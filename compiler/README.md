@@ -15,7 +15,9 @@ JAVA_HOME=~/jdks/jdk-11.0.9.1+1
 export JAVA_HOME
 ```
 
-Close terminal and open again. Check if java is recognised
+Close terminal and open again so new java home is loaded. 
+
+Check if java version is correct.
 
 ```
 java --version
@@ -33,13 +35,17 @@ OpenJDK 64-Bit Server VM (build 11.0.9.1+1-Ubuntu-0ubuntu1.18.04, mixed mode, sh
 
 ## Building
 
-Build jar
+Ensure data directory is present in the target folder.
+
+Build an executable jar file into the compiler/target directory
 
 ```
 mvn package
 ```
 
-This should build a jar file into the compiler/target/ directory
+Test if jar was built.
 
-Execute jar
+```
+java -jar compiler-1.0-SNAPSHOT.jar ../src/test/java/com/chaosopher/tigerlang/compiler/fixtures/merge_simple.tig
 
+```
