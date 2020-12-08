@@ -27,7 +27,7 @@ import com.chaosopher.tigerlang.compiler.parse.ParserFactory;
 import com.chaosopher.tigerlang.compiler.parse.ParserService;
 
 @RunWith(Theories.class)
-public class AnsynClonerRegTest {
+public class AbsynClonerRegTest {
 
     @DataPoints
     public static String[] paths() {
