@@ -12,7 +12,7 @@ public class JumpTest extends BaseCodeGenTest {
 
     @Test
     public void jumpTest() throws Exception {
-        IR tree = new Tree.JUMP(
+        IR tree = new com.chaosopher.tigerlang.compiler.tree.JUMP(
             Label.create()
         );
         TestEmitter testEmitter = new TestEmitter();

@@ -133,15 +133,15 @@ public class Translator extends Component {
      * will just refer to the current activation records frame pointer.
      * @param access
      * @param level
-     * @return a Tree.Exp containing MEM expressions.
+     * @return a com.chaosopher.tigerlang.compiler.tree.Exp containing MEM expressions.
      */
-    private Tree.Exp staticLinkOffset(Access access, Level level) {
+    private com.chaosopher.tigerlang.compiler.tree.Exp staticLinkOffset(Access access, Level level) {
         //variable is defined at same level as use,
         //just return the fp as framePointer
         //get current frames static link ( in rbp - 8),
         //lookup value, which is a pointer to the previous
         //frames static link, etc
-        Tree.Exp exp = new TEMP(level.frame.FP());
+        com.chaosopher.tigerlang.compiler.tree.Exp exp = new TEMP(level.frame.FP());
         var slinkLevel = level;
         int staticLinkOffset = -8;
         while (slinkLevel != access.home) {
@@ -550,7 +550,7 @@ public class Translator extends Component {
         // except for system function, which don't use a static link
         ExpList expList = null;
         if(useStaticLink) {
-            Tree.Exp staticLink = null;
+            com.chaosopher.tigerlang.compiler.tree.Exp staticLink = null;
             if(calleeLevel == callerLevel) { //recusive or same level, pass calleers static link ( not frame pointer )
                 staticLink = new MEM(
                     new BINOP(
@@ -628,7 +628,7 @@ public class Translator extends Component {
      * @param expTyList
      * @return
      */
-    private Tree.Stm buildSeq(ExpTyList expTyList) {
+    private com.chaosopher.tigerlang.compiler.tree.Stm buildSeq(ExpTyList expTyList) {
         Assert.assertNotNull(expTyList);
         Assert.assertNotNull(expTyList.expTy);
         if(expTyList.tail != null) {
@@ -647,7 +647,7 @@ public class Translator extends Component {
      * @param expTyList
      * @return an tree expression
      */
-    private Tree.Exp expSeq(ExpTyList expTyList) {
+    private com.chaosopher.tigerlang.compiler.tree.Exp expSeq(ExpTyList expTyList) {
         //invariant check, shouldn't happen
         Assert.assertNotNull(expTyList);
         Assert.assertNotNull(expTyList.expTy);
@@ -750,16 +750,16 @@ public class Translator extends Component {
         var loopStart = new Label();
         return new Nx(
             new SEQ(
-                new Tree.LABEL(whileStart),
+                new com.chaosopher.tigerlang.compiler.tree.LABEL(whileStart),
                 new SEQ(
                     testExp.exp.unCx(loopStart, loopEnd), 
                     new SEQ(
-                        new Tree.LABEL(loopStart),
+                        new com.chaosopher.tigerlang.compiler.tree.LABEL(loopStart),
                         new SEQ(
                             transBody.exp.unNx(), 
                             new SEQ(
-                                new Tree.JUMP(whileStart), 
-                                new Tree.LABEL(loopEnd)
+                                new com.chaosopher.tigerlang.compiler.tree.JUMP(whileStart), 
+                                new com.chaosopher.tigerlang.compiler.tree.LABEL(loopEnd)
                             )
                         )
                     )

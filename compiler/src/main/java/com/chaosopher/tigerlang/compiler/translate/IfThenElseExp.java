@@ -26,7 +26,7 @@ class IfThenElseExp extends Exp {
         a = aa;
         b = bb;
         if(b == null)
-        b = new Ex(new Tree.CONST(0));
+        b = new Ex(new com.chaosopher.tigerlang.compiler.tree.CONST(0));
     }
 
     /**
@@ -34,62 +34,62 @@ class IfThenElseExp extends Exp {
      * void.
      */
     @Override
-    Tree.Exp unEx() {
+    com.chaosopher.tigerlang.compiler.tree.Exp unEx() {
         var r = Temp.create();
-        return new Tree.ESEQ(
-            new Tree.SEQ(
-                new Tree.SEQ(
+        return new com.chaosopher.tigerlang.compiler.tree.ESEQ(
+            new com.chaosopher.tigerlang.compiler.tree.SEQ(
+                new com.chaosopher.tigerlang.compiler.tree.SEQ(
                     //evaluate test expression and just to true or false
                     testExp.unCx(trueLabel, falseLabel), 
-                    new Tree.SEQ(
-                        new Tree.LABEL(trueLabel), // add label t, evaluate expression a put resuult into register r.
-                        new Tree.SEQ( // eval then expression
-                                new Tree.MOVE( // move ex result into r
-                                    new Tree.TEMP(r), 
+                    new com.chaosopher.tigerlang.compiler.tree.SEQ(
+                        new com.chaosopher.tigerlang.compiler.tree.LABEL(trueLabel), // add label t, evaluate expression a put resuult into register r.
+                        new com.chaosopher.tigerlang.compiler.tree.SEQ( // eval then expression
+                                new com.chaosopher.tigerlang.compiler.tree.MOVE( // move ex result into r
+                                    new com.chaosopher.tigerlang.compiler.tree.TEMP(r), 
                                     a.unEx()
                                 ),
-                                new Tree.SEQ(
-                                    new Tree.JUMP(joinLabel),  //go to join label
-                                    new Tree.SEQ(
-                                        new Tree.LABEL(falseLabel), // add label f
-                                        new Tree.SEQ(new Tree.MOVE( // eval expression b put result into register r
-                                                new Tree.TEMP(r), 
+                                new com.chaosopher.tigerlang.compiler.tree.SEQ(
+                                    new com.chaosopher.tigerlang.compiler.tree.JUMP(joinLabel),  //go to join label
+                                    new com.chaosopher.tigerlang.compiler.tree.SEQ(
+                                        new com.chaosopher.tigerlang.compiler.tree.LABEL(falseLabel), // add label f
+                                        new com.chaosopher.tigerlang.compiler.tree.SEQ(new com.chaosopher.tigerlang.compiler.tree.MOVE( // eval expression b put result into register r
+                                                new com.chaosopher.tigerlang.compiler.tree.TEMP(r), 
                                                 b.unEx() // into register r
                                         ), 
-                                        new Tree.JUMP(joinLabel)) //jump to join label.
+                                        new com.chaosopher.tigerlang.compiler.tree.JUMP(joinLabel)) //jump to join label.
                                     )
                                 )
                         )
                     )
                 ), 
-                new Tree.LABEL(joinLabel) //join label
+                new com.chaosopher.tigerlang.compiler.tree.LABEL(joinLabel) //join label
             ), 
-            new Tree.TEMP(r) //return temp to to calling expression.
+            new com.chaosopher.tigerlang.compiler.tree.TEMP(r) //return temp to to calling expression.
         );
     }
 
     @Override
     Stm unNx() {
-        return new Tree.SEQ(
-            new Tree.SEQ(
+        return new com.chaosopher.tigerlang.compiler.tree.SEQ(
+            new com.chaosopher.tigerlang.compiler.tree.SEQ(
                 testExp.unCx(trueLabel, falseLabel), // eval cx with labels t and f
-                new Tree.SEQ(
-                    new Tree.LABEL(trueLabel), // add label t
-                    new Tree.SEQ( // eval then express
+                new com.chaosopher.tigerlang.compiler.tree.SEQ(
+                    new com.chaosopher.tigerlang.compiler.tree.LABEL(trueLabel), // add label t
+                    new com.chaosopher.tigerlang.compiler.tree.SEQ( // eval then express
                         a.unNx(), 
-                        new Tree.SEQ(
-                            new Tree.JUMP(joinLabel), 
-                            new Tree.SEQ(
-                                new Tree.LABEL(falseLabel), // add label
-                                    new Tree.SEQ(
+                        new com.chaosopher.tigerlang.compiler.tree.SEQ(
+                            new com.chaosopher.tigerlang.compiler.tree.JUMP(joinLabel), 
+                            new com.chaosopher.tigerlang.compiler.tree.SEQ(
+                                new com.chaosopher.tigerlang.compiler.tree.LABEL(falseLabel), // add label
+                                    new com.chaosopher.tigerlang.compiler.tree.SEQ(
                                         b.unNx(), // into register r
-                                        new Tree.JUMP(joinLabel))
+                                        new com.chaosopher.tigerlang.compiler.tree.JUMP(joinLabel))
                             )
                         )
                     )
                 )
             ),
-            new Tree.LABEL(joinLabel)
+            new com.chaosopher.tigerlang.compiler.tree.LABEL(joinLabel)
         );
     }
 
@@ -115,14 +115,14 @@ class IfThenElseExp extends Exp {
      */
     @Override
     Stm unCx(Label tt, Label ff) {
-        return new Tree.SEQ(
+        return new com.chaosopher.tigerlang.compiler.tree.SEQ(
             testExp.unCx(trueLabel, falseLabel), // eval test expression (AND: if (a > b) then (b > c) else (0) )
-            new Tree.SEQ(
-                new Tree.LABEL(trueLabel), // add label t
-                    new Tree.SEQ( // eval then express
+            new com.chaosopher.tigerlang.compiler.tree.SEQ(
+                new com.chaosopher.tigerlang.compiler.tree.LABEL(trueLabel), // add label t
+                    new com.chaosopher.tigerlang.compiler.tree.SEQ( // eval then express
                         a.unCx(tt, ff), 
-                        new Tree.SEQ(
-                                new Tree.LABEL(falseLabel), // add
+                        new com.chaosopher.tigerlang.compiler.tree.SEQ(
+                                new com.chaosopher.tigerlang.compiler.tree.LABEL(falseLabel), // add
                                 b.unCx(tt, ff) 
                             )
                         )

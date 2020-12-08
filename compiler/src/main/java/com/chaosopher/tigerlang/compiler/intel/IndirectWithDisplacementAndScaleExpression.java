@@ -13,7 +13,7 @@ public class IndirectWithDisplacementAndScaleExpression {
     }
 
     public int displacement() {
-        return binopOffsetExpression.binop.binop == Tree.BINOP.PLUS ? this.binopOffsetExpression.offset
+        return binopOffsetExpression.binop.binop == com.chaosopher.tigerlang.compiler.tree.BINOP.PLUS ? this.binopOffsetExpression.offset
                 : -this.binopOffsetExpression.offset;
     }
 

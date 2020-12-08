@@ -1,11 +1,11 @@
 package com.chaosopher.tigerlang.compiler.types;
 
 public class RECORD extends Type {
-   public Symbol.Symbol fieldName;
+   public com.chaosopher.tigerlang.compiler.symbol.Symbol fieldName;
    public Type fieldType;
    public RECORD tail;
 
-   public RECORD(Symbol.Symbol n, Type t, RECORD x) {
+   public RECORD(com.chaosopher.tigerlang.compiler.symbol.Symbol n, Type t, RECORD x) {
       if (n == null)
          throw new IllegalArgumentException("Symbol n cannot be null");
       if (t == null)
@@ -15,7 +15,7 @@ public class RECORD extends Type {
       tail = x;
    }
 
-   public RECORD append(Symbol.Symbol n, Type t) {
+   public RECORD append(com.chaosopher.tigerlang.compiler.symbol.Symbol n, Type t) {
       if (n == null)
          throw new IllegalArgumentException("Symbol n cannot be null");
       if (t == null)

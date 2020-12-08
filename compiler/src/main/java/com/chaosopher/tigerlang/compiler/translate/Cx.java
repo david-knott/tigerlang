@@ -12,7 +12,7 @@ import com.chaosopher.tigerlang.compiler.temp.Temp;
 abstract class Cx extends Exp {
 
     @Override
-    Tree.Exp unEx() {
+    com.chaosopher.tigerlang.compiler.tree.Exp unEx() {
         Label t = Label.create();
         Label f = Label.create();
         Temp r = Temp.create();
@@ -22,16 +22,16 @@ abstract class Cx extends Exp {
         // move const 0 into register r
         // add label true
         // create emit temp with register r
-        return new Tree.ESEQ(
-                new Tree.SEQ(new Tree.MOVE(new Tree.TEMP(r), new Tree.CONST(1)), new Tree.SEQ(unCx(t, f),
-                        new Tree.SEQ(new Tree.LABEL(f),
-                                new Tree.SEQ(new Tree.MOVE(new Tree.TEMP(r), new Tree.CONST(0)), new Tree.LABEL(t))))),
-                new Tree.TEMP(r));
+        return new com.chaosopher.tigerlang.compiler.tree.ESEQ(
+                new com.chaosopher.tigerlang.compiler.tree.SEQ(new com.chaosopher.tigerlang.compiler.tree.MOVE(new com.chaosopher.tigerlang.compiler.tree.TEMP(r), new com.chaosopher.tigerlang.compiler.tree.CONST(1)), new com.chaosopher.tigerlang.compiler.tree.SEQ(unCx(t, f),
+                        new com.chaosopher.tigerlang.compiler.tree.SEQ(new com.chaosopher.tigerlang.compiler.tree.LABEL(f),
+                                new com.chaosopher.tigerlang.compiler.tree.SEQ(new com.chaosopher.tigerlang.compiler.tree.MOVE(new com.chaosopher.tigerlang.compiler.tree.TEMP(r), new com.chaosopher.tigerlang.compiler.tree.CONST(0)), new com.chaosopher.tigerlang.compiler.tree.LABEL(t))))),
+                new com.chaosopher.tigerlang.compiler.tree.TEMP(r));
     }
 
     @Override
-    Tree.Stm unNx() {
+    com.chaosopher.tigerlang.compiler.tree.Stm unNx() {
         Label a = new Label();
-        return new Tree.SEQ(unCx(a, a), new Tree.LABEL(a));
+        return new com.chaosopher.tigerlang.compiler.tree.SEQ(unCx(a, a), new com.chaosopher.tigerlang.compiler.tree.LABEL(a));
     }
 }

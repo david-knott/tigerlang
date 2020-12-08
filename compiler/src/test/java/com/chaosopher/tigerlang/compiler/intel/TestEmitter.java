@@ -2,7 +2,7 @@ package com.chaosopher.tigerlang.compiler.intel;
 
 import java.util.Vector;
 
-import Assem.InstrList;
+import com.chaosopher.tigerlang.compiler.assem.InstrList;
 import Core.LL;
 import com.chaosopher.tigerlang.compiler.temp.Label;
 import com.chaosopher.tigerlang.compiler.temp.Temp;

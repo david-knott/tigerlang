@@ -13,14 +13,14 @@ public class SeqTest extends BaseCodeGenTest {
 
     @Test
     public void seqTwoItems() throws Exception {
-        IR tree = new Tree.SEQ(
-            new Tree.MOVE(
-                new Tree.TEMP(Temp.create()),
-                new Tree.TEMP(Temp.create())
+        IR tree = new com.chaosopher.tigerlang.compiler.tree.SEQ(
+            new com.chaosopher.tigerlang.compiler.tree.MOVE(
+                new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create()),
+                new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create())
             ),
-            new Tree.MOVE(
-                new Tree.TEMP(Temp.create()),
-                new Tree.TEMP(Temp.create())
+            new com.chaosopher.tigerlang.compiler.tree.MOVE(
+                new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create()),
+                new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create())
             )
         );
         TestEmitter testEmitter = new TestEmitter();
@@ -32,19 +32,19 @@ public class SeqTest extends BaseCodeGenTest {
 
     @Test
     public void seqThreeItems() throws Exception {
-        IR tree = new Tree.SEQ(
-            new Tree.MOVE(
-                new Tree.TEMP(Temp.create()),
-                new Tree.TEMP(Temp.create())
+        IR tree = new com.chaosopher.tigerlang.compiler.tree.SEQ(
+            new com.chaosopher.tigerlang.compiler.tree.MOVE(
+                new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create()),
+                new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create())
             ),
-            new Tree.SEQ(
-                new Tree.MOVE(
-                    new Tree.TEMP(Temp.create()),
-                    new Tree.TEMP(Temp.create())
+            new com.chaosopher.tigerlang.compiler.tree.SEQ(
+                new com.chaosopher.tigerlang.compiler.tree.MOVE(
+                    new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create()),
+                    new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create())
                 ),
-                new Tree.MOVE(
-                    new Tree.TEMP(Temp.create()),
-                    new Tree.TEMP(Temp.create())
+                new com.chaosopher.tigerlang.compiler.tree.MOVE(
+                    new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create()),
+                    new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create())
                 )
             )
         );

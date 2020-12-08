@@ -1,11 +1,11 @@
 package com.chaosopher.tigerlang.compiler.helpers;
 
-import Assem.Instr;
-import Assem.InstrList;
-import Assem.OPER;
-import Frame.Access;
-import Frame.Frame;
-import Frame.Proc;
+import com.chaosopher.tigerlang.compiler.assem.Instr;
+import com.chaosopher.tigerlang.compiler.assem.InstrList;
+import com.chaosopher.tigerlang.compiler.assem.OPER;
+import com.chaosopher.tigerlang.compiler.frame.Access;
+import com.chaosopher.tigerlang.compiler.frame.Frame;
+import com.chaosopher.tigerlang.compiler.frame.Proc;
 import com.chaosopher.tigerlang.compiler.temp.Label;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
 import com.chaosopher.tigerlang.compiler.temp.TempList;
@@ -101,7 +101,7 @@ public class TestFrame extends Frame {
 
     @Override
     public InstrList tempToMemory(Temp temp, Temp spillTemp, Access access) {
-        Instr moveTempToNewTemp = new Assem.MOVE("movq %`s0, %`d0; ttm", spillTemp, temp);
+        Instr moveTempToNewTemp = new com.chaosopher.tigerlang.compiler.assem.MOVE("movq %`s0, %`d0; ttm", spillTemp, temp);
         Instr moveNewTempToFrame = new OPER("movq %`s0, " + 0 + "(%`d0); ttm", this.precoloured, new TempList(spillTemp, null));
         return new InstrList(moveTempToNewTemp, new InstrList(moveNewTempToFrame, null)); 
     }
@@ -109,7 +109,7 @@ public class TestFrame extends Frame {
     @Override
     public InstrList memoryToTemp(Temp temp, Temp spillTemp, Access access) {
         Instr moveFrameToNewTemp = new OPER("movq " + 0 + "(%`s0), %`d0; mtt", new TempList(spillTemp, null), this.precoloured);
-        Instr moveNewTempToTemp = new Assem.MOVE("movq %`s0, %`d0; mtt", temp, spillTemp);
+        Instr moveNewTempToTemp = new com.chaosopher.tigerlang.compiler.assem.MOVE("movq %`s0, %`d0; mtt", temp, spillTemp);
         return new InstrList(moveFrameToNewTemp, new InstrList(moveNewTempToTemp, null)); 
     }
     

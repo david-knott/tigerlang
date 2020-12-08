@@ -2,14 +2,14 @@
 @Package Intel;
 @Header {
 	import com.chaosopher.tigerlang.compiler.tree.*;
-	import static Tree.TreeKind.*;
+	import static com.chaosopher.tigerlang.compiler.tree.TreeKind.*;
 }
-@INodeType Tree.IR;
+@INodeType com.chaosopher.tigerlang.compiler.tree.IR;
 @Constant ERROR_TRAP = 268435456;
-@ReturnType temp = Temp.Temp;
-@ReturnType exp = Temp.Temp;
-@ReturnType mem = Temp.Temp;
-@ReturnType binop = Temp.Temp;
+@ReturnType temp = com.chaosopher.tigerlang.compiler.temp.Temp;
+@ReturnType exp = com.chaosopher.tigerlang.compiler.temp.Temp;
+@ReturnType mem = com.chaosopher.tigerlang.compiler.temp.Temp;
+@ReturnType binop = com.chaosopher.tigerlang.compiler.temp.Temp;
 @Members
 {
 	private Reducer reducer;

@@ -42,7 +42,7 @@ public class Tasks implements TaskProvider {
             new SimpleTask(new SimpleTaskProvider() {
                 @Override
                 public void only(TaskContext taskContext) {
-                    Assem.FragList assemblyFragList = taskContext.assemFragList;
+                    com.chaosopher.tigerlang.compiler.assem.FragList assemblyFragList = taskContext.assemFragList;
                     assemblyFragList.accept(new UnallocatedAssmeblyDump(taskContext.log));
 
                 }
@@ -53,7 +53,7 @@ public class Tasks implements TaskProvider {
             new SimpleTask(new SimpleTaskProvider() {
                 @Override
                 public void only(TaskContext taskContext) {
-                    Assem.FragList assemblyFragList = taskContext.assemFragList;
+                    com.chaosopher.tigerlang.compiler.assem.FragList assemblyFragList = taskContext.assemFragList;
                     UnAllocatedAssemblyStats assemblyStats = new UnAllocatedAssemblyStats();
                     assemblyFragList.accept(assemblyStats);
                     assemblyStats.dump(taskContext.log);

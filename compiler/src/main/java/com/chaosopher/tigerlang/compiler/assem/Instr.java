@@ -3,13 +3,13 @@ package com.chaosopher.tigerlang.compiler.assem;
 public abstract class Instr implements Comparable<Instr> {
     public String assem;
 
-    public abstract Temp.TempList use();
+    public abstract com.chaosopher.tigerlang.compiler.temp.TempList use();
 
-    public abstract Temp.TempList def();
+    public abstract com.chaosopher.tigerlang.compiler.temp.TempList def();
 
     public abstract Targets jumps();
 
-    private Temp.Temp nthTemp(Temp.TempList l, int i) {
+    private com.chaosopher.tigerlang.compiler.temp.Temp nthTemp(com.chaosopher.tigerlang.compiler.temp.TempList l, int i) {
         if (i == 0) {
 
             if (l == null) {
@@ -20,7 +20,7 @@ public abstract class Instr implements Comparable<Instr> {
             return nthTemp(l.tail, i - 1);
     }
 
-    private Temp.Label nthLabel(Temp.LabelList l, int i) {
+    private com.chaosopher.tigerlang.compiler.temp.Label nthLabel(com.chaosopher.tigerlang.compiler.temp.LabelList l, int i) {
         if (i == 0)
             return l.head;
         else
@@ -33,11 +33,11 @@ public abstract class Instr implements Comparable<Instr> {
      * @param m
      * @return
      */
-    public String format(Temp.TempMap m) {
-        Temp.TempList dst = def();
-        Temp.TempList src = use();
+    public String format(com.chaosopher.tigerlang.compiler.temp.TempMap m) {
+        com.chaosopher.tigerlang.compiler.temp.TempList dst = def();
+        com.chaosopher.tigerlang.compiler.temp.TempList src = use();
         Targets j = jumps();
-        Temp.LabelList jump = (j == null) ? null : j.labels;
+        com.chaosopher.tigerlang.compiler.temp.LabelList jump = (j == null) ? null : j.labels;
         StringBuffer s = new StringBuffer();
         int len = assem.length();
         for (int i = 0; i < len; i++)

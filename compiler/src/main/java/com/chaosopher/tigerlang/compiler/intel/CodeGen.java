@@ -2,7 +2,7 @@
 
 package com.chaosopher.tigerlang.compiler.intel;
 	import com.chaosopher.tigerlang.compiler.tree.*;
-	import static Tree.TreeKind.*;
+	import static com.chaosopher.tigerlang.compiler.tree.TreeKind.*;
 public class CodeGen  {
     java.util.Stack __reducedValues = new java.util.Stack();
 	private Reducer reducer;
@@ -35,7 +35,7 @@ final public static int __binop_NT = 18;
 final public static int __expCall_NT = 19;
 final public static int __jump_NT = 20;
 final public static int nStates = 20;
-public  JBurgAnnotation label(Tree.IR to_be_labelled) {
+public  JBurgAnnotation label(com.chaosopher.tigerlang.compiler.tree.IR to_be_labelled) {
     int             arity   = to_be_labelled.getArity();
     JBurgAnnotation result  = this.getJBurgAnnotation(to_be_labelled);
 
@@ -48,308 +48,308 @@ public  JBurgAnnotation label(Tree.IR to_be_labelled) {
 
 /* binopOffsetExpression */
 
-private  BinopOffsetExpression action_1(Tree.IR __p) throws java.lang.Exception {
-    Integer arg1 = (Integer)__reducedValues.pop();Temp.Temp arg0 = (Temp.Temp)__reducedValues.pop();
+private  BinopOffsetExpression action_1(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
+    Integer arg1 = (Integer)__reducedValues.pop();com.chaosopher.tigerlang.compiler.temp.Temp arg0 = (com.chaosopher.tigerlang.compiler.temp.Temp)__reducedValues.pop();
     		return (reducer.binopOffsetExpression(__p,arg0,arg1));
 }
 
 /* binopOffsetExpression */
 
-private  BinopOffsetExpression action_2(Tree.IR __p) throws java.lang.Exception {
-    Temp.Temp arg1 = (Temp.Temp)__reducedValues.pop();Integer arg0 = (Integer)__reducedValues.pop();
+private  BinopOffsetExpression action_2(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
+    com.chaosopher.tigerlang.compiler.temp.Temp arg1 = (com.chaosopher.tigerlang.compiler.temp.Temp)__reducedValues.pop();Integer arg0 = (Integer)__reducedValues.pop();
     		return (reducer.binopOffsetExpression(__p,arg1,arg0));
 }
 
 /* indirect */
 
-private  IndirectExpression action_3(Tree.IR __p) throws java.lang.Exception {
-    Temp.Temp arg = (Temp.Temp)__reducedValues.pop();
+private  IndirectExpression action_3(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
+    com.chaosopher.tigerlang.compiler.temp.Temp arg = (com.chaosopher.tigerlang.compiler.temp.Temp)__reducedValues.pop();
     		return (reducer.indirect(__p,arg));
 }
 
 /* indirectWithDisplacement */
 
-private  IndirectWithDisplacementExpression action_4(Tree.IR __p) throws java.lang.Exception {
+private  IndirectWithDisplacementExpression action_4(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
     BinopOffsetExpression arg0 = (BinopOffsetExpression)__reducedValues.pop();
     		return (reducer.indirectWithDisplacement(__p,arg0));
 }
 
 /* indirectWithDisplacementAndScale */
 
-private  IndirectWithDisplacementAndScaleExpression action_5(Tree.IR __p) throws java.lang.Exception {
-    BinopOffsetExpression arg1 = (BinopOffsetExpression)__reducedValues.pop();Temp.Temp arg0 = (Temp.Temp)__reducedValues.pop();
+private  IndirectWithDisplacementAndScaleExpression action_5(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
+    BinopOffsetExpression arg1 = (BinopOffsetExpression)__reducedValues.pop();com.chaosopher.tigerlang.compiler.temp.Temp arg0 = (com.chaosopher.tigerlang.compiler.temp.Temp)__reducedValues.pop();
     		return (reducer.indirectWithDisplacementAndScale(__p,arg0,arg1));
 }
 
 /* move */
 
-private  Tree.IR action_6(Tree.IR __p) throws java.lang.Exception {
-    Temp.Temp arg1 = (Temp.Temp)__reducedValues.pop();Temp.Temp arg0 = (Temp.Temp)__reducedValues.pop();
+private  com.chaosopher.tigerlang.compiler.tree.IR action_6(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
+    com.chaosopher.tigerlang.compiler.temp.Temp arg1 = (com.chaosopher.tigerlang.compiler.temp.Temp)__reducedValues.pop();com.chaosopher.tigerlang.compiler.temp.Temp arg0 = (com.chaosopher.tigerlang.compiler.temp.Temp)__reducedValues.pop();
     		return (reducer.storeMemToMem(__p,arg0,arg1));
 }
 
 /* move */
 
-private  Tree.IR action_7(Tree.IR __p) throws java.lang.Exception {
-    Temp.Temp arg1 = (Temp.Temp)__reducedValues.pop();IndirectExpression arg0 = (IndirectExpression)__reducedValues.pop();
+private  com.chaosopher.tigerlang.compiler.tree.IR action_7(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
+    com.chaosopher.tigerlang.compiler.temp.Temp arg1 = (com.chaosopher.tigerlang.compiler.temp.Temp)__reducedValues.pop();IndirectExpression arg0 = (IndirectExpression)__reducedValues.pop();
     		return (reducer.storeIndirect(__p,arg0,arg1));
 }
 
 /* move */
 
-private  Tree.IR action_8(Tree.IR __p) throws java.lang.Exception {
-    Temp.Temp arg1 = (Temp.Temp)__reducedValues.pop();IndirectWithDisplacementExpression arg0 = (IndirectWithDisplacementExpression)__reducedValues.pop();
+private  com.chaosopher.tigerlang.compiler.tree.IR action_8(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
+    com.chaosopher.tigerlang.compiler.temp.Temp arg1 = (com.chaosopher.tigerlang.compiler.temp.Temp)__reducedValues.pop();IndirectWithDisplacementExpression arg0 = (IndirectWithDisplacementExpression)__reducedValues.pop();
     		return (reducer.storeIndirectWithDisplacement(__p,arg0,arg1));
 }
 
 /* move */
 
-private  Tree.IR action_9(Tree.IR __p) throws java.lang.Exception {
+private  com.chaosopher.tigerlang.compiler.tree.IR action_9(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
     Integer arg1 = (Integer)__reducedValues.pop();IndirectWithDisplacementExpression arg0 = (IndirectWithDisplacementExpression)__reducedValues.pop();
     		return (reducer.storeIndirectWithDisplacement(__p,arg0,arg1));
 }
 
 /* move */
 
-private  Tree.IR action_10(Tree.IR __p) throws java.lang.Exception {
-    Temp.Temp arg1 = (Temp.Temp)__reducedValues.pop();IndirectWithDisplacementAndScaleExpression arg0 = (IndirectWithDisplacementAndScaleExpression)__reducedValues.pop();
+private  com.chaosopher.tigerlang.compiler.tree.IR action_10(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
+    com.chaosopher.tigerlang.compiler.temp.Temp arg1 = (com.chaosopher.tigerlang.compiler.temp.Temp)__reducedValues.pop();IndirectWithDisplacementAndScaleExpression arg0 = (IndirectWithDisplacementAndScaleExpression)__reducedValues.pop();
     		return (reducer.storeIndirectWithDisplacementAndScale(__p,arg0,arg1));
 }
 
 /* move */
 
-private  Tree.IR action_11(Tree.IR __p) throws java.lang.Exception {
-    Integer src = (Integer)__reducedValues.pop();Temp.Temp dst = (Temp.Temp)__reducedValues.pop();
+private  com.chaosopher.tigerlang.compiler.tree.IR action_11(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
+    Integer src = (Integer)__reducedValues.pop();com.chaosopher.tigerlang.compiler.temp.Temp dst = (com.chaosopher.tigerlang.compiler.temp.Temp)__reducedValues.pop();
     		return (reducer.move(__p,dst,src));
 }
 
 /* move */
 
-private  Tree.IR action_12(Tree.IR __p) throws java.lang.Exception {
-    Temp.Temp src = (Temp.Temp)__reducedValues.pop();Temp.Temp dst = (Temp.Temp)__reducedValues.pop();
+private  com.chaosopher.tigerlang.compiler.tree.IR action_12(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
+    com.chaosopher.tigerlang.compiler.temp.Temp src = (com.chaosopher.tigerlang.compiler.temp.Temp)__reducedValues.pop();com.chaosopher.tigerlang.compiler.temp.Temp dst = (com.chaosopher.tigerlang.compiler.temp.Temp)__reducedValues.pop();
     		return (reducer.move(__p,dst,src));
 }
 
 /* cjump */
 
-private  Tree.IR action_13(Tree.IR __p) throws java.lang.Exception {
-    Temp.Temp right = (Temp.Temp)__reducedValues.pop();Temp.Temp left = (Temp.Temp)__reducedValues.pop();
+private  com.chaosopher.tigerlang.compiler.tree.IR action_13(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
+    com.chaosopher.tigerlang.compiler.temp.Temp right = (com.chaosopher.tigerlang.compiler.temp.Temp)__reducedValues.pop();com.chaosopher.tigerlang.compiler.temp.Temp left = (com.chaosopher.tigerlang.compiler.temp.Temp)__reducedValues.pop();
     		return (reducer.cjumpStatement(__p,left,right));
 }
 
 /* sxp */
 
-private  Tree.IR action_14(Tree.IR __p) throws java.lang.Exception {
-    Temp.Temp arg = (Temp.Temp)__reducedValues.pop();
+private  com.chaosopher.tigerlang.compiler.tree.IR action_14(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
+    com.chaosopher.tigerlang.compiler.temp.Temp arg = (com.chaosopher.tigerlang.compiler.temp.Temp)__reducedValues.pop();
     		return (reducer.sxpStatement(__p,arg));
 }
 
 /* label */
 
-private  Tree.IR action_15(Tree.IR __p) throws java.lang.Exception {
+private  com.chaosopher.tigerlang.compiler.tree.IR action_15(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
 
     		return (reducer.labelStatement(__p));
 }
 
 /* stmt */
 
-private  Object action_16(Tree.IR __p) throws java.lang.Exception {
+private  Object action_16(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
     Object right = (Object)__reducedValues.pop();Object left = (Object)__reducedValues.pop();
     		return (reducer.seqStatement(__p,left,right));
 }
 
 /* jump */
 
-private  Tree.IR action_17(Tree.IR __p) throws java.lang.Exception {
+private  com.chaosopher.tigerlang.compiler.tree.IR action_17(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
 
-    	 Tree.IR arg0 = __p.getNthChild(0);;
+    	 com.chaosopher.tigerlang.compiler.tree.IR arg0 = __p.getNthChild(0);;
     		return (reducer.jumpStatement(__p,arg0));
 }
 
 /* temp */
 
-private  Temp.Temp action_18(Tree.IR __p) throws java.lang.Exception {
+private  com.chaosopher.tigerlang.compiler.temp.Temp action_18(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
 
     		return (reducer.temp(__p));
 }
 
 /* integerConstant */
 
-private  Integer action_19(Tree.IR __p) throws java.lang.Exception {
+private  Integer action_19(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
 
     		return (reducer.integerConstant(__p));
 }
 
 /* integerExpression */
 
-private  Temp.Temp action_20(Tree.IR __p) throws java.lang.Exception {
+private  com.chaosopher.tigerlang.compiler.temp.Temp action_20(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
     Integer integerConstant = (Integer)__reducedValues.pop();
     		return (reducer.integerExpression(integerConstant));
 }
 
 /* name */
 
-private  Temp.Temp action_21(Tree.IR __p) throws java.lang.Exception {
+private  com.chaosopher.tigerlang.compiler.temp.Temp action_21(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
 
     		return (reducer.nameExpression(__p));
 }
 
 /* binop */
 
-private  Temp.Temp action_22(Tree.IR __p) throws java.lang.Exception {
-    Temp.Temp right = (Temp.Temp)__reducedValues.pop();Temp.Temp left = (Temp.Temp)__reducedValues.pop();
+private  com.chaosopher.tigerlang.compiler.temp.Temp action_22(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
+    com.chaosopher.tigerlang.compiler.temp.Temp right = (com.chaosopher.tigerlang.compiler.temp.Temp)__reducedValues.pop();com.chaosopher.tigerlang.compiler.temp.Temp left = (com.chaosopher.tigerlang.compiler.temp.Temp)__reducedValues.pop();
     		return (reducer.binopExpression(__p,left,right));
 }
 
 /* binop */
 
-private  Temp.Temp action_23(Tree.IR __p) throws java.lang.Exception {
-    Integer right = (Integer)__reducedValues.pop();Temp.Temp left = (Temp.Temp)__reducedValues.pop();
+private  com.chaosopher.tigerlang.compiler.temp.Temp action_23(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
+    Integer right = (Integer)__reducedValues.pop();com.chaosopher.tigerlang.compiler.temp.Temp left = (com.chaosopher.tigerlang.compiler.temp.Temp)__reducedValues.pop();
     		return (reducer.binopExpression(__p,left,right));
 }
 
 /* binop */
 
-private  Temp.Temp action_24(Tree.IR __p) throws java.lang.Exception {
-    Temp.Temp right = (Temp.Temp)__reducedValues.pop();Integer left = (Integer)__reducedValues.pop();
+private  com.chaosopher.tigerlang.compiler.temp.Temp action_24(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
+    com.chaosopher.tigerlang.compiler.temp.Temp right = (com.chaosopher.tigerlang.compiler.temp.Temp)__reducedValues.pop();Integer left = (Integer)__reducedValues.pop();
     		return (reducer.binopExpression(__p,left,right));
 }
 
 /* binop */
 
-private  Temp.Temp action_25(Tree.IR __p) throws java.lang.Exception {
+private  com.chaosopher.tigerlang.compiler.temp.Temp action_25(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
     Integer right = (Integer)__reducedValues.pop();Integer left = (Integer)__reducedValues.pop();
     		return (reducer.binopExpression(__p,left,right));
 }
 
 /* mem */
 
-private  Temp.Temp action_26(Tree.IR __p) throws java.lang.Exception {
+private  com.chaosopher.tigerlang.compiler.temp.Temp action_26(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
     BinopOffsetExpression boe = (BinopOffsetExpression)__reducedValues.pop();
     		return (reducer.mem(boe));
 }
 
 /* mem */
 
-private  Temp.Temp action_27(Tree.IR __p) throws java.lang.Exception {
+private  com.chaosopher.tigerlang.compiler.temp.Temp action_27(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
     Integer ic = (Integer)__reducedValues.pop();
     		return (reducer.mem(ic));
 }
 
 /* mem */
 
-private  Temp.Temp action_28(Tree.IR __p) throws java.lang.Exception {
-    Temp.Temp e = (Temp.Temp)__reducedValues.pop();
+private  com.chaosopher.tigerlang.compiler.temp.Temp action_28(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
+    com.chaosopher.tigerlang.compiler.temp.Temp e = (com.chaosopher.tigerlang.compiler.temp.Temp)__reducedValues.pop();
     		return (reducer.mem(e));
 }
 
 /* call */
 
-private  Object action_29(Tree.IR __p) throws java.lang.Exception {
-    java.util.Vector<Temp.Temp> args = (java.util.Vector<Temp.Temp>)__reducedValues.pop();
+private  Object action_29(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
+    java.util.Vector<com.chaosopher.tigerlang.compiler.temp.Temp> args = (java.util.Vector<com.chaosopher.tigerlang.compiler.temp.Temp>)__reducedValues.pop();
     		return (reducer.call(__p,args));
 }
 
 /* expCall */
 
-private  Object action_30(Tree.IR __p) throws java.lang.Exception {
+private  Object action_30(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
     Object c = (Object)__reducedValues.pop();
     		return (reducer.expCall(c));
 }
 
 /* moveCall */
 
-private  Object action_31(Tree.IR __p) throws java.lang.Exception {
-    Object c = (Object)__reducedValues.pop();Temp.Temp e = (Temp.Temp)__reducedValues.pop();
+private  Object action_31(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
+    Object c = (Object)__reducedValues.pop();com.chaosopher.tigerlang.compiler.temp.Temp e = (com.chaosopher.tigerlang.compiler.temp.Temp)__reducedValues.pop();
     		return (reducer.moveCall(e,c));
 }
 
 /* stmt */
 
-private  Object action_32(Tree.IR __p) throws java.lang.Exception {
+private  Object action_32(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
 
     		return ((Object)__reducedValues.pop());
 }
 
 /* stmt */
 
-private  Object action_33(Tree.IR __p) throws java.lang.Exception {
+private  Object action_33(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
 
     		return ((Object)__reducedValues.pop());
 }
 
 /* exp */
 
-private  Temp.Temp action_34(Tree.IR __p) throws java.lang.Exception {
+private  com.chaosopher.tigerlang.compiler.temp.Temp action_34(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
 
-    		return ((Temp.Temp)__reducedValues.pop());
+    		return ((com.chaosopher.tigerlang.compiler.temp.Temp)__reducedValues.pop());
 }
 
 /* exp */
 
-private  Temp.Temp action_35(Tree.IR __p) throws java.lang.Exception {
+private  com.chaosopher.tigerlang.compiler.temp.Temp action_35(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
 
-    		return ((Temp.Temp)__reducedValues.pop());
+    		return ((com.chaosopher.tigerlang.compiler.temp.Temp)__reducedValues.pop());
 }
 
 /* stmt */
 
-private  Object action_36(Tree.IR __p) throws java.lang.Exception {
+private  Object action_36(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
 
     		return ((Object)__reducedValues.pop());
 }
 
 /* exp */
 
-private  Temp.Temp action_37(Tree.IR __p) throws java.lang.Exception {
+private  com.chaosopher.tigerlang.compiler.temp.Temp action_37(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
 
-    		return ((Temp.Temp)__reducedValues.pop());
+    		return ((com.chaosopher.tigerlang.compiler.temp.Temp)__reducedValues.pop());
 }
 
 /* stmt */
 
-private  Object action_38(Tree.IR __p) throws java.lang.Exception {
+private  Object action_38(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
 
     		return ((Object)__reducedValues.pop());
 }
 
 /* stmt */
 
-private  Object action_39(Tree.IR __p) throws java.lang.Exception {
+private  Object action_39(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
 
     		return ((Object)__reducedValues.pop());
 }
 
 /* exp */
 
-private  Temp.Temp action_40(Tree.IR __p) throws java.lang.Exception {
+private  com.chaosopher.tigerlang.compiler.temp.Temp action_40(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
 
-    		return ((Temp.Temp)__reducedValues.pop());
+    		return ((com.chaosopher.tigerlang.compiler.temp.Temp)__reducedValues.pop());
 }
 
 /* exp */
 
-private  Temp.Temp action_41(Tree.IR __p) throws java.lang.Exception {
+private  com.chaosopher.tigerlang.compiler.temp.Temp action_41(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
 
-    		return ((Temp.Temp)__reducedValues.pop());
+    		return ((com.chaosopher.tigerlang.compiler.temp.Temp)__reducedValues.pop());
 }
 
 /* stmt */
 
-private  Object action_42(Tree.IR __p) throws java.lang.Exception {
+private  Object action_42(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
 
     		return ((Object)__reducedValues.pop());
 }
 
 /* exp */
 
-private  Temp.Temp action_43(Tree.IR __p) throws java.lang.Exception {
+private  com.chaosopher.tigerlang.compiler.temp.Temp action_43(com.chaosopher.tigerlang.compiler.tree.IR __p) throws java.lang.Exception {
 
-    		return ((Temp.Temp)__reducedValues.pop());
+    		return ((com.chaosopher.tigerlang.compiler.temp.Temp)__reducedValues.pop());
 }
 
 private  void dispatchAction(JBurgAnnotation ___node,int iRule) throws java.lang.Exception {
-     Tree.IR __p = ___node.getNode();
+     com.chaosopher.tigerlang.compiler.tree.IR __p = ___node.getNode();
     switch(iRule) {
         case 1: {
             __reducedValues.push(this.action_1(__p));
@@ -564,7 +564,7 @@ class JBurgAnnotation_BINOP_2  extends JBurgSpecializedAnnotation
     private  int getCostForRule_5a39699c(int goalState)  {
         return (normalizedAdd(1, normalizedAdd(this.getNthChild(1).getCost(__integerConstant_NT), this.getNthChild(0).getCost(__integerConstant_NT))));
     }private  JBurgAnnotation subtree0 = null;private  JBurgAnnotation subtree1 = null;private  int cachedCostFor_binopOffsetExpression = -1;private  int cachedCostFor_binop = -1;
-    public   JBurgAnnotation_BINOP_2(Tree.IR node)  {
+    public   JBurgAnnotation_BINOP_2(com.chaosopher.tigerlang.compiler.tree.IR node)  {
         super(node);
     }
     private  int getPatternMatchCost(int goalState)  {
@@ -711,7 +711,7 @@ class JBurgAnnotation_BINOP_2  extends JBurgSpecializedAnnotation
 class JBurgAnnotation_CALL_0_n  extends JBurgSpecializedAnnotation 
 {
     private  int cachedCostFor_call = -1;private  java.util.Vector<JBurgAnnotation> narySubtrees = new java.util.Vector<JBurgAnnotation>();
-    public   JBurgAnnotation_CALL_0_n(Tree.IR node)  {
+    public   JBurgAnnotation_CALL_0_n(com.chaosopher.tigerlang.compiler.tree.IR node)  {
         super(node);
     }
     private  int getPatternMatchCost(int goalState)  {
@@ -781,7 +781,7 @@ class JBurgAnnotation_CJUMP_2  extends JBurgSpecializedAnnotation
     private  int getCostForRule_56cbfb61(int goalState)  {
         return (normalizedAdd(1, normalizedAdd(this.getNthChild(1).getCost(__exp_NT), this.getNthChild(0).getCost(__exp_NT))));
     }private  JBurgAnnotation subtree0 = null;private  JBurgAnnotation subtree1 = null;private  int cachedCostFor_cjump = -1;
-    public   JBurgAnnotation_CJUMP_2(Tree.IR node)  {
+    public   JBurgAnnotation_CJUMP_2(com.chaosopher.tigerlang.compiler.tree.IR node)  {
         super(node);
     }
     private  int getPatternMatchCost(int goalState)  {
@@ -883,7 +883,7 @@ class JBurgAnnotation_CJUMP_2  extends JBurgSpecializedAnnotation
 class JBurgAnnotation_CONST_0  extends JBurgSpecializedAnnotation 
 {
 
-    public   JBurgAnnotation_CONST_0(Tree.IR node)  {
+    public   JBurgAnnotation_CONST_0(com.chaosopher.tigerlang.compiler.tree.IR node)  {
         super(node);
     }
     private  int getPatternMatchCost(int goalState)  {
@@ -974,7 +974,7 @@ class JBurgAnnotation_JUMP_1  extends JBurgSpecializedAnnotation
             return (Integer.MAX_VALUE);
         } 
     }private  JBurgAnnotation subtree0 = null;private  int cachedCostFor_jump = -1;
-    public   JBurgAnnotation_JUMP_1(Tree.IR node)  {
+    public   JBurgAnnotation_JUMP_1(com.chaosopher.tigerlang.compiler.tree.IR node)  {
         super(node);
     }
     private  int getPatternMatchCost(int goalState)  {
@@ -1070,7 +1070,7 @@ class JBurgAnnotation_JUMP_1  extends JBurgSpecializedAnnotation
 class JBurgAnnotation_LABEL_0  extends JBurgSpecializedAnnotation 
 {
 
-    public   JBurgAnnotation_LABEL_0(Tree.IR node)  {
+    public   JBurgAnnotation_LABEL_0(com.chaosopher.tigerlang.compiler.tree.IR node)  {
         super(node);
     }
     private  int getPatternMatchCost(int goalState)  {
@@ -1163,7 +1163,7 @@ class JBurgAnnotation_MEM_1  extends JBurgSpecializedAnnotation
     private  int getCostForRule_7c75222b(int goalState)  {
         return (normalizedAdd(5, this.getNthChild(0).getCost(__exp_NT)));
     }private  JBurgAnnotation subtree0 = null;private  int cachedCostFor_indirectWithDisplacementAndScale = -1;private  int cachedCostFor_indirect = -1;private  int cachedCostFor_mem = -1;private  int cachedCostFor_indirectWithDisplacement = -1;
-    public   JBurgAnnotation_MEM_1(Tree.IR node)  {
+    public   JBurgAnnotation_MEM_1(com.chaosopher.tigerlang.compiler.tree.IR node)  {
         super(node);
     }
     private  int getPatternMatchCost(int goalState)  {
@@ -1354,7 +1354,7 @@ class JBurgAnnotation_MOVE_2  extends JBurgSpecializedAnnotation
     private  int getCostForRule_43a25848(int goalState)  {
         return (normalizedAdd(1, normalizedAdd(this.getNthChild(1).getCost(__call_NT), this.getNthChild(0).getCost(__exp_NT))));
     }private  JBurgAnnotation subtree0 = null;private  JBurgAnnotation subtree1 = null;private  int cachedCostFor_moveCall = -1;private  int cachedCostFor_move = -1;
-    public   JBurgAnnotation_MOVE_2(Tree.IR node)  {
+    public   JBurgAnnotation_MOVE_2(com.chaosopher.tigerlang.compiler.tree.IR node)  {
         super(node);
     }
     private  int getPatternMatchCost(int goalState)  {
@@ -1519,7 +1519,7 @@ class JBurgAnnotation_MOVE_2  extends JBurgSpecializedAnnotation
 class JBurgAnnotation_NAME_0  extends JBurgSpecializedAnnotation 
 {
 
-    public   JBurgAnnotation_NAME_0(Tree.IR node)  {
+    public   JBurgAnnotation_NAME_0(com.chaosopher.tigerlang.compiler.tree.IR node)  {
         super(node);
     }
     private  int getPatternMatchCost(int goalState)  {
@@ -1591,7 +1591,7 @@ class JBurgAnnotation_SEQ_2  extends JBurgSpecializedAnnotation
     private  int getCostForRule_6a5fc7f7(int goalState)  {
         return (normalizedAdd(1, normalizedAdd(this.getNthChild(1).getCost(__stmt_NT), this.getNthChild(0).getCost(__stmt_NT))));
     }private  JBurgAnnotation subtree0 = null;private  JBurgAnnotation subtree1 = null;private  int cachedCostFor_stmt = -1;
-    public   JBurgAnnotation_SEQ_2(Tree.IR node)  {
+    public   JBurgAnnotation_SEQ_2(com.chaosopher.tigerlang.compiler.tree.IR node)  {
         super(node);
     }
     private  int getPatternMatchCost(int goalState)  {
@@ -1677,7 +1677,7 @@ class JBurgAnnotation_SXP_1  extends JBurgSpecializedAnnotation
     private  int getCostForRule_1e643faf(int goalState)  {
         return (normalizedAdd(1, this.getNthChild(0).getCost(__call_NT)));
     }private  JBurgAnnotation subtree0 = null;private  int cachedCostFor_sxp = -1;private  int cachedCostFor_expCall = -1;
-    public   JBurgAnnotation_SXP_1(Tree.IR node)  {
+    public   JBurgAnnotation_SXP_1(com.chaosopher.tigerlang.compiler.tree.IR node)  {
         super(node);
     }
     private  int getPatternMatchCost(int goalState)  {
@@ -1806,7 +1806,7 @@ class JBurgAnnotation_SXP_1  extends JBurgSpecializedAnnotation
 class JBurgAnnotation_TEMP_0  extends JBurgSpecializedAnnotation 
 {
 
-    public   JBurgAnnotation_TEMP_0(Tree.IR node)  {
+    public   JBurgAnnotation_TEMP_0(com.chaosopher.tigerlang.compiler.tree.IR node)  {
         super(node);
     }
     private  int getPatternMatchCost(int goalState)  {
@@ -1871,7 +1871,7 @@ class JBurgAnnotation_TEMP_0  extends JBurgSpecializedAnnotation
 }
 
 
-public  JBurgAnnotation getJBurgAnnotation(Tree.IR node)  {
+public  JBurgAnnotation getJBurgAnnotation(com.chaosopher.tigerlang.compiler.tree.IR node)  {
     switch(node.getOperator()) {
         case BINOP: {
             if ((node.getArity() == 2)) {
@@ -2110,7 +2110,7 @@ final public static int ERROR_TRAP = 268435456;
 	}
 
 
-    private void dispatchPrologue(Tree.IR p, int iRule)
+    private void dispatchPrologue(com.chaosopher.tigerlang.compiler.tree.IR p, int iRule)
     {
         switch(iRule)
         {
@@ -2183,7 +2183,7 @@ final public static int ERROR_TRAP = 268435456;
      * Reduce a subtree to the least-cost solution available.
      * @param root the root of the subtree.
      */
-    public void burm(Tree.IR root) throws java.lang.Exception
+    public void burm(com.chaosopher.tigerlang.compiler.tree.IR root) throws java.lang.Exception
 	{
 		/* Use the least-cost goal state available. */
 		burm(root, 0);
@@ -2194,7 +2194,7 @@ final public static int ERROR_TRAP = 268435456;
      * @param root the root of the subtree.
      * @param goal_state the desired goal.
      */
-    public void burm(Tree.IR root, int goal_state) throws java.lang.Exception
+    public void burm(com.chaosopher.tigerlang.compiler.tree.IR root, int goal_state) throws java.lang.Exception
 	{
 		JBurgAnnotation annotatedTree = label(root);
 
@@ -2257,7 +2257,7 @@ final public static int ERROR_TRAP = 268435456;
 		debug_output.print("</label></jburg>");
 	}
 	
-    public void dump(Tree.IR node,java.io.PrintWriter debug_output)
+    public void dump(com.chaosopher.tigerlang.compiler.tree.IR node,java.io.PrintWriter debug_output)
 	{
 		JBurgAnnotation anno = label(node);
 		debug_output.println("<?xml version=\"1.0\"?>");
@@ -2337,20 +2337,20 @@ final public static int ERROR_TRAP = 268435456;
 
     	/** 
          *  JBurgAnnotation is a data structure internal to the
-    	 *  JBurg-generated BURM that annotates a Tree.IR with
+    	 *  JBurg-generated BURM that annotates a com.chaosopher.tigerlang.compiler.tree.IR with
     	 *  information used for dynamic programming and reduction.
     	 */
     	public abstract static class JBurgAnnotation
     	{
-    		/**  The Tree.IR this JBurgAnnotation describes.  */
-    		Tree.IR m_node; 
-    		JBurgAnnotation ( Tree.IR newNode)
+    		/**  The com.chaosopher.tigerlang.compiler.tree.IR this JBurgAnnotation describes.  */
+    		com.chaosopher.tigerlang.compiler.tree.IR m_node; 
+    		JBurgAnnotation ( com.chaosopher.tigerlang.compiler.tree.IR newNode)
     		{
     			m_node = newNode;
     		}
 
-    		/** @return this node's wrapped Tree.IR. */ 
-    		public Tree.IR getNode()  
+    		/** @return this node's wrapped com.chaosopher.tigerlang.compiler.tree.IR. */ 
+    		public com.chaosopher.tigerlang.compiler.tree.IR getNode()  
     		{
     			return m_node; 
     		}
@@ -2404,7 +2404,7 @@ final public static int ERROR_TRAP = 268435456;
      */
 	abstract static class JBurgSpecializedAnnotation extends JBurgAnnotation
 	{
-		JBurgSpecializedAnnotation(Tree.IR node)
+		JBurgSpecializedAnnotation(com.chaosopher.tigerlang.compiler.tree.IR node)
 		{
 			super(node);
 		}
@@ -2434,7 +2434,7 @@ final public static int ERROR_TRAP = 268435456;
      */
 	private static class PlaceholderAnnotation extends JBurgSpecializedAnnotation
 	{
-		PlaceholderAnnotation(Tree.IR node, int capacity)
+		PlaceholderAnnotation(com.chaosopher.tigerlang.compiler.tree.IR node, int capacity)
 		{
 			super(node);
             this.children = new JBurgAnnotation[capacity];

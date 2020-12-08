@@ -12,11 +12,11 @@ import com.chaosopher.tigerlang.compiler.tree.Stm;
  */
 class RelCx extends Cx {
 
-    Tree.Exp right;
-    Tree.Exp left;
+    com.chaosopher.tigerlang.compiler.tree.Exp right;
+    com.chaosopher.tigerlang.compiler.tree.Exp left;
     int operator;
 
-    RelCx(Tree.Exp l, Tree.Exp r, int op) {
+    RelCx(com.chaosopher.tigerlang.compiler.tree.Exp l, com.chaosopher.tigerlang.compiler.tree.Exp r, int op) {
         right = r;
         left = l;
         operator = op;
@@ -28,6 +28,6 @@ class RelCx extends Cx {
      */
     @Override
     Stm unCx(Label t, Label f) {
-        return new Tree.CJUMP(operator, left, right, t, f);
+        return new com.chaosopher.tigerlang.compiler.tree.CJUMP(operator, left, right, t, f);
     }
 }

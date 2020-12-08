@@ -82,7 +82,7 @@ public class StmList extends Stm {
         return new StmList(stm, this);
     }
 
-    public Tree.Stm toSEQ() {
+    public com.chaosopher.tigerlang.compiler.tree.Stm toSEQ() {
         if (this.tail != null) {
             return new SEQ(this.head, this.tail.toSEQ());
         }

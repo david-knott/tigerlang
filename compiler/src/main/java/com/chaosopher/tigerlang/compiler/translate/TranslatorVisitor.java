@@ -55,7 +55,7 @@ import com.chaosopher.tigerlang.compiler.util.BoolList;
 public class TranslatorVisitor extends DefaultVisitor {
 
     private Hashtable<VarDec, Access> functionAccesses = new Hashtable<VarDec, Access>();
-    private Hashtable<Absyn.Absyn, Label> functionLabels = new Hashtable<Absyn.Absyn, Label>();
+    private Hashtable<com.chaosopher.tigerlang.compiler.absyn.Absyn, Label> functionLabels = new Hashtable<com.chaosopher.tigerlang.compiler.absyn.Absyn, Label>();
     private Hashtable<FunctionDec, Level> functionLevels = new Hashtable<FunctionDec, Level>();
     private Stack<Label> loopExits = new Stack<Label>();
     private Exp visitedExp;
@@ -92,15 +92,15 @@ public class TranslatorVisitor extends DefaultVisitor {
      * @param access the @see Translate.Access, which contains the @see Frame.Access
      *               and @see Translate.Level.
      * @param level  @see Translate.Level where we are accessing the variable from.
-     * @return a @see Tree.Exp containing MEM expressions.
+     * @return a @see com.chaosopher.tigerlang.compiler.tree.Exp containing MEM expressions.
      */
-    private Tree.Exp staticLinkOffset(Access access, Level level) {
+    private com.chaosopher.tigerlang.compiler.tree.Exp staticLinkOffset(Access access, Level level) {
         // variable is defined at same level as use,
         // just return the fp as framePointer
         // get current frames static link ( in rbp - 8),
         // lookup value, which is a pointer to the previous
         // frames static link, etc
-        Tree.Exp exp = new TEMP(level.frame.FP());
+        com.chaosopher.tigerlang.compiler.tree.Exp exp = new TEMP(level.frame.FP());
         var slinkLevel = level;
         int staticLinkOffset = -8;
         while (slinkLevel != access.home) {
@@ -158,7 +158,7 @@ public class TranslatorVisitor extends DefaultVisitor {
         boolean useStaticLink = defined.body != null;
         ExpList expList = null;
         if (useStaticLink) {
-            Tree.Exp staticLink = null;
+            com.chaosopher.tigerlang.compiler.tree.Exp staticLink = null;
             if (definedLevel == usageLevel) { // recusive or same level, pass calleers static link ( not frame pointer )
                 staticLink = new MEM(new BINOP(BINOP.MINUS, new TEMP(definedLevel.frame.FP()),
                         new CONST(definedLevel.frame.wordSize())));
@@ -335,7 +335,7 @@ public class TranslatorVisitor extends DefaultVisitor {
         Exp explo = this.visitedExp;
         exp.body.accept(this);
         Exp expbody = this.visitedExp;
-        Tree.Exp lowVar = translateAccess.acc.exp(staticLinkOffset(translateAccess, this.getCurrentLevel()));
+        com.chaosopher.tigerlang.compiler.tree.Exp lowVar = translateAccess.acc.exp(staticLinkOffset(translateAccess, this.getCurrentLevel()));
 		this.visitedExp = new Nx(
             new SEQ(
                 new MOVE(lowVar, explo.unEx()),
@@ -631,7 +631,7 @@ public class TranslatorVisitor extends DefaultVisitor {
      * @param recordPointer the record pointer.
      * @param total the total bytes required to store the record.
      * @param fieldTranslated the translated @see Translate.Exp
-     * @return a @see Tree.MOVE statement, which moves the fieldTranslated into offset total * 
+     * @return a @see com.chaosopher.tigerlang.compiler.tree.MOVE statement, which moves the fieldTranslated into offset total * 
      * wordSize from record pointer.
      */
     private Stm fieldStatement(Temp recordPointer, int total, Exp fieldTranslated) {
@@ -739,7 +739,7 @@ public class TranslatorVisitor extends DefaultVisitor {
         Access access = functionAccesses.get((VarDec)exp.def);
         Assert.assertNotNull(access);
         // Compute static link to variable using definition and current level
-        Tree.Exp stateLinkExp =  staticLinkOffset(access, this.getCurrentLevel());
+        com.chaosopher.tigerlang.compiler.tree.Exp stateLinkExp =  staticLinkOffset(access, this.getCurrentLevel());
         // Set visited expression.
         this.visitedExp = new Ex(access.acc.exp(stateLinkExp));
     }
@@ -780,7 +780,7 @@ public class TranslatorVisitor extends DefaultVisitor {
         // store in hash table for future usage.
         functionAccesses.put(exp, translateAccess);
         // create tree expression along with static link calculation ( is this needed ?? )
-        Tree.Exp decExp = translateAccess.acc.exp(staticLinkOffset(translateAccess, this.getCurrentLevel()));
+        com.chaosopher.tigerlang.compiler.tree.Exp decExp = translateAccess.acc.exp(staticLinkOffset(translateAccess, this.getCurrentLevel()));
         this.visitedExp = new Nx(
             new MOVE(
                 decExp,
@@ -809,16 +809,16 @@ public class TranslatorVisitor extends DefaultVisitor {
         Exp transBody = this.visitedExp;
         this.visitedExp = new Nx(
             new SEQ(
-                new Tree.LABEL(whileStart),
+                new com.chaosopher.tigerlang.compiler.tree.LABEL(whileStart),
                 new SEQ(
                     testExp.unCx(loopStart, loopEnd), 
                     new SEQ(
-                        new Tree.LABEL(loopStart),
+                        new com.chaosopher.tigerlang.compiler.tree.LABEL(loopStart),
                         new SEQ(
                             transBody.unNx(), 
                             new SEQ(
-                                new Tree.JUMP(whileStart), 
-                                new Tree.LABEL(loopEnd)
+                                new com.chaosopher.tigerlang.compiler.tree.JUMP(whileStart), 
+                                new com.chaosopher.tigerlang.compiler.tree.LABEL(loopEnd)
                             )
                         )
                     )

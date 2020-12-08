@@ -12,9 +12,9 @@ import com.chaosopher.tigerlang.compiler.temp.Label;
  * true and false labels.
  */
 abstract public class Exp {
-    abstract Tree.Exp unEx();
+    abstract com.chaosopher.tigerlang.compiler.tree.Exp unEx();
 
-    abstract Tree.Stm unNx();
+    abstract com.chaosopher.tigerlang.compiler.tree.Stm unNx();
 
-    abstract Tree.Stm unCx(Label t, Label f);
+    abstract com.chaosopher.tigerlang.compiler.tree.Stm unCx(Label t, Label f);
 }

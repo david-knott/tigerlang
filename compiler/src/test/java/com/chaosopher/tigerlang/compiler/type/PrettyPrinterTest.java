@@ -2,7 +2,7 @@ package com.chaosopher.tigerlang.compiler.type;
 
 import org.junit.Test;
 
-import Symbol.Symbol;
+import com.chaosopher.tigerlang.compiler.symbol.Symbol;
 import com.chaosopher.tigerlang.compiler.types.ARRAY;
 import com.chaosopher.tigerlang.compiler.types.Constants;
 import com.chaosopher.tigerlang.compiler.types.INT;

@@ -1,10 +1,10 @@
 package com.chaosopher.tigerlang.compiler.assem;
 
 public class MOVE extends Instr {
-   public Temp.Temp dst;
-   public Temp.Temp src;
+   public com.chaosopher.tigerlang.compiler.temp.Temp dst;
+   public com.chaosopher.tigerlang.compiler.temp.Temp src;
 
-   public MOVE(String a, Temp.Temp d, Temp.Temp s) {
+   public MOVE(String a, com.chaosopher.tigerlang.compiler.temp.Temp d, com.chaosopher.tigerlang.compiler.temp.Temp s) {
       if (a == null)
          throw new Error("a");
       if (d == null)
@@ -16,12 +16,12 @@ public class MOVE extends Instr {
       src = s;
    }
 
-   public Temp.TempList use() {
-      return new Temp.TempList(src, null);
+   public com.chaosopher.tigerlang.compiler.temp.TempList use() {
+      return new com.chaosopher.tigerlang.compiler.temp.TempList(src, null);
    }
 
-   public Temp.TempList def() {
-      return new Temp.TempList(dst, null);
+   public com.chaosopher.tigerlang.compiler.temp.TempList def() {
+      return new com.chaosopher.tigerlang.compiler.temp.TempList(dst, null);
    }
 
    public Targets jumps() {

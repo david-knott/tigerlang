@@ -3,9 +3,9 @@ package com.chaosopher.tigerlang.compiler.tree;
 public class Print {
 
    java.io.PrintStream out;
-   Temp.TempMap tmap;
+   com.chaosopher.tigerlang.compiler.temp.TempMap tmap;
 
-   public Print(java.io.PrintStream o, Temp.TempMap t) {
+   public Print(java.io.PrintStream o, com.chaosopher.tigerlang.compiler.temp.TempMap t) {
       out = o;
       tmap = t;
    }

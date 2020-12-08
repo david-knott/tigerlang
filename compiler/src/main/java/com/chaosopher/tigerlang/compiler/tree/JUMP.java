@@ -2,15 +2,15 @@ package com.chaosopher.tigerlang.compiler.tree;
 
 public class JUMP extends Stm {
   public Exp exp;
-  public Temp.LabelList targets;
+  public com.chaosopher.tigerlang.compiler.temp.LabelList targets;
 
-  public JUMP(Exp e, Temp.LabelList t) {
+  public JUMP(Exp e, com.chaosopher.tigerlang.compiler.temp.LabelList t) {
     exp = e;
     targets = t;
   }
 
-  public JUMP(Temp.Label target) {
-    this(new NAME(target), new Temp.LabelList(target, null));
+  public JUMP(com.chaosopher.tigerlang.compiler.temp.Label target) {
+    this(new NAME(target), new com.chaosopher.tigerlang.compiler.temp.LabelList(target, null));
   }
 
   public ExpList kids() {

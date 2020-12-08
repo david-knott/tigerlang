@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.chaosopher.tigerlang.compiler.translate.Access;
-import Frame.Frame;
 import com.chaosopher.tigerlang.compiler.intel.IntelFrame;
 import com.chaosopher.tigerlang.compiler.temp.Label;
 import com.chaosopher.tigerlang.compiler.translate.Exp;
@@ -21,7 +20,6 @@ import com.chaosopher.tigerlang.compiler.tree.TEMP;
 import com.chaosopher.tigerlang.compiler.absyn.Absyn;
 import com.chaosopher.tigerlang.compiler.bind.Binder;
 import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
-import FindEscape.EscapeVisitor;
 import com.chaosopher.tigerlang.compiler.parse.ParserFactory;
 import com.chaosopher.tigerlang.compiler.parse.ParserService;
 import com.chaosopher.tigerlang.compiler.tree.PrettyPrinter;

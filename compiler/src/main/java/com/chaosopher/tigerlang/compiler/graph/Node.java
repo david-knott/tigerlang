@@ -1,4 +1,4 @@
-package com.chaosopher.tigerlang.compiler.graoh;
+package com.chaosopher.tigerlang.compiler.graph;
 
 public class Node {
 

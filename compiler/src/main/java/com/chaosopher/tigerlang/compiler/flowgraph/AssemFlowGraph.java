@@ -10,8 +10,8 @@ import com.chaosopher.tigerlang.compiler.temp.TempList;
 
 public class AssemFlowGraph extends FlowGraph {
 
-    private Hashtable<Node, Assem.Instr> nodeMap = new Hashtable<Node, Assem.Instr>();
-    private Hashtable<Assem.Instr, Node> invNodeMap = new Hashtable<Assem.Instr, Node>();
+    private Hashtable<Node, com.chaosopher.tigerlang.compiler.assem.Instr> nodeMap = new Hashtable<Node, com.chaosopher.tigerlang.compiler.assem.Instr>();
+    private Hashtable<com.chaosopher.tigerlang.compiler.assem.Instr, Node> invNodeMap = new Hashtable<com.chaosopher.tigerlang.compiler.assem.Instr, Node>();
     private Hashtable<Label, Instr> labelInstr = new Hashtable<Label, Instr>();
     private Hashtable<Node, Boolean> visited = new Hashtable<Node, Boolean>();
 
@@ -25,17 +25,17 @@ public class AssemFlowGraph extends FlowGraph {
         return node;
     }
 
-    public AssemFlowGraph(Assem.InstrList instrs) {
+    public AssemFlowGraph(com.chaosopher.tigerlang.compiler.assem.InstrList instrs) {
         //add all the labels to a hashtable first
         //add the labels to the node map
-        for (Assem.InstrList p = instrs; p != null; p = p.tail) {
+        for (com.chaosopher.tigerlang.compiler.assem.InstrList p = instrs; p != null; p = p.tail) {
             if(p.head instanceof LABEL){
                 var l = ((LABEL)p.head).label;
                 labelInstr.put(l, p.head);
                 //this.getOrCreate(p.head);
             }
         }
-        Assem.InstrList p = instrs;
+        com.chaosopher.tigerlang.compiler.assem.InstrList p = instrs;
         Node prevNode = this.getOrCreate(p.head);
         p = p.tail;
         for (; p != null; p = p.tail) {
@@ -59,7 +59,7 @@ public class AssemFlowGraph extends FlowGraph {
     }
 
     @Override
-    public Assem.Instr instr(Node node) {
+    public Com.chaosopher.tigerlang.compiler.assem.Instr instr(Node node) {
         return nodeMap.get(node);
     }
 
@@ -80,7 +80,7 @@ public class AssemFlowGraph extends FlowGraph {
 
     @Override
     public boolean isMove(Node node) {
-        return instr(node) instanceof Assem.MOVE;
+        return instr(node) instanceof com.chaosopher.tigerlang.compiler.assem.MOVE;
     }
 
 }

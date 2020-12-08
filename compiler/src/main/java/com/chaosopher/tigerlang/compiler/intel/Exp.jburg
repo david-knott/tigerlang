@@ -6,12 +6,12 @@ exp = temp;
 integerConstant = CONST(void) : 1 
 @Reduction reducer.integerConstant(__p);
 
-@ReturnType integerExpression = Temp.Temp;
+@ReturnType integerExpression = com.chaosopher.tigerlang.compiler.temp.Temp;
 integerExpression = integerConstant : 1
 @Reduction reducer.integerExpression(integerConstant);
 exp = integerExpression;
 
-@ReturnType name = Temp.Temp;
+@ReturnType name = com.chaosopher.tigerlang.compiler.temp.Temp;
 name = NAME(void) : 1
 @Reduction reducer.nameExpression(__p);
 exp = name;

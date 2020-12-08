@@ -7,7 +7,7 @@ import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
 
 /**
  * ParserFactory creates a new configured parser instance using a specific
- * input stream and @see ErrorMsg.ErrorMsg 
+ * input stream and @see com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg 
  */
 public class ParserFactory {
     

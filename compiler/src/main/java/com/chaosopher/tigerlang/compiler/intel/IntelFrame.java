@@ -211,10 +211,10 @@ public class IntelFrame extends Frame {
                 //rpb + 24 : frame arg2
                 int offset = 16 + (frameArgPos * 8); 
                 var memLocation = new MEM(new BINOP(BINOP.PLUS, new CONST(offset), new TEMP(this.FP())));
-                this.addCallingConvention(new Tree.MOVE(new Tree.TEMP(dest), memLocation));
+                this.addCallingConvention(new com.chaosopher.tigerlang.compiler.tree.MOVE(new com.chaosopher.tigerlang.compiler.tree.TEMP(dest), memLocation));
                 return;
         }
-        this.addCallingConvention(new Tree.MOVE(new Tree.TEMP(dest), new Tree.TEMP(src)));
+        this.addCallingConvention(new com.chaosopher.tigerlang.compiler.tree.MOVE(new com.chaosopher.tigerlang.compiler.tree.TEMP(dest), new com.chaosopher.tigerlang.compiler.tree.TEMP(src)));
     }
 
     /*
@@ -251,10 +251,10 @@ public class IntelFrame extends Frame {
                 int parentOffset = 16 + (frameArgPos * 8); 
                 var srcLocation = new MEM(new BINOP(BINOP.PLUS, new CONST(parentOffset), new TEMP(this.FP())));
                 var destLocation = new MEM(new BINOP(BINOP.PLUS, new CONST(offset), new TEMP(this.FP())));
-                this.addCallingConvention(new Tree.MOVE(destLocation, srcLocation));
+                this.addCallingConvention(new com.chaosopher.tigerlang.compiler.tree.MOVE(destLocation, srcLocation));
                 return;
         }
-        this.addCallingConvention(new Tree.MOVE(memDest, new Tree.TEMP(src)));
+        this.addCallingConvention(new com.chaosopher.tigerlang.compiler.tree.MOVE(memDest, new com.chaosopher.tigerlang.compiler.tree.TEMP(src)));
     }
 
     private int getOffset() {
@@ -441,11 +441,11 @@ public class IntelFrame extends Frame {
      * marked as live on exit from the function. 
      * This contains the callee saves and the return registers as uses.
      */
-    public Assem.InstrList procEntryExit2(Assem.InstrList body) {
+    public com.chaosopher.tigerlang.compiler.assem.InstrList procEntryExit2(com.chaosopher.tigerlang.compiler.assem.InstrList body) {
         return InstrList.append(
             InstrList.append(
-                new Assem.InstrList(
-                    new Assem.OPER(
+                new com.chaosopher.tigerlang.compiler.assem.InstrList(
+                    new com.chaosopher.tigerlang.compiler.assem.OPER(
                         "# start ", 
                         null,
                         null
@@ -453,8 +453,8 @@ public class IntelFrame extends Frame {
                 ),
                 body
             ),
-            new Assem.InstrList(
-                new Assem.OPER(
+            new com.chaosopher.tigerlang.compiler.assem.InstrList(
+                new com.chaosopher.tigerlang.compiler.assem.OPER(
                     "# sink ", 
                     null, 
                     IntelFrame.returnSink
@@ -467,7 +467,7 @@ public class IntelFrame extends Frame {
      * Adds the procedure prolog and epilog.
      */
     @Override
-    public Proc procEntryExit3(Assem.InstrList body) {
+    public Proc procEntryExit3(com.chaosopher.tigerlang.compiler.assem.InstrList body) {
         InstrList prolog = new InstrList(
                 new OPER(this.name.toString() + ":", null, null),
                 new InstrList(new OPER("pushq %`s0", null, new TempList(IntelFrame.rbp)), 
@@ -537,7 +537,7 @@ public class IntelFrame extends Frame {
         Assert.assertNotNull(spillTemp);
         Assert.assertNotNull(access);
         int offset = ((InFrame) access).offset;
-        Instr moveTempToNewTemp = new Assem.MOVE("movq %`s0, %`d0 # spill store", spillTemp, temp);
+        Instr moveTempToNewTemp = new com.chaosopher.tigerlang.compiler.assem.MOVE("movq %`s0, %`d0 # spill store", spillTemp, temp);
         Instr moveNewTempToFrame = new OPER("movq %`s1, " + offset + "(%`s0) # spill store", 
                 null,
                 new TempList(this.FP(), new TempList(spillTemp, null)));
@@ -556,7 +556,7 @@ public class IntelFrame extends Frame {
         Instr moveFrameToNewTemp = new OPER("movq " + offset + "(%`s0), %`d0 # spill load",
                 new TempList(spillTemp), 
                 new TempList(this.FP()));
-        Instr moveNewTempToTemp = new Assem.MOVE("movq %`s0, %`d0 # spill load", temp, spillTemp);
+        Instr moveNewTempToTemp = new com.chaosopher.tigerlang.compiler.assem.MOVE("movq %`s0, %`d0 # spill load", temp, spillTemp);
         return new InstrList(moveFrameToNewTemp, new InstrList(moveNewTempToTemp, null));
     }
 }

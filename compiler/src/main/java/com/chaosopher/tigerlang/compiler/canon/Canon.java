@@ -3,21 +3,21 @@ package com.chaosopher.tigerlang.compiler.canon;
 import com.chaosopher.tigerlang.compiler.tree.IR;
 import com.chaosopher.tigerlang.compiler.tree.TreeVisitor;
 
-class MoveCall extends Tree.Stm {
-    Tree.TEMP dst;
-    Tree.CALL src;
+class MoveCall extends com.chaosopher.tigerlang.compiler.tree.Stm {
+    com.chaosopher.tigerlang.compiler.tree.TEMP dst;
+    com.chaosopher.tigerlang.compiler.tree.CALL src;
 
-    MoveCall(Tree.TEMP d, Tree.CALL s) {
+    MoveCall(com.chaosopher.tigerlang.compiler.tree.TEMP d, com.chaosopher.tigerlang.compiler.tree.CALL s) {
         dst = d;
         src = s;
     }
 
-    public Tree.ExpList kids() {
+    public com.chaosopher.tigerlang.compiler.tree.ExpList kids() {
         return src.kids();
     }
 
-    public Tree.Stm build(Tree.ExpList kids) {
-        return new Tree.MOVE(dst, src.build(kids));
+    public com.chaosopher.tigerlang.compiler.tree.Stm build(com.chaosopher.tigerlang.compiler.tree.ExpList kids) {
+        return new com.chaosopher.tigerlang.compiler.tree.MOVE(dst, src.build(kids));
     }
 
     @Override
@@ -41,19 +41,19 @@ class MoveCall extends Tree.Stm {
     }
 }
 
-class ExpCall extends Tree.Stm {
-    Tree.CALL call;
+class ExpCall extends com.chaosopher.tigerlang.compiler.tree.Stm {
+    com.chaosopher.tigerlang.compiler.tree.CALL call;
 
-    ExpCall(Tree.CALL c) {
+    ExpCall(com.chaosopher.tigerlang.compiler.tree.CALL c) {
         call = c;
     }
 
-    public Tree.ExpList kids() {
+    public com.chaosopher.tigerlang.compiler.tree.ExpList kids() {
         return call.kids();
     }
 
-    public Tree.Stm build(Tree.ExpList kids) {
-        return new Tree.EXP(call.build(kids));
+    public com.chaosopher.tigerlang.compiler.tree.Stm build(com.chaosopher.tigerlang.compiler.tree.ExpList kids) {
+        return new com.chaosopher.tigerlang.compiler.tree.EXP(call.build(kids));
     }
 
     @Override
@@ -78,10 +78,10 @@ class ExpCall extends Tree.Stm {
 }
 
 class StmExpList {
-    Tree.Stm stm;
-    Tree.ExpList exps;
+    com.chaosopher.tigerlang.compiler.tree.Stm stm;
+    com.chaosopher.tigerlang.compiler.tree.ExpList exps;
 
-    StmExpList(Tree.Stm s, Tree.ExpList e) {
+    StmExpList(com.chaosopher.tigerlang.compiler.tree.Stm s, com.chaosopher.tigerlang.compiler.tree.ExpList e) {
         if (s == null)
             throw new IllegalArgumentException("Stm cannot be null");
         stm = s;
@@ -91,97 +91,97 @@ class StmExpList {
 
 public class Canon {
 
-    static boolean isNop(Tree.Stm a) {
-        return a instanceof Tree.EXP && ((Tree.EXP) a).exp instanceof Tree.CONST;
+    static boolean isNop(com.chaosopher.tigerlang.compiler.tree.Stm a) {
+        return a instanceof com.chaosopher.tigerlang.compiler.tree.EXP && ((com.chaosopher.tigerlang.compiler.tree.EXP) a).exp instanceof com.chaosopher.tigerlang.compiler.tree.CONST;
     }
 
-    static Tree.Stm seq(Tree.Stm a, Tree.Stm b) {
+    static com.chaosopher.tigerlang.compiler.tree.Stm seq(com.chaosopher.tigerlang.compiler.tree.Stm a, com.chaosopher.tigerlang.compiler.tree.Stm b) {
         if (isNop(a))
             return b;
         else if (isNop(b))
             return a;
         else
-            return new Tree.SEQ(a, b);
+            return new com.chaosopher.tigerlang.compiler.tree.SEQ(a, b);
     }
 
-    static boolean commute(Tree.Stm a, Tree.Exp b) {
-        return isNop(a) || b instanceof Tree.NAME || b instanceof Tree.CONST;
+    static boolean commute(com.chaosopher.tigerlang.compiler.tree.Stm a, com.chaosopher.tigerlang.compiler.tree.Exp b) {
+        return isNop(a) || b instanceof com.chaosopher.tigerlang.compiler.tree.NAME || b instanceof com.chaosopher.tigerlang.compiler.tree.CONST;
     }
 
-    static Tree.Stm do_stm(Tree.SEQ s) {
+    static com.chaosopher.tigerlang.compiler.tree.Stm do_stm(com.chaosopher.tigerlang.compiler.tree.SEQ s) {
         return seq(do_stm(s.left), do_stm(s.right));
     }
 
-    static Tree.Stm do_stm(Tree.MOVE s) {
-        if (s.dst instanceof Tree.TEMP && s.src instanceof Tree.CALL)
-            return reorder_stm(new MoveCall((Tree.TEMP) s.dst, (Tree.CALL) s.src));
-        else if (s.dst instanceof Tree.ESEQ)
-            return do_stm(new Tree.SEQ(((Tree.ESEQ) s.dst).stm, new Tree.MOVE(((Tree.ESEQ) s.dst).exp, s.src)));
+    static com.chaosopher.tigerlang.compiler.tree.Stm do_stm(com.chaosopher.tigerlang.compiler.tree.MOVE s) {
+        if (s.dst instanceof com.chaosopher.tigerlang.compiler.tree.TEMP && s.src instanceof com.chaosopher.tigerlang.compiler.tree.CALL)
+            return reorder_stm(new MoveCall((com.chaosopher.tigerlang.compiler.tree.TEMP) s.dst, (com.chaosopher.tigerlang.compiler.tree.CALL) s.src));
+        else if (s.dst instanceof com.chaosopher.tigerlang.compiler.tree.ESEQ)
+            return do_stm(new com.chaosopher.tigerlang.compiler.tree.SEQ(((com.chaosopher.tigerlang.compiler.tree.ESEQ) s.dst).stm, new com.chaosopher.tigerlang.compiler.tree.MOVE(((com.chaosopher.tigerlang.compiler.tree.ESEQ) s.dst).exp, s.src)));
         else
             return reorder_stm(s);
     }
 
-    static Tree.Stm do_stm(Tree.EXP s) {
-        if (s.exp instanceof Tree.CALL)
-            return reorder_stm(new ExpCall((Tree.CALL) s.exp));
+    static com.chaosopher.tigerlang.compiler.tree.Stm do_stm(com.chaosopher.tigerlang.compiler.tree.EXP s) {
+        if (s.exp instanceof com.chaosopher.tigerlang.compiler.tree.CALL)
+            return reorder_stm(new ExpCall((com.chaosopher.tigerlang.compiler.tree.CALL) s.exp));
         else
             return reorder_stm(s);
     }
 
-    static Tree.Stm do_stm(Tree.Stm s) {
-        if (s instanceof Tree.SEQ)
-            return do_stm((Tree.SEQ) s);
-        else if (s instanceof Tree.MOVE)
-            return do_stm((Tree.MOVE) s);
-        else if (s instanceof Tree.EXP)
-            return do_stm((Tree.EXP) s);
+    static com.chaosopher.tigerlang.compiler.tree.Stm do_stm(com.chaosopher.tigerlang.compiler.tree.Stm s) {
+        if (s instanceof com.chaosopher.tigerlang.compiler.tree.SEQ)
+            return do_stm((com.chaosopher.tigerlang.compiler.tree.SEQ) s);
+        else if (s instanceof com.chaosopher.tigerlang.compiler.tree.MOVE)
+            return do_stm((com.chaosopher.tigerlang.compiler.tree.MOVE) s);
+        else if (s instanceof com.chaosopher.tigerlang.compiler.tree.EXP)
+            return do_stm((com.chaosopher.tigerlang.compiler.tree.EXP) s);
         else
             return reorder_stm(s);
     }
 
-    static Tree.Stm reorder_stm(Tree.Stm s) {
+    static com.chaosopher.tigerlang.compiler.tree.Stm reorder_stm(com.chaosopher.tigerlang.compiler.tree.Stm s) {
         StmExpList x = reorder(s.kids());
         return seq(x.stm, s.build(x.exps));
     }
 
-    static Tree.ESEQ do_exp(Tree.ESEQ e) {
-        Tree.Stm stms = do_stm(e.stm);
-        Tree.ESEQ b = do_exp(e.exp);
-        return new Tree.ESEQ(seq(stms, b.stm), b.exp);
+    static com.chaosopher.tigerlang.compiler.tree.ESEQ do_exp(com.chaosopher.tigerlang.compiler.tree.ESEQ e) {
+        com.chaosopher.tigerlang.compiler.tree.Stm stms = do_stm(e.stm);
+        com.chaosopher.tigerlang.compiler.tree.ESEQ b = do_exp(e.exp);
+        return new com.chaosopher.tigerlang.compiler.tree.ESEQ(seq(stms, b.stm), b.exp);
     }
 
-    static Tree.ESEQ do_exp(Tree.Exp e) {
-        if (e instanceof Tree.ESEQ)
-            return do_exp((Tree.ESEQ) e);
+    static com.chaosopher.tigerlang.compiler.tree.ESEQ do_exp(com.chaosopher.tigerlang.compiler.tree.Exp e) {
+        if (e instanceof com.chaosopher.tigerlang.compiler.tree.ESEQ)
+            return do_exp((com.chaosopher.tigerlang.compiler.tree.ESEQ) e);
         else
             return reorder_exp(e);
     }
 
-    static Tree.ESEQ reorder_exp(Tree.Exp e) {
+    static com.chaosopher.tigerlang.compiler.tree.ESEQ reorder_exp(com.chaosopher.tigerlang.compiler.tree.Exp e) {
         StmExpList x = reorder(e.kids());
-        return new Tree.ESEQ(x.stm, e.build(x.exps));
+        return new com.chaosopher.tigerlang.compiler.tree.ESEQ(x.stm, e.build(x.exps));
     }
 
-    static StmExpList nopNull = new StmExpList(new Tree.EXP(new Tree.CONST(0)), null);
+    static StmExpList nopNull = new StmExpList(new com.chaosopher.tigerlang.compiler.tree.EXP(new com.chaosopher.tigerlang.compiler.tree.CONST(0)), null);
 
-    static StmExpList reorder(Tree.ExpList exps) {
+    static StmExpList reorder(com.chaosopher.tigerlang.compiler.tree.ExpList exps) {
         if (exps == null)
             return nopNull;
         else {
-            Tree.Exp a = exps.head;
-            if (a instanceof Tree.CALL) {
-                Temp.Temp t = Temp.Temp.create();
-                Tree.Exp e = new Tree.ESEQ(new Tree.MOVE(new Tree.TEMP(t), a), new Tree.TEMP(t));
-                return reorder(new Tree.ExpList(e, exps.tail));
+            com.chaosopher.tigerlang.compiler.tree.Exp a = exps.head;
+            if (a instanceof com.chaosopher.tigerlang.compiler.tree.CALL) {
+                com.chaosopher.tigerlang.compiler.temp.Temp t = com.chaosopher.tigerlang.compiler.temp.Temp.create();
+                com.chaosopher.tigerlang.compiler.tree.Exp e = new com.chaosopher.tigerlang.compiler.tree.ESEQ(new com.chaosopher.tigerlang.compiler.tree.MOVE(new com.chaosopher.tigerlang.compiler.tree.TEMP(t), a), new com.chaosopher.tigerlang.compiler.tree.TEMP(t));
+                return reorder(new com.chaosopher.tigerlang.compiler.tree.ExpList(e, exps.tail));
             } else {
-                Tree.ESEQ aa = do_exp(a);
+                com.chaosopher.tigerlang.compiler.tree.ESEQ aa = do_exp(a);
                 StmExpList bb = reorder(exps.tail);
                 if (commute(bb.stm, aa.exp))
-                    return new StmExpList(seq(aa.stm, bb.stm), new Tree.ExpList(aa.exp, bb.exps));
+                    return new StmExpList(seq(aa.stm, bb.stm), new com.chaosopher.tigerlang.compiler.tree.ExpList(aa.exp, bb.exps));
                 else {
-                    Temp.Temp t = Temp.Temp.create();
-                    return new StmExpList(seq(aa.stm, seq(new Tree.MOVE(new Tree.TEMP(t), aa.exp), bb.stm)),
-                            new Tree.ExpList(new Tree.TEMP(t), bb.exps));
+                    com.chaosopher.tigerlang.compiler.temp.Temp t = com.chaosopher.tigerlang.compiler.temp.Temp.create();
+                    return new StmExpList(seq(aa.stm, seq(new com.chaosopher.tigerlang.compiler.tree.MOVE(new com.chaosopher.tigerlang.compiler.tree.TEMP(t), aa.exp), bb.stm)),
+                            new com.chaosopher.tigerlang.compiler.tree.ExpList(new com.chaosopher.tigerlang.compiler.tree.TEMP(t), bb.exps));
                 }
             }
         }
@@ -195,21 +195,21 @@ public class Canon {
      * @param l
      * @return a new statement list
      */
-    static Tree.StmList linear(Tree.SEQ s, Tree.StmList l) {
+    static com.chaosopher.tigerlang.compiler.tree.StmList linear(com.chaosopher.tigerlang.compiler.tree.SEQ s, com.chaosopher.tigerlang.compiler.tree.StmList l) {
         // calls function below with s.right and the list, which 
         // returns a statement list then passes the s.left and
         // the statement list into the function below
         return linear(s.left, linear(s.right, l));
     }
 
-    static Tree.StmList linear(Tree.Stm s, Tree.StmList l) {
-        if (s instanceof Tree.SEQ)
-            return linear((Tree.SEQ) s, l); // calls the function above
+    static com.chaosopher.tigerlang.compiler.tree.StmList linear(com.chaosopher.tigerlang.compiler.tree.Stm s, com.chaosopher.tigerlang.compiler.tree.StmList l) {
+        if (s instanceof com.chaosopher.tigerlang.compiler.tree.SEQ)
+            return linear((com.chaosopher.tigerlang.compiler.tree.SEQ) s, l); // calls the function above
         else
-            return new Tree.StmList(s, l);
+            return new com.chaosopher.tigerlang.compiler.tree.StmList(s, l);
     }
 
-    static public Tree.StmList linearize(Tree.Stm s) {
+    static public com.chaosopher.tigerlang.compiler.tree.StmList linearize(com.chaosopher.tigerlang.compiler.tree.Stm s) {
         return linear(do_stm(s), null);
     }
 }

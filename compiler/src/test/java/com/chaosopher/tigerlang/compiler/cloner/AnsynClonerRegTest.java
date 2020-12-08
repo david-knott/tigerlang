@@ -1,4 +1,4 @@
-package Cloner;
+package com.chaosopher.tigerlang.compiler.cloner;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 

@@ -1,9 +1,9 @@
 package com.chaosopher.tigerlang.compiler.findescape;
 
 class VarEscape extends Escape {
-    Absyn.VarDec vd;
+    com.chaosopher.tigerlang.compiler.absyn.VarDec vd;
 
-    VarEscape(int d, Absyn.VarDec v) {
+    VarEscape(int d, com.chaosopher.tigerlang.compiler.absyn.VarDec v) {
         depth = d;
         vd = v;
         vd.escape = false;

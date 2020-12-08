@@ -4,10 +4,10 @@ import com.chaosopher.tigerlang.compiler.tree.StmList;
 import com.chaosopher.tigerlang.compiler.tree.TreeVisitor;
 
 public class StmListList {
-    public Tree.StmList head;
+    public com.chaosopher.tigerlang.compiler.tree.StmList head;
     public StmListList tail;
 
-    public StmListList(Tree.StmList h, StmListList t) {
+    public StmListList(com.chaosopher.tigerlang.compiler.tree.StmList h, StmListList t) {
         head = h;
         tail = t;
     }

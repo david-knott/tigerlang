@@ -1,9 +1,9 @@
 package com.chaosopher.tigerlang.compiler.assem;
 
 public class Targets {
-  public Temp.LabelList labels;
+  public com.chaosopher.tigerlang.compiler.temp.LabelList labels;
 
-  public Targets(Temp.LabelList l) {
+  public Targets(com.chaosopher.tigerlang.compiler.temp.LabelList l) {
     labels = l;
   }
 }

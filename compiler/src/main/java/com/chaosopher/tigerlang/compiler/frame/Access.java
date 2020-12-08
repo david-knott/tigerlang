@@ -2,5 +2,5 @@ package com.chaosopher.tigerlang.compiler.frame;
 
 public abstract class Access {
 
-    public abstract Tree.Exp exp(Tree.Exp framePtr);
+    public abstract com.chaosopher.tigerlang.compiler.tree.Exp exp(com.chaosopher.tigerlang.compiler.tree.Exp framePtr);
 }

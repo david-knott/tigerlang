@@ -12,7 +12,7 @@ public class CjumpTest extends BaseCodeGenTest {
 
     @Test
     public void cjumpTempTemp() throws Exception {
-        IR tree = new Tree.CJUMP(
+        IR tree = new com.chaosopher.tigerlang.compiler.tree.CJUMP(
             0, 
             getTemp(),
             getTemp(), 
@@ -27,7 +27,7 @@ public class CjumpTest extends BaseCodeGenTest {
 
     @Test
     public void cjumpBinopBinop() throws Exception {
-        IR tree = new Tree.CJUMP(
+        IR tree = new com.chaosopher.tigerlang.compiler.tree.CJUMP(
             0, 
             getBinopExp(),
             getBinopExp(), 

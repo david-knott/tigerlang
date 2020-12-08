@@ -8,14 +8,14 @@ import com.chaosopher.tigerlang.compiler.tree.Stm;
  * a statement.
  */
 class Nx extends Exp {
-    Tree.Stm stm;
+    com.chaosopher.tigerlang.compiler.tree.Stm stm;
 
-    Nx(Tree.Stm s) {
+    Nx(com.chaosopher.tigerlang.compiler.tree.Stm s) {
         stm = s;
     }
 
     @Override
-    Tree.Exp unEx() {
+    com.chaosopher.tigerlang.compiler.tree.Exp unEx() {
         throw new RuntimeException("Not implemented, this should never occur");
     }
 

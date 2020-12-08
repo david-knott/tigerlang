@@ -15,7 +15,7 @@ public class TaskContext {
     public boolean bindingsDisplay = false;
     public FragList hirFragList;
     public FragList lirFragList;
-    public Assem.FragList assemFragList;
+    public com.chaosopher.tigerlang.compiler.assem.FragList assemFragList;
     public InputStream in = null;
     public OutputStream out = null;
     public OutputStream log = null;
@@ -58,7 +58,7 @@ public class TaskContext {
     //    this.instrList = instrList;
 	}
 
-	public void setAssemFragList(Assem.FragList frags) {
+	public void setAssemFragList(com.chaosopher.tigerlang.compiler.assem.FragList frags) {
         this.assemFragList = frags;
 	}
 }

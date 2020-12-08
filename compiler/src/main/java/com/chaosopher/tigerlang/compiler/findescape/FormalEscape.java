@@ -3,7 +3,7 @@ package com.chaosopher.tigerlang.compiler.findescape;
 import com.chaosopher.tigerlang.compiler.absyn.VarDec;
 
 class FormalEscape extends Escape {
-    Absyn.VarDec fl;
+    com.chaosopher.tigerlang.compiler.absyn.VarDec fl;
 
     FormalEscape(int d, VarDec f) {
         depth = d;

@@ -15,26 +15,26 @@ public abstract class BaseCodeGenTest {
     }
 
     public Exp getNestedBinopExp() {
-        return new Tree.BINOP(
+        return new com.chaosopher.tigerlang.compiler.tree.BINOP(
             BINOP.PLUS,
-            new Tree.CONST(3),
-            new Tree.BINOP(
+            new com.chaosopher.tigerlang.compiler.tree.CONST(3),
+            new com.chaosopher.tigerlang.compiler.tree.BINOP(
                 BINOP.PLUS,
-                new Tree.CONST(3),
-                new Tree.CONST(3)
+                new com.chaosopher.tigerlang.compiler.tree.CONST(3),
+                new com.chaosopher.tigerlang.compiler.tree.CONST(3)
             )
         );
     }
 
 	public Exp getBinopExp() {
-        return new Tree.BINOP(
+        return new com.chaosopher.tigerlang.compiler.tree.BINOP(
             BINOP.PLUS,
-            new Tree.CONST(3),
-            new Tree.CONST(3)
+            new com.chaosopher.tigerlang.compiler.tree.CONST(3),
+            new com.chaosopher.tigerlang.compiler.tree.CONST(3)
         );
     }
     
     public Exp getTemp() {
-        return new Tree.TEMP(Temp.create());
+        return new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create());
     }
 }

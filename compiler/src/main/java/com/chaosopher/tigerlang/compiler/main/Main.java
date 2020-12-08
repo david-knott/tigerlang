@@ -28,6 +28,7 @@ public class Main {
         InputStream in = new java.io.FileInputStream(args[args.length - 1]);
         PrintStream err = System.err;
         ErrorMsg errorMsg = new ErrorMsg(args[args.length - 1], err);
+        /*
         new TaskRegister()
                 .register(new Tasks())
                 .register(new Parse.Tasks(new ParserService(new ParserFactory())))
@@ -40,13 +41,13 @@ public class Main {
                 .register(new FindEscape.Tasks())
                 .register(new Absyn.Tasks())
                 .register(new Types.Tasks())
-              //  .register(new Semant.Tasks())
                 .register(new Translate.Tasks())
                 .register(new Canon.Tasks(new CanonicalizationImpl()))
                 .register(new Intel.Tasks(null, null))
                 .register(new RegAlloc.Tasks(new RegAllocFactory()))
                 .parseArgs(args)
                 .execute(in, out, err, errorMsg);
+                */
         Timer.instance.stop();
       //  Timer.instance.dump(err);
     }

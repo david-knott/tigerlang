@@ -13,13 +13,13 @@ public class IndirectWithDisplacementExpression {
     private final BinopOffsetExpression binopOffsetExpression;
 
     public IndirectWithDisplacementExpression(BinopOffsetExpression binopOffsetExpression) {
-        Assert.assertIsTrue(binopOffsetExpression.binop.binop == Tree.BINOP.PLUS
-                || binopOffsetExpression.binop.binop == Tree.BINOP.MINUS);
+        Assert.assertIsTrue(binopOffsetExpression.binop.binop == com.chaosopher.tigerlang.compiler.tree.BINOP.PLUS
+                || binopOffsetExpression.binop.binop == com.chaosopher.tigerlang.compiler.tree.BINOP.MINUS);
         this.binopOffsetExpression = binopOffsetExpression;
     }
 
     public int displacement() {
-        return binopOffsetExpression.binop.binop == Tree.BINOP.PLUS ? this.binopOffsetExpression.offset
+        return binopOffsetExpression.binop.binop == com.chaosopher.tigerlang.compiler.tree.BINOP.PLUS ? this.binopOffsetExpression.offset
                 : -this.binopOffsetExpression.offset;
     }
 

@@ -12,33 +12,33 @@ import com.chaosopher.tigerlang.compiler.tree.IR;
 import com.chaosopher.tigerlang.compiler.tree.JUMP;
 public class EmitterImpl implements Emitter {
 
-    private Assem.InstrList iList = null, last = null;
+    private com.chaosopher.tigerlang.compiler.assem.InstrList iList = null, last = null;
 	// AssemInstructionEnum.InstrList iList = null, last = null;
 
 	@Override
-	public Assem.InstrList getInstrList() {
+	public com.chaosopher.tigerlang.compiler.assem.InstrList getInstrList() {
 		return this.iList;
 	}
 
 	private void emit(Instr instr) {
 		if (last != null) {
-			last = last.tail = new Assem.InstrList(instr, null);
+			last = last.tail = new com.chaosopher.tigerlang.compiler.assem.InstrList(instr, null);
 		} else {
-			last = iList = new Assem.InstrList(instr, null);
+			last = iList = new com.chaosopher.tigerlang.compiler.assem.InstrList(instr, null);
 		}
 	}
 
 	public void loadIndirect(Temp dst, Temp src) {
-		emit(new Assem.OPER("movq (%`s0), %`d0 # load to offset", new TempList(dst), new TempList(src)));
+		emit(new com.chaosopher.tigerlang.compiler.assem.OPER("movq (%`s0), %`d0 # load to offset", new TempList(dst), new TempList(src)));
 	}
 
 	public void loadIndirectDisp(int binop, Temp dst, Temp src, int offset) {
 		offset = binop == BINOP.PLUS ? offset : -offset;
-		emit(new Assem.OPER("movq " + offset + "(%`s0), %`d0 # load to offset", new TempList(dst), new TempList(src)));
+		emit(new com.chaosopher.tigerlang.compiler.assem.OPER("movq " + offset + "(%`s0), %`d0 # load to offset", new TempList(dst), new TempList(src)));
 	}
 
 	public void startLoadIndirectDispScaled(Temp arg0, Temp arg1, IR arg2) {
-			//emit(new Assem.OPER("movq (%`s0, %`s1, " + wordSize +"), %`d0 # load array", 
+			//emit(new com.chaosopher.tigerlang.compiler.assem.OPER("movq (%`s0, %`s1, " + wordSize +"), %`d0 # load array", 
      //                   new TempList(dstTemp), 
        //                 new TempList(srcTemp, new TempList(indexTemp))
          //               ));
@@ -63,7 +63,7 @@ public class EmitterImpl implements Emitter {
 
 	@Override
 	public void storeIndirect(Temp dst, Temp src) {
-		emit(new Assem.OPER("movq %`s0, (%`s1)", null, new TempList(src, new TempList(dst))));
+		emit(new com.chaosopher.tigerlang.compiler.assem.OPER("movq %`s0, (%`s1)", null, new TempList(src, new TempList(dst))));
 
 	}
 
@@ -119,7 +119,7 @@ public class EmitterImpl implements Emitter {
 
 	@Override
 	public void label(Label label) {
-        emit(new Assem.LABEL(label.toString() + ":", label));
+        emit(new com.chaosopher.tigerlang.compiler.assem.LABEL(label.toString() + ":", label));
 	}
 
 	@Override

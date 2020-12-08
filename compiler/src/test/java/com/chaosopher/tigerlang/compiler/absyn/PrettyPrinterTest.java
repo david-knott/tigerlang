@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import org.junit.Test;
 
 import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
-import com.chaosopher.tigerlang.compiler.parse.Parser;
 import com.chaosopher.tigerlang.compiler.parse.ParserFactory;
 import com.chaosopher.tigerlang.compiler.parse.ParserService;
 

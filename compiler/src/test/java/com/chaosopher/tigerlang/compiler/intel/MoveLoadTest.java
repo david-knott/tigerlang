@@ -13,10 +13,10 @@ public class MoveLoadTest extends BaseCodeGenTest {
 
     @Test
     public void moveMemToTemp() throws Exception {
-        IR tree = new Tree.MOVE(
-            new Tree.TEMP(Temp.create()),
+        IR tree = new com.chaosopher.tigerlang.compiler.tree.MOVE(
+            new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create()),
             new MEM(
-                new Tree.TEMP(Temp.create())
+                new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create())
             )
         );
         TestEmitter testEmitter = new TestEmitter();
@@ -27,13 +27,13 @@ public class MoveLoadTest extends BaseCodeGenTest {
 
     @Test
     public void moveOffsetMemToTemp() throws Exception {
-        IR tree = new Tree.MOVE(
-            new Tree.TEMP(Temp.create()),
+        IR tree = new com.chaosopher.tigerlang.compiler.tree.MOVE(
+            new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create()),
             new MEM(
-                new Tree.BINOP(
-                    Tree.BINOP.PLUS,
-                    new Tree.TEMP(Temp.create()),
-                    new Tree.CONST(5)
+                new com.chaosopher.tigerlang.compiler.tree.BINOP(
+                    com.chaosopher.tigerlang.compiler.tree.BINOP.PLUS,
+                    new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create()),
+                    new com.chaosopher.tigerlang.compiler.tree.CONST(5)
                 )
             )
         );
@@ -45,13 +45,13 @@ public class MoveLoadTest extends BaseCodeGenTest {
 
     @Test
     public void moveOffsetMemExpToTemp() throws Exception {
-        IR tree = new Tree.MOVE(
-            new Tree.TEMP(Temp.create()),
+        IR tree = new com.chaosopher.tigerlang.compiler.tree.MOVE(
+            new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create()),
             new MEM(
-                new Tree.BINOP(
-                    Tree.BINOP.PLUS,
+                new com.chaosopher.tigerlang.compiler.tree.BINOP(
+                    com.chaosopher.tigerlang.compiler.tree.BINOP.PLUS,
                     super.getBinopExp(),
-                    new Tree.CONST(5)
+                    new com.chaosopher.tigerlang.compiler.tree.CONST(5)
                 )
             )
         );
@@ -64,13 +64,13 @@ public class MoveLoadTest extends BaseCodeGenTest {
 
     @Test
     public void moveOffsetMemNestedExpToTemp() throws Exception {
-        IR tree = new Tree.MOVE(
-            new Tree.TEMP(Temp.create()),
+        IR tree = new com.chaosopher.tigerlang.compiler.tree.MOVE(
+            new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create()),
             new MEM(
-                new Tree.BINOP(
-                    Tree.BINOP.PLUS,
+                new com.chaosopher.tigerlang.compiler.tree.BINOP(
+                    com.chaosopher.tigerlang.compiler.tree.BINOP.PLUS,
                     super.getNestedBinopExp(),
-                    new Tree.CONST(5)
+                    new com.chaosopher.tigerlang.compiler.tree.CONST(5)
                 )
             )
         );
@@ -84,16 +84,16 @@ public class MoveLoadTest extends BaseCodeGenTest {
 
     @Test
     public void moveIndexedMemToTemp() throws Exception {
-        IR tree = new Tree.MOVE(
-            new Tree.TEMP(Temp.create()),
+        IR tree = new com.chaosopher.tigerlang.compiler.tree.MOVE(
+            new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create()),
             new MEM(
-                new Tree.BINOP(
-                    Tree.BINOP.PLUS,
-                    new Tree.TEMP(Temp.create()),
-                    new Tree.BINOP(
-                        Tree.BINOP.MUL,
-                        new Tree.TEMP(Temp.create()),
-                        new Tree.CONST(4)
+                new com.chaosopher.tigerlang.compiler.tree.BINOP(
+                    com.chaosopher.tigerlang.compiler.tree.BINOP.PLUS,
+                    new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create()),
+                    new com.chaosopher.tigerlang.compiler.tree.BINOP(
+                        com.chaosopher.tigerlang.compiler.tree.BINOP.MUL,
+                        new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create()),
+                        new com.chaosopher.tigerlang.compiler.tree.CONST(4)
                     )
                 )
             )
@@ -106,16 +106,16 @@ public class MoveLoadTest extends BaseCodeGenTest {
 
     @Test
     public void moveIndexedMemExpToTemp() throws Exception {
-        IR tree = new Tree.MOVE(
-            new Tree.TEMP(Temp.create()),
+        IR tree = new com.chaosopher.tigerlang.compiler.tree.MOVE(
+            new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create()),
             new MEM(
-                new Tree.BINOP(
-                    Tree.BINOP.PLUS,
+                new com.chaosopher.tigerlang.compiler.tree.BINOP(
+                    com.chaosopher.tigerlang.compiler.tree.BINOP.PLUS,
                     super.getBinopExp(),
-                    new Tree.BINOP(
-                        Tree.BINOP.MUL,
+                    new com.chaosopher.tigerlang.compiler.tree.BINOP(
+                        com.chaosopher.tigerlang.compiler.tree.BINOP.MUL,
                         super.getBinopExp(),
-                        new Tree.CONST(4)
+                        new com.chaosopher.tigerlang.compiler.tree.CONST(4)
                     )
                 )
             )

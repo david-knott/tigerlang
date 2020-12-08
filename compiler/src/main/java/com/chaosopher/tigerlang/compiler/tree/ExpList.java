@@ -46,7 +46,7 @@ public class ExpList {
         tail = t;
     }
 
-    public ExpList append(Tree.Exp exp) {
+    public ExpList append(com.chaosopher.tigerlang.compiler.tree.Exp exp) {
         if (exp == null)
             throw new IllegalArgumentException("Exp cannot be null");
         var last = this;

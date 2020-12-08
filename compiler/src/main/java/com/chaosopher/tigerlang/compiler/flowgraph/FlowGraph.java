@@ -14,7 +14,7 @@ import com.chaosopher.tigerlang.compiler.graph.Node;
  * @see AssemFlowGraph
  */
 
-public abstract class FlowGraph extends Graph.Graph {
+public abstract class FlowGraph extends com.chaosopher.tigerlang.compiler.graph.Graph {
 	/**
 	 * The set of temporaries defined by this instruction or block
 	 */

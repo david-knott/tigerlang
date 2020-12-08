@@ -24,10 +24,10 @@ private void err(String s) {
 private java_cup.runtime.Symbol tok(int kind, Object value) {
     return new java_cup.runtime.Symbol(kind, yychar, yychar+yylength(), value);
 }
-private ErrorMsg.ErrorMsg errorMsg;
+private com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg errorMsg;
 private int commentDepth = 0;
 private String buffer = "";
-public Yylex(java.io.InputStream s, ErrorMsg.ErrorMsg e) {
+public Yylex(java.io.InputStream s, com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg e) {
   this(s);
   errorMsg=e;
 }

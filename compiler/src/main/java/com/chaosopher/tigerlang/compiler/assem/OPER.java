@@ -1,12 +1,12 @@
 package com.chaosopher.tigerlang.compiler.assem;
 
 public class OPER extends Instr {
-   public Temp.TempList dst;
-   public Temp.TempList src;
+   public com.chaosopher.tigerlang.compiler.temp.TempList dst;
+   public com.chaosopher.tigerlang.compiler.temp.TempList src;
    public Targets jump;
    public String comments;
 
-   public OPER(String a, Temp.TempList d, Temp.TempList s, Temp.LabelList j, String comments) {
+   public OPER(String a, com.chaosopher.tigerlang.compiler.temp.TempList d, com.chaosopher.tigerlang.compiler.temp.TempList s, com.chaosopher.tigerlang.compiler.temp.LabelList j, String comments) {
       if (a == null)
          throw new Error("a");
       if (d == null)
@@ -21,7 +21,7 @@ public class OPER extends Instr {
       jump = new Targets(j);
    }
 
-   public OPER(String a, Temp.TempList d, Temp.TempList s, Temp.LabelList j) {
+   public OPER(String a, com.chaosopher.tigerlang.compiler.temp.TempList d, com.chaosopher.tigerlang.compiler.temp.TempList s, com.chaosopher.tigerlang.compiler.temp.LabelList j) {
       if (a == null)
          throw new Error("a");
       if (j == null)
@@ -32,7 +32,7 @@ public class OPER extends Instr {
       jump = new Targets(j);
    }
 
-   public OPER(String a, Temp.TempList d, Temp.TempList s) {
+   public OPER(String a, com.chaosopher.tigerlang.compiler.temp.TempList d, com.chaosopher.tigerlang.compiler.temp.TempList s) {
       if (a == null)
          throw new Error("a");
       assem = a;
@@ -41,11 +41,11 @@ public class OPER extends Instr {
       jump = null;
    }
 
-   public Temp.TempList use() {
+   public com.chaosopher.tigerlang.compiler.temp.TempList use() {
       return src;
    }
 
-   public Temp.TempList def() {
+   public com.chaosopher.tigerlang.compiler.temp.TempList def() {
       return dst;
    }
 

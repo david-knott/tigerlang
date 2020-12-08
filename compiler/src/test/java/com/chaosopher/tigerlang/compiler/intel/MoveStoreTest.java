@@ -13,11 +13,11 @@ public class MoveStoreTest extends BaseCodeGenTest {
     
     @Test
     public void moveTempToMem() throws Exception {
-        IR tree = new Tree.MOVE(
+        IR tree = new com.chaosopher.tigerlang.compiler.tree.MOVE(
             new MEM(
-                new Tree.TEMP(Temp.create())
+                new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create())
             ),
-            new Tree.TEMP(Temp.create())
+            new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create())
         );
         TestEmitter testEmitter = new TestEmitter();
         this.createCodeGen(testEmitter).burm(tree);
@@ -27,15 +27,15 @@ public class MoveStoreTest extends BaseCodeGenTest {
 
     @Test
     public void moveTempToOffsetMem() throws Exception {
-        IR tree = new Tree.MOVE(
+        IR tree = new com.chaosopher.tigerlang.compiler.tree.MOVE(
             new MEM(
-                new Tree.BINOP(
-                    Tree.BINOP.PLUS,
-                    new Tree.TEMP(Temp.create()),
-                    new Tree.CONST(5)
+                new com.chaosopher.tigerlang.compiler.tree.BINOP(
+                    com.chaosopher.tigerlang.compiler.tree.BINOP.PLUS,
+                    new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create()),
+                    new com.chaosopher.tigerlang.compiler.tree.CONST(5)
                 )
             ),
-            new Tree.TEMP(Temp.create())
+            new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create())
         );
         TestEmitter testEmitter = new TestEmitter();
         this.createCodeGen(testEmitter).burm(tree);
@@ -45,19 +45,19 @@ public class MoveStoreTest extends BaseCodeGenTest {
 
     @Test
     public void moveTempToIndexedMem() throws Exception {
-        IR tree = new Tree.MOVE(
+        IR tree = new com.chaosopher.tigerlang.compiler.tree.MOVE(
             new MEM(
-                new Tree.BINOP(
-                    Tree.BINOP.PLUS,
-                    new Tree.TEMP(Temp.create()),
-                    new Tree.BINOP(
-                        Tree.BINOP.MUL,
-                        new Tree.TEMP(Temp.create()),
-                        new Tree.CONST(1)
+                new com.chaosopher.tigerlang.compiler.tree.BINOP(
+                    com.chaosopher.tigerlang.compiler.tree.BINOP.PLUS,
+                    new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create()),
+                    new com.chaosopher.tigerlang.compiler.tree.BINOP(
+                        com.chaosopher.tigerlang.compiler.tree.BINOP.MUL,
+                        new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create()),
+                        new com.chaosopher.tigerlang.compiler.tree.CONST(1)
                     )
                 )
             ),
-            new Tree.TEMP(Temp.create())
+            new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create())
         );
         TestEmitter testEmitter = new TestEmitter();
         this.createCodeGen(testEmitter).burm(tree);

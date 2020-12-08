@@ -13,8 +13,8 @@ public class CallTest extends BaseCodeGenTest {
 
     @Test
     public void call0Args() throws Exception {
-        IR tree = new Tree.EXP(
-            new Tree.CALL( new Tree.NAME(Label.create()), null)
+        IR tree = new com.chaosopher.tigerlang.compiler.tree.EXP(
+            new com.chaosopher.tigerlang.compiler.tree.CALL( new com.chaosopher.tigerlang.compiler.tree.NAME(Label.create()), null)
         );
         TestEmitter testEmitter = new TestEmitter();
         this.createCodeGen(testEmitter).burm(tree);
@@ -23,19 +23,19 @@ public class CallTest extends BaseCodeGenTest {
 
     @Test
     public void call1Args() throws Exception {
-        IR tree = new Tree.EXP(
-            new Tree.CALL(
-                new Tree.NAME(
+        IR tree = new com.chaosopher.tigerlang.compiler.tree.EXP(
+            new com.chaosopher.tigerlang.compiler.tree.CALL(
+                new com.chaosopher.tigerlang.compiler.tree.NAME(
                     Label.create()
                 ), 
-                new Tree.ExpList(
-                    new Tree.BINOP(
-                        Tree.BINOP.PLUS,
-                        new Tree.TEMP(Temp.create()),
-                        new Tree.BINOP(
-                            Tree.BINOP.MUL,
-                            new Tree.TEMP(Temp.create()),
-                            new Tree.CONST(1)
+                new com.chaosopher.tigerlang.compiler.tree.ExpList(
+                    new com.chaosopher.tigerlang.compiler.tree.BINOP(
+                        com.chaosopher.tigerlang.compiler.tree.BINOP.PLUS,
+                        new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create()),
+                        new com.chaosopher.tigerlang.compiler.tree.BINOP(
+                            com.chaosopher.tigerlang.compiler.tree.BINOP.MUL,
+                            new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create()),
+                            new com.chaosopher.tigerlang.compiler.tree.CONST(1)
                         )
                     )
                 )
@@ -50,29 +50,29 @@ public class CallTest extends BaseCodeGenTest {
 
     @Test
     public void call2Args() throws Exception {
-        IR tree = new Tree.EXP(
-            new Tree.CALL(
-                new Tree.NAME(
+        IR tree = new com.chaosopher.tigerlang.compiler.tree.EXP(
+            new com.chaosopher.tigerlang.compiler.tree.CALL(
+                new com.chaosopher.tigerlang.compiler.tree.NAME(
                     Label.create()
                 ), 
-                new Tree.ExpList(
-                    new Tree.BINOP(
-                        Tree.BINOP.PLUS,
-                        new Tree.TEMP(Temp.create()),
-                        new Tree.BINOP(
-                            Tree.BINOP.MUL,
-                            new Tree.TEMP(Temp.create()),
-                            new Tree.CONST(1)
+                new com.chaosopher.tigerlang.compiler.tree.ExpList(
+                    new com.chaosopher.tigerlang.compiler.tree.BINOP(
+                        com.chaosopher.tigerlang.compiler.tree.BINOP.PLUS,
+                        new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create()),
+                        new com.chaosopher.tigerlang.compiler.tree.BINOP(
+                            com.chaosopher.tigerlang.compiler.tree.BINOP.MUL,
+                            new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create()),
+                            new com.chaosopher.tigerlang.compiler.tree.CONST(1)
                         )
                     ),
-                    new Tree.ExpList(
-                        new Tree.BINOP(
-                            Tree.BINOP.AND,
-                            new Tree.TEMP(Temp.create()),
-                            new Tree.BINOP(
-                                Tree.BINOP.DIV,
-                                new Tree.TEMP(Temp.create()),
-                                new Tree.CONST(1)
+                    new com.chaosopher.tigerlang.compiler.tree.ExpList(
+                        new com.chaosopher.tigerlang.compiler.tree.BINOP(
+                            com.chaosopher.tigerlang.compiler.tree.BINOP.AND,
+                            new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create()),
+                            new com.chaosopher.tigerlang.compiler.tree.BINOP(
+                                com.chaosopher.tigerlang.compiler.tree.BINOP.DIV,
+                                new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create()),
+                                new com.chaosopher.tigerlang.compiler.tree.CONST(1)
                             )
                         )
                     )

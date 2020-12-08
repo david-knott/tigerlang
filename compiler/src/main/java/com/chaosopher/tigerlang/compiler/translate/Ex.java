@@ -4,20 +4,20 @@ import com.chaosopher.tigerlang.compiler.temp.Label;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 
 class Ex extends Exp {
-    Tree.Exp exp;
+    com.chaosopher.tigerlang.compiler.tree.Exp exp;
 
-    Ex(Tree.Exp e) {
+    Ex(com.chaosopher.tigerlang.compiler.tree.Exp e) {
         exp = e;
     }
 
     @Override
-    Tree.Exp unEx() {
+    com.chaosopher.tigerlang.compiler.tree.Exp unEx() {
         return exp;
     }
 
     @Override
     Stm unNx() {
-        return new Tree.EXP(exp);
+        return new com.chaosopher.tigerlang.compiler.tree.EXP(exp);
     }
 
     /**
@@ -29,15 +29,15 @@ class Ex extends Exp {
      */
     @Override
     Stm unCx(Label t, Label f) {
-        if(exp instanceof Tree.CONST){
-            var c = (Tree.CONST)exp;
+        if(exp instanceof com.chaosopher.tigerlang.compiler.tree.CONST){
+            var c = (com.chaosopher.tigerlang.compiler.tree.CONST)exp;
             if(c.value == 0){
-                return new Tree.JUMP(f);
+                return new com.chaosopher.tigerlang.compiler.tree.JUMP(f);
             }
             if(c.value == 1){
-                return new Tree.JUMP(t);
+                return new com.chaosopher.tigerlang.compiler.tree.JUMP(t);
             }
         }
-        return new Tree.CJUMP(Tree.CJUMP.EQ, this.exp, new Tree.CONST(1), t, f);
+        return new com.chaosopher.tigerlang.compiler.tree.CJUMP(com.chaosopher.tigerlang.compiler.tree.CJUMP.EQ, this.exp, new com.chaosopher.tigerlang.compiler.tree.CONST(1), t, f);
     }
 }

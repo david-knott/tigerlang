@@ -4,9 +4,9 @@ package com.chaosopher.tigerlang.compiler.tree;
  * Temporary is abstract machine similar to a register in a real machine.
  */
 public class TEMP extends Exp {
-    public Temp.Temp temp;
+    public com.chaosopher.tigerlang.compiler.temp.Temp temp;
 
-    public TEMP(Temp.Temp t) {
+    public TEMP(com.chaosopher.tigerlang.compiler.temp.Temp t) {
         temp = t;
     }
 

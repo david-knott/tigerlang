@@ -16,7 +16,7 @@ public class BinopOffsetExpression {
      */
     final Integer offset;
     /**
-     * The Tree.BINOP element.
+     * The com.chaosopher.tigerlang.compiler.tree.BINOP element.
      */
     final BINOP binop;
 

@@ -12,9 +12,9 @@ public class MoveTest extends BaseCodeGenTest {
 
     @Test
     public void moveTempToTemp() throws Exception {
-        IR tree = new Tree.MOVE(
-            new Tree.TEMP(Temp.create()),
-            new Tree.TEMP(Temp.create())
+        IR tree = new com.chaosopher.tigerlang.compiler.tree.MOVE(
+            new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create()),
+            new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create())
         );
         TestEmitter testEmitter = new TestEmitter();
         this.createCodeGen(testEmitter).burm(tree);
@@ -24,9 +24,9 @@ public class MoveTest extends BaseCodeGenTest {
 
     @Test
     public void moveConstToTemp() throws Exception {
-        IR tree = new Tree.MOVE(
-            new Tree.TEMP(Temp.create()),
-            new Tree.CONST(3)
+        IR tree = new com.chaosopher.tigerlang.compiler.tree.MOVE(
+            new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create()),
+            new com.chaosopher.tigerlang.compiler.tree.CONST(3)
         );
         TestEmitter testEmitter = new TestEmitter();
         this.createCodeGen(testEmitter).burm(tree);
@@ -36,8 +36,8 @@ public class MoveTest extends BaseCodeGenTest {
 
     @Test
     public void moveBinopToTemp() throws Exception {
-        IR tree = new Tree.MOVE(
-            new Tree.TEMP(Temp.create()),
+        IR tree = new com.chaosopher.tigerlang.compiler.tree.MOVE(
+            new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create()),
             super.getBinopExp()
         );
         TestEmitter testEmitter = new TestEmitter();
@@ -49,8 +49,8 @@ public class MoveTest extends BaseCodeGenTest {
 
     @Test
     public void moveBinopBinopToTemp() throws Exception {
-        IR tree = new Tree.MOVE(
-            new Tree.TEMP(Temp.create()),
+        IR tree = new com.chaosopher.tigerlang.compiler.tree.MOVE(
+            new com.chaosopher.tigerlang.compiler.tree.TEMP(Temp.create()),
             super.getNestedBinopExp()
         );
         TestEmitter testEmitter = new TestEmitter();

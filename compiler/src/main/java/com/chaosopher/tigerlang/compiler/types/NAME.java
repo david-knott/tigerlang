@@ -4,10 +4,10 @@ package com.chaosopher.tigerlang.compiler.types;
  * This class represents an user defined type. Such as type t = int
  */
 public class NAME extends Type {
-   public Symbol.Symbol name;
+   public com.chaosopher.tigerlang.compiler.symbol.Symbol name;
    private Type binding;
 
-   public NAME(Symbol.Symbol n) {
+   public NAME(com.chaosopher.tigerlang.compiler.symbol.Symbol n) {
       name = n;
    }
 

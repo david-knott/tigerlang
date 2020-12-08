@@ -12,7 +12,7 @@ public class ProcFrag extends Frag {
     /**
      * Intermediate representation function body
      */
-    public final Tree.Stm body;
+    public final com.chaosopher.tigerlang.compiler.tree.Stm body;
     
     /**
      * Activation record for this function
@@ -25,7 +25,7 @@ public class ProcFrag extends Frag {
      * @param bdt the function body
      * @param frm the activation record for this function
      */
-    public ProcFrag(Tree.Stm bdt, Frame frm) {
+    public ProcFrag(com.chaosopher.tigerlang.compiler.tree.Stm bdt, Frame frm) {
         body = bdt;
         frame = frm;
     }

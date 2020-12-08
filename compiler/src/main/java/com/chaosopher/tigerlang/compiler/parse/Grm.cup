@@ -1,14 +1,14 @@
 package com.chaosopher.tigerlang.compiler.parse;
 
 action code {: 
-  static Symbol.Symbol sym(String s) {
-	  return Symbol.Symbol.symbol(s);
+  static com.chaosopher.tigerlang.compiler.symbol.Symbol sym(String s) {
+	  return com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(s);
 	}
 :};
 
 parser code  {: 
   public Absyn.Exp parseResult;
-  ErrorMsg.ErrorMsg errorMsg;
+  com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg errorMsg;
   Lexer lexer;
 
   public void syntax_error(java_cup.runtime.Symbol current) {
@@ -27,7 +27,7 @@ parser code  {:
       errorMsg.error(info.left, message);
   }
 
-  public Grm(Lexer l, ErrorMsg.ErrorMsg err) {
+  public Grm(Lexer l, com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg err) {
     this();
     errorMsg=err;
     lexer=l;
@@ -44,14 +44,14 @@ terminal COMMA, COLON, SEMICOLON, LPAREN, RPAREN,
 	ASSIGN, ARRAY, IF, THEN, ELSE, WHILE, FOR, TO, DO, 
 	LET, IN, END, OF, BREAK, NIL, FUNCTION, VAR, TYPE, PRIMITIVE;
 
-non terminal Absyn.Absyn program;
+non terminal com.chaosopher.tigerlang.compiler.absyn.Absyn program;
 non terminal Absyn.Exp exp;
 non terminal Absyn.ExpList expList;
 non terminal Absyn.ExpList expListAux, paramList, paramListAux;
 non terminal Absyn.Exp letExp;
 non terminal Absyn.DecList decList, formalVarDecList, formalVarDecListAux;
 non terminal Absyn.Dec dec;
-non terminal Absyn.VarDec varDec, formalVarDec;
+non terminal com.chaosopher.tigerlang.compiler.absyn.VarDec varDec, formalVarDec;
 non terminal Absyn.FunctionDec funcDec, primDec, funcDecList, primDecList; 
 non terminal Absyn.TypeDec tyDec, tyDecList;
 non terminal Absyn.Ty ty;
@@ -108,13 +108,13 @@ decList ::= dec:d decList:dl {: RESULT = new Absyn.DecList(d, dl); :}
 | /* empty */ ;
 
 
-tyDec ::= TYPE ID:i EQ ty:t {: RESULT = new Absyn.TypeDec(ileft, Symbol.Symbol.symbol(i), t, null); :};
+tyDec ::= TYPE ID:i EQ ty:t {: RESULT = new Absyn.TypeDec(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), t, null); :};
 
-ty ::= ID:i {: RESULT = new Absyn.NameTy(ileft, Symbol.Symbol.symbol(i)); :}
+ty ::= ID:i {: RESULT = new Absyn.NameTy(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i)); :}
 | recTy:rt {: RESULT = rt; :}
 | arrTy:ar {: RESULT = ar; :};
 
-arrTy ::= ARRAY OF ID:i {: RESULT = new Absyn.ArrayTy(ileft, Symbol.Symbol.symbol(i)); :};
+arrTy ::= ARRAY OF ID:i {: RESULT = new Absyn.ArrayTy(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i)); :};
 
 fieldDecList ::= fieldDec:fd fieldDecListAux:fdla {: RESULT = new Absyn.FieldList(fdleft, fd.name, fd.typ, fdla); :}
 | /* empty */ ;
@@ -122,12 +122,12 @@ fieldDecList ::= fieldDec:fd fieldDecListAux:fdla {: RESULT = new Absyn.FieldLis
 fieldDecListAux ::= COMMA fieldDec:fd fieldDecListAux:fdla {: RESULT = new Absyn.FieldList(fdleft, fd.name, fd.typ, fdla); :}
 | /* empty */;
 
-fieldDec ::= ID:i COLON ID:ty {: RESULT = new Absyn.FieldList(ileft, Symbol.Symbol.symbol(i), new Absyn.NameTy(tyleft, Symbol.Symbol.symbol(ty)), null); :};
+fieldDec ::= ID:i COLON ID:ty {: RESULT = new Absyn.FieldList(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), new Absyn.NameTy(tyleft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(ty)), null); :};
 
 recTy ::= LBRACE fieldDecList:fl RBRACE {:  RESULT = new Absyn.RecordTy(flleft, fl); :};
 
 
-formalVarDec ::= ID:i COLON ty:t {: RESULT = new Absyn.VarDec(ileft, Symbol.Symbol.symbol(i), (Absyn.NameTy)t, null); :}
+formalVarDec ::= ID:i COLON ty:t {: RESULT = new com.chaosopher.tigerlang.compiler.absyn.VarDec(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), (Absyn.NameTy)t, null); :}
 ;
 
 formalVarDecList ::= formalVarDec:d formalVarDecListAux:dl  {: RESULT = new Absyn.DecList(d, dl); :}
@@ -138,25 +138,25 @@ formalVarDecListAux ::= COMMA formalVarDec:d formalVarDecListAux:dl  {: RESULT =
 | /* empty */;
 
 
-funcDec ::= FUNCTION ID:i LPAREN formalVarDecList:fdl RPAREN EQ exp:e1 {: RESULT = new Absyn.FunctionDec(ileft, Symbol.Symbol.symbol(i), fdl, null, e1, null ); :}
-| FUNCTION ID:i LPAREN formalVarDecList:fdl RPAREN COLON ID:ty EQ exp:e1 {: RESULT = new Absyn.FunctionDec(ileft, Symbol.Symbol.symbol(i), fdl, new Absyn.NameTy(ileft, Symbol.Symbol.symbol(ty)), e1, null ); :}
+funcDec ::= FUNCTION ID:i LPAREN formalVarDecList:fdl RPAREN EQ exp:e1 {: RESULT = new Absyn.FunctionDec(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), fdl, null, e1, null ); :}
+| FUNCTION ID:i LPAREN formalVarDecList:fdl RPAREN COLON ID:ty EQ exp:e1 {: RESULT = new Absyn.FunctionDec(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), fdl, new Absyn.NameTy(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(ty)), e1, null ); :}
 ;
 
-primDec ::= PRIMITIVE ID:i LPAREN formalVarDecList:fdl RPAREN {: RESULT = new Absyn.FunctionDec(ileft, Symbol.Symbol.symbol(i), fdl, null, null /* no body */, null ); :}
-| PRIMITIVE ID:i LPAREN formalVarDecList:fdl RPAREN COLON ID:ty {: RESULT = new Absyn.FunctionDec(ileft, Symbol.Symbol.symbol(i), fdl, new Absyn.NameTy(ileft, Symbol.Symbol.symbol(ty)), null /* no body */, null ); :}
+primDec ::= PRIMITIVE ID:i LPAREN formalVarDecList:fdl RPAREN {: RESULT = new Absyn.FunctionDec(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), fdl, null, null /* no body */, null ); :}
+| PRIMITIVE ID:i LPAREN formalVarDecList:fdl RPAREN COLON ID:ty {: RESULT = new Absyn.FunctionDec(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), fdl, new Absyn.NameTy(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(ty)), null /* no body */, null ); :}
 ;
 
-varDec ::= VAR ID:i ASSIGN exp:e {: RESULT = new Absyn.VarDec(ileft, Symbol.Symbol.symbol(i), null, e); :}
-| VAR ID:i COLON ty:t ASSIGN exp:e {: RESULT = new Absyn.VarDec(ileft, Symbol.Symbol.symbol(i), (Absyn.NameTy)t, e); :}
+varDec ::= VAR ID:i ASSIGN exp:e {: RESULT = new com.chaosopher.tigerlang.compiler.absyn.VarDec(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), null, e); :}
+| VAR ID:i COLON ty:t ASSIGN exp:e {: RESULT = new com.chaosopher.tigerlang.compiler.absyn.VarDec(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), (Absyn.NameTy)t, e); :}
 ;
 
 
 
 //https://stackoverflow.com/questions/26968665/bison-shift-reduce-conflict-tiger-compiler
-lValue ::= ID:id  {: RESULT = new Absyn.SimpleVar(idleft, Symbol.Symbol.symbol(id)); :}
-| lValue:lv DOT ID:i {: RESULT = new Absyn.FieldVar(lvleft, lv, Symbol.Symbol.symbol(i)); :} 
+lValue ::= ID:id  {: RESULT = new Absyn.SimpleVar(idleft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(id)); :}
+| lValue:lv DOT ID:i {: RESULT = new Absyn.FieldVar(lvleft, lv, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i)); :} 
 | lValue:lv LBRACK exp:e RBRACK {: RESULT = new Absyn.SubscriptVar(lvleft, lv, e); :}
-| ID:i LBRACK exp:e RBRACK {: RESULT = new Absyn.SubscriptVar(ileft, new Absyn.SimpleVar(ileft, Symbol.Symbol.symbol(i)), e); :}
+| ID:i LBRACK exp:e RBRACK {: RESULT = new Absyn.SubscriptVar(ileft, new Absyn.SimpleVar(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i)), e); :}
 ;
 
 exp ::= lValue:lv {: RESULT = new Absyn.VarExp(lvleft, lv); :}
@@ -199,7 +199,7 @@ seqExp ::= LPAREN RPAREN
 seqExpAux ::= SEMICOLON exp:e seqExpAux:sea {: RESULT = new Absyn.ExpList(e, sea); :}
 | /* empty */;
 
-callExp ::= ID:i LPAREN paramList:el RPAREN {: RESULT = new Absyn.CallExp(ileft, Symbol.Symbol.symbol(i), el); :};
+callExp ::= ID:i LPAREN paramList:el RPAREN {: RESULT = new Absyn.CallExp(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), el); :};
 
 paramList ::= exp:e paramListAux:a {: RESULT = new Absyn.ExpList(e, a); :}
 | /* empty */;
@@ -226,14 +226,14 @@ ifThenElse ::= IF exp:e1 THEN exp:e2 ELSE exp:e3 {: RESULT = new Absyn.IfExp(e1l
 
 whileExp ::= WHILE exp:e1 DO exp:e2 {: RESULT = new Absyn.WhileExp(e1left, (Absyn.Exp)e1, (Absyn.Exp)e2); :};
 
-forExp ::= FOR ID:i ASSIGN exp:e0 TO exp:e1 DO exp:e2 {: RESULT = new Absyn.ForExp(ileft, new Absyn.VarDec(ileft, Symbol.Symbol.symbol(i), null, e0), e1, e2); :};
+forExp ::= FOR ID:i ASSIGN exp:e0 TO exp:e1 DO exp:e2 {: RESULT = new Absyn.ForExp(ileft, new com.chaosopher.tigerlang.compiler.absyn.VarDec(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), null, e0), e1, e2); :};
 
 letExp ::= LET decList:e1 IN expList:e2 END {: RESULT = new Absyn.LetExp(e1left, (Absyn.DecList)e1, (Absyn.Exp)new Absyn.SeqExp(e1left, e2)); :};
 
 
-arrCreate ::= ID:i LBRACK exp:e1 RBRACK OF exp:e2 {: RESULT = new Absyn.ArrayExp(ileft, Symbol.Symbol.symbol(i), e1, e2); :};
+arrCreate ::= ID:i LBRACK exp:e1 RBRACK OF exp:e2 {: RESULT = new Absyn.ArrayExp(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), e1, e2); :};
 
-recCreate ::= ID:i LBRACE fieldCreateList:fcl RBRACE {: RESULT = new Absyn.RecordExp(ileft, Symbol.Symbol.symbol(i), fcl); :};
+recCreate ::= ID:i LBRACE fieldCreateList:fcl RBRACE {: RESULT = new Absyn.RecordExp(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), fcl); :};
 
 fieldCreateList ::= fieldCreate:fc fieldCreateListAux:fcla {: RESULT = new Absyn.FieldExpList(fcleft, fc.name, fc.init, fcla); :}
 | /* empty */;
@@ -241,4 +241,4 @@ fieldCreateList ::= fieldCreate:fc fieldCreateListAux:fcla {: RESULT = new Absyn
 fieldCreateListAux ::= COMMA fieldCreate:fc fieldCreateListAux:fcla {: RESULT = new Absyn.FieldExpList(fcleft, fc.name, fc.init, fcla); :}
 | /* empty */;
 
-fieldCreate ::= ID:i EQ exp:e {: RESULT = new Absyn.FieldExpList(ileft, Symbol.Symbol.symbol(i), e, null); :};
+fieldCreate ::= ID:i EQ exp:e {: RESULT = new Absyn.FieldExpList(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), e, null); :};

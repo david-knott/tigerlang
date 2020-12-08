@@ -11,7 +11,7 @@ import com.chaosopher.tigerlang.compiler.tree.JUMP;
  */
 public interface Emitter {
 
-	public Assem.InstrList getInstrList();
+	public com.chaosopher.tigerlang.compiler.assem.InstrList getInstrList();
 	
     public void loadIndirect(Temp dst, Temp src);
 

@@ -4,8 +4,8 @@ import com.chaosopher.tigerlang.compiler.temp.TempList;
 
 public class TEST extends Instr {
 
-   public Temp.TempList dst;
-   public Temp.TempList src;
+   public com.chaosopher.tigerlang.compiler.temp.TempList dst;
+   public com.chaosopher.tigerlang.compiler.temp.TempList src;
    public Targets jump;
    public String comments;
    private static int id = 0;
@@ -17,7 +17,7 @@ public class TEST extends Instr {
       super.assem = "test null, null";
    }
 
-   public TEST(Temp.TempList d, Temp.TempList s) {
+   public TEST(com.chaosopher.tigerlang.compiler.temp.TempList d, com.chaosopher.tigerlang.compiler.temp.TempList s) {
       dst = d;
       src = s;
       jump = null;
@@ -32,7 +32,7 @@ public class TEST extends Instr {
       }
    }
 
-   public TEST(Temp.TempList d, Temp.TempList s, Temp.LabelList j) {
+   public TEST(com.chaosopher.tigerlang.compiler.temp.TempList d, com.chaosopher.tigerlang.compiler.temp.TempList s, com.chaosopher.tigerlang.compiler.temp.LabelList j) {
       if (j == null)
          throw new Error("j");
       dst = d;

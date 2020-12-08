@@ -65,20 +65,20 @@ public class SEQ extends Stm {
         // return SEQ.linearize(this);
     }
 
-    static Tree.SEQ linear(Tree.SEQ s, Tree.SEQ l) {
+    static com.chaosopher.tigerlang.compiler.tree.SEQ linear(com.chaosopher.tigerlang.compiler.tree.SEQ s, com.chaosopher.tigerlang.compiler.tree.SEQ l) {
         // calls function below with s.right and the list, which returns a statement
         // then passes the s.left and the statement list into the function below
         return linear(s.left, linear(s.right, l));
     }
 
-    static Tree.SEQ linear(Tree.Stm s, Tree.SEQ l) {
-        if (s instanceof Tree.SEQ)
-            return linear((Tree.SEQ) s, l); // calls the function above
+    static com.chaosopher.tigerlang.compiler.tree.SEQ linear(com.chaosopher.tigerlang.compiler.tree.Stm s, com.chaosopher.tigerlang.compiler.tree.SEQ l) {
+        if (s instanceof com.chaosopher.tigerlang.compiler.tree.SEQ)
+            return linear((com.chaosopher.tigerlang.compiler.tree.SEQ) s, l); // calls the function above
         else
-            return new Tree.SEQ(s, l);
+            return new com.chaosopher.tigerlang.compiler.tree.SEQ(s, l);
     }
 
-    static public Tree.SEQ linearize(Tree.Stm s) {
+    static public com.chaosopher.tigerlang.compiler.tree.SEQ linearize(com.chaosopher.tigerlang.compiler.tree.Stm s) {
         return linear(s, null);
     }
 

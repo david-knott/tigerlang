@@ -20,7 +20,7 @@ import org.xml.sax.SAXException;
 import com.chaosopher.tigerlang.compiler.absyn.Absyn;
 import com.chaosopher.tigerlang.compiler.bind.Binder;
 import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
-import FindEscape.EscapeVisitor;
+import com.chaosopher.tigerlang.compiler.findescape.EscapeVisitor;
 import com.chaosopher.tigerlang.compiler.parse.ParserFactory;
 import com.chaosopher.tigerlang.compiler.parse.ParserService;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
