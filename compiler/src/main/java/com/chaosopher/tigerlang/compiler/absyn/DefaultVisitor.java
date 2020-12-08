@@ -10,6 +10,7 @@ public class DefaultVisitor implements AbsynVisitor{
 
     @Override
     public void visit(ArrayTy exp) {
+        // do nothing
     }
 
     @Override
@@ -20,6 +21,7 @@ public class DefaultVisitor implements AbsynVisitor{
 
     @Override
     public void visit(BreakExp exp) {
+        // do nothing
     }
 
     @Override
@@ -52,6 +54,7 @@ public class DefaultVisitor implements AbsynVisitor{
 
     @Override
     public void visit(FieldList exp) {
+        // do nothing
     }
 
     @Override
@@ -93,6 +96,7 @@ public class DefaultVisitor implements AbsynVisitor{
 
     @Override
     public void visit(IntExp exp) {
+        // do nothing
     }
 
     @Override
@@ -107,10 +111,12 @@ public class DefaultVisitor implements AbsynVisitor{
 
     @Override
     public void visit(NameTy exp) {
+        // do nothing
     }
 
     @Override
     public void visit(NilExp exp) {
+        // do nothing
     }
 
     @Override
@@ -142,10 +148,12 @@ public class DefaultVisitor implements AbsynVisitor{
 
     @Override
     public void visit(SimpleVar exp) {
+        // do nothing
     }
 
     @Override
     public void visit(StringExp exp) {
+        // do nothing
     }
 
     @Override
@@ -156,10 +164,12 @@ public class DefaultVisitor implements AbsynVisitor{
 
     @Override
     public void visit(TypeDec exp) {
+        // do nothing
     }
 
     @Override
     public void visit(Var exp) {
+        // do nothing
     }
 
     @Override

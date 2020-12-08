@@ -34,7 +34,7 @@ public class PrettyPrinterTests {
         PrettyPrinter prettyPrinter = new PrettyPrinter(System.out, true, true);
         program.accept(prettyPrinter);
         assertTrue(!errorMsg.anyErrors);
-        assertEquals(this.baos.toString(), "\n(\n    0\n)");
+        assertEquals(this.baos.toString(), "\n/* == Abstract Syntax Tree. == */\n(\n    0\n)");
     }
 
     @Test
@@ -47,7 +47,7 @@ public class PrettyPrinterTests {
         PrettyPrinter prettyPrinter = new PrettyPrinter(System.out, true, true);
         program.accept(prettyPrinter);
         assertTrue(!errorMsg.anyErrors);
-        assertEquals(this.baos.toString(), "\nif (1 = 1) \nthen (2 = 2)\nelse 0");
+        assertEquals(this.baos.toString(), "\n/* == Abstract Syntax Tree. == */\nif (1 = 1) \nthen (2 = 2)\nelse 0");
     }
 
     @Test
@@ -60,7 +60,7 @@ public class PrettyPrinterTests {
         PrettyPrinter prettyPrinter = new PrettyPrinter(System.out, true, true);
         program.accept(prettyPrinter);
         assertTrue(!errorMsg.anyErrors);
-        assertEquals(this.baos.toString(), "\nif (1 = 1) \nthen 1\nelse (2 = 2)");
+        assertEquals(this.baos.toString(), "\n/* == Abstract Syntax Tree. == */\nif (1 = 1) \nthen 1\nelse (2 = 2)");
     }
 
 }

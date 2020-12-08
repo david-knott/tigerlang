@@ -1,5 +1,7 @@
 package com.chaosopher.tigerlang.compiler.parse;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -20,6 +22,7 @@ public class PrimitiveTest {
         InputStream targetStream = new ByteArrayInputStream(tiger.getBytes());
         ParserService parserService = new ParserService(new ParserFactory());
         DecList decList = parserService.parse(targetStream, errorMsg);
+        assertNotNull(decList);
         decList.accept(new PrettyPrinter(System.out));
         
 
