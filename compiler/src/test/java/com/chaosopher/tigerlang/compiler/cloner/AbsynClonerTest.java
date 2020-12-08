@@ -1,5 +1,7 @@
 package com.chaosopher.tigerlang.compiler.cloner;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -29,6 +31,8 @@ public class AbsynClonerTest {
         absynCloner.visitedDecList.accept(prettyPrinter);
         InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
         //System.out.println(new String(outputStream.toByteArray(), StandardCharsets.UTF_8));
-        parserService.parse(inputStream, errorMsg);
+        Absyn program2 = parserService.parse(inputStream, errorMsg);
+        assertNotNull(program2);
+        
     }
 }

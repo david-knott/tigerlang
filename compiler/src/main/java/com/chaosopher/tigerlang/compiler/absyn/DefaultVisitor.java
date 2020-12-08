@@ -164,7 +164,10 @@ public class DefaultVisitor implements AbsynVisitor{
 
     @Override
     public void visit(VarDec exp) {
-        exp.init.accept(this);
+        // exp.init is null when vardec is used as function formal.
+        if(exp.init != null) {
+            exp.init.accept(this);
+        }
         if(exp.typ != null) {
             exp.typ.accept(this);
         }
