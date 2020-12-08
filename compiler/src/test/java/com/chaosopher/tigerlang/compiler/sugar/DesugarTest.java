@@ -35,8 +35,8 @@ public class DesugarTest {
 
         Desugar absynCloner = new Desugar();
         program.accept(absynCloner);
-        absynCloner.visitedExp.accept(new Binder(errorMsg));
-        absynCloner.visitedExp.accept(new PrettyPrinter(System.out, true, true));
+        absynCloner.visitedDecList.accept(new Binder(errorMsg));
+        absynCloner.visitedDecList.accept(new PrettyPrinter(System.out, true, true));
     }
 
     @Test
@@ -46,8 +46,8 @@ public class DesugarTest {
         program.accept(new Binder(errorMsg));
         Desugar absynCloner = new Desugar();
         program.accept(absynCloner);
-        absynCloner.visitedExp.accept(new Binder(errorMsg));
-        absynCloner.visitedExp.accept(new PrettyPrinter(System.out, true, true));
+        absynCloner.visitedDecList.accept(new Binder(errorMsg));
+        absynCloner.visitedDecList.accept(new PrettyPrinter(System.out, true, true));
     }
 
     @Test
@@ -57,8 +57,8 @@ public class DesugarTest {
         program.accept(new Binder(errorMsg));
         Desugar absynCloner = new Desugar();
         program.accept(absynCloner);
-        absynCloner.visitedExp.accept(new Binder(errorMsg));
-        absynCloner.visitedExp.accept(new PrettyPrinter(System.out, true, true));
+        absynCloner.visitedDecList.accept(new Binder(errorMsg));
+        absynCloner.visitedDecList.accept(new PrettyPrinter(System.out, true, true));
     }
 
 
@@ -70,8 +70,8 @@ public class DesugarTest {
 
         Desugar absynCloner = new Desugar();
         program.accept(absynCloner);
-        absynCloner.visitedExp.accept(new Binder(errorMsg));
-        absynCloner.visitedExp.accept(new PrettyPrinter(System.out, true, true));
+        absynCloner.visitedDecList.accept(new Binder(errorMsg));
+        absynCloner.visitedDecList.accept(new PrettyPrinter(System.out, true, true));
     }
 }
 
