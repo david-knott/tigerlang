@@ -22,16 +22,28 @@ public class Main {
         Timer.instance.push("rest");
         PrintStream out = System.out;
         if (args.length == 1) {
-           //args = new String[] {"--reg-alloc", "--clone", "--escapes-compute", "--demove", args[0] };
            args = new String[] {"--reg-alloc", "--escapes-compute", "--demove", args[0] };
         }
         InputStream in = new java.io.FileInputStream(args[args.length - 1]);
         PrintStream err = System.err;
         ErrorMsg errorMsg = new ErrorMsg(args[args.length - 1], err);
-        /*
         new TaskRegister()
                 .register(new Tasks())
-                .register(new Parse.Tasks(new ParserService(new ParserFactory())))
+                .register(new com.chaosopher.tigerlang.compiler.parse.Tasks(new ParserService(new ParserFactory())))
+                .register(new com.chaosopher.tigerlang.compiler.cloner.Tasks())
+                .register(new com.chaosopher.tigerlang.compiler.callgraph.Tasks())
+                .register(new com.chaosopher.tigerlang.compiler.liveness.Tasks())
+                .register(new com.chaosopher.tigerlang.compiler.inlining.Tasks())
+                .register(new com.chaosopher.tigerlang.compiler.sugar.Tasks())
+                .register(new com.chaosopher.tigerlang.compiler.bind.Tasks())
+                .register(new com.chaosopher.tigerlang.compiler.findescape.Tasks())
+                .register(new com.chaosopher.tigerlang.compiler.absyn.Tasks())
+                .register(new com.chaosopher.tigerlang.compiler.types.Tasks())
+                .register(new com.chaosopher.tigerlang.compiler.translate.Tasks())
+                .register(new com.chaosopher.tigerlang.compiler.canon.Tasks(new CanonicalizationImpl()))
+                .register(new com.chaosopher.tigerlang.compiler.intel.Tasks(null, null))
+                .register(new com.chaosopher.tigerlang.compiler.regalloc.Tasks(new RegAllocFactory()))
+        /*
                 .register(new Cloner.Tasks())
                 .register(new CallGraph.Tasks())
                 .register(new Liveness.Tasks())
@@ -45,10 +57,10 @@ public class Main {
                 .register(new Canon.Tasks(new CanonicalizationImpl()))
                 .register(new Intel.Tasks(null, null))
                 .register(new RegAlloc.Tasks(new RegAllocFactory()))
+                */
                 .parseArgs(args)
                 .execute(in, out, err, errorMsg);
-                */
         Timer.instance.stop();
-      //  Timer.instance.dump(err);
+        Timer.instance.dump(err);
     }
 }
