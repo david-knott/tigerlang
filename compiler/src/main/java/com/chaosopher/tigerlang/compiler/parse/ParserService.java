@@ -12,6 +12,11 @@ import com.chaosopher.tigerlang.compiler.absyn.LetExp;
 import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
 import com.chaosopher.tigerlang.compiler.symbol.Symbol;
 
+/**
+ * A parser service that returns a configured parser. It uses
+ * a factory to contruct the parser and a configuration to
+ * set the parser.
+ */
 public class ParserService {
 
     private final ParserFactory parserFactory;
