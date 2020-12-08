@@ -1,0 +1,244 @@
+package com.chaosopher.tigerlang.compiler.parse;
+
+action code {: 
+  static Symbol.Symbol sym(String s) {
+	  return Symbol.Symbol.symbol(s);
+	}
+:};
+
+parser code  {: 
+  public Absyn.Exp parseResult;
+  ErrorMsg.ErrorMsg errorMsg;
+  Lexer lexer;
+
+  public void syntax_error(java_cup.runtime.Symbol current) {
+      errorMsg.error(current.left, "CUP: Syntax error, unexpected '"  + Const.symnames[current.sym] + "'");
+  }
+
+  public void unrecovered_syntax_error(java_cup.runtime.Symbol current) {
+      errorMsg.error(current != null ? current.left : 0, "CUP: Unrecovered syntax error, unexpected '"  + Const.symnames[current.sym] + "'");
+  }
+
+  public void report_error(String message, java_cup.runtime.Symbol info) {
+      errorMsg.error(info.left, message);
+  }
+
+  public void report_fatal_error(String message, java_cup.runtime.Symbol info) {
+      errorMsg.error(info.left, message);
+  }
+
+  public Grm(Lexer l, ErrorMsg.ErrorMsg err) {
+    this();
+    errorMsg=err;
+    lexer=l;
+  }
+:};
+
+scan with {: return lexer.nextToken(); :};
+
+terminal String ID, STRING;
+terminal Integer INT;
+terminal COMMA, COLON, SEMICOLON, LPAREN, RPAREN, 
+	LBRACK, RBRACK, LBRACE, RBRACE, DOT, PLUS, MINUS, 
+	TIMES, DIVIDE, EQ, NEQ, LT, LE, GT, GE, AND, OR, 
+	ASSIGN, ARRAY, IF, THEN, ELSE, WHILE, FOR, TO, DO, 
+	LET, IN, END, OF, BREAK, NIL, FUNCTION, VAR, TYPE, PRIMITIVE;
+
+non terminal Absyn.Absyn program;
+non terminal Absyn.Exp exp;
+non terminal Absyn.ExpList expList;
+non terminal Absyn.ExpList expListAux, paramList, paramListAux;
+non terminal Absyn.Exp letExp;
+non terminal Absyn.DecList decList, formalVarDecList, formalVarDecListAux;
+non terminal Absyn.Dec dec;
+non terminal Absyn.VarDec varDec, formalVarDec;
+non terminal Absyn.FunctionDec funcDec, primDec, funcDecList, primDecList; 
+non terminal Absyn.TypeDec tyDec, tyDecList;
+non terminal Absyn.Ty ty;
+non terminal Absyn.ArrayTy arrTy;
+non terminal Absyn.RecordTy recTy;
+non terminal Absyn.FieldList fieldDec, fieldDecList, fieldDecListAux;
+non terminal Absyn.RecordExp recCreate;
+non terminal Absyn.AssignExp assignment;
+non terminal Absyn.FieldExpList fieldCreate;
+non terminal Absyn.FieldExpList fieldCreateList;
+non terminal Absyn.FieldExpList fieldCreateListAux;
+non terminal Absyn.Var lValue;
+non terminal Absyn.ArrayExp arrCreate;
+non terminal Absyn.FieldVar fieldExp;
+non terminal Absyn.OpExp infixExp;
+non terminal Absyn.ExpList seqExp, seqExpAux; 
+non terminal Absyn.CallExp callExp; 
+non terminal Absyn.IfExp ifThen, ifThenElse; 
+non terminal Absyn.WhileExp whileExp; 
+non terminal Absyn.ForExp forExp; 
+non terminal Absyn.Exp negation; 
+
+precedence left AND, OR;
+precedence nonassoc EQ, NEQ, GT, LT, GE, LE;
+precedence left PLUS, MINUS;
+precedence left TIMES, DIVIDE;
+
+start with program;
+
+
+program ::= exp:e {: RESULT = e; :}
+| decList:dl {: RESULT = dl; :}
+;
+
+tyDecList ::= tyDec:h {: RESULT = new Absyn.TypeDec(h.pos, h.name, h.ty, null); :}
+| tyDec:h tyDecList:t {: RESULT = new Absyn.TypeDec(h.pos, h.name, h.ty, t);  :}
+;
+
+funcDecList ::= funcDec:h {: RESULT = new Absyn.FunctionDec(h.pos, h.name, h.params, h.result, h.body, null); :}
+| funcDec:h funcDecList:t {: RESULT = new Absyn.FunctionDec(h.pos, h.name, h.params, h.result, h.body, t); :}
+;
+
+primDecList ::= primDec:h {: RESULT = new Absyn.FunctionDec(h.pos, h.name, h.params, h.result, null, null); :}
+| primDec:h primDecList:t {: RESULT = new Absyn.FunctionDec(h.pos, h.name, h.params, h.result, null, t); :}
+;
+
+dec ::= tyDecList:td {: RESULT = td; :}
+| varDec:vd {: RESULT = vd; :}
+| funcDecList:fd {: RESULT = fd; :} 
+| primDecList: fd {: RESULT = fd; :}
+;
+
+decList ::= dec:d decList:dl {: RESULT = new Absyn.DecList(d, dl); :} 
+| /* empty */ ;
+
+
+tyDec ::= TYPE ID:i EQ ty:t {: RESULT = new Absyn.TypeDec(ileft, Symbol.Symbol.symbol(i), t, null); :};
+
+ty ::= ID:i {: RESULT = new Absyn.NameTy(ileft, Symbol.Symbol.symbol(i)); :}
+| recTy:rt {: RESULT = rt; :}
+| arrTy:ar {: RESULT = ar; :};
+
+arrTy ::= ARRAY OF ID:i {: RESULT = new Absyn.ArrayTy(ileft, Symbol.Symbol.symbol(i)); :};
+
+fieldDecList ::= fieldDec:fd fieldDecListAux:fdla {: RESULT = new Absyn.FieldList(fdleft, fd.name, fd.typ, fdla); :}
+| /* empty */ ;
+
+fieldDecListAux ::= COMMA fieldDec:fd fieldDecListAux:fdla {: RESULT = new Absyn.FieldList(fdleft, fd.name, fd.typ, fdla); :}
+| /* empty */;
+
+fieldDec ::= ID:i COLON ID:ty {: RESULT = new Absyn.FieldList(ileft, Symbol.Symbol.symbol(i), new Absyn.NameTy(tyleft, Symbol.Symbol.symbol(ty)), null); :};
+
+recTy ::= LBRACE fieldDecList:fl RBRACE {:  RESULT = new Absyn.RecordTy(flleft, fl); :};
+
+
+formalVarDec ::= ID:i COLON ty:t {: RESULT = new Absyn.VarDec(ileft, Symbol.Symbol.symbol(i), (Absyn.NameTy)t, null); :}
+;
+
+formalVarDecList ::= formalVarDec:d formalVarDecListAux:dl  {: RESULT = new Absyn.DecList(d, dl); :}
+| /* empty */;
+
+
+formalVarDecListAux ::= COMMA formalVarDec:d formalVarDecListAux:dl  {: RESULT = new Absyn.DecList(d, dl); :}
+| /* empty */;
+
+
+funcDec ::= FUNCTION ID:i LPAREN formalVarDecList:fdl RPAREN EQ exp:e1 {: RESULT = new Absyn.FunctionDec(ileft, Symbol.Symbol.symbol(i), fdl, null, e1, null ); :}
+| FUNCTION ID:i LPAREN formalVarDecList:fdl RPAREN COLON ID:ty EQ exp:e1 {: RESULT = new Absyn.FunctionDec(ileft, Symbol.Symbol.symbol(i), fdl, new Absyn.NameTy(ileft, Symbol.Symbol.symbol(ty)), e1, null ); :}
+;
+
+primDec ::= PRIMITIVE ID:i LPAREN formalVarDecList:fdl RPAREN {: RESULT = new Absyn.FunctionDec(ileft, Symbol.Symbol.symbol(i), fdl, null, null /* no body */, null ); :}
+| PRIMITIVE ID:i LPAREN formalVarDecList:fdl RPAREN COLON ID:ty {: RESULT = new Absyn.FunctionDec(ileft, Symbol.Symbol.symbol(i), fdl, new Absyn.NameTy(ileft, Symbol.Symbol.symbol(ty)), null /* no body */, null ); :}
+;
+
+varDec ::= VAR ID:i ASSIGN exp:e {: RESULT = new Absyn.VarDec(ileft, Symbol.Symbol.symbol(i), null, e); :}
+| VAR ID:i COLON ty:t ASSIGN exp:e {: RESULT = new Absyn.VarDec(ileft, Symbol.Symbol.symbol(i), (Absyn.NameTy)t, e); :}
+;
+
+
+
+//https://stackoverflow.com/questions/26968665/bison-shift-reduce-conflict-tiger-compiler
+lValue ::= ID:id  {: RESULT = new Absyn.SimpleVar(idleft, Symbol.Symbol.symbol(id)); :}
+| lValue:lv DOT ID:i {: RESULT = new Absyn.FieldVar(lvleft, lv, Symbol.Symbol.symbol(i)); :} 
+| lValue:lv LBRACK exp:e RBRACK {: RESULT = new Absyn.SubscriptVar(lvleft, lv, e); :}
+| ID:i LBRACK exp:e RBRACK {: RESULT = new Absyn.SubscriptVar(ileft, new Absyn.SimpleVar(ileft, Symbol.Symbol.symbol(i)), e); :}
+;
+
+exp ::= lValue:lv {: RESULT = new Absyn.VarExp(lvleft, lv); :}
+| NIL:n {: RESULT = new Absyn.NilExp(nleft); :} 
+| INT:i {: RESULT = new Absyn.IntExp(ileft, i); :}
+| STRING:s {: RESULT = new Absyn.StringExp(sleft, s); :} 
+| seqExp:se {: RESULT = new Absyn.SeqExp(seleft, se); :}
+| callExp:ce {: RESULT = ce; :} 
+| infixExp:ie {: RESULT = ie; :}
+| arrCreate:ac {: RESULT = ac; :}
+| recCreate:rc {: RESULT = rc; :}
+| assignment:a {: RESULT = a; :}
+| negation:n {: RESULT = n; :}
+| ifThenElse:ite {: RESULT = ite; :}
+| ifThen:it {: RESULT = it; :}
+| whileExp:we {: RESULT = we; :} 
+| forExp:fe {: RESULT = fe; :} 
+| BREAK:b {: RESULT = new Absyn.BreakExp(bleft); :}
+| letExp:le {: RESULT = le; :}
+| error exp
+;
+
+negation ::= MINUS exp:e1 {: RESULT = new Absyn.OpExp(e1left, new Absyn.IntExp(e1left,0), Absyn.OpExp.MINUS, e1); :};
+
+infixExp ::= exp:e1 PLUS exp:e2 {: RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.PLUS, e2); :}
+| exp:e1 MINUS exp:e2 {: RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.MINUS, e2); :}
+| exp:e1 TIMES exp:e2 {: RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.MUL, e2); :}
+| exp:e1 DIVIDE exp:e2 {: RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.DIV, e2); :}
+| exp:e1 EQ exp:e2 {: RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.EQ, e2); :}
+| exp:e1 NEQ exp:e2 {: RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.NE, e2); :}
+| exp:e1 GT exp:e2 {: RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.GT, e2); :}
+| exp:e1 LT exp:e2 {: RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.LT, e2); :}
+| exp:e1 GE exp:e2 {: RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.GE, e2); :}
+| exp:e1 LE exp:e2 {: RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.LE, e2); :}
+;
+
+seqExp ::= LPAREN RPAREN
+| LPAREN exp:e seqExpAux:sea RPAREN {: RESULT = new Absyn.ExpList(e, sea); :};
+
+seqExpAux ::= SEMICOLON exp:e seqExpAux:sea {: RESULT = new Absyn.ExpList(e, sea); :}
+| /* empty */;
+
+callExp ::= ID:i LPAREN paramList:el RPAREN {: RESULT = new Absyn.CallExp(ileft, Symbol.Symbol.symbol(i), el); :};
+
+paramList ::= exp:e paramListAux:a {: RESULT = new Absyn.ExpList(e, a); :}
+| /* empty */;
+
+paramListAux ::= COMMA exp:e paramListAux:a {: RESULT = new Absyn.ExpList(e, a); :}
+| /* empty */;
+
+
+expList ::= exp:e expListAux:a {: RESULT = new Absyn.ExpList(e, a); :}
+| /* empty */;
+
+expListAux ::= SEMICOLON exp:e expListAux:a {: RESULT = new Absyn.ExpList(e, a); :}
+| /* empty */;
+
+assignment ::= lValue:l ASSIGN exp:e {: RESULT = new Absyn.AssignExp(lleft, l, e); :};
+
+ifThen ::= IF exp:e1 THEN exp:e2 {: RESULT = new Absyn.IfExp(e1left, e1, e2); :};
+
+ifThenElse ::= IF exp:e1 THEN exp:e2 ELSE exp:e3 {: RESULT = new Absyn.IfExp(e1left, e1, e2, e3); :}
+| exp:e1 AND exp:e2 {: RESULT = new Absyn.IfExp(e1left, e1, e2, new Absyn.IntExp(e1left, 0)); :} 
+| exp:e1 OR exp:e2 {: RESULT = new Absyn.IfExp(e1left, e1, new Absyn.IntExp(e1left, 1), e2); :} 
+;
+
+
+whileExp ::= WHILE exp:e1 DO exp:e2 {: RESULT = new Absyn.WhileExp(e1left, (Absyn.Exp)e1, (Absyn.Exp)e2); :};
+
+forExp ::= FOR ID:i ASSIGN exp:e0 TO exp:e1 DO exp:e2 {: RESULT = new Absyn.ForExp(ileft, new Absyn.VarDec(ileft, Symbol.Symbol.symbol(i), null, e0), e1, e2); :};
+
+letExp ::= LET decList:e1 IN expList:e2 END {: RESULT = new Absyn.LetExp(e1left, (Absyn.DecList)e1, (Absyn.Exp)new Absyn.SeqExp(e1left, e2)); :};
+
+
+arrCreate ::= ID:i LBRACK exp:e1 RBRACK OF exp:e2 {: RESULT = new Absyn.ArrayExp(ileft, Symbol.Symbol.symbol(i), e1, e2); :};
+
+recCreate ::= ID:i LBRACE fieldCreateList:fcl RBRACE {: RESULT = new Absyn.RecordExp(ileft, Symbol.Symbol.symbol(i), fcl); :};
+
+fieldCreateList ::= fieldCreate:fc fieldCreateListAux:fcla {: RESULT = new Absyn.FieldExpList(fcleft, fc.name, fc.init, fcla); :}
+| /* empty */;
+
+fieldCreateListAux ::= COMMA fieldCreate:fc fieldCreateListAux:fcla {: RESULT = new Absyn.FieldExpList(fcleft, fc.name, fc.init, fcla); :}
+| /* empty */;
+
+fieldCreate ::= ID:i EQ exp:e {: RESULT = new Absyn.FieldExpList(ileft, Symbol.Symbol.symbol(i), e, null); :};

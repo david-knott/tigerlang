@@ -1,0 +1,14 @@
+@ReturnType call = Object;
+call = CALL(exp args*) : 100
+@Prologue reducer.callPrologue()
+@Reduction reducer.call(__p, args);
+
+
+@ReturnType expCall = Object;
+expCall = SXP(call c) : 1
+@Reduction reducer.expCall(c);
+
+
+@ReturnType moveCall = Object;
+moveCall = MOVE(exp e, call c): 1
+@Reduction reducer.moveCall(e, c);

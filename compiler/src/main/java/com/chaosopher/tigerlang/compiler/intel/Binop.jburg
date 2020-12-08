@@ -1,0 +1,16 @@
+/* binop of two expressions, each which returns a temp */
+binop = BINOP(exp left, exp right) : 1
+/* @Prologue reducer.setUpBinopExpression(p) */
+@Reduction reducer.binopExpression(__p, left, right);
+
+/* binop on expression and const */
+binop = BINOP(exp left,  integerConstant right) : 1
+@Reduction reducer.binopExpression(__p, left, right);
+
+/* binop on expression and const */
+binop = BINOP(integerConstant left, exp right) : 1
+@Reduction reducer.binopExpression(__p, left, right);
+
+/* binop on two consts, these can be folded */
+binop = BINOP(integerConstant left, integerConstant right) : 1
+@Reduction reducer.binopExpression(__p, left, right);

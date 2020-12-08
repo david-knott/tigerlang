@@ -1,0 +1,27 @@
+@Include "./Temp.jburg"
+exp = temp;
+
+
+@ReturnType integerConstant = Integer;
+integerConstant = CONST(void) : 1 
+@Reduction reducer.integerConstant(__p);
+
+@ReturnType integerExpression = Temp.Temp;
+integerExpression = integerConstant : 1
+@Reduction reducer.integerExpression(integerConstant);
+exp = integerExpression;
+
+@ReturnType name = Temp.Temp;
+name = NAME(void) : 1
+@Reduction reducer.nameExpression(__p);
+exp = name;
+
+@Include "./Binop.jburg"
+exp = binop;
+
+@Include "./Mem.jburg"
+exp = mem;
+
+@Include "./Call.jburg"
+exp = expCall;
+stmt = moveCall;

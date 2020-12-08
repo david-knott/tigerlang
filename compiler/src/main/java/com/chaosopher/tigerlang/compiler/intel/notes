@@ -1,0 +1,111 @@
+Assembly for a function (a,b,c,d,e,f,g) called from a main function
+
+#include <stdio.h>
+int function1(int a, int b, int c, int d, int e, int f, int g){
+    int result = a * b * c * d * e * f * g;
+    return c;
+}
+
+int main()
+{
+   int a = 11;
+   int b = 22;
+   int c = 33;
+   int d = 44;
+   int e = 55;
+   int f = 66;
+   int g  = 77;
+   int result  = function1(a,b,c,d,e,f,g);
+   return 0;
+}
+
+
+In main, the literal ints are placed at offsets from the base pointer, starting from 8, increasing by 4 bytes
+
+	mov	DWORD PTR -32[rbp], 11
+	mov	DWORD PTR -28[rbp], 21
+	mov	DWORD PTR -24[rbp], 22
+	mov	DWORD PTR -20[rbp], 22
+	mov	DWORD PTR -16[rbp], 22
+	mov	DWORD PTR -12[rbp], 22
+	mov	DWORD PTR -8[rbp], 22
+  
+These are then copied into registers
+
+	mov	r9d, DWORD PTR -12[rbp]
+	mov	r8d, DWORD PTR -16[rbp]2
+	mov	ecx, DWORD PTR -20[rbp]
+	mov	edx, DWORD PTR -24[rbp]
+	mov	esi, DWORD PTR -28[rbp]
+	mov	eax, DWORD PTR -32[rbp]
+	mov	edi, DWORD PTR -8[rbp]
+  
+register rdi is copied onto the stack ( the only reference to this register )
+copy eax ( data at -32 ) onto edi
+function is then called
+
+function pushes current base pointer onto stack
+copies current stack pointer to base pointer
+copies 6 of the 7 register values into memory offsets relative to the (new) base pointer
+
+
+
+
+.file	"one_function.c"
+	.intel_syntax noprefix
+	.text
+	.globl	function1
+	.type	function1, @function
+function1:
+	push	rbp
+	mov	rbp, rsp
+	mov	DWORD PTR -20[rbp], edi
+	mov	DWORD PTR -24[rbp], esi
+	mov	DWORD PTR -28[rbp], edx
+	mov	DWORD PTR -32[rbp], ecx
+	mov	DWORD PTR -36[rbp], r8d
+	mov	DWORD PTR -40[rbp], r9d
+	mov	eax, DWORD PTR -20[rbp]
+	imul	eax, DWORD PTR -24[rbp]
+	imul	eax, DWORD PTR -28[rbp]
+	imul	eax, DWORD PTR -32[rbp]
+	imul	eax, DWORD PTR -36[rbp]
+	imul	eax, DWORD PTR -40[rbp]
+	mov	edx, DWORD PTR 16[rbp]
+	imul	eax, edx
+	mov	DWORD PTR -4[rbp], eax
+	mov	eax, DWORD PTR -28[rbp]
+	pop	rbp
+	ret
+	.size	function1, .-function1
+	.globl	main
+	.type	main, @function
+main:
+	push	rbp
+	mov	rbp, rsp
+	sub	rsp, 32
+	mov	DWORD PTR -32[rbp], 11
+	mov	DWORD PTR -28[rbp], 22
+	mov	DWORD PTR -24[rbp], 33
+	mov	DWORD PTR -20[rbp], 44
+	mov	DWORD PTR -16[rbp], 55
+	mov	DWORD PTR -12[rbp], 66
+	mov	DWORD PTR -8[rbp], 77
+	mov	r9d, DWORD PTR -12[rbp]
+	mov	r8d, DWORD PTR -16[rbp]
+	mov	ecx, DWORD PTR -20[rbp]
+	mov	edx, DWORD PTR -24[rbp]
+	mov	esi, DWORD PTR -28[rbp]
+	mov	eax, DWORD PTR -32[rbp]
+	mov	edi, DWORD PTR -8[rbp]
+	push	rdi
+	mov	edi, eax
+	call	function1
+	add	rsp, 8
+	mov	DWORD PTR -4[rbp], eax
+	mov	eax, 0
+	leave
+	ret
+	.size	main, .-main
+	.ident	"GCC: (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0"
+	.section	.note.GNU-stack,"",@progbits

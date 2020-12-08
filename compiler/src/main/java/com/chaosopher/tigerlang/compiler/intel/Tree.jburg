@@ -1,0 +1,28 @@
+@Language Java;
+@Package Intel;
+@Header {
+	import com.chaosopher.tigerlang.compiler.tree.*;
+	import static Tree.TreeKind.*;
+}
+@INodeType Tree.IR;
+@Constant ERROR_TRAP = 268435456;
+@ReturnType temp = Temp.Temp;
+@ReturnType exp = Temp.Temp;
+@ReturnType mem = Temp.Temp;
+@ReturnType binop = Temp.Temp;
+@Members
+{
+	private Reducer reducer;
+	public void setReducer(Reducer reducer) {
+		this.reducer = reducer;
+	}
+
+	private Emitter emitter;
+	public void setEmitter(Emitter emitter) {
+		this.emitter = emitter;
+	}
+}
+
+@Include "./Common.jburg"
+@Include "./Stm.jburg"
+@Include "./Exp.jburg"

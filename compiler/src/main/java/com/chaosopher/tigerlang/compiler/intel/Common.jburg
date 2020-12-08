@@ -1,0 +1,20 @@
+/* indirect addressing with displacement and scaled index */
+
+@ReturnType binopOffsetExpression = BinopOffsetExpression;
+binopOffsetExpression = BINOP(exp arg0, integerConstant arg1): 1
+@Reduction reducer.binopOffsetExpression(__p, arg0, arg1);
+
+binopOffsetExpression = BINOP(integerConstant arg0, exp arg1): 1
+@Reduction reducer.binopOffsetExpression(__p, arg1, arg0);
+
+@ReturnType indirect = IndirectExpression;
+indirect = MEM(exp arg) : 5 
+@Reduction reducer.indirect(__p, arg);
+
+@ReturnType indirectWithDisplacement = IndirectWithDisplacementExpression;
+indirectWithDisplacement = MEM(binopOffsetExpression arg0) : 4
+@Reduction reducer.indirectWithDisplacement(__p, arg0);
+
+@ReturnType indirectWithDisplacementAndScale = IndirectWithDisplacementAndScaleExpression;
+indirectWithDisplacementAndScale = MEM(BINOP(exp arg0, binopOffsetExpression arg1)) : 3
+@Reduction reducer.indirectWithDisplacementAndScale(__p, arg0, arg1);

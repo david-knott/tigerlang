@@ -1,0 +1,6 @@
+let
+	var a:int := 99
+in
+    a:= a + 33
+end
+

@@ -1,0 +1,8 @@
+mem = MEM(binopOffsetExpression boe) : 4
+@Reduction reducer.mem(boe);
+
+mem = MEM(integerConstant ic) : 4
+@Reduction reducer.mem(ic);
+
+mem = MEM(exp e) : 5
+@Reduction reducer.mem(e);

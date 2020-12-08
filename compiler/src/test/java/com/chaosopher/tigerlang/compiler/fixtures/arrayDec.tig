@@ -1,0 +1,8 @@
+let
+    
+    type intArray = array of int
+    var row := intArray [10] of 66 
+    var x:int := 3
+in
+    x := row[5]
+end

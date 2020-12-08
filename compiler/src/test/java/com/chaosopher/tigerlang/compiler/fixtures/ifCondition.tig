@@ -1,0 +1,6 @@
+let
+	var a:int := 99
+in
+    if a <> 0 then a := 100
+end
+

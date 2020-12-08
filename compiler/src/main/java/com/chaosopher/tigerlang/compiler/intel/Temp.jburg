@@ -1,0 +1,3 @@
+/* returns the temp bound to the IR node */
+temp = TEMP(void): 10
+@Reduction reducer.temp(__p);

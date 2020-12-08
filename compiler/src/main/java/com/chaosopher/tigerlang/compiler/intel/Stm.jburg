@@ -1,0 +1,27 @@
+@Include "./Move.jburg"
+@ReturnType stmt = Object;
+stmt = move;
+
+@Include "./Cjump.jburg"
+stmt = cjump;
+
+sxp = SXP(exp arg) : 1
+@Reduction reducer.sxpStatement(__p, arg);
+stmt = sxp;
+
+label = LABEL(void) : 1 
+@Reduction reducer.labelStatement(__p);
+stmt = label;
+
+stmt = SEQ(stmt left, stmt right) : 1
+@Reduction reducer.seqStatement(__p, left, right);
+
+/*
+jump = JUMP(exp arg0) : 10 
+@Reduction reducer.jumpStatement(__p, arg0);
+stmt = jump;
+*/
+
+jump = JUMP(NAME(void) arg0) : 1 
+@Reduction reducer.jumpStatement(__p, arg0);
+stmt = jump;

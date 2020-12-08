@@ -1,0 +1,2 @@
+cjump = CJUMP(exp left, exp right) : 1
+@Reduction reducer.cjumpStatement(__p, left, right);

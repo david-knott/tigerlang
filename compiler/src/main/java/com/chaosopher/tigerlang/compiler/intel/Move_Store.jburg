@@ -1,0 +1,20 @@
+/* Move mem to another mem */
+move = MOVE(MEM(exp arg0), MEM(exp arg1)): 3
+@Reduction reducer.storeMemToMem(__p, arg0, arg1);
+
+/* Indirect addressing without displacement */
+move = MOVE(indirect arg0, exp arg1) : 5
+@Reduction reducer.storeIndirect(__p, arg0, arg1);
+
+/* indirect addressing with displacement */
+move = MOVE(indirectWithDisplacement arg0, exp arg1) : 4
+@Reduction reducer.storeIndirectWithDisplacement(__p, arg0, arg1);
+
+/* indirect addressing with displacement */
+move = MOVE(indirectWithDisplacement arg0, integerConstant arg1) : 4
+@Reduction reducer.storeIndirectWithDisplacement(__p, arg0, arg1);
+
+
+/* indirect addressing with displacement and scale */
+move = MOVE(indirectWithDisplacementAndScale arg0, exp arg1) : 3
+@Reduction reducer.storeIndirectWithDisplacementAndScale(__p, arg0, arg1);
