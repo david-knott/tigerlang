@@ -1,0 +1,27 @@
+/*
+Example of static link usage.
+main calls aa, passes main.fp as static link
+aa calls dd, same level as dd, it passes aa.static_link as static link
+dd uses x, which is defined in mains frame, 
+Therefore we need to ensure that dd has static link that is a pointer
+to main.fp
+
+sl arg passed to dd from aa
+aa expects frame pointer address for main
+get aa's static link mem(a.fp - 8) : address of aa's parent frame
+
+
+*/
+let
+
+var x:int := 3
+
+function dd() = printi(x)
+
+function aa() = dd()
+
+in
+
+aa()
+
+end

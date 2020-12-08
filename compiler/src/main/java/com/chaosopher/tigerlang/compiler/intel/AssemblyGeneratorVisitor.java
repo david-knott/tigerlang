@@ -32,12 +32,12 @@ class AssemblyGeneratorVisitor implements FragmentVisitor {
                 throw new Error(e);
             }
         }
-        this.fragList = new FragList(new Assem.ProcFrag(reducer.iList, procFrag.frame), this.fragList);
+        this.fragList = new FragList(new com.chaosopher.tigerlang.compiler.assem.ProcFrag(reducer.iList, procFrag.frame), this.fragList);
     }
 
     @Override
     public void visit(DataFrag dataFrag) {
-        this.fragList = new FragList(new Assem.DataFrag(dataFrag.toString()), this.fragList);
+        this.fragList = new FragList(new com.chaosopher.tigerlang.compiler.assem.DataFrag(dataFrag.toString()), this.fragList);
     }
 
     public FragList getAssemFragList() {

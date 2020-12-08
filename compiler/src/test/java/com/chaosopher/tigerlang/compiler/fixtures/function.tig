@@ -1,0 +1,6 @@
+let
+function fa(): int =
+3
+in
+printi(fa())
+end

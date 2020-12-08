@@ -659,7 +659,7 @@ public class Grm extends java_cup.runtime.lr_parser {
     }
 
  
-  public Absyn.Exp parseResult;
+  public com.chaosopher.tigerlang.compiler.absyn.Exp parseResult;
   com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg errorMsg;
   Lexer lexer;
 
@@ -719,14 +719,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 97: // fieldCreate ::= ID EQ exp 
             {
-              Absyn.FieldExpList RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.FieldExpList RESULT = null;
 		int ileft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).right;
 		String i = (String)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
 		int eleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Exp e = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.FieldExpList(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), e, null); 
+		com.chaosopher.tigerlang.compiler.absyn.Exp e = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.FieldExpList(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), e, null); 
               CUP$Grm$result = new java_cup.runtime.Symbol(28/*fieldCreate*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -734,7 +734,7 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 96: // fieldCreateListAux ::= 
             {
-              Absyn.FieldExpList RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.FieldExpList RESULT = null;
 
               CUP$Grm$result = new java_cup.runtime.Symbol(30/*fieldCreateListAux*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -743,14 +743,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 95: // fieldCreateListAux ::= COMMA fieldCreate fieldCreateListAux 
             {
-              Absyn.FieldExpList RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.FieldExpList RESULT = null;
 		int fcleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left;
 		int fcright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).right;
-		Absyn.FieldExpList fc = (Absyn.FieldExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
+		com.chaosopher.tigerlang.compiler.absyn.FieldExpList fc = (com.chaosopher.tigerlang.compiler.absyn.FieldExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
 		int fclaleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int fclaright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.FieldExpList fcla = (Absyn.FieldExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.FieldExpList(fcleft, fc.name, fc.init, fcla); 
+		com.chaosopher.tigerlang.compiler.absyn.FieldExpList fcla = (com.chaosopher.tigerlang.compiler.absyn.FieldExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.FieldExpList(fcleft, fc.name, fc.init, fcla); 
               CUP$Grm$result = new java_cup.runtime.Symbol(30/*fieldCreateListAux*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -758,7 +758,7 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 94: // fieldCreateList ::= 
             {
-              Absyn.FieldExpList RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.FieldExpList RESULT = null;
 
               CUP$Grm$result = new java_cup.runtime.Symbol(29/*fieldCreateList*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -767,14 +767,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 93: // fieldCreateList ::= fieldCreate fieldCreateListAux 
             {
-              Absyn.FieldExpList RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.FieldExpList RESULT = null;
 		int fcleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left;
 		int fcright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).right;
-		Absyn.FieldExpList fc = (Absyn.FieldExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
+		com.chaosopher.tigerlang.compiler.absyn.FieldExpList fc = (com.chaosopher.tigerlang.compiler.absyn.FieldExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
 		int fclaleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int fclaright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.FieldExpList fcla = (Absyn.FieldExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.FieldExpList(fcleft, fc.name, fc.init, fcla); 
+		com.chaosopher.tigerlang.compiler.absyn.FieldExpList fcla = (com.chaosopher.tigerlang.compiler.absyn.FieldExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.FieldExpList(fcleft, fc.name, fc.init, fcla); 
               CUP$Grm$result = new java_cup.runtime.Symbol(29/*fieldCreateList*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -782,14 +782,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 92: // recCreate ::= ID LBRACE fieldCreateList RBRACE 
             {
-              Absyn.RecordExp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.RecordExp RESULT = null;
 		int ileft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-3)).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-3)).right;
 		String i = (String)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-3)).value;
 		int fclleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left;
 		int fclright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).right;
-		Absyn.FieldExpList fcl = (Absyn.FieldExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
-		 RESULT = new Absyn.RecordExp(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), fcl); 
+		com.chaosopher.tigerlang.compiler.absyn.FieldExpList fcl = (com.chaosopher.tigerlang.compiler.absyn.FieldExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.RecordExp(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), fcl); 
               CUP$Grm$result = new java_cup.runtime.Symbol(26/*recCreate*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-3)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -797,17 +797,17 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 91: // arrCreate ::= ID LBRACK exp RBRACK OF exp 
             {
-              Absyn.ArrayExp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.ArrayExp RESULT = null;
 		int ileft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-5)).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-5)).right;
 		String i = (String)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-5)).value;
 		int e1left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-3)).left;
 		int e1right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-3)).right;
-		Absyn.Exp e1 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-3)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp e1 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-3)).value;
 		int e2left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Exp e2 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.ArrayExp(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), e1, e2); 
+		com.chaosopher.tigerlang.compiler.absyn.Exp e2 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.ArrayExp(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), e1, e2); 
               CUP$Grm$result = new java_cup.runtime.Symbol(32/*arrCreate*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-5)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -815,14 +815,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 90: // letExp ::= LET decList IN expList END 
             {
-              Absyn.Exp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Exp RESULT = null;
 		int e1left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-3)).left;
 		int e1right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-3)).right;
-		Absyn.DecList e1 = (Absyn.DecList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-3)).value;
+		com.chaosopher.tigerlang.compiler.absyn.DecList e1 = (com.chaosopher.tigerlang.compiler.absyn.DecList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-3)).value;
 		int e2left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).right;
-		Absyn.ExpList e2 = (Absyn.ExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
-		 RESULT = new Absyn.LetExp(e1left, (Absyn.DecList)e1, (Absyn.Exp)new Absyn.SeqExp(e1left, e2)); 
+		com.chaosopher.tigerlang.compiler.absyn.ExpList e2 = (com.chaosopher.tigerlang.compiler.absyn.ExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.LetExp(e1left, (com.chaosopher.tigerlang.compiler.absyn.DecList)e1, (com.chaosopher.tigerlang.compiler.absyn.Exp)new com.chaosopher.tigerlang.compiler.absyn.SeqExp(e1left, e2)); 
               CUP$Grm$result = new java_cup.runtime.Symbol(7/*letExp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-4)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -830,20 +830,20 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 89: // forExp ::= FOR ID ASSIGN exp TO exp DO exp 
             {
-              Absyn.ForExp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.ForExp RESULT = null;
 		int ileft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-6)).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-6)).right;
 		String i = (String)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-6)).value;
 		int e0left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-4)).left;
 		int e0right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-4)).right;
-		Absyn.Exp e0 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-4)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp e0 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-4)).value;
 		int e1left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left;
 		int e1right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).right;
-		Absyn.Exp e1 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp e1 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
 		int e2left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Exp e2 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.ForExp(ileft, new com.chaosopher.tigerlang.compiler.absyn.VarDec(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), null, e0), e1, e2); 
+		com.chaosopher.tigerlang.compiler.absyn.Exp e2 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.ForExp(ileft, new com.chaosopher.tigerlang.compiler.absyn.VarDec(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), null, e0), e1, e2); 
               CUP$Grm$result = new java_cup.runtime.Symbol(41/*forExp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-7)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -851,14 +851,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 88: // whileExp ::= WHILE exp DO exp 
             {
-              Absyn.WhileExp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.WhileExp RESULT = null;
 		int e1left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left;
 		int e1right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).right;
-		Absyn.Exp e1 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp e1 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
 		int e2left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Exp e2 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.WhileExp(e1left, (Absyn.Exp)e1, (Absyn.Exp)e2); 
+		com.chaosopher.tigerlang.compiler.absyn.Exp e2 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.WhileExp(e1left, (com.chaosopher.tigerlang.compiler.absyn.Exp)e1, (com.chaosopher.tigerlang.compiler.absyn.Exp)e2); 
               CUP$Grm$result = new java_cup.runtime.Symbol(40/*whileExp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-3)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -866,14 +866,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 87: // ifThenElse ::= exp OR exp 
             {
-              Absyn.IfExp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.IfExp RESULT = null;
 		int e1left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left;
 		int e1right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).right;
-		Absyn.Exp e1 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp e1 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
 		int e2left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Exp e2 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.IfExp(e1left, e1, new Absyn.IntExp(e1left, 1), e2); 
+		com.chaosopher.tigerlang.compiler.absyn.Exp e2 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.IfExp(e1left, e1, new com.chaosopher.tigerlang.compiler.absyn.IntExp(e1left, 1), e2); 
               CUP$Grm$result = new java_cup.runtime.Symbol(39/*ifThenElse*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -881,14 +881,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 86: // ifThenElse ::= exp AND exp 
             {
-              Absyn.IfExp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.IfExp RESULT = null;
 		int e1left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left;
 		int e1right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).right;
-		Absyn.Exp e1 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp e1 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
 		int e2left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Exp e2 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.IfExp(e1left, e1, e2, new Absyn.IntExp(e1left, 0)); 
+		com.chaosopher.tigerlang.compiler.absyn.Exp e2 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.IfExp(e1left, e1, e2, new com.chaosopher.tigerlang.compiler.absyn.IntExp(e1left, 0)); 
               CUP$Grm$result = new java_cup.runtime.Symbol(39/*ifThenElse*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -896,17 +896,17 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 85: // ifThenElse ::= IF exp THEN exp ELSE exp 
             {
-              Absyn.IfExp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.IfExp RESULT = null;
 		int e1left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-4)).left;
 		int e1right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-4)).right;
-		Absyn.Exp e1 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-4)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp e1 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-4)).value;
 		int e2left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).right;
-		Absyn.Exp e2 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp e2 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
 		int e3left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int e3right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Exp e3 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.IfExp(e1left, e1, e2, e3); 
+		com.chaosopher.tigerlang.compiler.absyn.Exp e3 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.IfExp(e1left, e1, e2, e3); 
               CUP$Grm$result = new java_cup.runtime.Symbol(39/*ifThenElse*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-5)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -914,14 +914,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 84: // ifThen ::= IF exp THEN exp 
             {
-              Absyn.IfExp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.IfExp RESULT = null;
 		int e1left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left;
 		int e1right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).right;
-		Absyn.Exp e1 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp e1 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
 		int e2left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Exp e2 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.IfExp(e1left, e1, e2); 
+		com.chaosopher.tigerlang.compiler.absyn.Exp e2 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.IfExp(e1left, e1, e2); 
               CUP$Grm$result = new java_cup.runtime.Symbol(38/*ifThen*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-3)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -929,14 +929,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 83: // assignment ::= lValue ASSIGN exp 
             {
-              Absyn.AssignExp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.AssignExp RESULT = null;
 		int lleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left;
 		int lright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).right;
-		Absyn.Var l = (Absyn.Var)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Var l = (com.chaosopher.tigerlang.compiler.absyn.Var)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
 		int eleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Exp e = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.AssignExp(lleft, l, e); 
+		com.chaosopher.tigerlang.compiler.absyn.Exp e = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.AssignExp(lleft, l, e); 
               CUP$Grm$result = new java_cup.runtime.Symbol(27/*assignment*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -944,7 +944,7 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 82: // expListAux ::= 
             {
-              Absyn.ExpList RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.ExpList RESULT = null;
 
               CUP$Grm$result = new java_cup.runtime.Symbol(4/*expListAux*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -953,14 +953,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 81: // expListAux ::= SEMICOLON exp expListAux 
             {
-              Absyn.ExpList RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.ExpList RESULT = null;
 		int eleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).right;
-		Absyn.Exp e = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp e = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.ExpList a = (Absyn.ExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.ExpList(e, a); 
+		com.chaosopher.tigerlang.compiler.absyn.ExpList a = (com.chaosopher.tigerlang.compiler.absyn.ExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.ExpList(e, a); 
               CUP$Grm$result = new java_cup.runtime.Symbol(4/*expListAux*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -968,7 +968,7 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 80: // expList ::= 
             {
-              Absyn.ExpList RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.ExpList RESULT = null;
 
               CUP$Grm$result = new java_cup.runtime.Symbol(3/*expList*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -977,14 +977,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 79: // expList ::= exp expListAux 
             {
-              Absyn.ExpList RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.ExpList RESULT = null;
 		int eleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).right;
-		Absyn.Exp e = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp e = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.ExpList a = (Absyn.ExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.ExpList(e, a); 
+		com.chaosopher.tigerlang.compiler.absyn.ExpList a = (com.chaosopher.tigerlang.compiler.absyn.ExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.ExpList(e, a); 
               CUP$Grm$result = new java_cup.runtime.Symbol(3/*expList*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -992,7 +992,7 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 78: // paramListAux ::= 
             {
-              Absyn.ExpList RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.ExpList RESULT = null;
 
               CUP$Grm$result = new java_cup.runtime.Symbol(6/*paramListAux*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -1001,14 +1001,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 77: // paramListAux ::= COMMA exp paramListAux 
             {
-              Absyn.ExpList RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.ExpList RESULT = null;
 		int eleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).right;
-		Absyn.Exp e = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp e = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.ExpList a = (Absyn.ExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.ExpList(e, a); 
+		com.chaosopher.tigerlang.compiler.absyn.ExpList a = (com.chaosopher.tigerlang.compiler.absyn.ExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.ExpList(e, a); 
               CUP$Grm$result = new java_cup.runtime.Symbol(6/*paramListAux*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1016,7 +1016,7 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 76: // paramList ::= 
             {
-              Absyn.ExpList RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.ExpList RESULT = null;
 
               CUP$Grm$result = new java_cup.runtime.Symbol(5/*paramList*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -1025,14 +1025,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 75: // paramList ::= exp paramListAux 
             {
-              Absyn.ExpList RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.ExpList RESULT = null;
 		int eleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).right;
-		Absyn.Exp e = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp e = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.ExpList a = (Absyn.ExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.ExpList(e, a); 
+		com.chaosopher.tigerlang.compiler.absyn.ExpList a = (com.chaosopher.tigerlang.compiler.absyn.ExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.ExpList(e, a); 
               CUP$Grm$result = new java_cup.runtime.Symbol(5/*paramList*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1040,14 +1040,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 74: // callExp ::= ID LPAREN paramList RPAREN 
             {
-              Absyn.CallExp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.CallExp RESULT = null;
 		int ileft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-3)).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-3)).right;
 		String i = (String)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-3)).value;
 		int elleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left;
 		int elright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).right;
-		Absyn.ExpList el = (Absyn.ExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
-		 RESULT = new Absyn.CallExp(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), el); 
+		com.chaosopher.tigerlang.compiler.absyn.ExpList el = (com.chaosopher.tigerlang.compiler.absyn.ExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.CallExp(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), el); 
               CUP$Grm$result = new java_cup.runtime.Symbol(37/*callExp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-3)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1055,7 +1055,7 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 73: // seqExpAux ::= 
             {
-              Absyn.ExpList RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.ExpList RESULT = null;
 
               CUP$Grm$result = new java_cup.runtime.Symbol(36/*seqExpAux*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -1064,14 +1064,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 72: // seqExpAux ::= SEMICOLON exp seqExpAux 
             {
-              Absyn.ExpList RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.ExpList RESULT = null;
 		int eleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).right;
-		Absyn.Exp e = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp e = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
 		int sealeft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int searight = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.ExpList sea = (Absyn.ExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.ExpList(e, sea); 
+		com.chaosopher.tigerlang.compiler.absyn.ExpList sea = (com.chaosopher.tigerlang.compiler.absyn.ExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.ExpList(e, sea); 
               CUP$Grm$result = new java_cup.runtime.Symbol(36/*seqExpAux*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1079,14 +1079,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 71: // seqExp ::= LPAREN exp seqExpAux RPAREN 
             {
-              Absyn.ExpList RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.ExpList RESULT = null;
 		int eleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).right;
-		Absyn.Exp e = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp e = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
 		int sealeft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left;
 		int searight = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).right;
-		Absyn.ExpList sea = (Absyn.ExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
-		 RESULT = new Absyn.ExpList(e, sea); 
+		com.chaosopher.tigerlang.compiler.absyn.ExpList sea = (com.chaosopher.tigerlang.compiler.absyn.ExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.ExpList(e, sea); 
               CUP$Grm$result = new java_cup.runtime.Symbol(35/*seqExp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-3)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1094,7 +1094,7 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 70: // seqExp ::= LPAREN RPAREN 
             {
-              Absyn.ExpList RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.ExpList RESULT = null;
 
               CUP$Grm$result = new java_cup.runtime.Symbol(35/*seqExp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -1103,14 +1103,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 69: // infixExp ::= exp LE exp 
             {
-              Absyn.OpExp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.OpExp RESULT = null;
 		int e1left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left;
 		int e1right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).right;
-		Absyn.Exp e1 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp e1 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
 		int e2left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Exp e2 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.LE, e2); 
+		com.chaosopher.tigerlang.compiler.absyn.Exp e2 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.OpExp(e1left, e1, com.chaosopher.tigerlang.compiler.absyn.OpExp.LE, e2); 
               CUP$Grm$result = new java_cup.runtime.Symbol(34/*infixExp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1118,14 +1118,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 68: // infixExp ::= exp GE exp 
             {
-              Absyn.OpExp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.OpExp RESULT = null;
 		int e1left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left;
 		int e1right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).right;
-		Absyn.Exp e1 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp e1 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
 		int e2left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Exp e2 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.GE, e2); 
+		com.chaosopher.tigerlang.compiler.absyn.Exp e2 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.OpExp(e1left, e1, com.chaosopher.tigerlang.compiler.absyn.OpExp.GE, e2); 
               CUP$Grm$result = new java_cup.runtime.Symbol(34/*infixExp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1133,14 +1133,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 67: // infixExp ::= exp LT exp 
             {
-              Absyn.OpExp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.OpExp RESULT = null;
 		int e1left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left;
 		int e1right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).right;
-		Absyn.Exp e1 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp e1 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
 		int e2left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Exp e2 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.LT, e2); 
+		com.chaosopher.tigerlang.compiler.absyn.Exp e2 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.OpExp(e1left, e1, com.chaosopher.tigerlang.compiler.absyn.OpExp.LT, e2); 
               CUP$Grm$result = new java_cup.runtime.Symbol(34/*infixExp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1148,14 +1148,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 66: // infixExp ::= exp GT exp 
             {
-              Absyn.OpExp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.OpExp RESULT = null;
 		int e1left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left;
 		int e1right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).right;
-		Absyn.Exp e1 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp e1 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
 		int e2left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Exp e2 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.GT, e2); 
+		com.chaosopher.tigerlang.compiler.absyn.Exp e2 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.OpExp(e1left, e1, com.chaosopher.tigerlang.compiler.absyn.OpExp.GT, e2); 
               CUP$Grm$result = new java_cup.runtime.Symbol(34/*infixExp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1163,14 +1163,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 65: // infixExp ::= exp NEQ exp 
             {
-              Absyn.OpExp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.OpExp RESULT = null;
 		int e1left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left;
 		int e1right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).right;
-		Absyn.Exp e1 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp e1 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
 		int e2left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Exp e2 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.NE, e2); 
+		com.chaosopher.tigerlang.compiler.absyn.Exp e2 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.OpExp(e1left, e1, com.chaosopher.tigerlang.compiler.absyn.OpExp.NE, e2); 
               CUP$Grm$result = new java_cup.runtime.Symbol(34/*infixExp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1178,14 +1178,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 64: // infixExp ::= exp EQ exp 
             {
-              Absyn.OpExp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.OpExp RESULT = null;
 		int e1left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left;
 		int e1right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).right;
-		Absyn.Exp e1 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp e1 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
 		int e2left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Exp e2 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.EQ, e2); 
+		com.chaosopher.tigerlang.compiler.absyn.Exp e2 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.OpExp(e1left, e1, com.chaosopher.tigerlang.compiler.absyn.OpExp.EQ, e2); 
               CUP$Grm$result = new java_cup.runtime.Symbol(34/*infixExp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1193,14 +1193,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 63: // infixExp ::= exp DIVIDE exp 
             {
-              Absyn.OpExp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.OpExp RESULT = null;
 		int e1left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left;
 		int e1right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).right;
-		Absyn.Exp e1 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp e1 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
 		int e2left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Exp e2 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.DIV, e2); 
+		com.chaosopher.tigerlang.compiler.absyn.Exp e2 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.OpExp(e1left, e1, com.chaosopher.tigerlang.compiler.absyn.OpExp.DIV, e2); 
               CUP$Grm$result = new java_cup.runtime.Symbol(34/*infixExp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1208,14 +1208,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 62: // infixExp ::= exp TIMES exp 
             {
-              Absyn.OpExp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.OpExp RESULT = null;
 		int e1left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left;
 		int e1right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).right;
-		Absyn.Exp e1 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp e1 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
 		int e2left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Exp e2 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.MUL, e2); 
+		com.chaosopher.tigerlang.compiler.absyn.Exp e2 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.OpExp(e1left, e1, com.chaosopher.tigerlang.compiler.absyn.OpExp.MUL, e2); 
               CUP$Grm$result = new java_cup.runtime.Symbol(34/*infixExp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1223,14 +1223,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 61: // infixExp ::= exp MINUS exp 
             {
-              Absyn.OpExp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.OpExp RESULT = null;
 		int e1left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left;
 		int e1right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).right;
-		Absyn.Exp e1 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp e1 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
 		int e2left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Exp e2 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.MINUS, e2); 
+		com.chaosopher.tigerlang.compiler.absyn.Exp e2 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.OpExp(e1left, e1, com.chaosopher.tigerlang.compiler.absyn.OpExp.MINUS, e2); 
               CUP$Grm$result = new java_cup.runtime.Symbol(34/*infixExp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1238,14 +1238,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 60: // infixExp ::= exp PLUS exp 
             {
-              Absyn.OpExp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.OpExp RESULT = null;
 		int e1left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left;
 		int e1right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).right;
-		Absyn.Exp e1 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp e1 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
 		int e2left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Exp e2 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.PLUS, e2); 
+		com.chaosopher.tigerlang.compiler.absyn.Exp e2 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.OpExp(e1left, e1, com.chaosopher.tigerlang.compiler.absyn.OpExp.PLUS, e2); 
               CUP$Grm$result = new java_cup.runtime.Symbol(34/*infixExp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1253,11 +1253,11 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 59: // negation ::= MINUS exp 
             {
-              Absyn.Exp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Exp RESULT = null;
 		int e1left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int e1right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Exp e1 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.OpExp(e1left, new Absyn.IntExp(e1left,0), Absyn.OpExp.MINUS, e1); 
+		com.chaosopher.tigerlang.compiler.absyn.Exp e1 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.OpExp(e1left, new com.chaosopher.tigerlang.compiler.absyn.IntExp(e1left,0), com.chaosopher.tigerlang.compiler.absyn.OpExp.MINUS, e1); 
               CUP$Grm$result = new java_cup.runtime.Symbol(42/*negation*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1265,7 +1265,7 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 58: // exp ::= error exp 
             {
-              Absyn.Exp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Exp RESULT = null;
 
               CUP$Grm$result = new java_cup.runtime.Symbol(2/*exp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -1274,10 +1274,10 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 57: // exp ::= letExp 
             {
-              Absyn.Exp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Exp RESULT = null;
 		int leleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int leright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Exp le = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp le = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
 		 RESULT = le; 
               CUP$Grm$result = new java_cup.runtime.Symbol(2/*exp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -1286,11 +1286,11 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 56: // exp ::= BREAK 
             {
-              Absyn.Exp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Exp RESULT = null;
 		int bleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int bright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
 		Object b = (Object)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.BreakExp(bleft); 
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.BreakExp(bleft); 
               CUP$Grm$result = new java_cup.runtime.Symbol(2/*exp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1298,10 +1298,10 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 55: // exp ::= forExp 
             {
-              Absyn.Exp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Exp RESULT = null;
 		int feleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int feright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.ForExp fe = (Absyn.ForExp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		com.chaosopher.tigerlang.compiler.absyn.ForExp fe = (com.chaosopher.tigerlang.compiler.absyn.ForExp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
 		 RESULT = fe; 
               CUP$Grm$result = new java_cup.runtime.Symbol(2/*exp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -1310,10 +1310,10 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 54: // exp ::= whileExp 
             {
-              Absyn.Exp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Exp RESULT = null;
 		int weleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int weright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.WhileExp we = (Absyn.WhileExp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		com.chaosopher.tigerlang.compiler.absyn.WhileExp we = (com.chaosopher.tigerlang.compiler.absyn.WhileExp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
 		 RESULT = we; 
               CUP$Grm$result = new java_cup.runtime.Symbol(2/*exp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -1322,10 +1322,10 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 53: // exp ::= ifThen 
             {
-              Absyn.Exp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Exp RESULT = null;
 		int itleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int itright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.IfExp it = (Absyn.IfExp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		com.chaosopher.tigerlang.compiler.absyn.IfExp it = (com.chaosopher.tigerlang.compiler.absyn.IfExp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
 		 RESULT = it; 
               CUP$Grm$result = new java_cup.runtime.Symbol(2/*exp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -1334,10 +1334,10 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 52: // exp ::= ifThenElse 
             {
-              Absyn.Exp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Exp RESULT = null;
 		int iteleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int iteright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.IfExp ite = (Absyn.IfExp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		com.chaosopher.tigerlang.compiler.absyn.IfExp ite = (com.chaosopher.tigerlang.compiler.absyn.IfExp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
 		 RESULT = ite; 
               CUP$Grm$result = new java_cup.runtime.Symbol(2/*exp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -1346,10 +1346,10 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 51: // exp ::= negation 
             {
-              Absyn.Exp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Exp RESULT = null;
 		int nleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int nright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Exp n = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp n = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
 		 RESULT = n; 
               CUP$Grm$result = new java_cup.runtime.Symbol(2/*exp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -1358,10 +1358,10 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 50: // exp ::= assignment 
             {
-              Absyn.Exp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Exp RESULT = null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.AssignExp a = (Absyn.AssignExp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		com.chaosopher.tigerlang.compiler.absyn.AssignExp a = (com.chaosopher.tigerlang.compiler.absyn.AssignExp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
 		 RESULT = a; 
               CUP$Grm$result = new java_cup.runtime.Symbol(2/*exp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -1370,10 +1370,10 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 49: // exp ::= recCreate 
             {
-              Absyn.Exp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Exp RESULT = null;
 		int rcleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int rcright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.RecordExp rc = (Absyn.RecordExp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		com.chaosopher.tigerlang.compiler.absyn.RecordExp rc = (com.chaosopher.tigerlang.compiler.absyn.RecordExp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
 		 RESULT = rc; 
               CUP$Grm$result = new java_cup.runtime.Symbol(2/*exp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -1382,10 +1382,10 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 48: // exp ::= arrCreate 
             {
-              Absyn.Exp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Exp RESULT = null;
 		int acleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int acright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.ArrayExp ac = (Absyn.ArrayExp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		com.chaosopher.tigerlang.compiler.absyn.ArrayExp ac = (com.chaosopher.tigerlang.compiler.absyn.ArrayExp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
 		 RESULT = ac; 
               CUP$Grm$result = new java_cup.runtime.Symbol(2/*exp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -1394,10 +1394,10 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 47: // exp ::= infixExp 
             {
-              Absyn.Exp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Exp RESULT = null;
 		int ieleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int ieright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.OpExp ie = (Absyn.OpExp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		com.chaosopher.tigerlang.compiler.absyn.OpExp ie = (com.chaosopher.tigerlang.compiler.absyn.OpExp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
 		 RESULT = ie; 
               CUP$Grm$result = new java_cup.runtime.Symbol(2/*exp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -1406,10 +1406,10 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 46: // exp ::= callExp 
             {
-              Absyn.Exp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Exp RESULT = null;
 		int celeft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int ceright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.CallExp ce = (Absyn.CallExp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		com.chaosopher.tigerlang.compiler.absyn.CallExp ce = (com.chaosopher.tigerlang.compiler.absyn.CallExp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
 		 RESULT = ce; 
               CUP$Grm$result = new java_cup.runtime.Symbol(2/*exp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -1418,11 +1418,11 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 45: // exp ::= seqExp 
             {
-              Absyn.Exp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Exp RESULT = null;
 		int seleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int seright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.ExpList se = (Absyn.ExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.SeqExp(seleft, se); 
+		com.chaosopher.tigerlang.compiler.absyn.ExpList se = (com.chaosopher.tigerlang.compiler.absyn.ExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.SeqExp(seleft, se); 
               CUP$Grm$result = new java_cup.runtime.Symbol(2/*exp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1430,11 +1430,11 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 44: // exp ::= STRING 
             {
-              Absyn.Exp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Exp RESULT = null;
 		int sleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int sright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
 		String s = (String)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.StringExp(sleft, s); 
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.StringExp(sleft, s); 
               CUP$Grm$result = new java_cup.runtime.Symbol(2/*exp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1442,11 +1442,11 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 43: // exp ::= INT 
             {
-              Absyn.Exp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Exp RESULT = null;
 		int ileft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
 		Integer i = (Integer)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.IntExp(ileft, i); 
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.IntExp(ileft, i); 
               CUP$Grm$result = new java_cup.runtime.Symbol(2/*exp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1454,11 +1454,11 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 42: // exp ::= NIL 
             {
-              Absyn.Exp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Exp RESULT = null;
 		int nleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int nright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
 		Object n = (Object)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.NilExp(nleft); 
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.NilExp(nleft); 
               CUP$Grm$result = new java_cup.runtime.Symbol(2/*exp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1466,11 +1466,11 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 41: // exp ::= lValue 
             {
-              Absyn.Exp RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Exp RESULT = null;
 		int lvleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int lvright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Var lv = (Absyn.Var)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.VarExp(lvleft, lv); 
+		com.chaosopher.tigerlang.compiler.absyn.Var lv = (com.chaosopher.tigerlang.compiler.absyn.Var)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.VarExp(lvleft, lv); 
               CUP$Grm$result = new java_cup.runtime.Symbol(2/*exp*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1478,14 +1478,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 40: // lValue ::= ID LBRACK exp RBRACK 
             {
-              Absyn.Var RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Var RESULT = null;
 		int ileft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-3)).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-3)).right;
 		String i = (String)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-3)).value;
 		int eleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).right;
-		Absyn.Exp e = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
-		 RESULT = new Absyn.SubscriptVar(ileft, new Absyn.SimpleVar(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i)), e); 
+		com.chaosopher.tigerlang.compiler.absyn.Exp e = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.SubscriptVar(ileft, new com.chaosopher.tigerlang.compiler.absyn.SimpleVar(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i)), e); 
               CUP$Grm$result = new java_cup.runtime.Symbol(31/*lValue*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-3)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1493,14 +1493,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 39: // lValue ::= lValue LBRACK exp RBRACK 
             {
-              Absyn.Var RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Var RESULT = null;
 		int lvleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-3)).left;
 		int lvright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-3)).right;
-		Absyn.Var lv = (Absyn.Var)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-3)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Var lv = (com.chaosopher.tigerlang.compiler.absyn.Var)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-3)).value;
 		int eleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).right;
-		Absyn.Exp e = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
-		 RESULT = new Absyn.SubscriptVar(lvleft, lv, e); 
+		com.chaosopher.tigerlang.compiler.absyn.Exp e = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.SubscriptVar(lvleft, lv, e); 
               CUP$Grm$result = new java_cup.runtime.Symbol(31/*lValue*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-3)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1508,14 +1508,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 38: // lValue ::= lValue DOT ID 
             {
-              Absyn.Var RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Var RESULT = null;
 		int lvleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left;
 		int lvright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).right;
-		Absyn.Var lv = (Absyn.Var)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Var lv = (com.chaosopher.tigerlang.compiler.absyn.Var)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
 		int ileft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
 		String i = (String)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.FieldVar(lvleft, lv, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i)); 
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.FieldVar(lvleft, lv, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i)); 
               CUP$Grm$result = new java_cup.runtime.Symbol(31/*lValue*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1523,11 +1523,11 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 37: // lValue ::= ID 
             {
-              Absyn.Var RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Var RESULT = null;
 		int idleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.SimpleVar(idleft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(id)); 
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.SimpleVar(idleft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(id)); 
               CUP$Grm$result = new java_cup.runtime.Symbol(31/*lValue*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1541,11 +1541,11 @@ class CUP$Grm$actions {
 		String i = (String)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-4)).value;
 		int tleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left;
 		int tright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).right;
-		Absyn.Ty t = (Absyn.Ty)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Ty t = (com.chaosopher.tigerlang.compiler.absyn.Ty)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
 		int eleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Exp e = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.VarDec(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), (Absyn.NameTy)t, e); 
+		com.chaosopher.tigerlang.compiler.absyn.Exp e = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.VarDec(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), (com.chaosopher.tigerlang.compiler.absyn.NameTy)t, e); 
               CUP$Grm$result = new java_cup.runtime.Symbol(12/*varDec*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-5)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1559,7 +1559,7 @@ class CUP$Grm$actions {
 		String i = (String)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
 		int eleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Exp e = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp e = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
 		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.VarDec(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), null, e); 
               CUP$Grm$result = new java_cup.runtime.Symbol(12/*varDec*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-3)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -1568,17 +1568,17 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 34: // primDec ::= PRIMITIVE ID LPAREN formalVarDecList RPAREN COLON ID 
             {
-              Absyn.FunctionDec RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.FunctionDec RESULT = null;
 		int ileft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-5)).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-5)).right;
 		String i = (String)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-5)).value;
 		int fdlleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-3)).left;
 		int fdlright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-3)).right;
-		Absyn.DecList fdl = (Absyn.DecList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-3)).value;
+		com.chaosopher.tigerlang.compiler.absyn.DecList fdl = (com.chaosopher.tigerlang.compiler.absyn.DecList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-3)).value;
 		int tyleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int tyright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
 		String ty = (String)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.FunctionDec(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), fdl, new Absyn.NameTy(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(ty)), null /* no body */, null ); 
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.FunctionDec(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), fdl, new com.chaosopher.tigerlang.compiler.absyn.NameTy(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(ty)), null /* no body */, null ); 
               CUP$Grm$result = new java_cup.runtime.Symbol(15/*primDec*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-6)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1586,14 +1586,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 33: // primDec ::= PRIMITIVE ID LPAREN formalVarDecList RPAREN 
             {
-              Absyn.FunctionDec RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.FunctionDec RESULT = null;
 		int ileft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-3)).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-3)).right;
 		String i = (String)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-3)).value;
 		int fdlleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left;
 		int fdlright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).right;
-		Absyn.DecList fdl = (Absyn.DecList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
-		 RESULT = new Absyn.FunctionDec(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), fdl, null, null /* no body */, null ); 
+		com.chaosopher.tigerlang.compiler.absyn.DecList fdl = (com.chaosopher.tigerlang.compiler.absyn.DecList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.FunctionDec(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), fdl, null, null /* no body */, null ); 
               CUP$Grm$result = new java_cup.runtime.Symbol(15/*primDec*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-4)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1601,20 +1601,20 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 32: // funcDec ::= FUNCTION ID LPAREN formalVarDecList RPAREN COLON ID EQ exp 
             {
-              Absyn.FunctionDec RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.FunctionDec RESULT = null;
 		int ileft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-7)).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-7)).right;
 		String i = (String)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-7)).value;
 		int fdlleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-5)).left;
 		int fdlright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-5)).right;
-		Absyn.DecList fdl = (Absyn.DecList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-5)).value;
+		com.chaosopher.tigerlang.compiler.absyn.DecList fdl = (com.chaosopher.tigerlang.compiler.absyn.DecList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-5)).value;
 		int tyleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left;
 		int tyright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).right;
 		String ty = (String)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
 		int e1left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int e1right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Exp e1 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.FunctionDec(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), fdl, new Absyn.NameTy(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(ty)), e1, null ); 
+		com.chaosopher.tigerlang.compiler.absyn.Exp e1 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.FunctionDec(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), fdl, new com.chaosopher.tigerlang.compiler.absyn.NameTy(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(ty)), e1, null ); 
               CUP$Grm$result = new java_cup.runtime.Symbol(14/*funcDec*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-8)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1622,17 +1622,17 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 31: // funcDec ::= FUNCTION ID LPAREN formalVarDecList RPAREN EQ exp 
             {
-              Absyn.FunctionDec RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.FunctionDec RESULT = null;
 		int ileft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-5)).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-5)).right;
 		String i = (String)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-5)).value;
 		int fdlleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-3)).left;
 		int fdlright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-3)).right;
-		Absyn.DecList fdl = (Absyn.DecList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-3)).value;
+		com.chaosopher.tigerlang.compiler.absyn.DecList fdl = (com.chaosopher.tigerlang.compiler.absyn.DecList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-3)).value;
 		int e1left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int e1right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Exp e1 = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.FunctionDec(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), fdl, null, e1, null ); 
+		com.chaosopher.tigerlang.compiler.absyn.Exp e1 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.FunctionDec(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), fdl, null, e1, null ); 
               CUP$Grm$result = new java_cup.runtime.Symbol(14/*funcDec*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-6)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1640,7 +1640,7 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 30: // formalVarDecListAux ::= 
             {
-              Absyn.DecList RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.DecList RESULT = null;
 
               CUP$Grm$result = new java_cup.runtime.Symbol(10/*formalVarDecListAux*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -1649,14 +1649,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 29: // formalVarDecListAux ::= COMMA formalVarDec formalVarDecListAux 
             {
-              Absyn.DecList RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.DecList RESULT = null;
 		int dleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left;
 		int dright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).right;
 		com.chaosopher.tigerlang.compiler.absyn.VarDec d = (com.chaosopher.tigerlang.compiler.absyn.VarDec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
 		int dlleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int dlright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.DecList dl = (Absyn.DecList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.DecList(d, dl); 
+		com.chaosopher.tigerlang.compiler.absyn.DecList dl = (com.chaosopher.tigerlang.compiler.absyn.DecList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.DecList(d, dl); 
               CUP$Grm$result = new java_cup.runtime.Symbol(10/*formalVarDecListAux*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1664,7 +1664,7 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 28: // formalVarDecList ::= 
             {
-              Absyn.DecList RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.DecList RESULT = null;
 
               CUP$Grm$result = new java_cup.runtime.Symbol(9/*formalVarDecList*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -1673,14 +1673,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 27: // formalVarDecList ::= formalVarDec formalVarDecListAux 
             {
-              Absyn.DecList RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.DecList RESULT = null;
 		int dleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left;
 		int dright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).right;
 		com.chaosopher.tigerlang.compiler.absyn.VarDec d = (com.chaosopher.tigerlang.compiler.absyn.VarDec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
 		int dlleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int dlright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.DecList dl = (Absyn.DecList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.DecList(d, dl); 
+		com.chaosopher.tigerlang.compiler.absyn.DecList dl = (com.chaosopher.tigerlang.compiler.absyn.DecList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.DecList(d, dl); 
               CUP$Grm$result = new java_cup.runtime.Symbol(9/*formalVarDecList*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1694,8 +1694,8 @@ class CUP$Grm$actions {
 		String i = (String)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
 		int tleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int tright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Ty t = (Absyn.Ty)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.VarDec(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), (Absyn.NameTy)t, null); 
+		com.chaosopher.tigerlang.compiler.absyn.Ty t = (com.chaosopher.tigerlang.compiler.absyn.Ty)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.VarDec(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), (com.chaosopher.tigerlang.compiler.absyn.NameTy)t, null); 
               CUP$Grm$result = new java_cup.runtime.Symbol(13/*formalVarDec*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1703,11 +1703,11 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 25: // recTy ::= LBRACE fieldDecList RBRACE 
             {
-              Absyn.RecordTy RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.RecordTy RESULT = null;
 		int flleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left;
 		int flright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).right;
-		Absyn.FieldList fl = (Absyn.FieldList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
-		  RESULT = new Absyn.RecordTy(flleft, fl); 
+		com.chaosopher.tigerlang.compiler.absyn.FieldList fl = (com.chaosopher.tigerlang.compiler.absyn.FieldList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
+		  RESULT = new com.chaosopher.tigerlang.compiler.absyn.RecordTy(flleft, fl); 
               CUP$Grm$result = new java_cup.runtime.Symbol(22/*recTy*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1715,14 +1715,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 24: // fieldDec ::= ID COLON ID 
             {
-              Absyn.FieldList RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.FieldList RESULT = null;
 		int ileft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).right;
 		String i = (String)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
 		int tyleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int tyright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
 		String ty = (String)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.FieldList(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), new Absyn.NameTy(tyleft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(ty)), null); 
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.FieldList(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), new com.chaosopher.tigerlang.compiler.absyn.NameTy(tyleft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(ty)), null); 
               CUP$Grm$result = new java_cup.runtime.Symbol(23/*fieldDec*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1730,7 +1730,7 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 23: // fieldDecListAux ::= 
             {
-              Absyn.FieldList RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.FieldList RESULT = null;
 
               CUP$Grm$result = new java_cup.runtime.Symbol(25/*fieldDecListAux*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -1739,14 +1739,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 22: // fieldDecListAux ::= COMMA fieldDec fieldDecListAux 
             {
-              Absyn.FieldList RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.FieldList RESULT = null;
 		int fdleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left;
 		int fdright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).right;
-		Absyn.FieldList fd = (Absyn.FieldList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
+		com.chaosopher.tigerlang.compiler.absyn.FieldList fd = (com.chaosopher.tigerlang.compiler.absyn.FieldList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
 		int fdlaleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int fdlaright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.FieldList fdla = (Absyn.FieldList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.FieldList(fdleft, fd.name, fd.typ, fdla); 
+		com.chaosopher.tigerlang.compiler.absyn.FieldList fdla = (com.chaosopher.tigerlang.compiler.absyn.FieldList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.FieldList(fdleft, fd.name, fd.typ, fdla); 
               CUP$Grm$result = new java_cup.runtime.Symbol(25/*fieldDecListAux*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1754,7 +1754,7 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 21: // fieldDecList ::= 
             {
-              Absyn.FieldList RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.FieldList RESULT = null;
 
               CUP$Grm$result = new java_cup.runtime.Symbol(24/*fieldDecList*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -1763,14 +1763,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 20: // fieldDecList ::= fieldDec fieldDecListAux 
             {
-              Absyn.FieldList RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.FieldList RESULT = null;
 		int fdleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left;
 		int fdright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).right;
-		Absyn.FieldList fd = (Absyn.FieldList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
+		com.chaosopher.tigerlang.compiler.absyn.FieldList fd = (com.chaosopher.tigerlang.compiler.absyn.FieldList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
 		int fdlaleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int fdlaright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.FieldList fdla = (Absyn.FieldList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.FieldList(fdleft, fd.name, fd.typ, fdla); 
+		com.chaosopher.tigerlang.compiler.absyn.FieldList fdla = (com.chaosopher.tigerlang.compiler.absyn.FieldList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.FieldList(fdleft, fd.name, fd.typ, fdla); 
               CUP$Grm$result = new java_cup.runtime.Symbol(24/*fieldDecList*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1778,11 +1778,11 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 19: // arrTy ::= ARRAY OF ID 
             {
-              Absyn.ArrayTy RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.ArrayTy RESULT = null;
 		int ileft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
 		String i = (String)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.ArrayTy(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i)); 
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.ArrayTy(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i)); 
               CUP$Grm$result = new java_cup.runtime.Symbol(21/*arrTy*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1790,10 +1790,10 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 18: // ty ::= arrTy 
             {
-              Absyn.Ty RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Ty RESULT = null;
 		int arleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int arright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.ArrayTy ar = (Absyn.ArrayTy)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		com.chaosopher.tigerlang.compiler.absyn.ArrayTy ar = (com.chaosopher.tigerlang.compiler.absyn.ArrayTy)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
 		 RESULT = ar; 
               CUP$Grm$result = new java_cup.runtime.Symbol(20/*ty*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -1802,10 +1802,10 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 17: // ty ::= recTy 
             {
-              Absyn.Ty RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Ty RESULT = null;
 		int rtleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int rtright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.RecordTy rt = (Absyn.RecordTy)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		com.chaosopher.tigerlang.compiler.absyn.RecordTy rt = (com.chaosopher.tigerlang.compiler.absyn.RecordTy)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
 		 RESULT = rt; 
               CUP$Grm$result = new java_cup.runtime.Symbol(20/*ty*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -1814,11 +1814,11 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 16: // ty ::= ID 
             {
-              Absyn.Ty RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Ty RESULT = null;
 		int ileft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
 		String i = (String)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.NameTy(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i)); 
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.NameTy(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i)); 
               CUP$Grm$result = new java_cup.runtime.Symbol(20/*ty*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1826,14 +1826,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 15: // tyDec ::= TYPE ID EQ ty 
             {
-              Absyn.TypeDec RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.TypeDec RESULT = null;
 		int ileft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).right;
 		String i = (String)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-2)).value;
 		int tleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int tright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Ty t = (Absyn.Ty)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.TypeDec(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), t, null); 
+		com.chaosopher.tigerlang.compiler.absyn.Ty t = (com.chaosopher.tigerlang.compiler.absyn.Ty)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.TypeDec(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), t, null); 
               CUP$Grm$result = new java_cup.runtime.Symbol(18/*tyDec*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-3)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1841,7 +1841,7 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 14: // decList ::= 
             {
-              Absyn.DecList RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.DecList RESULT = null;
 
               CUP$Grm$result = new java_cup.runtime.Symbol(8/*decList*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -1850,14 +1850,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 13: // decList ::= dec decList 
             {
-              Absyn.DecList RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.DecList RESULT = null;
 		int dleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left;
 		int dright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).right;
-		Absyn.Dec d = (Absyn.Dec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Dec d = (com.chaosopher.tigerlang.compiler.absyn.Dec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
 		int dlleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int dlright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.DecList dl = (Absyn.DecList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.DecList(d, dl); 
+		com.chaosopher.tigerlang.compiler.absyn.DecList dl = (com.chaosopher.tigerlang.compiler.absyn.DecList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.DecList(d, dl); 
               CUP$Grm$result = new java_cup.runtime.Symbol(8/*decList*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1865,10 +1865,10 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 12: // dec ::= primDecList 
             {
-              Absyn.Dec RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Dec RESULT = null;
 		int fdleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int fdright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.FunctionDec fd = (Absyn.FunctionDec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		com.chaosopher.tigerlang.compiler.absyn.FunctionDec fd = (com.chaosopher.tigerlang.compiler.absyn.FunctionDec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
 		 RESULT = fd; 
               CUP$Grm$result = new java_cup.runtime.Symbol(11/*dec*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -1877,10 +1877,10 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 11: // dec ::= funcDecList 
             {
-              Absyn.Dec RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Dec RESULT = null;
 		int fdleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int fdright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.FunctionDec fd = (Absyn.FunctionDec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		com.chaosopher.tigerlang.compiler.absyn.FunctionDec fd = (com.chaosopher.tigerlang.compiler.absyn.FunctionDec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
 		 RESULT = fd; 
               CUP$Grm$result = new java_cup.runtime.Symbol(11/*dec*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -1889,7 +1889,7 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 10: // dec ::= varDec 
             {
-              Absyn.Dec RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Dec RESULT = null;
 		int vdleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int vdright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
 		com.chaosopher.tigerlang.compiler.absyn.VarDec vd = (com.chaosopher.tigerlang.compiler.absyn.VarDec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
@@ -1901,10 +1901,10 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 9: // dec ::= tyDecList 
             {
-              Absyn.Dec RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.Dec RESULT = null;
 		int tdleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int tdright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.TypeDec td = (Absyn.TypeDec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		com.chaosopher.tigerlang.compiler.absyn.TypeDec td = (com.chaosopher.tigerlang.compiler.absyn.TypeDec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
 		 RESULT = td; 
               CUP$Grm$result = new java_cup.runtime.Symbol(11/*dec*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -1913,14 +1913,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 8: // primDecList ::= primDec primDecList 
             {
-              Absyn.FunctionDec RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.FunctionDec RESULT = null;
 		int hleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left;
 		int hright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).right;
-		Absyn.FunctionDec h = (Absyn.FunctionDec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
+		com.chaosopher.tigerlang.compiler.absyn.FunctionDec h = (com.chaosopher.tigerlang.compiler.absyn.FunctionDec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
 		int tleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int tright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.FunctionDec t = (Absyn.FunctionDec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.FunctionDec(h.pos, h.name, h.params, h.result, null, t); 
+		com.chaosopher.tigerlang.compiler.absyn.FunctionDec t = (com.chaosopher.tigerlang.compiler.absyn.FunctionDec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.FunctionDec(h.pos, h.name, h.params, h.result, null, t); 
               CUP$Grm$result = new java_cup.runtime.Symbol(17/*primDecList*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1928,11 +1928,11 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 7: // primDecList ::= primDec 
             {
-              Absyn.FunctionDec RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.FunctionDec RESULT = null;
 		int hleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int hright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.FunctionDec h = (Absyn.FunctionDec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.FunctionDec(h.pos, h.name, h.params, h.result, null, null); 
+		com.chaosopher.tigerlang.compiler.absyn.FunctionDec h = (com.chaosopher.tigerlang.compiler.absyn.FunctionDec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.FunctionDec(h.pos, h.name, h.params, h.result, null, null); 
               CUP$Grm$result = new java_cup.runtime.Symbol(17/*primDecList*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1940,14 +1940,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 6: // funcDecList ::= funcDec funcDecList 
             {
-              Absyn.FunctionDec RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.FunctionDec RESULT = null;
 		int hleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left;
 		int hright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).right;
-		Absyn.FunctionDec h = (Absyn.FunctionDec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
+		com.chaosopher.tigerlang.compiler.absyn.FunctionDec h = (com.chaosopher.tigerlang.compiler.absyn.FunctionDec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
 		int tleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int tright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.FunctionDec t = (Absyn.FunctionDec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.FunctionDec(h.pos, h.name, h.params, h.result, h.body, t); 
+		com.chaosopher.tigerlang.compiler.absyn.FunctionDec t = (com.chaosopher.tigerlang.compiler.absyn.FunctionDec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.FunctionDec(h.pos, h.name, h.params, h.result, h.body, t); 
               CUP$Grm$result = new java_cup.runtime.Symbol(16/*funcDecList*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1955,11 +1955,11 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 5: // funcDecList ::= funcDec 
             {
-              Absyn.FunctionDec RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.FunctionDec RESULT = null;
 		int hleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int hright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.FunctionDec h = (Absyn.FunctionDec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.FunctionDec(h.pos, h.name, h.params, h.result, h.body, null); 
+		com.chaosopher.tigerlang.compiler.absyn.FunctionDec h = (com.chaosopher.tigerlang.compiler.absyn.FunctionDec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.FunctionDec(h.pos, h.name, h.params, h.result, h.body, null); 
               CUP$Grm$result = new java_cup.runtime.Symbol(16/*funcDecList*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1967,14 +1967,14 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 4: // tyDecList ::= tyDec tyDecList 
             {
-              Absyn.TypeDec RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.TypeDec RESULT = null;
 		int hleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left;
 		int hright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).right;
-		Absyn.TypeDec h = (Absyn.TypeDec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
+		com.chaosopher.tigerlang.compiler.absyn.TypeDec h = (com.chaosopher.tigerlang.compiler.absyn.TypeDec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
 		int tleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int tright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.TypeDec t = (Absyn.TypeDec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.TypeDec(h.pos, h.name, h.ty, t);  
+		com.chaosopher.tigerlang.compiler.absyn.TypeDec t = (com.chaosopher.tigerlang.compiler.absyn.TypeDec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.TypeDec(h.pos, h.name, h.ty, t);  
               CUP$Grm$result = new java_cup.runtime.Symbol(19/*tyDecList*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1982,11 +1982,11 @@ class CUP$Grm$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 3: // tyDecList ::= tyDec 
             {
-              Absyn.TypeDec RESULT = null;
+              com.chaosopher.tigerlang.compiler.absyn.TypeDec RESULT = null;
 		int hleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int hright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.TypeDec h = (Absyn.TypeDec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new Absyn.TypeDec(h.pos, h.name, h.ty, null); 
+		com.chaosopher.tigerlang.compiler.absyn.TypeDec h = (com.chaosopher.tigerlang.compiler.absyn.TypeDec)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.TypeDec(h.pos, h.name, h.ty, null); 
               CUP$Grm$result = new java_cup.runtime.Symbol(19/*tyDecList*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1997,7 +1997,7 @@ class CUP$Grm$actions {
               com.chaosopher.tigerlang.compiler.absyn.Absyn RESULT = null;
 		int dlleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int dlright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.DecList dl = (Absyn.DecList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		com.chaosopher.tigerlang.compiler.absyn.DecList dl = (com.chaosopher.tigerlang.compiler.absyn.DecList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
 		 RESULT = dl; 
               CUP$Grm$result = new java_cup.runtime.Symbol(1/*program*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
@@ -2009,7 +2009,7 @@ class CUP$Grm$actions {
               com.chaosopher.tigerlang.compiler.absyn.Absyn RESULT = null;
 		int eleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
-		Absyn.Exp e = (Absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
+		com.chaosopher.tigerlang.compiler.absyn.Exp e = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
 		 RESULT = e; 
               CUP$Grm$result = new java_cup.runtime.Symbol(1/*program*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }

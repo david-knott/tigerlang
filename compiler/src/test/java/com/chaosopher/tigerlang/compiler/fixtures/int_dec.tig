@@ -1,0 +1,5 @@
+let
+    var v:int := 3
+in
+printi(v)
+end

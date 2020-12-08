@@ -16,7 +16,7 @@ import com.chaosopher.tigerlang.compiler.util.BoolList;
  */
 public class Level {
    
-    Frame.Frame frame;
+    com.chaosopher.tigerlang.compiler.frame.Frame frame;
     Level parent;
     public AccessList formals;
 
@@ -24,7 +24,7 @@ public class Level {
      * Creates the root Level using frame reference f.
      * @param f
      */
-    public Level(Frame.Frame f) {
+    public Level(com.chaosopher.tigerlang.compiler.frame.Frame f) {
         frame = f;
     }
 
@@ -34,7 +34,7 @@ public class Level {
      * Note that we create a the formal list with the first argument as the static 
      * link.
      * Internally a new frame is created and referenced by this instance. The new
-     * frame may create @see Frame.Access for the functions formal arguments.
+     * frame may create @see com.chaosopher.tigerlang.compiler.frame.Access for the functions formal arguments.
      * @param prnt the parent level and associated frame.
      * @param name the label of the function
      * @param fmls the list of formal arguments
@@ -43,7 +43,7 @@ public class Level {
     public Level(Level prnt, Label name, BoolList fmls, boolean sl) {
         parent = prnt;
         frame = prnt.frame.newFrame(name, sl ? new BoolList(true, fmls) : fmls);
-        Frame.AccessList frameFormals = frame.formals;
+        com.chaosopher.tigerlang.compiler.frame.AccessList frameFormals = frame.formals;
         for(; frameFormals != null; frameFormals = frameFormals.tail) {
             if(formals == null){
                 formals = new AccessList(new Access(this, frameFormals.head));

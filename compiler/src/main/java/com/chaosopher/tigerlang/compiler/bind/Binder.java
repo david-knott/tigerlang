@@ -166,14 +166,11 @@ public class Binder extends DefaultVisitor {
             this.visitedType = def.type;
             // set this simple variables defintition to def.
             exp.setDef(def.exp);
-            // TODO: visitedType can be null if its type was undefined.
-            if(this.visitedType != null) {
-                this.setType(exp, this.visitedType);
-            }
         } else {
             this.errorMsg.error(exp.pos, "undeclared variable:" + exp.name);
-            this.visitedType = Constants.VOID;
+            this.visitedType = Constants.ERRORT;
         }
+        this.setType(exp, this.visitedType);
     }
 
     /**
@@ -237,8 +234,9 @@ public class Binder extends DefaultVisitor {
             this.visitedType = def.type;
         } else {
             this.errorMsg.error(exp.pos, "undefined type:" + exp.typ);
-            this.visitedType = null;
+            this.visitedType = Constants.ERRORT; 
         }
+        this.setType(exp, this.visitedType);
     }
 
     /**
@@ -250,12 +248,12 @@ public class Binder extends DefaultVisitor {
         if (this.typeSymbolTable.contains(exp.typ)) {
             SymbolTableElement def = this.typeSymbolTable.lookup(exp.typ);
             exp.setDef(def.exp);
-            this.setType(exp, def.type);
             this.visitedType = def.type;
         } else {
             this.errorMsg.error(exp.pos, "undefined type:" + exp.typ);
-            this.visitedType = null;
+            this.visitedType = Constants.ERRORT; 
         }
+        this.setType(exp, this.visitedType);
     }
 
     /**
@@ -303,7 +301,7 @@ public class Binder extends DefaultVisitor {
     /**
      * Private helper function to construct a record
      * form a function formal argument declaration list
-     * @param decList @Absyn.Declist
+     * @param decList @com.chaosopher.tigerlang.compiler.absyn.Declist
      * @return @see Types.RECORD
      */
     private RECORD getRecord(DecList decList) {
@@ -435,11 +433,11 @@ public class Binder extends DefaultVisitor {
             exp.setDef(def.exp);
             // set the type for binding.
             this.visitedType = def.type;
-            this.setType(exp, this.visitedType);
         } else {
             this.errorMsg.error(exp.pos, "undefined type:" + exp.name);
-            this.visitedType = null;
+            this.visitedType = Constants.ERRORT; 
         }
+        this.setType(exp, this.visitedType);
     }
 
     /**
@@ -454,25 +452,20 @@ public class Binder extends DefaultVisitor {
             SymbolTableElement def = this.typeSymbolTable.lookup(exp.typ);
             // set the type for binding
             this.visitedType = new ARRAY(def.type);
-            this.setType(exp, this.visitedType);
         } else {
             this.errorMsg.error(exp.pos, "undefined type:" + exp.typ);
-            this.visitedType = null;
+            this.visitedType = Constants.ERRORT; 
         }
+        this.setType(exp, this.visitedType);
     }
 
     @Override
     public void visit(SubscriptVar exp) {
         exp.var.accept(this);
-        //Type varType = this.visitedType;
-        //exp.var.setType(varType.actual());
-        exp.index.accept(this);
+        //exp.var.getType() could be null if the
+        //type was incorrectly defined.
         exp.setType(exp.var.getType().actual());
-
-        //Type of subscript is the element type of the array
-
-        //Type indexType = this.visitedType;
-        //exp.index.setType(indexType);
+        exp.index.accept(this);
     }    
 
     @Override

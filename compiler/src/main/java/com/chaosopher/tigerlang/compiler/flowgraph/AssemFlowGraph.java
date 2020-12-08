@@ -59,7 +59,7 @@ public class AssemFlowGraph extends FlowGraph {
     }
 
     @Override
-    public Com.chaosopher.tigerlang.compiler.assem.Instr instr(Node node) {
+    public com.chaosopher.tigerlang.compiler.assem.Instr instr(Node node) {
         return nodeMap.get(node);
     }
 

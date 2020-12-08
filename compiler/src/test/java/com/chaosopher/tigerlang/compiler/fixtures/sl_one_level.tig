@@ -1,0 +1,11 @@
+let
+
+var x:int := 3
+
+function aa() = ( printi(x) )
+
+in
+
+aa()
+
+end

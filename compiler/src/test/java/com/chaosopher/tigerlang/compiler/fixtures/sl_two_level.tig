@@ -1,0 +1,16 @@
+let
+
+var x:int := 3
+
+function aa() = 
+	let
+		function bb() = ( printi(x) )
+	in
+		bb()
+	end
+
+in
+
+aa()
+
+end

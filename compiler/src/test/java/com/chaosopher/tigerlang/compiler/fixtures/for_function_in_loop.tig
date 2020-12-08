@@ -1,0 +1,5 @@
+let
+in
+for j := 2 to 12  
+    do (printi(j))
+end

@@ -1,0 +1,6 @@
+let
+var r:int := 0
+function fac(n :int ):int = if n = 1 then 1 else n * fac(n - 1)
+in
+r := fac(5); printi(r)
+end

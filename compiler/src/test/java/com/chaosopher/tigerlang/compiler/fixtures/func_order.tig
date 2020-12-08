@@ -1,0 +1,10 @@
+let
+function one() = (print("one"); two())
+
+function two() = print("two")
+
+in
+
+one()
+
+end

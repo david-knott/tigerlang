@@ -1,0 +1,11 @@
+let
+    type intArray = array of int
+    var row := intArray [ 10 ] of 0
+in
+    row[0] := 10;
+    row[9] := 9;
+    row[5] := 5; 
+    printi(row[5]); 
+    printi(row[0]);
+    printi(row[9])
+end

@@ -1,0 +1,6 @@
+let
+var a:string := "david"
+var b:string := "april"
+in
+print(concat(a, b))
+end

@@ -1,0 +1,14 @@
+let
+	type intArray = array of int
+	var list := intArray [12] of 0
+	var i:int  := 1
+	function escape() = 
+		let 
+			var key := i
+		 in 
+		 (printi(key))
+		end
+
+ in escape()
+end
+

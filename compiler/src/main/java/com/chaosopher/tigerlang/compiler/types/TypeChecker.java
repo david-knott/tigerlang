@@ -28,7 +28,7 @@ import com.chaosopher.tigerlang.compiler.absyn.WhileExp;
 import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
 
 /**
- * A TypeChecker visitor is used to check the <see ref="Absyn.Exp"> againts the
+ * A TypeChecker visitor is used to check the <see ref="com.chaosopher.tigerlang.compiler.absyn.Exp"> againts the
  * defined language specification, also know as the semantic rules.
  * 
  * https://www.lrde.epita.fr/~tiger/assignments.split/TC_002d4.html#TC_002d4

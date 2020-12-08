@@ -1,7 +1,7 @@
 package com.chaosopher.tigerlang.compiler.absyn;
 
 /**
- * DecList class is a singled linked list of @see Absyn.Dec items.
+ * DecList class is a singled linked list of @see com.chaosopher.tigerlang.compiler.absyn.Dec items.
  */
 public class DecList extends Absyn {
    public Dec head;

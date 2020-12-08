@@ -6,9 +6,9 @@ import com.chaosopher.tigerlang.compiler.symbol.Symbol;
 
 public class Program {
 
-    public Absyn.Exp absyn;
+    public com.chaosopher.tigerlang.compiler.absyn.Exp absyn;
 
-    public Program(Absyn.Exp absyn) {
+    public Program(com.chaosopher.tigerlang.compiler.absyn.Exp absyn) {
         this.absyn = absyn;
     }
 

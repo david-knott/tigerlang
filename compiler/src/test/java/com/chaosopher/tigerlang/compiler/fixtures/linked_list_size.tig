@@ -1,0 +1,14 @@
+let 
+
+ type list = {first: int, rest: list}
+
+ var list1 := list{first=2,rest=list{first=3, rest=list{first=4,rest=nil}}}
+
+ function list_size(l: list) : int  =
+   if l = nil then 0
+   else if l.rest=nil then 1
+   else 1 + list_size(l.rest)
+
+ in printi(list_size(list1))
+end
+

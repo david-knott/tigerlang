@@ -1,0 +1,16 @@
+let 
+
+var a:int := 5
+var b:int := 4
+
+ function test() : int =
+   if a=1 then 1
+   else if b=2 then 2
+   else if a < b
+      then 3
+      else 4
+
+
+ in printi(test())
+end
+

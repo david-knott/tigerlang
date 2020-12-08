@@ -1,0 +1,7 @@
+let
+    var a:int := 4 
+    var b:int := 3
+    function fa(b: int):int = b * a
+in
+	printi(fa(b))
+end

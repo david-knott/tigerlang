@@ -83,7 +83,6 @@ public class ParserService {
         try {
             prelude = parserFactory.getParser(new FileInputStream("./data/prelude.tih"), errorMsg);
         } catch (FileNotFoundException e) {
-            //   System.out.println("Working Directory = " + System.getProperty("user.dir"));
             throw new PreludeFileNotFoundException();
         }
         DecList preludeList = (DecList)prelude.parse();

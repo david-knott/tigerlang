@@ -1,0 +1,23 @@
+let
+
+var x:int := 3
+
+function aa() = ( printi(x) )
+
+function a() = 
+let
+    function b() = 
+    let
+    in
+        aa()
+    end
+in
+    b()
+end
+
+
+in
+
+a()
+
+end

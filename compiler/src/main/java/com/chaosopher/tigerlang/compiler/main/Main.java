@@ -39,7 +39,7 @@ public class Main {
                 .register(new Sugar.Tasks())
                 .register(new Bind.Tasks())
                 .register(new FindEscape.Tasks())
-                .register(new Absyn.Tasks())
+                .register(new com.chaosopher.tigerlang.compiler.absyn.Tasks())
                 .register(new Types.Tasks())
                 .register(new Translate.Tasks())
                 .register(new Canon.Tasks(new CanonicalizationImpl()))

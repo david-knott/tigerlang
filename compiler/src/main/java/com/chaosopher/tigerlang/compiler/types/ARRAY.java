@@ -1,5 +1,6 @@
 package com.chaosopher.tigerlang.compiler.types;
 
+
 public class ARRAY extends Type {
    public final Type element;
 

@@ -28,7 +28,7 @@ public class PrettyPrinterRegTest {
 
     @DataPoints
     public static String[] paths() {
-        try (Stream<Path> walk = Files.walk(Paths.get("./test/E2E/good/"))) {
+        try (Stream<Path> walk = Files.walk(Paths.get("./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/"))) {
             return walk.filter(Files::isRegularFile).map(x -> x.toString())
             .filter(f -> f.endsWith(".tig"))
             .collect(Collectors.toList()).toArray(String[]::new);

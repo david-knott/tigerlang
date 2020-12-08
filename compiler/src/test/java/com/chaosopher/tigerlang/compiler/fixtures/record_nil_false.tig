@@ -1,0 +1,7 @@
+let
+    type any = {any : int}
+    type list = {first: int, second:int, rest: list}
+    var myList:list := list{first = 10, second = 20, rest=nil}
+in
+    printi(myList = nil)
+end

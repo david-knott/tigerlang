@@ -89,7 +89,7 @@ public class TranslatorVisitor extends DefaultVisitor {
      * higher up the stack. If the variable is defined in the current stack frame,
      * the static link will just refer to the current activation records frame
      * pointer.
-     * @param access the @see Translate.Access, which contains the @see Frame.Access
+     * @param access the @see Translate.Access, which contains the @see com.chaosopher.tigerlang.compiler.frame.Access
      *               and @see Translate.Level.
      * @param level  @see Translate.Level where we are accessing the variable from.
      * @return a @see com.chaosopher.tigerlang.compiler.tree.Exp containing MEM expressions.
@@ -182,7 +182,7 @@ public class TranslatorVisitor extends DefaultVisitor {
             expList = ExpList.append(expList, staticLink);
         }
         // visit each actual parameter of the called function and add to expList.
-        for (Absyn.ExpList argList = exp.args; argList != null; argList = argList.tail) {
+        for (com.chaosopher.tigerlang.compiler.absyn.ExpList argList = exp.args; argList != null; argList = argList.tail) {
             argList.head.accept(this);
             Exp translatedArg = this.visitedExp;
             expList = ExpList.append(expList, translatedArg.unEx());
@@ -222,7 +222,7 @@ public class TranslatorVisitor extends DefaultVisitor {
     }
 
     @Override
-    public void visit(Absyn.ExpList exp) {
+    public void visit(com.chaosopher.tigerlang.compiler.absyn.ExpList exp) {
         // only one item in the expression, just return it
         if(exp.tail == null) {
             exp.head.accept(this);
@@ -391,7 +391,7 @@ public class TranslatorVisitor extends DefaultVisitor {
                 // notice that we create the new level
                 // using the function formal arguments
                 // these are supplied so the level & frame
-                // can create Frame.Access ( Temp or Mem )
+                // can create com.chaosopher.tigerlang.compiler.frame.Access ( Temp or Mem )
                 // for the function.
                 Label label = Label.create();
                 // create level and access for function
@@ -483,7 +483,7 @@ public class TranslatorVisitor extends DefaultVisitor {
      * boolean in this list represents a variable, where
      * a true indicates the variable should escape and false
      * where it should not.
-     * @param fields @see Absyn.FieldList which can be null.
+     * @param fields @see com.chaosopher.tigerlang.compiler.absyn.FieldList which can be null.
      * @return a single linked list where each node represents either a true or false value or null.
      */
     private BoolList getBoolList(final DecList decList) {

@@ -1,0 +1,9 @@
+let
+    type list = {first: int, second:int, rest: list}
+    var myList:list := list{first = 10, second = 20, rest=nil}
+in
+    myList.first := 20;
+    myList.second := 21;
+    printi(myList.first);
+    printi(myList.second)
+end

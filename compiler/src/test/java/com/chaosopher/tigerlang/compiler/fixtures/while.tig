@@ -1,0 +1,6 @@
+let
+var a:int := 0
+in
+while a < 11  do (a := a + 1);
+printi(a)
+end

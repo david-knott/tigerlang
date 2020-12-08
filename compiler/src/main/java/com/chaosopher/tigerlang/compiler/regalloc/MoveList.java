@@ -1,10 +1,10 @@
 package com.chaosopher.tigerlang.compiler.regalloc;
 
 public class MoveList {
-   public Graph.Node src, dst;
+   public com.chaosopher.tigerlang.compiler.graph.Node src, dst;
    public MoveList tail;
 
-   public MoveList(Graph.Node s, Graph.Node d, MoveList t) {
+   public MoveList(com.chaosopher.tigerlang.compiler.graph.Node s, com.chaosopher.tigerlang.compiler.graph.Node d, MoveList t) {
       if (s == null)
          throw new Error("s");
       if (d == null)
@@ -14,7 +14,7 @@ public class MoveList {
       tail = t;
    }
 
-   public boolean contains(Graph.Node s, Graph.Node d) {
+   public boolean contains(com.chaosopher.tigerlang.compiler.graph.Node s, com.chaosopher.tigerlang.compiler.graph.Node d) {
       MoveList item = this;
       for (; item != null; item = item.tail) {
          if (item.src == s && item.dst == d) {

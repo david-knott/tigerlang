@@ -1,0 +1,15 @@
+let
+    function fa(a:int):int =
+        let
+            function fb(): int = 
+                let
+                    function fc(): int = a / a
+                in
+                    fc()
+                end
+        in
+            fb()
+        end
+in
+    printi(fa(10))
+end

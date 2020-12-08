@@ -1,0 +1,6 @@
+let
+function fa(a: int, b: int, c: int): int =
+a + b + c
+in
+printi(fa(2, 3, 4))
+end

@@ -6,5 +6,5 @@ public class Constants {
     public static STRING STRING = new STRING();
     public static VOID VOID = new VOID();
     public static NIL NIL = new NIL();
-    
+    public static ERROR ERRORT = ERROR.instance;
 }

@@ -1,0 +1,6 @@
+let
+var a:= 0
+in
+for j := 2 to 12  do a := a + 1;
+printi(10)
+end

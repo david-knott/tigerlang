@@ -15,8 +15,8 @@ import com.chaosopher.tigerlang.compiler.absyn.SeqExp;
 import com.chaosopher.tigerlang.compiler.absyn.SimpleVar;
 import com.chaosopher.tigerlang.compiler.absyn.VarDec;
 import com.chaosopher.tigerlang.compiler.absyn.VarExp;
-import com.chaosopher.tigerlang.compiler.CallGraphVisitor;
-import com.chaosopher.tigerlang.compiler.FunctionCallGraph;
+import com.chaosopher.tigerlang.compiler.callgraph.CallGraphVisitor;
+import com.chaosopher.tigerlang.compiler.callgraph.FunctionCallGraph;
 import com.chaosopher.tigerlang.compiler.cloner.AbsynCloner;
 import com.chaosopher.tigerlang.compiler.symbol.Symbol;
 

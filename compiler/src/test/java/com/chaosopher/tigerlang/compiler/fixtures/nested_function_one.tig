@@ -1,0 +1,11 @@
+let
+    function fa(a:int):int =
+        let
+            function fb(): int = 
+                a * a
+        in
+            fb()
+        end
+in
+    printi(fa(10))
+end

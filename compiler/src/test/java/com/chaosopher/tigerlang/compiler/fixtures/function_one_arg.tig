@@ -1,0 +1,6 @@
+let
+function fa(a: int): int =
+5 + a
+in
+printi(fa(7))
+end

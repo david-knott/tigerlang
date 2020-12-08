@@ -1,0 +1,5 @@
+let
+var a:string := "brillig"
+in
+print(substring(a, 2, 5 ))
+end

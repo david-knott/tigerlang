@@ -1,0 +1,6 @@
+let
+    type list = {first: int, rest: list}
+    var myList:list := list{first = 3, rest=list{first = 5, rest = nil}}
+in
+    printi(myList.rest.first)
+end

@@ -1,0 +1,11 @@
+let
+var a:int := 4
+var b:int := 3
+var c:int := 5
+var d:int := 4
+
+in
+
+printi(if a > b & c > d then 1 else 0)
+
+end

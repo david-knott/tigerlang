@@ -1,0 +1,34 @@
+/*
+In this example bb calls dd which is at a lower level.
+We need to calculate the differnce in depth between bb
+and dd, it is 1. 
+
+bb static link points to aa.fp, aa static link points to main.fp
+
+We should pass aa static link to dd.
+
+mem(mem(bb.fp - 8) - 8)
+
+//bb.sl, aa.sl
+
+We pass this to dd as its static link, or pointer to dd's 
+parent frame pointer.
+*/
+let
+
+var x:int := 3
+
+function dd() = printi(x)
+
+function aa() = 
+	let
+		function bb() = dd()
+	in
+		bb()
+	end	
+
+in
+
+aa()
+
+end

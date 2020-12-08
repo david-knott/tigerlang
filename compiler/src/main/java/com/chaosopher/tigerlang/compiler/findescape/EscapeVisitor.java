@@ -16,7 +16,7 @@ import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
 public class EscapeVisitor extends DefaultVisitor {
 
     final ErrorMsg  errorMsg;
-    final Symbol.GenericTable<Escape> escEnv = new Symbol.GenericTable<Escape>();
+    final com.chaosopher.tigerlang.compiler.symbol.GenericTable<Escape> escEnv = new com.chaosopher.tigerlang.compiler.symbol.GenericTable<Escape>();
     int depth = 0;
 
     public EscapeVisitor(ErrorMsg errorMsg) {
