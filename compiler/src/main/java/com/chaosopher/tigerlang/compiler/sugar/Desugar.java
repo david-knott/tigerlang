@@ -17,6 +17,8 @@ import com.chaosopher.tigerlang.compiler.absyn.VarExp;
 import com.chaosopher.tigerlang.compiler.absyn.WhileExp;
 import com.chaosopher.tigerlang.compiler.cloner.AbsynCloner;
 import com.chaosopher.tigerlang.compiler.symbol.Symbol;
+import com.chaosopher.tigerlang.compiler.tree.CONST;
+import com.chaosopher.tigerlang.compiler.types.Constants;
 import com.chaosopher.tigerlang.compiler.types.STRING;
 
 public class Desugar extends AbsynCloner {
@@ -39,6 +41,7 @@ public class Desugar extends AbsynCloner {
                     )
                 )
             );
+            callExp.setType(Constants.INT);
             this.visitedExp = new OpExp(exp.pos, callExp, exp.oper, new IntExp(exp.pos, 0));
         } else {
             super.visit(exp);

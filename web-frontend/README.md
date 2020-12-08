@@ -31,8 +31,8 @@ https://github.com/martinpagesaal/ngx-ace-editor-wrapper
 
 ## Docker ##
 
+```
 docker image rm ace-tiger-ui:latest
-
 docker build -t ace-tiger-ui .
-
 docker run --rm --name ace-tiger-ui-container  -p 8888:80 ace-tiger-ui
+```

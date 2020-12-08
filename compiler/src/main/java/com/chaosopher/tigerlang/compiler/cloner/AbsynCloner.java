@@ -94,16 +94,16 @@ public class AbsynCloner implements AbsynVisitor {
 
     @Override
     public void visit(DecList exp) {
-        DecList clonedDecList = null, first = null, temp = null;
+        DecList last = null, first = null, temp = null;
         for(DecList decList = exp; decList != null; decList = decList.tail) {
             decList.head.accept(this);
             Dec clonedDec = this.visitedDec;
             if(first == null) {
-                first = clonedDecList = new DecList(clonedDec, null);
+                first = last = new DecList(clonedDec, null);
             } else {
-                temp = clonedDecList;
-                clonedDecList = new DecList(clonedDec, null);
-                temp.tail = clonedDecList;
+                temp = last;
+                last = new DecList(clonedDec, null);
+                temp.tail = last;
             }
         }
         this.visitedDecList = first;

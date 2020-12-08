@@ -486,9 +486,9 @@ public class Binder extends DefaultVisitor {
 
     @Override
     public void visit(OpExp exp) {
-        super.visit(exp);
-        // type checking phase ensures both types match.
+        exp.left.accept(this);
         exp.setType(exp.left.getType());
+        exp.right.accept(this);
     }
 
     /**
