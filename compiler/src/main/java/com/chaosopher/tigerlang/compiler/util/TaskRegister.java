@@ -104,6 +104,9 @@ public class TaskRegister {
         TaskContext taskContext = new TaskContext(in, out, log, errorMsg);
         for (LL<TaskWrapper> t = this.tasks; t != null; t = t.tail) {
             if(t.head.task.active) {
+                if(taskContext.errorMsg.anyErrors) {
+                    return this;
+                }
                 Timer.instance.push(t.head.task.name);
                 t.head.task.execute(taskContext);
                 Timer.instance.pop();

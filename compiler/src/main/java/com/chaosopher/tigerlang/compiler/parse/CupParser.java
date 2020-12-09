@@ -36,17 +36,19 @@ public class CupParser implements Parser {
     @Override
     public Absyn parse() {
         Yylex yylex = new Yylex(inputStream, errorMsg);
-        Grm parser = new Grm(new DebugLexer(yylex, System.out), this.errorMsg);
+        Grm parser = new Grm(new DebugLexer(yylex, errorMsg.out), this.errorMsg);
         java_cup.runtime.Symbol rootSymbol = null;
         try {
             rootSymbol = !this.parserTrace ? parser.parse() : parser.debug_parse();
         } catch (Throwable e) {
-            throw new Error(e);
+            //throw new Error(e);
+            System.err.println(e.getMessage());
         } finally {
             try {
                 inputStream.close();
             } catch (final java.io.IOException e) {
-                throw new Error(e.toString());
+                //throw new Error(e.toString());
+                System.err.println(e.getMessage());
             }
         }
         //return rootSymbol != null ? (Program) rootSymbol.value : null;

@@ -46,7 +46,7 @@ Ensure data directory is present in the target folder.
 Build an executable jar file into the compiler/target directory
 
 ```
-mvn package
+mvn clean package
 ```
 
 Test if jar was built.

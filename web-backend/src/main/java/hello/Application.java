@@ -4,6 +4,9 @@ import java.io.InputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,10 +48,11 @@ public class Application {
 	@PostMapping("/compile")
 	public CompilerResponse compile(@RequestBody TigerSource tigerSource) {
 		String[] args = new String[] {"--reg-alloc", "--escapes-compute", "--demove"};
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		PrintStream out = new PrintStream(baos);
-        InputStream in = new ByteArrayInputStream(tigerSource.getCode().getBytes());
-		PrintStream err = new PrintStream(new ByteArrayOutputStream());
+		InputStream in = new ByteArrayInputStream(tigerSource.getCode().getBytes());
+		ByteArrayOutputStream backingOutputStream = new ByteArrayOutputStream();
+		PrintStream out = new PrintStream(backingOutputStream);
+		ByteArrayOutputStream backingErrorStream = new ByteArrayOutputStream();
+		PrintStream err = new PrintStream(backingErrorStream);
         ErrorMsg errorMsg = new ErrorMsg("", err);
 		new TaskRegister()
 		.register(new com.chaosopher.tigerlang.compiler.main.Tasks())
@@ -68,7 +72,7 @@ public class Application {
 		.register(new com.chaosopher.tigerlang.compiler.regalloc.Tasks(new RegAllocFactory()))
 		.parseArgs(args)
 		.execute(in, out, err, errorMsg);
-		return new CompilerResponse(baos.toString());
+		return new CompilerResponse(backingOutputStream.toString(), backingErrorStream.toString());
 	}
 
 	@GetMapping("/")

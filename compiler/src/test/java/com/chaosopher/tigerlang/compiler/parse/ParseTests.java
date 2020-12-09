@@ -88,5 +88,15 @@ public class ParseTests {
         assertTrue(errorMsg.anyErrors);
     }
 
+    @Test
+    public void strangeChars() {
+        ErrorMsg errorMsg = new ErrorMsg("errorRecovery", System.out);
+        String program = "var a:int := 1 var b:int := a + c 1234";
+        InputStream targetStream = new ByteArrayInputStream(program.getBytes());
+        new CupParser(targetStream, errorMsg).parse();
+        assertTrue(errorMsg.anyErrors);
+    }
+
+
 
 }

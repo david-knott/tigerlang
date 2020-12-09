@@ -52,7 +52,6 @@ public class Tasks implements TaskProvider {
                     DecList decList = parserService.parse(taskContext.in, taskContext.errorMsg);
                     if(taskContext.errorMsg.anyErrors) {
                         // there was a lexical or parse error, cannot continue
-                        System.exit(0);
                     } else {
                         taskContext.setDecList(decList);
                     }
