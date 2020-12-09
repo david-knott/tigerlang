@@ -43,21 +43,6 @@ public class Main {
                 .register(new com.chaosopher.tigerlang.compiler.canon.Tasks(new CanonicalizationImpl()))
                 .register(new com.chaosopher.tigerlang.compiler.intel.Tasks(null, null))
                 .register(new com.chaosopher.tigerlang.compiler.regalloc.Tasks(new RegAllocFactory()))
-        /*
-                .register(new Cloner.Tasks())
-                .register(new CallGraph.Tasks())
-                .register(new Liveness.Tasks())
-                .register(new Inlining.Tasks())
-                .register(new Sugar.Tasks())
-                .register(new Bind.Tasks())
-                .register(new FindEscape.Tasks())
-                .register(new com.chaosopher.tigerlang.compiler.absyn.Tasks())
-                .register(new Types.Tasks())
-                .register(new Translate.Tasks())
-                .register(new Canon.Tasks(new CanonicalizationImpl()))
-                .register(new Intel.Tasks(null, null))
-                .register(new RegAlloc.Tasks(new RegAllocFactory()))
-                */
                 .parseArgs(args)
                 .execute(in, out, err, errorMsg);
         Timer.instance.stop();

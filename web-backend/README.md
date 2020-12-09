@@ -52,8 +52,14 @@ mvn package
 Test if jar was built.
 
 ```
-java  -jar target/gs-spring-boot-docker-0.1.0.jar
+java  -jar target/web-backend-0.1.0.jar
 
+```
+
+Test simple compilation
+
+```
+curl -X POST  localhost:8080/compile -H 'Content-type:application/json' -d '{"code" : "var a:int := 1"}'
 ```
 
 ```
