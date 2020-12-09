@@ -2,13 +2,12 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.chaosopher.tigerlang.interpreter</groupId>
-  <artifactId>interpreter</artifactId>
+  <groupId>com.chaosopher.tigerlang.irinterp</groupId>
+  <artifactId>irinterp</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>interpreter</name>
+  <name>irinterp</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
-
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>

@@ -9,5 +9,6 @@
   <modules>
     <module>compiler</module>
     <module>web-backend</module>
+    <module>irinterp</module>
   </modules>
 </project>
