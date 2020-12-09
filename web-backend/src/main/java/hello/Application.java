@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,12 +35,28 @@ import com.chaosopher.tigerlang.compiler.regalloc.RegAllocFactory;
 import com.chaosopher.tigerlang.compiler.util.TaskRegister;
 import com.chaosopher.tigerlang.compiler.util.Timer;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 @RestController
+@CrossOrigin(origins = "*")
 public class Application {
 
 	private ParserService parserService;
+
+
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+			//	registry.addMapping("/compile").allowedOrigins("http://localhost:4200");
+				registry.addMapping("/**");
+			}
+		};
+	}
 
 	public Application() {
 		parserService = new ParserService(new ParserFactory());
@@ -75,8 +92,11 @@ public class Application {
 		return new CompilerResponse(backingOutputStream.toString(), backingErrorStream.toString());
 	}
 
+
+	@CrossOrigin(origins = "*")
 	@GetMapping("/")
 	public String greet(@RequestParam(value = "name", defaultValue = "David") String name) {
+		System.out.println("Test");
 		String[] args = new String[] {"--reg-alloc", "--escapes-compute", "--demove"};
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		PrintStream out = new PrintStream(baos);

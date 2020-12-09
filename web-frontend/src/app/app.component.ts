@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { CompilerService } from './compiler.service';
-import { ASSEMBLY } from './mock-assembly';
 import { Assembly } from './assembly';
 @Component({
   selector: 'app-root',
@@ -16,10 +15,18 @@ export class AppComponent {
   constructor(private compilerService: CompilerService) {}
 
   getAssembly(code: string): Observable<Assembly> {
-    return of(ASSEMBLY);
+    return this.compilerService.compile({
+      code: code,
+      args: null
+    });
   }
 
   onChange(event): void {
     console.log(event);
+    this.getAssembly(this.tiger).subscribe(
+      result => {
+        this.assembly = result.assembly;
+      }
+    );
   }
 }

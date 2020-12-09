@@ -29,10 +29,17 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 https://github.com/martinpagesaal/ngx-ace-editor-wrapper
 
 
-## Docker ##
+## Docker
 
 ```
-docker image rm ace-tiger-ui:latest
-docker build -t ace-tiger-ui .
-docker run --rm --name ace-tiger-ui-container  -p 8888:80 ace-tiger-ui
+docker image rm tiger-front-end:latest
+docker build -t tiger-front-end .
+docker run --rm --name tiger-front-end-container  -p 4200:80 tiger-front-end-ui
 ```
+
+
+## Links
+
+Graph software
+
+https://swimlane.github.io/ngx-graph/demos/examples#examples

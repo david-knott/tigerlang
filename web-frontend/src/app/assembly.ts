@@ -1,6 +1,7 @@
 export interface Assembly {
     id: number;
     name: string;
+    assembly: string;
     /*
       lines of generated assembly
 

@@ -63,6 +63,7 @@ curl -X POST  localhost:8080/compile -H 'Content-type:application/json' -d '{"co
 ```
 
 ```
+docker image rm tiger-web-backend
 docker build -t tiger-web-backend .
-docker run --rm -p 8080:8080 tiger-web-backend
+docker run --rm -p 10000:8080 tiger-web-backend
 ```
