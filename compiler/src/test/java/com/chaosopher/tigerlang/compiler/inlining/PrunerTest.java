@@ -2,18 +2,15 @@ package com.chaosopher.tigerlang.compiler.inlining;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Test;
-
 import com.chaosopher.tigerlang.compiler.absyn.Absyn;
 import com.chaosopher.tigerlang.compiler.absyn.PrettyPrinter;
 import com.chaosopher.tigerlang.compiler.bind.Binder;
 import com.chaosopher.tigerlang.compiler.bind.Renamer;
-import com.chaosopher.tigerlang.compiler.callgraph.CallGraphVisitor;
-import com.chaosopher.tigerlang.compiler.cloner.AbsynCloner;
 import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
-import com.chaosopher.tigerlang.compiler.inlining.Pruner;
 import com.chaosopher.tigerlang.compiler.parse.ParserFactory;
 import com.chaosopher.tigerlang.compiler.parse.ParserService;
+
+import org.junit.Test;
 
 public class PrunerTest {
 
