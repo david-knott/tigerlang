@@ -11,6 +11,7 @@ import com.chaosopher.tigerlang.compiler.absyn.FunctionDec;
 import com.chaosopher.tigerlang.compiler.absyn.LetExp;
 import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
 import com.chaosopher.tigerlang.compiler.symbol.Symbol;
+import com.chaosopher.tigerlang.compiler.util.Assert;
 
 /**
  * A parser service that returns a configured parser. It uses
@@ -70,6 +71,9 @@ public class ParserService {
         }
         Parser prelude;
         InputStream in = getClass().getResourceAsStream("/data/prelude.tih");
+        if(null == in) {
+            Assert.unreachable();
+        }
         prelude = parserFactory.getParser(in, errorMsg);
         DecList preludeList = (DecList) prelude.parse();
         // append the user code to end of prelude declarations.

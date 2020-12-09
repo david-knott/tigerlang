@@ -23,8 +23,8 @@ public class PrimitiveTest {
         String tiger = "1";
         InputStream targetStream = new ByteArrayInputStream(tiger.getBytes());
         ParserService parserService = new ParserService(new ParserFactory());
-     //   DecList decList = parserService.parse(targetStream, errorMsg);
-      //  assertNotNull(decList);
-      //  decList.accept(new PrettyPrinter(System.out));
+        DecList decList = parserService.parse(targetStream, errorMsg);
+        assertNotNull(decList);
+        decList.accept(new PrettyPrinter(System.out));
     }
 }
