@@ -32,6 +32,12 @@ OpenJDK 64-Bit Server VM (build 11.0.9.1+1-Ubuntu-0ubuntu1.18.04, mixed mode, sh
 
 ```
 
+## Development
+
+Start the backend development server using spring boot tools.
+
+
+Start the front end angular application.
 
 ## Building
 
