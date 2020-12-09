@@ -132,6 +132,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "ace-tiger-ui"
+    }
+  },
+  "defaultProject": "ace-tiger-ui",
+  "cli": {
+    "analytics": false
+  }
 }

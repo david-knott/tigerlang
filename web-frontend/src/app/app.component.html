@@ -15,6 +15,7 @@
       </form>
       <div
         ace-editor
+        #sourceEditor
         [autoUpdateContent]="true"
         [durationBeforeCallback]="1000"
         (textChanged)="onChange($event)"
@@ -30,6 +31,7 @@
           <ng-template ngbNavContent>
             <div
               ace-editor
+              #assemEditor
               [autoUpdateContent]="true"
               [(text)]="assembly"
               [readOnly]="true"

@@ -20,7 +20,7 @@ import com.chaosopher.tigerlang.compiler.util.TaskRegister;
  */
 public class Tasks implements TaskProvider {
     final RegAllocFactory regAllocFactory;
-    boolean disableCoalesce = false;
+    boolean disableCoalesce = true;
 
     public Tasks(RegAllocFactory regAllocFactory) {
         this.regAllocFactory = regAllocFactory;

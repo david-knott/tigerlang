@@ -46,14 +46,13 @@ public class Application {
 
 	private ParserService parserService;
 
-
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 			//	registry.addMapping("/compile").allowedOrigins("http://localhost:4200");
-				registry.addMapping("/**");
+			//	registry.addMapping("/**");
 			}
 		};
 	}
@@ -64,13 +63,14 @@ public class Application {
 
 	@PostMapping("/compile")
 	public CompilerResponse compile(@RequestBody TigerSource tigerSource) {
-		String[] args = new String[] {"--reg-alloc", "--escapes-compute", "--demove"};
 		InputStream in = new ByteArrayInputStream(tigerSource.getCode().getBytes());
 		ByteArrayOutputStream backingOutputStream = new ByteArrayOutputStream();
 		PrintStream out = new PrintStream(backingOutputStream);
 		ByteArrayOutputStream backingErrorStream = new ByteArrayOutputStream();
 		PrintStream err = new PrintStream(backingErrorStream);
         ErrorMsg errorMsg = new ErrorMsg("", err);
+		String[] args = new String[] {"--reg-alloc", "--escapes-compute", "--demove", "xxx"};
+		//String[] args = new String[] {};
 		new TaskRegister()
 		.register(new com.chaosopher.tigerlang.compiler.main.Tasks())
 		.register(new com.chaosopher.tigerlang.compiler.parse.Tasks(new ParserService(new ParserFactory())))
@@ -92,8 +92,6 @@ public class Application {
 		return new CompilerResponse(backingOutputStream.toString(), backingErrorStream.toString());
 	}
 
-
-	@CrossOrigin(origins = "*")
 	@GetMapping("/")
 	public String greet(@RequestParam(value = "name", defaultValue = "David") String name) {
 		System.out.println("Test");
