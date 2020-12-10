@@ -164,7 +164,9 @@ public class TranslateVisitorTest {
     public void translateInt() {
         TranslatorVisitor translator = new TranslatorVisitor();
         assertNotNull(translator);
-        Absyn program = parserService.parse("3", new ErrorMsg("", System.out));
+        ErrorMsg errorMsg = new ErrorMsg("", System.out);
+        Absyn program = parserService.parse("3", errorMsg);
+        program.accept(new Binder(errorMsg));
         program.accept(translator);
         FragList fragList = translator.getFragList();
         assertNotNull(fragList);
@@ -182,8 +184,11 @@ public class TranslateVisitorTest {
     @Test
     public void translateAdd() {
         TranslatorVisitor translator = new TranslatorVisitor();
+        ErrorMsg errorMsg = new ErrorMsg("", System.out);
         assertNotNull(translator);
         Absyn program = parserService.parse("3 + 5", new ErrorMsg("", System.out));
+        // need binder to bind types to expressions.
+        program.accept(new Binder(errorMsg));
         program.accept(translator);
         FragList fragList = translator.getFragList();
         assertNotNull(fragList);
@@ -200,7 +205,9 @@ public class TranslateVisitorTest {
     public void translateEscapingVarDec() {
         TranslatorVisitor translator = new TranslatorVisitor();
         assertNotNull(translator);
-        Absyn program = parserService.parse("var a:int := 3", new ErrorMsg("", System.out));
+        ErrorMsg errorMsg = new ErrorMsg("", System.out);
+        Absyn program = parserService.parse("var a:int := 3", errorMsg);
+        program.accept(new Binder(errorMsg));
         program.accept(translator);
         FragList fragList = translator.getFragList();
         assertNotNull(fragList);
@@ -223,8 +230,10 @@ public class TranslateVisitorTest {
     public void translateNonEscapingVarDec() {
         TranslatorVisitor translator = new TranslatorVisitor();
         assertNotNull(translator);
-        Absyn program = parserService.parse("var a:int := 3", new ErrorMsg("", System.out));
-        program.accept(new EscapeVisitor(new ErrorMsg("", System.out)));
+        ErrorMsg errorMsg = new ErrorMsg("", System.out);
+        Absyn program = parserService.parse("var a:int := 3", errorMsg);
+        program.accept(new EscapeVisitor(errorMsg));
+        program.accept(new Binder(errorMsg));
         program.accept(translator);
         FragList fragList = translator.getFragList();
         assertNotNull(fragList);
@@ -245,7 +254,7 @@ public class TranslateVisitorTest {
         ErrorMsg errorMsg = new ErrorMsg("", System.out);
         Absyn program = parserService.parse("var a:int := 3 var b:int := a", errorMsg);
     //    Absyn program = parserService.parse("var a:int := 3", errorMsg);
-        program.accept(new EscapeVisitor(new ErrorMsg("", System.out)));
+        program.accept(new EscapeVisitor(errorMsg));
         program.accept(new Binder(errorMsg));
         program.accept(translator);
         FragList fragList = translator.getFragList();
