@@ -12,8 +12,8 @@ function bubblesort(ar:iat)  =
         var temp:int := 0
         var swaps:int := 1 /* boolean swaps */
         
-    in
-        (
+        function swapper() = (
+            
             while swaps do (
                 swaps := 0;
                 ( 
@@ -26,12 +26,15 @@ function bubblesort(ar:iat)  =
                             ar[first] := ar[second];
                             ar[second] := temp;
                             swaps := 1
-                        );
-                        swaps /* compile error if swaps is removed */
+                        )
                     )
                 )
             )
+        
         )
+        
+    in
+        swapper()
     end
 )
 in
