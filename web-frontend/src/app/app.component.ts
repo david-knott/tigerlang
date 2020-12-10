@@ -3,6 +3,8 @@ import { Observable, of } from 'rxjs';
 import { CompilerService } from './compiler.service';
 import { Assembly } from './assembly';
 import * as ace from "ace-builds";
+var Range = ace.require('ace/range').Range;
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -21,6 +23,9 @@ export class AppComponent implements AfterViewInit {
     console.log(this.sourceEditor);
     ace.config.set("fontSize", "19px");
     const aceEditor = ace.edit(this.sourceEditor.nativeElement);
+    const from = 0;
+    const to = 10;
+    aceEditor.session.addMarker(new Range(from, 0, to, 1), "myMarker", "fullLine");
   }
 
   getAssembly(code: string): Observable<Assembly> {
