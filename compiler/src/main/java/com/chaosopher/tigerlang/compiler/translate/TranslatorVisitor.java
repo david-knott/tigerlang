@@ -582,22 +582,30 @@ public class TranslatorVisitor extends DefaultVisitor {
                 switch(exp.oper) {
                     case OpExp.EQ:
                         relop = CJUMP.EQ;
-                        strOp = "stringEqual";
+                        strOp = "streq";
+                        break;
+                    case OpExp.NE:
+                        relop = CJUMP.NE;
+                        strOp = "streq";
                         break;
                     case OpExp.GE:
                         relop = CJUMP.GE;
+                        strOp = "strcmp";
                         break;
                     case OpExp.GT:
                         relop = CJUMP.GT;
+                        strOp = "strcmp";
                         break;
                     case OpExp.LE:
                         relop = CJUMP.LE;
+                        strOp = "strcmp";
                         break;
                     case OpExp.LT:
                         relop = CJUMP.LT;
+                        strOp = "strcmp";
                         break;
                     default:
-                        Assert.unreachable();
+                        Assert.unreachable("Unknown operator:" + exp.oper);
                 }
                 if(exp.left.getType().coerceTo(Constants.STRING) && exp.right.getType().coerceTo(Constants.STRING)) {
                     Assert.assertNotNull(strOp);

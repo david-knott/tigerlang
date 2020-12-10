@@ -16,6 +16,7 @@ import com.chaosopher.tigerlang.compiler.absyn.FieldList;
 import com.chaosopher.tigerlang.compiler.absyn.FieldVar;
 import com.chaosopher.tigerlang.compiler.absyn.ForExp;
 import com.chaosopher.tigerlang.compiler.absyn.FunctionDec;
+import com.chaosopher.tigerlang.compiler.absyn.IfExp;
 import com.chaosopher.tigerlang.compiler.absyn.IntExp;
 import com.chaosopher.tigerlang.compiler.absyn.LetExp;
 import com.chaosopher.tigerlang.compiler.absyn.NameTy;
@@ -153,6 +154,11 @@ public class Binder extends DefaultVisitor {
         exp.setType(exp.var.getType());
     }
 
+    @Override
+    public void visit(IfExp exp) {
+        super.visit(exp);
+        exp.setType(exp.elseclause != null ? exp.thenclause.getType() : Constants.VOID);
+    }
     /**
      * Visit a simple var expression and bind it to its declaration. Sets the simple
      * var type to its definition type.

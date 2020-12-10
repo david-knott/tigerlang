@@ -33,6 +33,5 @@ public class AbsynClonerTest {
         //System.out.println(new String(outputStream.toByteArray(), StandardCharsets.UTF_8));
         Absyn program2 = parserService.parse(inputStream, errorMsg);
         assertNotNull(program2);
-        
     }
 }

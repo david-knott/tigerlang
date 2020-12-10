@@ -30,4 +30,8 @@ public class Assert {
 	public static void unreachable() {
         throw new Error("unreachable");
 	}
+
+	public static void unreachable(String string) {
+        throw new Error("unreachable:" + string);
+	}
 }

@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.junit.Test;
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
@@ -40,6 +41,27 @@ public class TranslateRegTest {
 
     @Theory
     public void good(String fileName) {
+        System.out.println("Testing Translator" + fileName);
+        ErrorMsg errorMsg = new ErrorMsg("f", System.out);
+        ParserService parserService = new ParserService(new ParserFactory());
+        parserService.configure(config -> config.setNoPrelude(false));
+        parserService.configure(config -> config.setParserTrace(false));
+        try (FileInputStream fin = new FileInputStream(fileName)) {
+            Absyn program = parserService.parse(fin, errorMsg);
+            program.accept(new EscapeVisitor(errorMsg));
+            TranslatorVisitor translator = new TranslatorVisitor();
+            program.accept(new Binder(errorMsg));
+            program.accept(translator);
+            FragList fragList = translator.getFragList();
+            assertNotNull(fragList);
+        }   catch(IOException e) {
+            e.printStackTrace();
+        } 
+    }
+
+    @Test
+    public void ifCond() {
+        String fileName = "./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/ifCondition.tig";
         System.out.println("Testing Translator" + fileName);
         ErrorMsg errorMsg = new ErrorMsg("f", System.out);
         ParserService parserService = new ParserService(new ParserFactory());
