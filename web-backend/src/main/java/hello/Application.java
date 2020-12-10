@@ -68,6 +68,7 @@ public class Application {
 		PrintStream out = new PrintStream(backingOutputStream);
 		ByteArrayOutputStream backingErrorStream = new ByteArrayOutputStream();
 		PrintStream err = new PrintStream(backingErrorStream);
+		System.out.println("here!!!!");
         ErrorMsg errorMsg = new ErrorMsg("", err);
 		String[] args = new String[] {"--reg-alloc", "--escapes-compute", "--demove", "xxx"};
 		//String[] args = new String[] {};
@@ -93,33 +94,8 @@ public class Application {
 	}
 
 	@GetMapping("/")
-	public String greet(@RequestParam(value = "name", defaultValue = "David") String name) {
-		System.out.println("Test");
-		String[] args = new String[] {"--reg-alloc", "--escapes-compute", "--demove"};
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		PrintStream out = new PrintStream(baos);
-        InputStream in = new ByteArrayInputStream("1".getBytes());
-		PrintStream err = new PrintStream(new ByteArrayOutputStream());
-        ErrorMsg errorMsg = new ErrorMsg("", err);
-		new TaskRegister()
-		.register(new com.chaosopher.tigerlang.compiler.main.Tasks())
-		.register(new com.chaosopher.tigerlang.compiler.parse.Tasks(new ParserService(new ParserFactory())))
-		.register(new com.chaosopher.tigerlang.compiler.cloner.Tasks())
-		.register(new com.chaosopher.tigerlang.compiler.callgraph.Tasks())
-		.register(new com.chaosopher.tigerlang.compiler.liveness.Tasks())
-		.register(new com.chaosopher.tigerlang.compiler.inlining.Tasks())
-		.register(new com.chaosopher.tigerlang.compiler.sugar.Tasks())
-		.register(new com.chaosopher.tigerlang.compiler.bind.Tasks())
-		.register(new com.chaosopher.tigerlang.compiler.findescape.Tasks())
-		.register(new com.chaosopher.tigerlang.compiler.absyn.Tasks())
-		.register(new com.chaosopher.tigerlang.compiler.types.Tasks())
-		.register(new com.chaosopher.tigerlang.compiler.translate.Tasks())
-		.register(new com.chaosopher.tigerlang.compiler.canon.Tasks(new CanonicalizationImpl()))
-		.register(new com.chaosopher.tigerlang.compiler.intel.Tasks(null, null))
-		.register(new com.chaosopher.tigerlang.compiler.regalloc.Tasks(new RegAllocFactory()))
-		.parseArgs(args)
-		.execute(in, out, err, errorMsg);
-		return baos.toString();
+	public String index() {
+		return "index";
 	}
 
 	public static void main(String[] args) {
