@@ -60,6 +60,19 @@ public class TypeTest {
     }
 
     @Test
+    public void assignToForIndex() {
+        PrintStream outputStream = System.out;
+        ErrorMsg errorMsg = new ErrorMsg("", outputStream);
+        Parser parser = new CupParser("/* error: index variable erroneously assigned to.  */ for i := 10 to 1100 do i := 10", errorMsg);
+        Absyn program = parser.parse();
+        Binder binder = new Binder(errorMsg);
+        program.accept(binder);
+        program.accept(new TypeChecker(errorMsg));
+        PrettyPrinter prettyPrinter = new PrettyPrinter(System.out, false, false);
+        program.accept(prettyPrinter);
+        assertTrue(errorMsg.anyErrors);
+    }
+    @Test
     public void varDec() {
         PrintStream outputStream = System.out;
         ErrorMsg errorMsg = new ErrorMsg("", outputStream);
@@ -480,7 +493,7 @@ public class TypeTest {
 
     @Test
     public void desugarFor() {
-        Parser parser = new CupParser("for i := 0 to 10 do print_int(i)",
+        Parser parser = new CupParser("for i := 0 to 10 do i",
                 new ErrorMsg("", System.out));
         Absyn program = parser.parse();
         PrintStream outputStream = System.out;

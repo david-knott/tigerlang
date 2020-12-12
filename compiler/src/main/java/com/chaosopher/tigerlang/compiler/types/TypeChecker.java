@@ -91,7 +91,8 @@ public class TypeChecker extends DefaultVisitor {
      */
     @Override
     public void visit(CallExp exp) {
-        FUNCTION function = (FUNCTION)exp.getType();
+        //FUNCTION function = (FUNCTION)exp.getType();
+        FUNCTION function = (FUNCTION)((FunctionDec)exp.def).getType();
         ExpList actuals = exp.args;
         RECORD formals = function.formals;
         while(actuals != null && formals != null) {
