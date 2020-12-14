@@ -157,6 +157,9 @@ public class TranslatorVisitor extends DefaultVisitor {
         FunctionDec defined = (FunctionDec) exp.def;
         boolean useStaticLink = defined.staticLink();
         ExpList expList = null;
+        // add the static link to expression list. This is a refernce to the
+        // current activation records frame pointer address. This is passed
+        // as the first argument to the callee function.
         if (useStaticLink) {
             com.chaosopher.tigerlang.compiler.tree.Exp staticLink = null;
             if (definedLevel == usageLevel) { // recusive or same level, pass calleers static link ( not frame pointer )

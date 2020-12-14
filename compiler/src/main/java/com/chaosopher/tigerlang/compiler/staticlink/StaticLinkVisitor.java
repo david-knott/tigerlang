@@ -11,7 +11,7 @@ import com.chaosopher.tigerlang.compiler.absyn.VarDec;
 /**
  * This class analyses the abstract syntax tree and computes which
  * functions will require a static link. This visitor depends on
- * the Binding visitor.
+ * the Binding visitor. All static linkx are assume to escape.
  */
 public class StaticLinkVisitor extends DefaultVisitor {
 
