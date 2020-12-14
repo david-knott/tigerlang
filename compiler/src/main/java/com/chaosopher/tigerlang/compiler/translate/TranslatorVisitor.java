@@ -155,7 +155,7 @@ public class TranslatorVisitor extends DefaultVisitor {
         // if the function being called has no body its a primitive
         // and doesn't need a static link.
         FunctionDec defined = (FunctionDec) exp.def;
-        boolean useStaticLink = defined.body != null;
+        boolean useStaticLink = defined.staticLink();
         ExpList expList = null;
         if (useStaticLink) {
             com.chaosopher.tigerlang.compiler.tree.Exp staticLink = null;
@@ -402,7 +402,7 @@ public class TranslatorVisitor extends DefaultVisitor {
                         getBoolList(
                             current.params
                         ),
-                        true /* create static link */
+                        current.staticLink() /* create static link */
                     );
                 this.functionLabels.put(current, label);
                 this.functionLevels.put(current, level);

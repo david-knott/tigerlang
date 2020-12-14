@@ -1,21 +1,13 @@
 package com.chaosopher.tigerlang.compiler.sugar;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.io.PrintStream;
-
-import org.junit.Test;
-
 import com.chaosopher.tigerlang.compiler.absyn.Absyn;
 import com.chaosopher.tigerlang.compiler.absyn.PrettyPrinter;
 import com.chaosopher.tigerlang.compiler.bind.Binder;
 import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
-import com.chaosopher.tigerlang.compiler.parse.CupParser;
-import com.chaosopher.tigerlang.compiler.parse.Parser;
 import com.chaosopher.tigerlang.compiler.parse.ParserFactory;
 import com.chaosopher.tigerlang.compiler.parse.ParserService;
-import com.chaosopher.tigerlang.compiler.parse.Program;
+
+import org.junit.Test;
 
 
 

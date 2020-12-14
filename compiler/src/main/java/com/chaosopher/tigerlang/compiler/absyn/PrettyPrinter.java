@@ -17,6 +17,7 @@ public class PrettyPrinter implements AbsynVisitor {
     private int currentIndentation = 0;
     public boolean escapesDisplay = false;
     public boolean bindingsDisplay = false;
+    public boolean staticLinkDisplay = true;
 
     public PrettyPrinter(PrintStream o) {
         this(o, false, false);
@@ -216,6 +217,11 @@ public class PrettyPrinter implements AbsynVisitor {
         if(this.bindingsDisplay) {
             space();
             say("/* " + System.identityHashCode(functionDec) + " */");
+            space();
+        }
+        if(this.staticLinkDisplay && functionDec.staticLink()) {
+            space();
+            say("/* static link */");
             space();
         }
         say("(");

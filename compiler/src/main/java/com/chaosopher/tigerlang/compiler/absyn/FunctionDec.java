@@ -8,6 +8,11 @@ public class FunctionDec extends Dec {
    public NameTy result; /* optional */
    public Exp body;
    public FunctionDec next;
+   public boolean sl = true;
+
+   public boolean staticLink() {
+      return sl && body != null;
+   }
 
    public FunctionDec(int p, Symbol n, DecList a, NameTy r, Exp b, FunctionDec x) {
       pos = p;

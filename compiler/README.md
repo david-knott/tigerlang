@@ -32,6 +32,15 @@ OpenJDK 64-Bit Server VM (build 11.0.9.1+1-Ubuntu-0ubuntu1.18.04, mixed mode, sh
 
 ```
 
+## Testing
+
+### E2E Testing
+
+Create assembly for runtime c file.
+
+```
+gcc -g -w -no-pie -Wimplicit-function-declaration -Wl,--wrap,getchar -S -o runtime.s runtime.c
+```
 
 ## Building
 
@@ -49,3 +58,4 @@ Test if jar was built.
 java -jar compiler-1.0-SNAPSHOT.jar ../src/test/java/com/chaosopher/tigerlang/compiler/fixtures/merge_simple.tig
 
 ```
+
