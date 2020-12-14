@@ -7,9 +7,6 @@ import com.chaosopher.tigerlang.compiler.util.SimpleTaskProvider;
 import com.chaosopher.tigerlang.compiler.util.TaskContext;
 import com.chaosopher.tigerlang.compiler.util.TaskProvider;
 import com.chaosopher.tigerlang.compiler.util.TaskRegister;
-import java_cup.parser;
-
-import java.io.FileNotFoundException;
 
 import com.chaosopher.tigerlang.compiler.absyn.DecList;
 import com.chaosopher.tigerlang.compiler.util.Assert;

@@ -63,6 +63,7 @@ public class Main {
         new TaskRegister()
                 .register(new Tasks())
                 .register(new com.chaosopher.tigerlang.compiler.parse.Tasks(new ParserService(new ParserFactory())))
+                .register(new com.chaosopher.tigerlang.compiler.staticlink.Tasks())
                 .register(new com.chaosopher.tigerlang.compiler.cloner.Tasks())
                 .register(new com.chaosopher.tigerlang.compiler.callgraph.Tasks())
                 .register(new com.chaosopher.tigerlang.compiler.liveness.Tasks())
@@ -83,6 +84,8 @@ public class Main {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
+        new Main().execute(args);
+        /*
         Timer.instance.start();
         Timer.instance.push("rest");
         PrintStream out = System.out;
@@ -126,5 +129,6 @@ public class Main {
                 .execute(in, out, err, errorMsg);
         Timer.instance.stop();
         Timer.instance.dump(err);
+        */
     }
 }

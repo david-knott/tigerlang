@@ -9,6 +9,7 @@ public class FunctionDec extends Dec {
    public Exp body;
    public FunctionDec next;
    public boolean sl = true;
+   public boolean slEscapes = true;
 
    public boolean staticLink() {
       return sl && body != null;

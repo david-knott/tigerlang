@@ -13,7 +13,7 @@ import com.chaosopher.tigerlang.compiler.absyn.VarDec;
  * functions will require a static link. This visitor depends on
  * the Binding visitor. All static linkx are assume to escape.
  */
-public class StaticLinkVisitor extends DefaultVisitor {
+public class FunctionStaticLinkVisitor extends DefaultVisitor {
 
     private FunctionDec currentFunctionDec;
     private final Hashtable<VarDec, FunctionDec> definingFunctions = new Hashtable<>();

@@ -40,9 +40,9 @@ public class Level {
      * @param fmls the list of formal arguments
      * @param useStaticLink should a static link be created in the frame
      */
-    public Level(Level prnt, Label name, BoolList fmls, boolean useStaticLink) {
+    public Level(Level prnt, Label name, BoolList fmls, boolean useStaticLink, boolean staticLinkEscapes) {
         parent = prnt;
-        frame = prnt.frame.newFrame(name, useStaticLink ? new BoolList(true, fmls) : fmls);
+        frame = prnt.frame.newFrame(name, useStaticLink ? new BoolList(staticLinkEscapes, fmls) : fmls);
         com.chaosopher.tigerlang.compiler.frame.AccessList frameFormals = frame.formals;
         for(; frameFormals != null; frameFormals = frameFormals.tail) {
             if(formals == null){

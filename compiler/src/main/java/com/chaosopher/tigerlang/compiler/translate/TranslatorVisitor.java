@@ -405,7 +405,8 @@ public class TranslatorVisitor extends DefaultVisitor {
                         getBoolList(
                             current.params
                         ),
-                        current.staticLink() /* create static link */
+                        current.staticLink() /* create static link */,
+                        current.slEscapes
                     );
                 this.functionLabels.put(current, label);
                 this.functionLevels.put(current, level);

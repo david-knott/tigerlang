@@ -221,7 +221,11 @@ public class PrettyPrinter implements AbsynVisitor {
         }
         if(this.staticLinkDisplay && functionDec.staticLink()) {
             space();
-            say("/* static link */");
+            if(functionDec.slEscapes) {
+                say("/* escaping static link */");
+            } else {
+                say("/* static link */");
+            }
             space();
         }
         say("(");
