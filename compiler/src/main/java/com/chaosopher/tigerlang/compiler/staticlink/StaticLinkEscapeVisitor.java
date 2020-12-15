@@ -33,7 +33,16 @@ class StaticLinkEscapeVisitor extends DefaultVisitor {
             functionDec.slEscapes = false;
             return;
         }
-        functionDec.slEscapes = true;
+        // if this function only calls other functions at the same level
+        // then static does not escape
+        for(NodeList succs = node.succ(); succs != null; succs = succs.tail) {
+            if(this.functionCallGraph.getFunctionDec(succs.head).level != functionDec.level) {
+                functionDec.slEscapes = true;
+                return;
+                
+            }
+        }
+        functionDec.slEscapes = false;
         super.visit(exp);
     }
 }

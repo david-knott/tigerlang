@@ -2,6 +2,7 @@ package com.chaosopher.tigerlang.compiler.staticlink;
 
 import java.util.Hashtable;
 import java.util.LinkedList;
+import java.util.Stack;
 
 import com.chaosopher.tigerlang.compiler.absyn.DefaultVisitor;
 import com.chaosopher.tigerlang.compiler.absyn.FunctionDec;
@@ -15,16 +16,28 @@ import com.chaosopher.tigerlang.compiler.absyn.VarDec;
  */
 public class FunctionStaticLinkVisitor extends DefaultVisitor {
 
-    private FunctionDec currentFunctionDec;
+    private Stack<FunctionDec> levels = new Stack<>();
+   // private FunctionDec currentFunctionDec;
     private final Hashtable<VarDec, FunctionDec> definingFunctions = new Hashtable<>();
     private final LinkedList<SimpleVar> escapingVars = new LinkedList<>();
 
     @Override
     public void visit(FunctionDec exp) {
         // record the function dec we are visiting
-        FunctionDec parent = this.currentFunctionDec;
-        this.currentFunctionDec = exp;
-        super.visit(exp);
+      //  FunctionDec parent = this.currentFunctionDec;
+       // this.currentFunctionDec = exp;
+        this.levels.push(exp);
+        if(exp.params != null) {
+            exp.params.accept(this);
+        }
+        if(exp.result != null) {
+            exp.result.accept(this);
+        }
+        if(exp.body != null) {
+            exp.body.accept(this);
+        }
+        
+        exp.level = this.levels.size();
         // check all escaping vars to see if they are defined here.
         for(int i = 0; i < this.escapingVars.size(); i++) {
             SimpleVar sv = this.escapingVars.get(i);
@@ -35,15 +48,19 @@ public class FunctionStaticLinkVisitor extends DefaultVisitor {
             }
         }
         // if there are escaping variables live across this function call, it needs a sl. 
-        this.currentFunctionDec.sl = this.escapingVars.size() != 0;
-        // restore the parent function dec.
-        this.currentFunctionDec = parent;
+        this.levels.peek().sl = this.escapingVars.size() != 0;
+        this.levels.pop();
+
+        // visit next function at same level.
+        if(exp.next != null) {
+            exp.next.accept(this);
+        }
     }
     
     @Override
     public void visit(VarDec exp) {
         super.visit(exp);
-        this.definingFunctions.put(exp, this.currentFunctionDec);
+        this.definingFunctions.put(exp, this.levels.peek());
     }
     
     @Override
@@ -53,8 +70,8 @@ public class FunctionStaticLinkVisitor extends DefaultVisitor {
         VarDec varDec = (VarDec)exp.def;
         // if variable escapes and is not defined in this function, mark this function
         // as needing static link, add the simple var to list of escaping variables
-        if(varDec.escape && this.currentFunctionDec != this.definingFunctions.get(varDec) ) {
-            this.currentFunctionDec.sl = true;
+        if(varDec.escape && this.levels.peek() != this.definingFunctions.get(varDec) ) {
+            this.levels.peek().sl = true;
             this.escapingVars.add(exp);
         }
         super.visit(exp);
