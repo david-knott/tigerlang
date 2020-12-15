@@ -63,6 +63,28 @@ public class RegTest {
         }
     }
 
+    public static String inputStreamToString(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream result = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = inputStream.read(buffer)) != -1) {
+            result.write(buffer, 0, length);
+        }
+        return result.toString("UTF-8");
+    }
+
+    public static String getFileContent(FileInputStream fis, String encoding) throws IOException {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(fis, encoding))) {
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+                sb.append('\n');
+            }
+            return sb.toString();
+        }
+    }
+
     @Theory
     public void good(String fileName) throws InterruptedException, IOException {
         String baseName = fileName.substring(fileName.lastIndexOf("/") + 1);
@@ -78,13 +100,18 @@ public class RegTest {
         while ((length = runtimeAssemblyStream.read(buffer)) != -1) {
             result.write(buffer, 0, length);
         }
+
+        String strResult = null;
+        try (FileInputStream fin = new FileInputStream(fileName + ".result")) {
+            strResult = getFileContent(fin, "UTF-8").trim();
+        }
         String runtimeAssem = result.toString("UTF-8");
         try (FileInputStream fin = new FileInputStream(fileName)) {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             ByteArrayOutputStream errorStream = new ByteArrayOutputStream();
             Main main = new Main(outputStream, errorStream);
             main.execute(new String[]{fileName});
-            System.out.println(new String(outputStream.toByteArray(), StandardCharsets.UTF_8));
+         //   System.out.println(new String(outputStream.toByteArray(), StandardCharsets.UTF_8));
             Runtime runtime = Runtime.getRuntime();
             Process gccProcess = runtime.exec(
                     "gcc -x assembler-with-cpp -g -w -no-pie -Wimplicit-function-declaration -Wl,--wrap,getchar -o /tmp/" + baseName +".o -");
@@ -93,16 +120,14 @@ public class RegTest {
             gccStdOut.write(outputStream.toString());
             gccStdOut.close();
             gccProcess.waitFor();
-            dumpOutputForProcess(gccProcess);
             assertEquals(gccProcess.exitValue(), 0);
-            System.out.println(" --> " + baseName + ":" + gccProcess.exitValue());
-
             //execute the binary that was created.
             Process compiledProcess = runtime.exec(
                     "/tmp/" + baseName +".o");
             compiledProcess.waitFor();
-            dumpOutputForProcess(compiledProcess);
+            String actualResult = inputStreamToString(compiledProcess.getInputStream()).trim();
             System.out.println(" --> " + baseName + ":" + compiledProcess.exitValue());
+            assertEquals(strResult, actualResult);
         } catch (IOException e) {
             e.printStackTrace();
         }

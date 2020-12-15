@@ -39,7 +39,6 @@ class StaticLinkEscapeVisitor extends DefaultVisitor {
             if(this.functionCallGraph.getFunctionDec(succs.head).level != functionDec.level) {
                 functionDec.slEscapes = true;
                 return;
-                
             }
         }
         functionDec.slEscapes = false;
