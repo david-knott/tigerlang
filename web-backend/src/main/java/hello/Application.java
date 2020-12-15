@@ -68,10 +68,8 @@ public class Application {
 		PrintStream out = new PrintStream(backingOutputStream);
 		ByteArrayOutputStream backingErrorStream = new ByteArrayOutputStream();
 		PrintStream err = new PrintStream(backingErrorStream);
-		System.out.println("here!!!!");
-        ErrorMsg errorMsg = new ErrorMsg("", err);
-		String[] args = new String[] {"--reg-alloc", "--escapes-compute", "--demove", "xxx"};
-		//String[] args = new String[] {};
+		ErrorMsg errorMsg = new ErrorMsg("", err);
+		String[] args = new String[] {"--reg-alloc", "--escapes-compute", "--demove", "filenameplaceholder"};
 		new TaskRegister()
 		.register(new com.chaosopher.tigerlang.compiler.main.Tasks())
 		.register(new com.chaosopher.tigerlang.compiler.parse.Tasks(new ParserService(new ParserFactory())))

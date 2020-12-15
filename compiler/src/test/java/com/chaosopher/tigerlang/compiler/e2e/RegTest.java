@@ -52,13 +52,11 @@ public class RegTest {
     private void dumpOutputForProcess(Process gccProcess) throws IOException {
         BufferedReader gccStdInput = new BufferedReader(new InputStreamReader(gccProcess.getInputStream()));
         BufferedReader gccStdError = new BufferedReader(new InputStreamReader(gccProcess.getErrorStream()));
-        // Read the output from the command
         System.out.println("Here is the standard output of the command:\n");
         String s = null;
         while ((s = gccStdInput.readLine()) != null) {
             System.out.println(s);
         }
-        // Read any errors from the attempted command
         System.out.println("Here is the standard error of the command (if any):\n");
         while ((s = gccStdError.readLine()) != null) {
             System.out.println(s);
