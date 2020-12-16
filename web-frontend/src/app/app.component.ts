@@ -10,7 +10,12 @@ var Range = ace.require('ace/range').Range;
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent {
+
+  showSettings(): void {
+
+  }
+  /*
   title = 'ace-tiger-ui';
   tiger:string = "let\nin\n\tprint(\"Hello World\")\nend";
   assembly:string = "tbc";
@@ -41,5 +46,5 @@ export class AppComponent implements AfterViewInit {
         this.assembly = result.assembly;
       }
     );
-  }
+  }*/
 }

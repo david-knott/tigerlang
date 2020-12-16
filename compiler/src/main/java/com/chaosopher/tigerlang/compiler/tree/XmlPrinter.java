@@ -12,22 +12,15 @@ public class XmlPrinter implements TreeVisitor {
 
     private XMLStreamWriter xmlStreamWriter;
 
-    public XmlPrinter(OutputStream arrayOutputStream) throws XMLStreamException, FactoryConfigurationError {
-        this.xmlStreamWriter = XMLOutputFactory.newInstance().createXMLStreamWriter(arrayOutputStream);
+    public XmlPrinter(OutputStream outputStream) throws XMLStreamException, FactoryConfigurationError {
+        this.xmlStreamWriter = XMLOutputFactory.newInstance().createXMLStreamWriter(outputStream);
         this.xmlStreamWriter.writeStartDocument();
-        this.xmlStreamWriter.writeStartElement("tree");
     }
     
-    public void end() throws XMLStreamException {
-        this.xmlStreamWriter.writeEndElement();
-        this.xmlStreamWriter.flush();
-    }
-
     private void writeStartElement(String name) {
         try {
             this.xmlStreamWriter.writeStartElement(name);
         } catch (XMLStreamException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -35,8 +28,8 @@ public class XmlPrinter implements TreeVisitor {
     private void writeEndElement() {
         try {
             this.xmlStreamWriter.writeEndElement();
+            this.xmlStreamWriter.flush();
         } catch (XMLStreamException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -45,7 +38,6 @@ public class XmlPrinter implements TreeVisitor {
         try {
             this.xmlStreamWriter.writeAttribute(string, Integer.toString(value));
         } catch (XMLStreamException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -54,7 +46,6 @@ public class XmlPrinter implements TreeVisitor {
         try {
             this.xmlStreamWriter.writeAttribute(string, string2);
         } catch (XMLStreamException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -147,7 +138,7 @@ public class XmlPrinter implements TreeVisitor {
     @Override
     public void visit(TEMP op) {
         this.writeStartElement("temp");
-     //   this.writeAttribute("value", op.toString());
+        this.writeAttribute("value", op.toString());
         this.writeEndElement();
     }
 
@@ -157,6 +148,13 @@ public class XmlPrinter implements TreeVisitor {
         this.writeAttribute("value", Integer.toString(cjump.relop));
         cjump.left.accept(this);
         cjump.right.accept(this);
+        this.writeStartElement("label");
+        this.writeAttribute("value", cjump.iftrue.toString());
         this.writeEndElement();
+        this.writeStartElement("label");
+        this.writeAttribute("value", cjump.iffalse.toString());
+        this.writeEndElement();
+        this.writeEndElement();
+
     }
 }

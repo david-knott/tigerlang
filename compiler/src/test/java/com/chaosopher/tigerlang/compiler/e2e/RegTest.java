@@ -1,39 +1,30 @@
 package com.chaosopher.tigerlang.compiler.e2e;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.PrintStream;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
+import com.chaosopher.tigerlang.compiler.main.Main;
+import com.chaosopher.tigerlang.compiler.parse.ParserFactory;
+import com.chaosopher.tigerlang.compiler.parse.ParserService;
 
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
 import org.junit.runner.RunWith;
-
-import com.chaosopher.tigerlang.compiler.absyn.Absyn;
-import com.chaosopher.tigerlang.compiler.absyn.PrettyPrinter;
-import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
-import com.chaosopher.tigerlang.compiler.main.Main;
-import com.chaosopher.tigerlang.compiler.parse.ParserFactory;
-import com.chaosopher.tigerlang.compiler.parse.ParserService;
 
 @RunWith(Theories.class)
 public class RegTest {

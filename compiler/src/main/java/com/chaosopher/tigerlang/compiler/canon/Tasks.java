@@ -4,7 +4,6 @@ import com.chaosopher.tigerlang.compiler.translate.DataFrag;
 import com.chaosopher.tigerlang.compiler.translate.FragList;
 import com.chaosopher.tigerlang.compiler.translate.FragmentVisitor;
 import com.chaosopher.tigerlang.compiler.translate.ProcFrag;
-import com.chaosopher.tigerlang.compiler.tree.TreeSimplifierVisitor;
 import com.chaosopher.tigerlang.compiler.tree.PrettyPrinter;
 import com.chaosopher.tigerlang.compiler.util.Assert;
 import com.chaosopher.tigerlang.compiler.util.SimpleTask;
@@ -41,22 +40,6 @@ public class Tasks implements TaskProvider {
         );
         taskRegister.register(
             new SimpleTask((taskContext) -> taskContext.hirFragList.accept(new FragmentVisitor() {
-                @Override
-                public void visit(ProcFrag procFrag) {
-                    TreeSimplifierVisitor expandTempVisitor = new TreeSimplifierVisitor();
-                    procFrag.body.accept(expandTempVisitor);
-                }
-                @Override
-                public void visit(DataFrag dataFrag) {
-                }
-                }), 
-                "hir-simplify", 
-                "Simplifies the hir in preparation for optimisation",
-                "hir-compute"
-            )
-        );
-        taskRegister.register(
-            new SimpleTask((taskContext) -> taskContext.hirFragList.accept(new FragmentVisitor() {
                     public void visit(ProcFrag frags) {
                         CanonVisitor canonVisitor = new CanonVisitor(canonicalization);
                         frags.accept(canonVisitor);
@@ -71,26 +54,5 @@ public class Tasks implements TaskProvider {
                 "hir-simplify"
             )
         );
-
-        taskRegister.register(
-            new SimpleTask((taskContext) -> taskContext.lirFragList.accept(new FragmentVisitor() {
-
-                public void visit(ProcFrag procFrag) {
-                    procFrag.body.accept(new PrettyPrinter(taskContext.log));
-                }
-
-                @Override
-                public void visit(DataFrag dataFrag) {
-                    // do nothing.
-                }
-                    
-                }), 
-                "lir-simplify-display", 
-                "Simplifies the hir in preparation for optimisation",
-                "hir-simplify-canon"
-            )
-        );
-
-
     }
 }

@@ -1,59 +1,11 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-6">
-      <form>
-        <div class="row">
-          <div class="col">
-            <input
-              type="text"
-              id="arguments"
-              class="form-control"
-              placeholder="--hir-display"
-            />
-          </div>
-        </div>
-      </form>
-      <div
-        ace-editor
-        #sourceEditor
-        [autoUpdateContent]="true"
-        [durationBeforeCallback]="1000"
-        (textChanged)="onChange($event)"
-        [(text)]="tiger"
-        style="min-height: 600px; overflow: auto"
-        [mode]="'text'"
-      ></div>
-    </div>
-    <div class="col-md-6">
-      <nav ngbNav #nav="ngbNav" class="nav-tabs">
-        <ng-container ngbNavItem>
-          <a ngbNavLink>Assembly</a>
-          <ng-template ngbNavContent>
-            <div
-              ace-editor
-              #assemEditor
-              [autoUpdateContent]="true"
-              [(text)]="assembly"
-              [readOnly]="true"
-              style="min-height: 600px; overflow: auto"
-              [mode]="'assembly_x86'"
-            ></div>
-          </ng-template>
-        </ng-container>
-        <ng-container ngbNavItem>
-          <a ngbNavLink>Console</a>
-          <ng-template ngbNavContent>
-            <p>TBD</p>
-          </ng-template>
-        </ng-container>
-        <ng-container ngbNavItem>
-          <a ngbNavLink>Call Graph</a>
-          <ng-template ngbNavContent>
-            <p>TBD</p>
-          </ng-template>
-        </ng-container>
-      </nav>
-      <div [ngbNavOutlet]="nav" class="mt-2"></div>
-    </div>
-  </div>
-</div>
+<mat-grid-list cols="2" rowHeight="2:1">
+  <mat-grid-tile>
+    <app-source-editor></app-source-editor>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <app-target-editor></app-target-editor>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="2">
+    <app-output-panel></app-output-panel>
+  </mat-grid-tile>
+</mat-grid-list>

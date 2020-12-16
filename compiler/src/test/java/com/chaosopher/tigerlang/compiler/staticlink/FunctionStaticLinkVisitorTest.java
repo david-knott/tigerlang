@@ -125,4 +125,25 @@ public class FunctionStaticLinkVisitorTest {
 
         //how do we know if a function is at the same level ? Its contained in the same dec block.
     }
+
+    @Test
+    public void improve3() {
+        ErrorMsg errorMsg = new ErrorMsg("", System.out);
+        Absyn program = this.parserService.parse("let var v := 1 function outer() : int = let function inner() : int = v in inner() end function sister() : int = outer() in sister() end", errorMsg);
+        program.accept(new EscapeVisitor(errorMsg));
+        program.accept(new Binder(errorMsg));
+        program.accept(new PrettyPrinter(System.out));
+        program.accept(new FunctionStaticLinkVisitor());
+        program.accept(new StaticLinkEscapeVisitor(program));
+        program.accept(new PrettyPrinter(System.out, true, false));
+        //sister does not need a static link on its frame, this can be in a register.
+
+        //outer does need the staticlink on its frame as inner needs access to the variable v outside of outer.
+
+        // if a function calls another function at the same level, the first function's static link does not
+        
+        // escape unless that function calls a function higher up as well as the function at the same level.
+
+        //how do we know if a function is at the same level ? Its contained in the same dec block.
+    }
 }

@@ -1,0 +1,32 @@
+<div class="component">
+  <p>
+    <mat-toolbar color="primary">
+      <span>Source</span>
+      <span class="example-spacer"></span>
+
+      <button mat-icon-button aria-hidden="false" aria-label="Example home settings" (click)="showSettings()"
+        ><mat-icon 
+          >settings</mat-icon
+        ></button
+      >
+
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>expand_more</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>Pretty Print</button>
+      </mat-menu>
+    </mat-toolbar>
+  </p>
+
+  <div
+    ace-editor
+    #sourceEditor
+    [autoUpdateContent]="true"
+    [durationBeforeCallback]="1000"
+    (textChanged)="onChange($event)"
+    [(text)]="tiger"
+    [mode]="'text'"
+    class="editor"
+  ></div>
+</div>
