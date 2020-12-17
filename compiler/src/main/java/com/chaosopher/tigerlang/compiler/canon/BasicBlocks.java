@@ -36,11 +36,11 @@ class BasicBlocks {
         lastBlock = lastBlock.tail = new StmListList(lastStm, null);
       doStms(l.tail);
     } else
-      mkBlocks(new com.chaosopher.tigerlang.compiler.tree.StmList(new com.chaosopher.tigerlang.compiler.tree.LABEL(new com.chaosopher.tigerlang.compiler.temp.Label()), l));
+      mkBlocks(new com.chaosopher.tigerlang.compiler.tree.StmList(new com.chaosopher.tigerlang.compiler.tree.LABEL(com.chaosopher.tigerlang.compiler.temp.Label.create()), l));
   }
 
   public BasicBlocks(com.chaosopher.tigerlang.compiler.tree.StmList stms) {
-    done = new com.chaosopher.tigerlang.compiler.temp.Label();
+    done = com.chaosopher.tigerlang.compiler.temp.Label.create();
     mkBlocks(stms);
   }
 }

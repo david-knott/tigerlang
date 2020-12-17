@@ -1,6 +1,6 @@
 package com.chaosopher.tigerlang.compiler.dataflow;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 
 import com.chaosopher.tigerlang.compiler.temp.Temp;
 import com.chaosopher.tigerlang.compiler.tree.Exp;
@@ -17,8 +17,8 @@ import com.chaosopher.tigerlang.compiler.tree.TEMP;
 class TempReplacer extends CloningTreeVisitor {
 
     private final TreeAtomizer atomizer;
-    private Hashtable<Stm, Stm> removals = new Hashtable<>();
-    private Hashtable<Temp,Exp> expReplacements = new Hashtable<>();
+    private HashMap<Stm, Stm> removals = new HashMap<>();
+    private HashMap<Temp,Exp> expReplacements = new HashMap<>();
     private StmList stmList;
 
     public StmList getStmList() {

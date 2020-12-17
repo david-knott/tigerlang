@@ -71,12 +71,12 @@ public class TempReplacerTest {
         );
         binop.accept(treeAtomizer);
         XmlPrinter printer = new XmlPrinter(System.out);
-        treeAtomizer.getAtoms().accept(printer);
+       // treeAtomizer.getAtoms().accept(printer);
         assertNotNull(treeAtomizer.getAtoms());
 
         TempReplacer blah = new TempReplacer(treeAtomizer);
         treeAtomizer.getAtoms().accept(blah);
         assertNotNull(blah.getStmList());
-//        blah.getStmList().accept(printer);
+        blah.getStmList().accept(printer);
     }
 }
