@@ -1,7 +1,9 @@
 # Diary
 
-## Monday 14th Decemeber 2020
+## Thursday 17th December 2020
+Started dataflow analysis, splitting tree IR into quadruples and the recombining them.
 
+## Monday 14th Decemeber 2020
 Calculating static links and whether they can escape. Not complete. Doesn't work in
 the sister example in the test suite.
 

@@ -1,12 +1,5 @@
 package com.chaosopher.tigerlang.compiler.dataflow;
 
-import com.chaosopher.tigerlang.compiler.tree.MOVE;
-
-import java.util.Hashtable;
-
-import com.chaosopher.tigerlang.compiler.canon.Canonicalization;
-import com.chaosopher.tigerlang.compiler.temp.Temp;
-import com.chaosopher.tigerlang.compiler.temp.TempList;
 import com.chaosopher.tigerlang.compiler.tree.BINOP;
 import com.chaosopher.tigerlang.compiler.tree.CALL;
 import com.chaosopher.tigerlang.compiler.tree.CJUMP;
@@ -18,6 +11,7 @@ import com.chaosopher.tigerlang.compiler.tree.ExpList;
 import com.chaosopher.tigerlang.compiler.tree.JUMP;
 import com.chaosopher.tigerlang.compiler.tree.LABEL;
 import com.chaosopher.tigerlang.compiler.tree.MEM;
+import com.chaosopher.tigerlang.compiler.tree.MOVE;
 import com.chaosopher.tigerlang.compiler.tree.NAME;
 import com.chaosopher.tigerlang.compiler.tree.SEQ;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
@@ -25,52 +19,20 @@ import com.chaosopher.tigerlang.compiler.tree.StmList;
 import com.chaosopher.tigerlang.compiler.tree.TEMP;
 import com.chaosopher.tigerlang.compiler.tree.TreeVisitor;
 
-
 /**
- * Creates an atomized tree. This transforms the HIR into
- * a form where there are no nested expressions. After canonicalisation
- * this is similar to a quadruple set, which can be fed into data flow
- * analyses.
+ * Clones a tree.
  */
-public class TreeAtomizer implements TreeVisitor {
+class CloningTreeVisitor implements TreeVisitor {
 
-    private Exp exp;
-    private Stm stm;
-    private final Canonicalization canonicalization;
-
-    public TreeAtomizer(Canonicalization canonicalization) {
-        this.canonicalization = canonicalization;
-    }
-
-    public StmList getAtoms() {
-        return this.canonicalization.canon(this.stm != null ? this.stm : new EXP(this.exp));
-    }
-
-    private Hashtable<Temp, Temp> temps = new Hashtable<>();
-    private Temp createTemp() {
-        Temp temp = Temp.create();
-        this.temps.put(temp, temp);
-        return temp;
-    }
-
-    public boolean contains(Temp temp) {
-        return this.temps.containsKey(temp);
-    }
-
-    private Exp rewrite(Exp exp) {
-        if(exp instanceof MEM || exp instanceof BINOP) {
-            Temp temp = this.createTemp();
-            return new ESEQ(new MOVE(new TEMP(temp), exp), new TEMP(temp));
-        }
-        return exp; 
-     }
+    protected Exp exp;
+    protected Stm stm;
 
     @Override
     public void visit(BINOP op) {
         op.left.accept(this);
-        Exp leftClone = rewrite(this.exp);
+        Exp leftClone = this.exp;
         op.right.accept(this);
-        Exp rightClone = rewrite(this.exp);
+        Exp rightClone = this.exp;
         this.exp = new BINOP(op.binop, leftClone, rightClone);
     }
 
@@ -79,7 +41,7 @@ public class TreeAtomizer implements TreeVisitor {
         op.func.accept(this);
         Exp funcClone = this.exp;
         ExpList cloneExpList = null;
-        for(ExpList arg = op.args; arg != null; arg = arg.tail) {
+        for (ExpList arg = op.args; arg != null; arg = arg.tail) {
             arg.head.accept(this);
             Exp cloneArg = this.exp;
             cloneExpList = ExpList.append(cloneExpList, cloneArg);
@@ -111,7 +73,7 @@ public class TreeAtomizer implements TreeVisitor {
     @Override
     public void visit(JUMP op) {
         op.exp.accept(this);
-        Exp eClone = rewrite(this.exp);
+        Exp eClone = this.exp;
         this.stm = new JUMP(eClone, op.targets);
     }
 
@@ -124,7 +86,7 @@ public class TreeAtomizer implements TreeVisitor {
     @Override
     public void visit(MEM op) {
         op.exp.accept(this);
-        Exp expClone = rewrite(this.exp);
+        Exp expClone = this.exp;
         this.exp = new MEM(expClone);
     }
 
@@ -159,16 +121,20 @@ public class TreeAtomizer implements TreeVisitor {
     @Override
     public void visit(CJUMP cjump) {
         cjump.left.accept(this);
-        Exp leftClone = rewrite(this.exp);
+        Exp leftClone = this.exp;
         cjump.right.accept(this);
-        Exp rightClone = rewrite(this.exp);
+        Exp rightClone = this.exp;
         this.stm = new CJUMP(cjump.relop, leftClone, rightClone, cjump.iftrue, cjump.iffalse);
     }
 
     @Override
     public void visit(StmList stmList) {
+        StmList cloned = null;
         for(;stmList != null; stmList = stmList.tail) {
             stmList.head.accept(this);
+            Stm clonedStm = this.stm;
+            cloned = StmList.append(cloned, clonedStm);
         }
+        this.stm = stmList;
     }
 }

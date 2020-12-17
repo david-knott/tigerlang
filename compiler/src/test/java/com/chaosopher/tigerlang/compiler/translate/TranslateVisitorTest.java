@@ -67,17 +67,6 @@ public class TranslateVisitorTest {
         return false;
     }
 
-    private static boolean isEqualNode(Node first, Node second) {
-        if(!first.getNodeName().equals(second.getNodeName()))
-            return false;
-        //ignore temp and label id's as we can't predict these.
-        if(first.getNodeName().equals("temp") || first.getNodeName().equals("label")) {
-            return true;
-        }
-        //return first.isEqualNode(second);
-        return first.getNodeName().equals(second.getNodeName());
-    }
-
     private static boolean subtree(Node actual, Node test) {
         NodeList actualNodeList = actual.getChildNodes();
         NodeList testNodeList = test.getChildNodes();
@@ -99,7 +88,6 @@ public class TranslateVisitorTest {
     }
 
     private static boolean contains(Node actual, Node test) {
-      //  System.out.println("Comparing " + actual.getNodeName() + " " + test.getNodeName());
         NodeList actualNodeList = actual.getChildNodes();
         for(int i = 0; i < actualNodeList.getLength(); i++) {
             if(subtree(actualNodeList.item(i), test)) {
@@ -112,85 +100,6 @@ public class TranslateVisitorTest {
             }
         }
         return false;
-    }
-
-    /**
-     * Checks if second Xml fragment is contained in the first. 
-     * We keep moving through the first document until we find an element that matches 
-     * the first element in test.
-     * When we find a matching element in test, we advance to next element in test and 
-     * advance to next element in actual and compare, if equal, repeat, if not equal return false.
-     * If we pass the last element of test, return true
-     * 
-     * Keep moving through actual, if no partial matches return false.
-     * @param actual
-     * @param test
-     * @return
-     */
-    private static boolean containi1(Node actual, Node test) {
-        System.out.println("Comparing " + actual.getNodeName() + " " + test.getNodeName());
-        NodeList actualNodeList = actual.getChildNodes();
-        NodeList testNodeList = test.getChildNodes();
-        // nodes match
-        if(actual.getNodeName().equals(test.getNodeName())) {
-            if(testNodeList.getLength() == actualNodeList.getLength()) {
-                System.out.println("Potential Match:" + actual.getNodeName());
-                for(int i = 0; i < testNodeList.getLength(); i++) {
-                    if(contains(actualNodeList.item(i), testNodeList.item(i))) {
-                        //add to list.
-                        System.out.println(">> solution ");
-                      //  return true;
-                    }
-                }
-            } else {
-                System.out.println("Wrong argument count:" + actual.getNodeName());
-            }
-        } else {
-            //move to next actual node, reset test back to first node.
-            //move back to stack from with root test and move to next actual node
-            //as as soon as their is a failure, reset stack and increment node.
-            //if there is a match, advance actual and advance test.
-            //finish when at end of actual or end of test, which ever comes first
-            //stack frame 0 contains, test[0], actual[0]
-            //stack frame 1 contains, test[0], actual[1] etc
-            /*
-            System.out.println("No Match:"  + actual.getNodeName() + " " + test.getNodeName());
-            for(int i = 0; i < actualNodeList.getLength(); i++) {
-                if(contains(actualNodeList.item(i), test)) {
-                    return true;
-                }
-            }*/
-        }
-
-       // System.out.println("exit");
-        return false;
-        /*
-        //current level nodes are equal.
-        if(isEqualNode(test, actual)) {
-            System.out.println(">> Node match " + actual.getNodeName() + " " + test.getNodeName());
-            NodeList testNodeList = test.getChildNodes();
-            // different child counts, therefore cannot be the same.
-            if(testNodeList.getLength() != actualNodeList.getLength()) {
-                System.out.println("Different child lengths.");
-                return false;
-            }
-            for(int i = 0; i < testNodeList.getLength(); i++) {
-                if(!contains(actualNodeList.item(i), testNodeList.item(i))) {
-                    return false;
-                }
-            }
-            System.out.println("Nodes and child nodes match.");
-            return true;
-        } else {    //nodes are not equal, nove to parent node
-            System.out.println("Nodes do not match, moving to next actual node.");
-            // move through the actual node list using same test
-            for(int i = 0; i < actualNodeList.getLength(); i++) {
-                if(contains(actualNodeList.item(i), test)) {
-                    return true;
-                }
-            }
-            return false;
-        }*/
     }
 
     private ParserService parserService;

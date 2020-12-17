@@ -27,5 +27,7 @@ public interface TreeVisitor {
 
     public void visit(TEMP op);
 
-	public void visit(CJUMP cjump);
+    public void visit(CJUMP cjump);
+    
+    public void visit(StmList stmList);
 }

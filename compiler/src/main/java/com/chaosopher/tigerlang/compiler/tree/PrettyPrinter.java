@@ -195,4 +195,11 @@ public class PrettyPrinter implements TreeVisitor {
         this.decLevel();
         this.write(")");
     }
+
+    @Override
+    public void visit(StmList stmList) {
+        for(;stmList != null; stmList = stmList.tail) {
+            stmList.head.accept(this);
+        }
+    }
 }

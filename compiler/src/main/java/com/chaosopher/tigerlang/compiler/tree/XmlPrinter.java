@@ -157,4 +157,11 @@ public class XmlPrinter implements TreeVisitor {
         this.writeEndElement();
 
     }
+
+    @Override
+    public void visit(StmList stmList) {
+        for(;stmList != null; stmList = stmList.tail) {
+            stmList.head.accept(this);
+        }
+    }
 }

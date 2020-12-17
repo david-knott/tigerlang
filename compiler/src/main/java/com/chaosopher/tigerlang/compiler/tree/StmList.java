@@ -101,10 +101,7 @@ public class StmList extends Stm {
 
     @Override
     public void accept(TreeVisitor treeVisitor) {
-        StmList stmList = this;
-        for(;stmList != null; stmList = stmList.tail) {
-            stmList.head.accept(treeVisitor);
-        }
+        treeVisitor.visit(this);
     }
 
     @Override

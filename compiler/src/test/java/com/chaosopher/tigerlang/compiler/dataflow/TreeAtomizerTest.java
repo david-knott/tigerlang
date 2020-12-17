@@ -21,7 +21,6 @@ import com.chaosopher.tigerlang.compiler.tree.StmList;
 import com.chaosopher.tigerlang.compiler.tree.XmlPrinter;
 
 import org.junit.Test;
-
 public class TreeAtomizerTest {
 
     @Test
@@ -46,6 +45,11 @@ public class TreeAtomizerTest {
         XmlPrinter printer = new XmlPrinter(System.out);
         treeAtomizer.getAtoms().accept(printer);
         assertNotNull(treeAtomizer.getAtoms());
+
+        TempReplacer blah = new TempReplacer(treeAtomizer);
+        treeAtomizer.getAtoms().accept(blah);
+        assertNotNull(blah.getStmList());
+//        blah.getStmList().accept(printer);
     }
 
     @Test
@@ -99,7 +103,6 @@ public class TreeAtomizerTest {
         XmlPrinter printer = new XmlPrinter(System.out);
         StmList stmlList = treeAtomizer.getAtoms();
         stmlList.accept(printer);
-
         assertNotNull(stmlList);
     }
 }
