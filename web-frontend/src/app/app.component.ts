@@ -1,6 +1,6 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { CompilerService } from './compiler.service';
+import { CompilerService } from './services/compiler.service';
 import { Assembly } from './assembly';
 import * as ace from "ace-builds";
 var Range = ace.require('ace/range').Range;

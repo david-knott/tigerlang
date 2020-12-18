@@ -22,6 +22,7 @@ import org.xml.sax.SAXException;
 
 
 public class TempReplacerTest {
+
     private static boolean subtree(Node actual, Node test) {
         NodeList actualNodeList = actual.getChildNodes();
         NodeList testNodeList = test.getChildNodes();
@@ -71,11 +72,10 @@ public class TempReplacerTest {
         );
         binop.accept(treeAtomizer);
         XmlPrinter printer = new XmlPrinter(System.out);
-       // treeAtomizer.getAtoms().accept(printer);
-        assertNotNull(treeAtomizer.getAtoms());
-
+        treeAtomizer.getCanonicalisedAtoms().accept(printer);
+        assertNotNull(treeAtomizer.getCanonicalisedAtoms());
         TempReplacer blah = new TempReplacer(treeAtomizer);
-        treeAtomizer.getAtoms().accept(blah);
+        treeAtomizer.getCanonicalisedAtoms().accept(blah);
         assertNotNull(blah.getStmList());
         blah.getStmList().accept(printer);
     }

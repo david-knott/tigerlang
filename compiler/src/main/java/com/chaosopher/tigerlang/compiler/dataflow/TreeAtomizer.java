@@ -42,8 +42,12 @@ public class TreeAtomizer implements TreeVisitor {
         this.canonicalization = canonicalization;
     }
 
-    public StmList getAtoms() {
+    public StmList getCanonicalisedAtoms() {
         return this.canonicalization.canon(this.stm != null ? this.stm : new EXP(this.exp));
+    }
+
+    public Stm getAtoms() {
+        return this.stm != null ? this.stm : new EXP(this.exp);
     }
 
     private Hashtable<Temp, Temp> temps = new Hashtable<>();
