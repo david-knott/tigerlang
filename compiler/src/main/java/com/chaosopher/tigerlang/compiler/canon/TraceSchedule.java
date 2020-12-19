@@ -1,5 +1,6 @@
 package com.chaosopher.tigerlang.compiler.canon;
 
+import com.chaosopher.tigerlang.compiler.temp.Label;
 import com.chaosopher.tigerlang.compiler.tree.StmList;
 
 class TraceSchedule {
@@ -15,7 +16,7 @@ class TraceSchedule {
         return seqs;
     }
 
-    java.util.Dictionary table = new java.util.Hashtable();
+    java.util.Dictionary<Label, StmList> table = new java.util.Hashtable<>();
 
     com.chaosopher.tigerlang.compiler.tree.StmList getLast(com.chaosopher.tigerlang.compiler.tree.StmList block) {
         com.chaosopher.tigerlang.compiler.tree.StmList l = block;
