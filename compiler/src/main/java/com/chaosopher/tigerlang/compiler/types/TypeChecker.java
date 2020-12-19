@@ -6,12 +6,14 @@ import java.util.LinkedList;
 import com.chaosopher.tigerlang.compiler.absyn.Absyn;
 import com.chaosopher.tigerlang.compiler.absyn.ArrayExp;
 import com.chaosopher.tigerlang.compiler.absyn.AssignExp;
+import com.chaosopher.tigerlang.compiler.absyn.BreakExp;
 import com.chaosopher.tigerlang.compiler.absyn.CallExp;
 import com.chaosopher.tigerlang.compiler.absyn.DecList;
 import com.chaosopher.tigerlang.compiler.absyn.DefaultVisitor;
 import com.chaosopher.tigerlang.compiler.absyn.ExpList;
 import com.chaosopher.tigerlang.compiler.absyn.FieldExpList;
 import com.chaosopher.tigerlang.compiler.absyn.FieldList;
+import com.chaosopher.tigerlang.compiler.absyn.FieldVar;
 import com.chaosopher.tigerlang.compiler.absyn.ForExp;
 import com.chaosopher.tigerlang.compiler.absyn.FunctionDec;
 import com.chaosopher.tigerlang.compiler.absyn.IfExp;
@@ -48,7 +50,7 @@ public class TypeChecker extends DefaultVisitor {
     }
 
     private void checkTypes(Absyn loc, String synCat1, Type first, String synCat2, Type second) {
-        if (!first.coerceTo(second)) {
+        if (!second.coerceTo(first)) {
             this.errorMsg.error(loc.pos,
                     String.format("type mismatch\n%s:%s\n%s:%s", synCat1, first.actual(), synCat2, second.actual()));
         }
@@ -57,7 +59,6 @@ public class TypeChecker extends DefaultVisitor {
     private Type getExpType() {
         return this.expType;
     }
-
 
     /** ============== AST Expressions ============================== **/
 
@@ -85,6 +86,18 @@ public class TypeChecker extends DefaultVisitor {
         this.expType = Constants.NIL;
     }
 
+    /**
+     * Sets the type of break to void.
+     */
+    @Override
+    public void visit(BreakExp exp) {
+        this.expType = Constants.VOID;
+    }
+
+    @Override
+    public void visit(FieldVar exp) {
+        this.expType = exp.getType();
+    }
     /**
      * Visits a call node. The implementation checks that the actual arguments match
      * the formal arguments in the function definition. It sets the current visited
@@ -237,6 +250,14 @@ public class TypeChecker extends DefaultVisitor {
         exp.right.accept(this);
         Type rightType = this.expType;
         this.checkTypes(exp, "left type", leftType, "right type", rightType);
+        // if the operation is a comparision, rather than arithmetic
+        switch(exp.oper) {
+            case OpExp.DIV: case OpExp.MINUS: case OpExp.MUL: case OpExp.PLUS:
+                break;
+            default:
+                this.expType = Constants.INT;
+            
+        }
     }
 
     /**

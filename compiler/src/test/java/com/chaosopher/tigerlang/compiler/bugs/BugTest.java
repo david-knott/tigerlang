@@ -26,12 +26,41 @@ public class BugTest {
         assertNotNull(program);
     }
 
-   
     @Test
     public void argumentMismatch() throws FileNotFoundException {
         ErrorMsg errorMsg = new ErrorMsg("f", System.out);
         ParserService parserService = new ParserService(new ParserFactory());
         Absyn program = parserService.parse("let function a(a:int, b:int, c:int) = () in a(1,2) end", errorMsg);
+        program.accept(new Binder(errorMsg));
+        program.accept(new TypeChecker(errorMsg));
+        assertNotNull(program);
+    }
+
+    @Test
+    public void bug20202012191() throws FileNotFoundException {
+        ErrorMsg errorMsg = new ErrorMsg("f", System.out);
+        ParserService parserService = new ParserService(new ParserFactory());
+        Absyn program = parserService.parse(" let var a:int := 10 in while a > 0 do if a = 5 then break else a := a - 1; a end", errorMsg);
+        program.accept(new Binder(errorMsg));
+        program.accept(new TypeChecker(errorMsg));
+        assertNotNull(program);
+    }
+
+    @Test
+    public void bug20202012192() throws FileNotFoundException {
+        ErrorMsg errorMsg = new ErrorMsg("f", System.out);
+        ParserService parserService = new ParserService(new ParserFactory());
+        Absyn program = parserService.parse(" let var a:string := \"david\" var b:string := \"david\" in printi(a = b) end", errorMsg);
+        program.accept(new Binder(errorMsg));
+        program.accept(new TypeChecker(errorMsg));
+        assertNotNull(program);
+    }
+
+    @Test
+    public void bug20202012193() throws FileNotFoundException {
+        ErrorMsg errorMsg = new ErrorMsg("f", System.out);
+        ParserService parserService = new ParserService(new ParserFactory());
+        Absyn program = parserService.parse(" let type list = {first: int, second:int, rest: list} var myList:list := list{first = 10, second = 20, rest=nil} in myList.first := 20; myList.second := 21; printi(myList.first); printi(myList.second) end ", errorMsg);
         program.accept(new Binder(errorMsg));
         program.accept(new TypeChecker(errorMsg));
         assertNotNull(program);

@@ -9,6 +9,8 @@ The second item was due to the type visitor not processing the function bodies. 
 original unit tests didn't catch this because we were using the parser directory.
 The parser service wraps the code in a declist if there isn't one present.
 
+I need to revist the type checking before any further work.
+
 
 ## Thursday 17th December 2020
 Started dataflow analysis, splitting tree IR into quadruples and the recombining them.
