@@ -1,5 +1,9 @@
 # Diary
 
+## Saturday 19th December 2020
+Bugs in type checking method formal arguments versus actual arguments.
+Bug for invalid expressions like 'print("Hello World")dd'
+
 ## Thursday 17th December 2020
 Started dataflow analysis, splitting tree IR into quadruples and the recombining them.
 Search for a tiger colour palette for the design.

@@ -18,6 +18,15 @@ import org.junit.Test;
 public class BugTest {
     
     @Test
+    public void syntaxError() throws FileNotFoundException {
+        ErrorMsg errorMsg = new ErrorMsg("f", System.out);
+        ParserService parserService = new ParserService(new ParserFactory());
+        Absyn program = parserService.parse("print(\"Hello World\")dd", errorMsg);
+        assertNotNull(program);
+    }
+
+
+    @Test
     public void ifExpressionNullType() throws FileNotFoundException {
         ErrorMsg errorMsg = new ErrorMsg("f", System.out);
         ParserService parserService = new ParserService(new ParserFactory());
@@ -29,6 +38,6 @@ public class BugTest {
         program.accept(translator);
         FragList fragList = translator.getFragList();
         assertNotNull(fragList);
-
     }
+
 }
