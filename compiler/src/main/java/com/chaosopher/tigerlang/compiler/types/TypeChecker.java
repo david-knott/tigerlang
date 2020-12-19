@@ -7,6 +7,7 @@ import com.chaosopher.tigerlang.compiler.absyn.Absyn;
 import com.chaosopher.tigerlang.compiler.absyn.ArrayExp;
 import com.chaosopher.tigerlang.compiler.absyn.AssignExp;
 import com.chaosopher.tigerlang.compiler.absyn.CallExp;
+import com.chaosopher.tigerlang.compiler.absyn.DecList;
 import com.chaosopher.tigerlang.compiler.absyn.DefaultVisitor;
 import com.chaosopher.tigerlang.compiler.absyn.ExpList;
 import com.chaosopher.tigerlang.compiler.absyn.FieldExpList;
@@ -275,19 +276,23 @@ public class TypeChecker extends DefaultVisitor {
 
     /**
      * Represents the declaration of a variable which may include the type for
-     * example: var myVar:int = 1
+     * example: var myVar:int = 1, or as a function argument.
      */
     @Override
     public void visit(VarDec exp) {
-        // visit initializer.
-        exp.init.accept(this);
+        // visit initializer, if present.
+        Type initType = null;
+        if(exp.init != null) {
+            exp.init.accept(this);
+            initType = this.expType;
+        }
         // expect that the initizer type is set here ( either int, string, namety, recordty, arrayty)
-        Type initType = this.expType;
-        // visit the type if defined.
         if (exp.typ != null) {
             exp.typ.accept(this);
             Type declaredType = this.expType;
-            this.checkTypes(exp, "declared", declaredType, "actual", initType);
+            if(initType != null) {
+                this.checkTypes(exp, "declared", declaredType, "actual", initType);
+            }
         }
         this.expType = Constants.VOID;
     }
@@ -306,5 +311,6 @@ public class TypeChecker extends DefaultVisitor {
     @Override
     public void visit(FunctionDec exp) {
         this.expType = exp.getType();
+        super.visit(exp);
     }
 }

@@ -33,8 +33,9 @@ public class DefaultVisitor implements AbsynVisitor{
 
     @Override
     public void visit(DecList exp) {
-        for(; exp != null; exp = exp.tail) {
-            exp.head.accept(this);
+        exp.head.accept(this);
+        if(exp.tail != null) {
+            exp.tail.accept(this);
         }
     }
 

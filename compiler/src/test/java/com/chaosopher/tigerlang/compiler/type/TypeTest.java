@@ -316,7 +316,7 @@ public class TypeTest {
     public void functionMissingArgs() {
         PrintStream outputStream = System.out;
         ErrorMsg errorMsg = new ErrorMsg("", outputStream);
-        Parser parser = new CupParser("let function a(a:int, b:int) = () in a() end",errorMsg);
+        Parser parser = new CupParser("let function a(a:int, b:int) = () in a(1) end",errorMsg);
         Absyn program = parser.parse();
         Binder binder = new Binder(errorMsg);
         program.accept(binder);

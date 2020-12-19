@@ -3,6 +3,12 @@
 ## Saturday 19th December 2020
 Bugs in type checking method formal arguments versus actual arguments.
 Bug for invalid expressions like 'print("Hello World")dd'
+Both items were fixed, first due to an illegal cast of ExpList to Absyn. The parser
+expects that all the classes extend from the same base class.
+The second item was due to the type visitor not processing the function bodies. The
+original unit tests didn't catch this because we were using the parser directory.
+The parser service wraps the code in a declist if there isn't one present.
+
 
 ## Thursday 17th December 2020
 Started dataflow analysis, splitting tree IR into quadruples and the recombining them.

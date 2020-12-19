@@ -12,11 +12,12 @@ import com.chaosopher.tigerlang.compiler.parse.ParserFactory;
 import com.chaosopher.tigerlang.compiler.parse.ParserService;
 import com.chaosopher.tigerlang.compiler.translate.FragList;
 import com.chaosopher.tigerlang.compiler.translate.TranslatorVisitor;
+import com.chaosopher.tigerlang.compiler.types.TypeChecker;
 
 import org.junit.Test;
 
 public class BugTest {
-    
+     
     @Test
     public void syntaxError() throws FileNotFoundException {
         ErrorMsg errorMsg = new ErrorMsg("f", System.out);
@@ -25,6 +26,16 @@ public class BugTest {
         assertNotNull(program);
     }
 
+   
+    @Test
+    public void argumentMismatch() throws FileNotFoundException {
+        ErrorMsg errorMsg = new ErrorMsg("f", System.out);
+        ParserService parserService = new ParserService(new ParserFactory());
+        Absyn program = parserService.parse("let function a(a:int, b:int, c:int) = () in a(1,2) end", errorMsg);
+        program.accept(new Binder(errorMsg));
+        program.accept(new TypeChecker(errorMsg));
+        assertNotNull(program);
+    }
 
     @Test
     public void ifExpressionNullType() throws FileNotFoundException {
