@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.chaosopher.tigerlang.compiler.temp.Label;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
+import com.chaosopher.tigerlang.compiler.tree.JUMP;
 import com.chaosopher.tigerlang.compiler.tree.LABEL;
 import com.chaosopher.tigerlang.compiler.tree.MOVE;
 import com.chaosopher.tigerlang.compiler.tree.StmList;
@@ -13,8 +14,8 @@ import org.junit.Test;
 
 public class CFGTest {
     
-    @Test
-    public void canCreateInstance() {
+    @Test(expected = java.lang.Error.class)
+    public void statementNoLabel() {
         StmList test = new StmList(
             new MOVE(
                 new TEMP(Temp.create()),
@@ -47,6 +48,38 @@ public class CFGTest {
             )
         );
         CFG cfg = new CFG(test);
+        cfg.show(System.out);
+        // expect one block, with 3 statements.
+    }
+
+    @Test
+    public void simpleLoop() {
+        Temp a = Temp.create();
+        Temp b = Temp.create();
+        Temp c = Temp.create();
+        Label label = Label.create();
+        StmList test = new StmList(
+            new LABEL(
+                label
+            ),
+            new StmList(
+                new MOVE(
+                    new TEMP(a),
+                    new TEMP(b)
+                ),
+                new StmList(
+                    new MOVE(
+                        new TEMP(c),
+                        new TEMP(a)
+                    ),
+                    new StmList(
+                        new JUMP(label)
+                    )
+                )
+            )
+        );
+        CFG cfg = new CFG(test);
+        cfg.show(System.out);
         // expect one block, with 3 statements.
     }
 

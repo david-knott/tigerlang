@@ -86,7 +86,9 @@ public class CFG extends Graph {
 
         private void start(BasicBlock basicBlock) {
             addNode(basicBlock);
-            addEdge(basicBlock, basicBlock.labelList);
+            if(basicBlock.labelList != null) {
+                addEdge(basicBlock, basicBlock.labelList);
+            }
             if(basicBlock.tail != null) {
                 this.start(basicBlock.tail);
             }
@@ -124,6 +126,7 @@ public class CFG extends Graph {
         @Override
         public void visit(StmList stmList) {
             super.visit(stmList);
+            Assert.assertNotNull(this.basicBlock, "Basic block should not be null, perhaps there is no label ?");
             this.basicBlock.addStatement(stmList.head);
         }
     }
@@ -140,6 +143,7 @@ public class CFG extends Graph {
 
     private void init() {
         this.stmList.accept(this.buildBasicBlocks);
+        new BuildGraph(this.buildBasicBlocks.basicBlock).start();
     }
 
     private HashMap<BasicBlock, Node> map = new HashMap<>();
@@ -162,5 +166,4 @@ public class CFG extends Graph {
         });
         super.addEdge(nodeStart, nodeEnd);
     }
-    
 }
