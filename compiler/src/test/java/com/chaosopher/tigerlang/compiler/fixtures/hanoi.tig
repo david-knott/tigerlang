@@ -1,0 +1,14 @@
+let
+function move(s:int,a:string,b:string,c:string) = (
+    if(s = 1) then
+        (print("move disk 1 from rod ");print(a); print(" to rod "); print(b);print("\n"))
+    else (
+        move(s - 1, a, c, b);
+        print("move disk ");
+printi(s);print(" from rod ");print(a); print(" to rod "); print(b);print("\n");
+        move(s - 1, c, b, a)
+    )
+)
+in 
+move(3, "A", "B", "C")
+end
