@@ -7,12 +7,12 @@ import { CompilerService } from "../services/compiler.service";
   styleUrls: ["./compiler-input.component.scss"],
 })
 export class CompilerInputComponent {
-  data: string = "print(\"Hello World\")";
+  data: string = 'print("Hello World")';
 
   constructor(private compilerService: CompilerService) {}
 
   inputChanged($event): void {
-    this.compilerService.compile({ code: $event, args: null});
-    console.log($event);
+    // notify the output window to call the compiler...
+    this.compilerService.compilationRequest({ code: $event, args: null });
   }
 }
