@@ -72,6 +72,7 @@ public class TypeTest {
         program.accept(prettyPrinter);
         assertTrue(errorMsg.anyErrors);
     }
+
     @Test
     public void varDec() {
         PrintStream outputStream = System.out;

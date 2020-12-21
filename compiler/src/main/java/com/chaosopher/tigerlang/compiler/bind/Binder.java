@@ -1,7 +1,8 @@
 package com.chaosopher.tigerlang.compiler.bind;
 
-import java.util.Hashtable;
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.HashMap;
 
 import com.chaosopher.tigerlang.compiler.absyn.Absyn;
 import com.chaosopher.tigerlang.compiler.absyn.ArrayExp;
@@ -22,30 +23,26 @@ import com.chaosopher.tigerlang.compiler.absyn.VarDec;
 import com.chaosopher.tigerlang.compiler.absyn.WhileExp;
 import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
 import com.chaosopher.tigerlang.compiler.symbol.Symbol;
-import com.chaosopher.tigerlang.compiler.types.RECORD;
-import com.chaosopher.tigerlang.compiler.types.Type;
 
 /**
- * The Binder class traverses the abstract syntax tree and binds variable,
- * function and type uses to their definitions. This is done using the symbol
- * tables. These are used in the type checking and translation phases.
- * 
- * A Question, what is the purpose of the type member variable ? What does it do
- * ? 1) During traversal, it allows types calculated at a child node be
- * propagated back to parent nodes.
+ * This class implements the default visitor and traverses the AST
+ * looking for definitions of variables, types and functions and then
+ * binds these to their usages. It also checks for breaks correctly nested
+ * within while expressions and for expressions. All type checking is
+ * defered to the @see com.chaosopher.tigerlang.compiler.types.TypeChecker .
  */
 public class Binder extends DefaultVisitor {
 
     private final SymbolTable typeSymbolTable;
     private final SymbolTable varSymbolTable;
     private final SymbolTable functionSymbolTable;
-    private final Stack<Absyn> loops = new Stack<Absyn>();
+    private final Deque<Absyn> loops = new ArrayDeque<>();
     private final ErrorMsg errorMsg;
 
     public Binder(ErrorMsg errorMsg) {
         this.errorMsg = errorMsg;
         // base system types
-        Hashtable<Symbol, SymbolTableElement> tinit = new Hashtable<Symbol, SymbolTableElement>();
+        HashMap<Symbol, SymbolTableElement> tinit = new HashMap<>();
         tinit.put(Symbol.symbol("int"), new SymbolTableElement(null));
         tinit.put(Symbol.symbol("string"), new SymbolTableElement(null));
         this.typeSymbolTable = new SymbolTable(tinit);
@@ -64,15 +61,7 @@ public class Binder extends DefaultVisitor {
         this.typeSymbolTable.beginScope();
         this.varSymbolTable.beginScope();
         this.functionSymbolTable.beginScope();
-        if (exp.decs != null) {
-            exp.decs.accept(this);
-        }
-        if (exp.body != null) {
-            exp.body.accept(this);
-       //     exp.setType(exp.body.getType());
-        } else {
-         //   exp.setType(Constants.VOID);
-        }
+        super.visit(exp);
         this.functionSymbolTable.endScope();
         this.varSymbolTable.endScope();
         this.typeSymbolTable.endScope();
@@ -114,7 +103,7 @@ public class Binder extends DefaultVisitor {
      * Visit a variable declaration and add it to the symbol table.
      * This is only used for variable declarations inside a let expression.
      * VarDec used as formal argument is handled directly inside the FunctionDec
-     * visit method.
+     * visit method. The var dec's type is set to the same as its initializer.
      */
     @Override
     public void visit(VarDec exp) {
@@ -122,6 +111,7 @@ public class Binder extends DefaultVisitor {
             exp.typ.accept(this);
         }
         exp.init.accept(this);
+        // set the type of the var dec to its initializer.
         if (!this.varSymbolTable.contains(exp.name, false)) {
             this.varSymbolTable.put(exp.name, new SymbolTableElement(exp));
         } else {
@@ -162,7 +152,7 @@ public class Binder extends DefaultVisitor {
      */
     @Override
     public void visit(BreakExp exp) {
-        if (this.loops.empty()) {
+        if (this.loops.isEmpty()) {
             this.errorMsg.error(exp.pos, "`break' outside any loop:" + exp.pos);
         } else {
             exp.loop = this.loops.peek();
@@ -188,33 +178,6 @@ public class Binder extends DefaultVisitor {
         super.visit(exp);
         this.loops.pop();
     }
-
-    /**
-     * Private helper function to construct a record
-     * form a function formal argument declaration list
-     * @param decList @com.chaosopher.tigerlang.compiler.absyn.Declist
-     * @return @see Types.RECORD
-     */
-    private RECORD getRecord(DecList decList, Type visitedType) {
-        // build record type 
-        RECORD last = null, first = null, temp = null;
-        if(decList == null) {
-            return null;
-        }
-        for(;decList != null; decList = decList.tail) {
-            VarDec varDec = (VarDec)decList.head;
-            varDec.typ.accept(this);
-            last = new RECORD(varDec.name, visitedType, null);
-            if (first == null) {
-                first = last;
-            } else {
-                temp.tail = last;
-            }
-            temp = last;
-        }
-        return first;
-    }
-
 
     /**
      * Visit a function declaration. Visit the function header first, this includes

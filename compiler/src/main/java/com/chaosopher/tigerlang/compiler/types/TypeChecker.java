@@ -10,6 +10,7 @@ import com.chaosopher.tigerlang.compiler.absyn.BreakExp;
 import com.chaosopher.tigerlang.compiler.absyn.CallExp;
 import com.chaosopher.tigerlang.compiler.absyn.DecList;
 import com.chaosopher.tigerlang.compiler.absyn.DefaultVisitor;
+import com.chaosopher.tigerlang.compiler.absyn.Exp;
 import com.chaosopher.tigerlang.compiler.absyn.ExpList;
 import com.chaosopher.tigerlang.compiler.absyn.FieldExpList;
 import com.chaosopher.tigerlang.compiler.absyn.FieldList;
@@ -26,16 +27,20 @@ import com.chaosopher.tigerlang.compiler.absyn.SeqExp;
 import com.chaosopher.tigerlang.compiler.absyn.SimpleVar;
 import com.chaosopher.tigerlang.compiler.absyn.StringExp;
 import com.chaosopher.tigerlang.compiler.absyn.TypeDec;
+import com.chaosopher.tigerlang.compiler.absyn.Var;
 import com.chaosopher.tigerlang.compiler.absyn.VarDec;
 import com.chaosopher.tigerlang.compiler.absyn.VarExp;
 import com.chaosopher.tigerlang.compiler.absyn.WhileExp;
 import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
+import com.chaosopher.tigerlang.compiler.util.Assert;
 
 /**
  * A TypeChecker visitor is used to check the <see ref="com.chaosopher.tigerlang.compiler.absyn.Exp. 
  * Againts the defined language specification, also know as the semantic rules.
  * https://www.lrde.epita.fr/~tiger/assignments.split/TC_002d4.html#TC_002d4
  * https://gitlab.lrde.epita.fr/tiger/tc-base/-/blob/2022/src/type/type-checker.cc
+ * This class implements the default visitor. Each visit method sets the correct type on its
+ * formal argument. It uses the information gathered from visiting the desecdant nodes.
  */
 public class TypeChecker extends DefaultVisitor {
 
@@ -44,13 +49,13 @@ public class TypeChecker extends DefaultVisitor {
 
     public TypeChecker(ErrorMsg errorMsg) {
         this.errorMsg = errorMsg;
-        this.readonlyVarDecs = new LinkedList<Absyn>();
+        this.readonlyVarDecs = new LinkedList<>();
     }
 
     private void checkTypes(Absyn loc, String synCat1, Type first, String synCat2, Type second) {
         if (!second.coerceTo(first)) {
             this.errorMsg.error(loc.pos,
-                    String.format("type mismatch\n%s:%s\n%s:%s", synCat1, first.actual(), synCat2, second.actual()));
+                    String.format("type mismatch%n%s:%s%n%s:%s", synCat1, first.actual(), synCat2, second.actual()));
         }
     }
 
@@ -82,7 +87,7 @@ public class TypeChecker extends DefaultVisitor {
     }
 
     /**
-     * Sets the type of break to void.
+     * Visits a break expression and sets the type of the expression to void.
      */
     @Override
     public void visit(BreakExp exp) {
@@ -90,15 +95,73 @@ public class TypeChecker extends DefaultVisitor {
     }
 
     /**
-     * Get the type of the field var.
+     * Visit a record expression and sets it type to that of its definition. This method
+     * also visits the record expression's field list to ensure the record fields are correct.
+     */
+    @Override
+    public void visit(RecordExp exp) {
+        VarDec def = (VarDec)exp.def;
+        Assert.assertIsTrue(def.getType() instanceof RECORD);
+        // set this expressions type.
+        exp.setType(def.getType());
+        // visit the field list inline as we need its record type. 
+        RECORD record = (RECORD)def.getType();
+        FieldExpList fieldExpList = exp.fields;
+        // loop through all fields and check types match. 
+        while(record != null && fieldExpList != null) {
+            // visit field expression to compute type.
+            fieldExpList.init.accept(this);
+            // check types.
+            Type fieldType = fieldExpList.init.getType();
+            this.checkTypes(fieldExpList, "expected field type", record.fieldType, "supplied field type", fieldType);
+            // move to next pair of fields.
+            record = record.tail;
+            fieldExpList = fieldExpList.tail;
+        }
+        // if either linked list is not empty, we have either too many or too few parameters.
+        if(record != null) {
+            this.errorMsg.error(exp.pos, "Missing record fields: " + record.fieldName);
+        }
+        if(fieldExpList != null) {
+            this.errorMsg.error(exp.pos, "Uknown record field: " + fieldExpList.name);
+        }
+    }
+
+    /**
+     * Visits an array expression and sets its type.
+     */
+    @Override
+    public void visit(ArrayExp exp) {
+        exp.init.accept(this);
+        Type initType = exp.init.getType();
+        TypeDec def = (TypeDec)exp.def;
+        Assert.assertIsTrue(def.getType() instanceof ARRAY);
+        ARRAY arrayType = (ARRAY)def.ty.getType(); 
+        this.checkTypes(exp, "array initialiser", initType, "expected type", arrayType.element);
+        exp.size.accept(this);
+        Type sizeType = exp.size.getType();
+        this.checkTypes(exp, "array size", sizeType, "expected type", Constants.INT);
+        exp.setType(arrayType);
+    }
+
+    /**
+     * Set the type of the field var expression to the type of the field being accessed.
      */
     @Override
     public void visit(FieldVar exp) {
-        // get the defining variable
-        Absyn def = exp.var.def;
-
-        this.expType = exp.getType();
+        // get the defining variable ( VarDec ) and its type.
+        VarDec def = (VarDec)exp.var.def;
+        Assert.assertIsTrue(def.getType() instanceof RECORD);
+        RECORD record = (RECORD)def.getType();
+        for(; record != null; record = record.tail) {
+            if(record.fieldName == exp.field) {
+                exp.setType(record.fieldType);
+                return;
+            }
+        }
+        this.errorMsg.error(exp.pos, "Unknown record type:" + exp.field);
     }
+
     /**
      * Visits a call node. The implementation checks that the actual arguments match
      * the formal arguments in the function definition. It sets the current visited
@@ -106,7 +169,6 @@ public class TypeChecker extends DefaultVisitor {
      */
     @Override
     public void visit(CallExp exp) {
-        //FUNCTION function = (FUNCTION)exp.getType();
         FUNCTION function = (FUNCTION)((FunctionDec)exp.def).getType();
         ExpList actuals = exp.args;
         RECORD formals = function.formals;
@@ -128,6 +190,9 @@ public class TypeChecker extends DefaultVisitor {
         exp.setType(function.result);
     }
 
+    /**
+     * Visit an if expression. Check type rules.
+     */
     @Override
     public void visit(IfExp exp) {
         exp.test.accept(this);
@@ -138,72 +203,42 @@ public class TypeChecker extends DefaultVisitor {
         if(exp.elseclause != null) {
             exp.elseclause.accept(this);
             Type elseType = exp.elseclause.getType();
-            //todo check no nil.
             this.checkTypes(exp.elseclause, "then", thenType, "else", elseType);
-            exp.setType(elseType);
-        } else {
-            exp.setType(Constants.VOID);
         }
-    }
-
-    @Override
-    public void visit(ArrayExp exp) {
-        exp.init.accept(this);
-        Type initType = exp.init.getType();
-        TypeDec def = (TypeDec)exp.def;
-        ARRAY arrayType = (ARRAY)def.ty.getType(); 
-        this.checkTypes(exp, "array initialiser", initType, "expected type", arrayType.element);
-        exp.size.accept(this);
-        Type sizeType = exp.size.getType();
-        this.checkTypes(exp, "array size", sizeType, "expected type", Constants.INT);
-        exp.setType(arrayType);
-    }
-
-    @Override
-    public void visit(FieldExpList exp) {
-        RECORD record = (RECORD)this.expType.actual();
-        while(record != null && exp != null) {
-            exp.init.accept(this);
-            Type fieldType = exp.init.getType();
-            this.checkTypes(exp, "expected field type", record.fieldType, "supplied field type", fieldType);
-            record = record.tail;
-            exp = exp.tail;
-        }
+        exp.setType(exp.elseclause != null ? thenType : Constants.VOID);
     }
 
     /**
-     * Type check implementation for simple var. This sets the current visited type
-     * to its own type.
+     * Type check implementation for simple var. Sets the simple var type to 
+     * its defining variable declarations initializer type.
      */
     @Override
     public void visit(SimpleVar exp) {
         VarDec def = (VarDec)exp.def;
-        exp.setType(def.getType());
+        exp.setType(def.init.getType());
     }
 
     /**
-     * Ensures that the expType member is set to VOID
-     * If the ExpList is not null, this will be modified
-     * to the last item in the list. If the ExpList is null
-     * the expType member is have been unchanged and still
-     * referencing the VOID type. This ensures that expressions such
-     * as () are evaluated as VOID.
+     * Visit sequence expression and set its type to the last expression.
      */
     @Override
     public void visit(SeqExp exp) {
-        exp.setType(Constants.VOID);
         super.visit(exp);
-        //this.expTyp is set to the last visited item in exp.
+        if(exp.list == null) {
+            exp.setType(Constants.VOID);
+        } else {
+            ExpList last = exp.list;
+            for(; last.tail != null; last = last.tail);
+            exp.setType(last.head.getType());
+        }
     }
 
     /**
-     * Visit a NameTy node. This in turn visits its definition to retreive its type.
-     * Currently there is a problem if the NameTy refers to an int or string. Native types
-     * do not have a definition and because of the the NameTy def property is null.
+     * Visit a NameTy node.
      */
     @Override
     public void visit(NameTy exp) {
-        this.expType = exp.getType();
+        // todo: implement.
     }
 
     /**
@@ -215,11 +250,14 @@ public class TypeChecker extends DefaultVisitor {
         exp.hi.accept(this);
         Type hiType = exp.hi.getType();
         this.checkTypes(exp, "for hi type", hiType, "expected type", Constants.INT);
-        exp.var.init.accept(this);
+        exp.var.accept(this);
+      //  exp.var.init.accept(this);
         Type varType = exp.var.init.getType();
+        // loop var marked as readonly.
         this.readonlyVarDecs.add(exp.var);
         this.checkTypes(exp, "for var type", varType, "expected type", Constants.INT);
         exp.body.accept(this);
+        exp.setType(Constants.VOID);
     }
 
     /**
@@ -255,7 +293,8 @@ public class TypeChecker extends DefaultVisitor {
         Type rightType = exp.exp.getType();
         this.checkTypes(exp, "right operand type", rightType, "expected type", leftType);
         if (this.readonlyVarDecs.contains(exp.var.def)) {
-            this.errorMsg.error(exp.pos, "variable " + exp.var.def + " is read only");
+            VarDec varr = (VarDec)exp.var.def;            
+            this.errorMsg.error(exp.pos, "variable " + varr.name + " is read only");
         }
         exp.setType(Constants.VOID);
     }
@@ -300,18 +339,22 @@ public class TypeChecker extends DefaultVisitor {
         exp.setType(Constants.VOID);
     }
 
+    /**
+     * Visit a variable expression. Sets the type of this variable expression to the same type
+     * as the referenced variable.
+     */
     @Override
     public void visit(VarExp exp) {
+        exp.var.accept(this);
         exp.setType(exp.var.getType());
     }
+
     /**
      * Visit a type declaration, set the type.
      */
     @Override
     public void visit(TypeDec exp) {
-
         //figure out the type type 
-        
     }
 
 
@@ -321,8 +364,14 @@ public class TypeChecker extends DefaultVisitor {
      */
     @Override
     public void visit(FunctionDec exp) {
-       
+        // first pass
+        for (FunctionDec functionDec = exp; functionDec != null; functionDec = functionDec.next) {
+ 
+        }
+        for (FunctionDec functionDec = exp; functionDec != null; functionDec = functionDec.next) {
+
+        }
         //figure out the function type.
-        
     }
+
 }

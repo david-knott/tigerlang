@@ -44,7 +44,9 @@ public class BinderTest {
             {"let type me = {} type me = {} function twice(a: int, a: int) : int = a + a in me {} = me {} end", true},
             {"let var x := 0 in while 1 do ( for i := 0 to 10 do ( x := x + i; if x >= 42 then break ); if x >= 51 then break ) end", false},
             {"let type box = { value : int } type dup = { value : int, value : string } var box := box { value = 51 } in box.head end", false},
-            {"let type rec = { a : unknown } in rec { a = 42 } end", true}
+            {"let type rec = { a : unknown } in rec { a = 42 } end", true},
+            {"let in for i:= 0 to 10 do j := 1 end", true},
+            {"let in for i:= 0 to 10 do i := 1 end", false}, /* no error as assigning to read only is checked in typechecker */
         });
     }
 

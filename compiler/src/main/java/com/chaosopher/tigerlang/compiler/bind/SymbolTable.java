@@ -1,6 +1,7 @@
 package com.chaosopher.tigerlang.compiler.bind;
 
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.chaosopher.tigerlang.compiler.absyn.Absyn;
 import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
@@ -14,7 +15,7 @@ class SymbolTable {
     private InnerTable current;
 
     private class InnerTable {
-        public final Hashtable<Symbol, SymbolTableElement> table = new Hashtable<Symbol, SymbolTableElement>();
+        public final Map<Symbol, SymbolTableElement> table = new HashMap<Symbol, SymbolTableElement>();
         public final InnerTable parent;
 
         InnerTable() {
@@ -31,25 +32,6 @@ class SymbolTable {
         public void execute(SymbolTableElement symbolTableElement);
     }
 
-    void tryInstallFunction(SymbolTableAccessCallback callback, Symbol symbol, Absyn typeDec, Type type, ErrorMsg errorMsg) {
-        if (!this.contains(symbol)) {
-            SymbolTableElement symbolTableElement = new SymbolTableElement(typeDec);
-            this.put(symbol, symbolTableElement);
-            callback.execute(symbolTableElement);
-        } else {
-            errorMsg.error(typeDec.pos, "redefinition:" + symbol);
-        }
-    }
-
-    void tryLookup(SymbolTableAccessCallback callback, Symbol symbol, Absyn loc, ErrorMsg errorMsg) {
-        if (this.contains(symbol)) {
-            SymbolTableElement def = this.lookup(symbol);
-            callback.execute(def);
-        } else {
-            errorMsg.error(loc.pos, "undefined:" + symbol);
-        }
-    }
-
     private SymbolTable(InnerTable innerTable) {
         this.root = this.current = innerTable;
     }
@@ -58,7 +40,7 @@ class SymbolTable {
         this.root = this.current = new InnerTable();
     }
 
-    public SymbolTable(Hashtable<Symbol, SymbolTableElement> initial) {
+    public SymbolTable(Map<Symbol, SymbolTableElement> initial) {
         this.root = this.current = new InnerTable();
         for (Symbol key : initial.keySet()) {
             this.root.table.put(key, initial.get(key));
@@ -90,7 +72,7 @@ class SymbolTable {
                 return true;
             }
             currentScope = currentScope.parent;
-        } while (rec == true && currentScope != null);
+        } while (rec && currentScope != null);
         return false;
     }
 

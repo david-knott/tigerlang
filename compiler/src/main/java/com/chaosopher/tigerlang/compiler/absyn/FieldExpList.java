@@ -4,7 +4,6 @@ import com.chaosopher.tigerlang.compiler.symbol.Symbol;
 
 /**
  * A field expression list is used to initialize a new record with particular values.
- * This classes defining type is the VarDec.
  */
 public class FieldExpList extends Absyn {
    public Symbol name;
