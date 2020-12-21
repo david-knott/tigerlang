@@ -1,5 +1,16 @@
 # Diary
 
+## Monday 21st December 2020
+Refactoring in progress. I need to figure out how named types translate into their
+type representation in the compiler. At present the following throws an error
+var a:string := 1. the type checker knows that 1 ( IntExp ) has a type of INT,
+but it doesn't know that a:string ( NameTy (string) ) is of type STRING. Previously
+using a symbol table which mapped string -> STRING this worked fine. But, I removed
+the extra information in the symbol table to make binding just concerned with finding
+uses and definitions in the AST. 
+
+So the question is, if we see a AST type, how do we map that to an actual compiler type ?
+
 ## Sunday 20th December 2020
 I have started the refactoring of the binder. I want to remove the TYPE references
 so that we are concened only with bind uses of syntax to their definitions. Given that
