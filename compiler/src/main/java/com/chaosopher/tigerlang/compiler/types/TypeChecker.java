@@ -27,20 +27,18 @@ import com.chaosopher.tigerlang.compiler.absyn.SimpleVar;
 import com.chaosopher.tigerlang.compiler.absyn.StringExp;
 import com.chaosopher.tigerlang.compiler.absyn.TypeDec;
 import com.chaosopher.tigerlang.compiler.absyn.VarDec;
+import com.chaosopher.tigerlang.compiler.absyn.VarExp;
 import com.chaosopher.tigerlang.compiler.absyn.WhileExp;
 import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
 
 /**
- * A TypeChecker visitor is used to check the <see ref="com.chaosopher.tigerlang.compiler.absyn.Exp"> againts the
- * defined language specification, also know as the semantic rules.
- * 
+ * A TypeChecker visitor is used to check the <see ref="com.chaosopher.tigerlang.compiler.absyn.Exp. 
+ * Againts the defined language specification, also know as the semantic rules.
  * https://www.lrde.epita.fr/~tiger/assignments.split/TC_002d4.html#TC_002d4
- * 
  * https://gitlab.lrde.epita.fr/tiger/tc-base/-/blob/2022/src/type/type-checker.cc
  */
 public class TypeChecker extends DefaultVisitor {
 
-    Type expType;
     final ErrorMsg errorMsg;
     Collection<Absyn> readonlyVarDecs = null;
 
@@ -56,9 +54,6 @@ public class TypeChecker extends DefaultVisitor {
         }
     }
 
-    private Type getExpType() {
-        return this.expType;
-    }
 
     /** ============== AST Expressions ============================== **/
 
@@ -67,7 +62,7 @@ public class TypeChecker extends DefaultVisitor {
      */
     @Override
     public void visit(IntExp exp) {
-        this.expType = Constants.INT;
+        exp.setType(Constants.INT);
     }
 
     /**
@@ -75,7 +70,7 @@ public class TypeChecker extends DefaultVisitor {
      */
     @Override
     public void visit(StringExp exp) {
-        this.expType = Constants.STRING;
+        exp.setType(Constants.STRING);
     }
 
     /**
@@ -83,7 +78,7 @@ public class TypeChecker extends DefaultVisitor {
      */
     @Override
     public void visit(NilExp exp) {
-        this.expType = Constants.NIL;
+        exp.setType(Constants.NIL);
     }
 
     /**
@@ -91,11 +86,17 @@ public class TypeChecker extends DefaultVisitor {
      */
     @Override
     public void visit(BreakExp exp) {
-        this.expType = Constants.VOID;
+        exp.setType(Constants.VOID);
     }
 
+    /**
+     * Get the type of the field var.
+     */
     @Override
     public void visit(FieldVar exp) {
+        // get the defining variable
+        Absyn def = exp.var.def;
+
         this.expType = exp.getType();
     }
     /**
@@ -112,7 +113,7 @@ public class TypeChecker extends DefaultVisitor {
         while(actuals != null && formals != null) {
             // visit each actual parameter
             actuals.head.accept(this);
-            Type actualType = this.getExpType();
+            Type actualType = actuals.head.getType();
             // get the type of the formal from its types def.
             this.checkTypes(actuals.head, "supplied arg type", actualType, "expected arg type", formals.fieldType);
             actuals = actuals.tail;
@@ -124,70 +125,50 @@ public class TypeChecker extends DefaultVisitor {
         if(formals != null) {
             this.errorMsg.error(exp.pos, "less actuals than expected:" + formals.fieldName);
         }
-        this.expType = function.result;
+        exp.setType(function.result);
     }
 
     @Override
     public void visit(IfExp exp) {
         exp.test.accept(this);
-        Type testType = this.expType;
+        Type testType = exp.test.getType();
         this.checkTypes(exp.test, "", testType, "", Constants.INT);
         exp.thenclause.accept(this);
-        Type thenType = this.expType;
+        Type thenType = exp.thenclause.getType();
         if(exp.elseclause != null) {
             exp.elseclause.accept(this);
-            Type elseType = this.expType;
+            Type elseType = exp.elseclause.getType();
             //todo check no nil.
             this.checkTypes(exp.elseclause, "then", thenType, "else", elseType);
-            this.expType = elseType;
+            exp.setType(elseType);
         } else {
-            this.expType = Constants.VOID;
+            exp.setType(Constants.VOID);
         }
     }
 
     @Override
     public void visit(ArrayExp exp) {
-        this.expType = exp.getType();
         exp.init.accept(this);
-        Type initType = this.expType;
+        Type initType = exp.init.getType();
         TypeDec def = (TypeDec)exp.def;
         ARRAY arrayType = (ARRAY)def.ty.getType(); 
         this.checkTypes(exp, "array initialiser", initType, "expected type", arrayType.element);
         exp.size.accept(this);
-        Type sizeType = this.expType;
+        Type sizeType = exp.size.getType();
         this.checkTypes(exp, "array size", sizeType, "expected type", Constants.INT);
-        this.expType = exp.getType();
+        exp.setType(arrayType);
     }
 
-    @Override
-    public void visit(RecordExp exp) {
-        this.expType = exp.getType();
-        exp.fields.accept(this);
-        this.expType = exp.getType();
-    }
-    
     @Override
     public void visit(FieldExpList exp) {
         RECORD record = (RECORD)this.expType.actual();
         while(record != null && exp != null) {
             exp.init.accept(this);
-            Type fieldType = this.expType;
+            Type fieldType = exp.init.getType();
             this.checkTypes(exp, "expected field type", record.fieldType, "supplied field type", fieldType);
             record = record.tail;
             exp = exp.tail;
         }
-        this.expType = Constants.VOID;
-    }
-
-    /**
-     * Visit a FieldList expression, visit using the 
-     * super class implementation. The final return type 
-     * is void.
-     */
-    @Override
-    public void visit(FieldList exp) {
-        super.visit(exp);
-        this.expType = Constants.VOID;
     }
 
     /**
@@ -196,7 +177,8 @@ public class TypeChecker extends DefaultVisitor {
      */
     @Override
     public void visit(SimpleVar exp) {
-        this.expType = exp.getType();
+        VarDec def = (VarDec)exp.def;
+        exp.setType(def.getType());
     }
 
     /**
@@ -209,7 +191,7 @@ public class TypeChecker extends DefaultVisitor {
      */
     @Override
     public void visit(SeqExp exp) {
-        this.expType = Constants.VOID;
+        exp.setType(Constants.VOID);
         super.visit(exp);
         //this.expTyp is set to the last visited item in exp.
     }
@@ -231,10 +213,10 @@ public class TypeChecker extends DefaultVisitor {
     @Override
     public void visit(ForExp exp) {
         exp.hi.accept(this);
-        Type hiType = this.expType;
+        Type hiType = exp.hi.getType();
         this.checkTypes(exp, "for hi type", hiType, "expected type", Constants.INT);
         exp.var.init.accept(this);
-        Type varType = this.expType;
+        Type varType = exp.var.init.getType();
         this.readonlyVarDecs.add(exp.var);
         this.checkTypes(exp, "for var type", varType, "expected type", Constants.INT);
         exp.body.accept(this);
@@ -246,17 +228,17 @@ public class TypeChecker extends DefaultVisitor {
     @Override
     public void visit(OpExp exp) {
         exp.left.accept(this);
-        Type leftType = this.expType;
+        Type leftType = exp.left.getType();
         exp.right.accept(this);
-        Type rightType = this.expType;
+        Type rightType = exp.right.getType();
         this.checkTypes(exp, "left type", leftType, "right type", rightType);
         // if the operation is a comparision, rather than arithmetic
         switch(exp.oper) {
             case OpExp.DIV: case OpExp.MINUS: case OpExp.MUL: case OpExp.PLUS:
+                exp.setType(rightType);
                 break;
             default:
-                this.expType = Constants.INT;
-            
+                exp.setType(Constants.INT);
         }
     }
 
@@ -268,14 +250,14 @@ public class TypeChecker extends DefaultVisitor {
     public void visit(AssignExp exp) {
         // check lvaue type is same type as rvalue
         exp.var.accept(this);
-        Type leftType = this.expType;
+        Type leftType = exp.var.getType();
         exp.exp.accept(this);
-        Type rightType = this.expType;
+        Type rightType = exp.exp.getType();
         this.checkTypes(exp, "right operand type", rightType, "expected type", leftType);
         if (this.readonlyVarDecs.contains(exp.var.def)) {
             this.errorMsg.error(exp.pos, "variable " + exp.var.def + " is read only");
         }
-        this.expType = Constants.VOID;
+        exp.setType(Constants.VOID);
     }
 
     /**
@@ -284,12 +266,12 @@ public class TypeChecker extends DefaultVisitor {
     @Override
     public void visit(WhileExp exp) {
         exp.test.accept(this);
-        Type testType = this.expType;
+        Type testType = exp.test.getType();
         this.checkTypes(exp.test, "while test type", testType, "expected type", Constants.INT);
         exp.body.accept(this);
-        Type bodyType = this.expType;
+        Type bodyType = exp.body.getType();
         this.checkTypes(exp.body, "while body type", bodyType, "expected type", Constants.VOID);
-        this.expType = Constants.VOID;
+        exp.setType(Constants.VOID);
     }
 
 
@@ -305,33 +287,42 @@ public class TypeChecker extends DefaultVisitor {
         Type initType = null;
         if(exp.init != null) {
             exp.init.accept(this);
-            initType = this.expType;
+            initType = exp.init.getType();
         }
         // expect that the initizer type is set here ( either int, string, namety, recordty, arrayty)
         if (exp.typ != null) {
             exp.typ.accept(this);
-            Type declaredType = this.expType;
+            Type declaredType = exp.typ.getType();
             if(initType != null) {
                 this.checkTypes(exp, "declared", declaredType, "actual", initType);
             }
         }
-        this.expType = Constants.VOID;
+        exp.setType(Constants.VOID);
     }
 
+    @Override
+    public void visit(VarExp exp) {
+        exp.setType(exp.var.getType());
+    }
     /**
      * Visit a type declaration, set the type.
      */
     @Override
     public void visit(TypeDec exp) {
-        this.expType = exp.getType();
+
+        //figure out the type type 
+        
     }
 
+
     /**
-     * Visit a function declaration, set the type. 
+     * Visit a function declaration, compute the type of the
+     * of the function.
      */
     @Override
     public void visit(FunctionDec exp) {
-        this.expType = exp.getType();
-        super.visit(exp);
+       
+        //figure out the function type.
+        
     }
 }

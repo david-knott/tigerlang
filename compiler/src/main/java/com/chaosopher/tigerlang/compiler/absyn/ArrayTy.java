@@ -4,7 +4,7 @@ import com.chaosopher.tigerlang.compiler.symbol.Symbol;
 
 /**
  * This class defines the type of an array. The typ member represents the name
- * of the type.
+ * of the type as per the type definition, eg type intArray = array of int
  */
 public class ArrayTy extends Ty {
    public Symbol typ;

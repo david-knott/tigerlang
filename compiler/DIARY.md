@@ -1,5 +1,20 @@
 # Diary
 
+## Sunday 20th December 2020
+I have started the refactoring of the binder. I want to remove the TYPE references
+so that we are concened only with bind uses of syntax to their definitions. Given that
+symbol tables are used for this, and they rely on Types, I am not sure how we do this.
+
+Currently the symbol tables uses actual types for binding, say we just used the symbol and 
+nohing else. Perhaps removing type from the SymbolTable is what we need to do ?
+1) How to handle native types, INT and STRING, they do not have a definining AST. Perhaps they
+can be assigned to the root AST node.
+
+All tests pass, however I am not happy about the treatment of the native types, we install
+them into the type symbol table with a null reference to a definition.
+
+Dataflow analysis in on hold until I have completed this refactoring.
+
 ## Saturday 19th December 2020
 Bugs in type checking method formal arguments versus actual arguments.
 Bug for invalid expressions like 'print("Hello World")dd'

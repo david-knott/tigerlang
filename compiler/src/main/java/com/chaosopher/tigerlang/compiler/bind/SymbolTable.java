@@ -33,7 +33,7 @@ class SymbolTable {
 
     void tryInstallFunction(SymbolTableAccessCallback callback, Symbol symbol, Absyn typeDec, Type type, ErrorMsg errorMsg) {
         if (!this.contains(symbol)) {
-            SymbolTableElement symbolTableElement = new SymbolTableElement(type, typeDec);
+            SymbolTableElement symbolTableElement = new SymbolTableElement(typeDec);
             this.put(symbol, symbolTableElement);
             callback.execute(symbolTableElement);
         } else {

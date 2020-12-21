@@ -2,6 +2,9 @@ package com.chaosopher.tigerlang.compiler.absyn;
 
 import com.chaosopher.tigerlang.compiler.symbol.Symbol;
 
+/**
+ * A field var is used to refer to a field within a record instance.
+ */
 public class FieldVar extends Var {
    public Var var;
    public Symbol field;
