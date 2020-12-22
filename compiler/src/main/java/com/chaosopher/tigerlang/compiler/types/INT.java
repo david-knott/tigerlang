@@ -1,5 +1,7 @@
 package com.chaosopher.tigerlang.compiler.types;
 
+import com.chaosopher.tigerlang.compiler.util.Assert;
+
 public class INT extends Type {
 	private static String NAME = "int";
 
@@ -7,6 +9,7 @@ public class INT extends Type {
 	}
 
 	public boolean coerceTo(Type t) {
+		Assert.assertNotNull(t);
 		return (t.actual() instanceof INT);
 	}
 

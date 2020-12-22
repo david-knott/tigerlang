@@ -74,6 +74,20 @@ public class TypeTest {
     }
 
     @Test
+    public void varDecCustomType() {
+        PrintStream outputStream = System.out;
+        ErrorMsg errorMsg = new ErrorMsg("", outputStream);
+        Parser parser = new CupParser("let type a = int var a:a := 1 in end",errorMsg);
+        Absyn program = parser.parse();
+        Binder binder = new Binder(errorMsg);
+        program.accept(binder);
+        program.accept(new TypeChecker(errorMsg));
+        PrettyPrinter prettyPrinter = new PrettyPrinter(System.out, false, false);
+        program.accept(prettyPrinter);
+        assertTrue(errorMsg.anyErrors);
+    }
+
+    @Test
     public void varDec() {
         PrintStream outputStream = System.out;
         ErrorMsg errorMsg = new ErrorMsg("", outputStream);

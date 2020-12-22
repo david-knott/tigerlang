@@ -14,15 +14,19 @@ import com.chaosopher.tigerlang.compiler.absyn.DefaultVisitor;
 import com.chaosopher.tigerlang.compiler.absyn.FieldList;
 import com.chaosopher.tigerlang.compiler.absyn.ForExp;
 import com.chaosopher.tigerlang.compiler.absyn.FunctionDec;
+import com.chaosopher.tigerlang.compiler.absyn.IntTypeDec;
 import com.chaosopher.tigerlang.compiler.absyn.LetExp;
 import com.chaosopher.tigerlang.compiler.absyn.NameTy;
 import com.chaosopher.tigerlang.compiler.absyn.RecordExp;
+import com.chaosopher.tigerlang.compiler.absyn.RecordTy;
 import com.chaosopher.tigerlang.compiler.absyn.SimpleVar;
+import com.chaosopher.tigerlang.compiler.absyn.StringTypeDec;
 import com.chaosopher.tigerlang.compiler.absyn.TypeDec;
 import com.chaosopher.tigerlang.compiler.absyn.VarDec;
 import com.chaosopher.tigerlang.compiler.absyn.WhileExp;
 import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
 import com.chaosopher.tigerlang.compiler.symbol.Symbol;
+import com.chaosopher.tigerlang.compiler.util.Assert;
 
 /**
  * This class implements the default visitor and traverses the AST
@@ -42,9 +46,11 @@ public class Binder extends DefaultVisitor {
     public Binder(ErrorMsg errorMsg) {
         this.errorMsg = errorMsg;
         // base system types
+        // install int and string as built in types, these are defined
+        // by the language itself.
         HashMap<Symbol, SymbolTableElement> tinit = new HashMap<>();
-        tinit.put(Symbol.symbol("int"), new SymbolTableElement(null));
-        tinit.put(Symbol.symbol("string"), new SymbolTableElement(null));
+        tinit.put(Symbol.symbol("int"), new SymbolTableElement(new IntTypeDec())); 
+        tinit.put(Symbol.symbol("string"), new SymbolTableElement(new StringTypeDec())); 
         this.typeSymbolTable = new SymbolTable(tinit);
         // base functions
         this.functionSymbolTable = new SymbolTable();
@@ -218,6 +224,7 @@ public class Binder extends DefaultVisitor {
                     this.errorMsg.error(param.pos, "redefinition:" + param.name);
                 }
             }
+            // visit the body, if present.
             if(functionDec.body != null) {
                 functionDec.body.accept(this);
             }
@@ -227,12 +234,8 @@ public class Binder extends DefaultVisitor {
 
     /**
      * Visits a user defined type declaration and binds the symbol to its type
-     * representation. This allows further lookups using the exp.name which will
-     * resolve the the user defined type.
-     * 
-     * type a = int // TypeDec(NameTy(SymbolTy)) tpye intArray = array of int //
-     * TypeDec(ArrayTy(SymbolTy)) type rec = {first: typ1, secont: ty2} //
-     * TypeDec(RecordTy(FieldList)))
+     * representation. The type symbol table is updated with a refernce to the
+     * name.
      */
     @Override
     public void visit(TypeDec exp) {
@@ -240,24 +243,24 @@ public class Binder extends DefaultVisitor {
         for (TypeDec typeDec = exp; typeDec != null; typeDec = typeDec.next) {
             // install new type definitio. in symbol table.
             if (!this.typeSymbolTable.contains(typeDec.name)) {
+                // add new type definition for type.
                 this.typeSymbolTable.put(typeDec.name, new SymbolTableElement(typeDec));
             } else {
                 this.errorMsg.error(typeDec.pos, "redefinition:" + typeDec.name);
             }
         }
-        // visit again and process the rvalue, which could be namety, arrayty or recordty.
+        // visit again and bind the rvalue, which could be namety, arrayty or recordty.
         for (TypeDec typeDec = exp; typeDec != null; typeDec = typeDec.next) {
             if (this.typeSymbolTable.contains(typeDec.name)) {
                 typeDec.ty.accept(this);
+            } else {
+                Assert.unreachable("This should not happen as all left ty should be bound.");
             }
         }
     }
 
     /**
-     * Visit a explicit type in a var declaration, eg var a:int = 1, where int is
-     * the NameTy or visit the return type defined in a function declaration eg
-     * function a():int, where int is the NameTy, or type t = int, where int is
-     * NameTy. It can also be used in a FieldList {a: int, b: b}
+     * Visits a named type AST definition.
      */
     @Override
     public void visit(NameTy exp) {
@@ -265,10 +268,34 @@ public class Binder extends DefaultVisitor {
         if (this.typeSymbolTable.contains(exp.name)) {
             // value present so set the exp's definition.
             SymbolTableElement def = this.typeSymbolTable.lookup(exp.name);
+            // set the definition.
             exp.setDef(def.exp);
         } else {
             this.errorMsg.error(exp.pos, "undefined type:" + exp.name);
         }
+    }
+
+    /**
+     * Visits an array type and checks and sets its definition.
+     */
+    @Override
+    public void visit(ArrayTy exp) {
+        if (!this.typeSymbolTable.contains(exp.typ)) {
+            this.errorMsg.error(exp.pos, "undefined type:" + exp.typ);
+        }
+    }
+
+    /**
+     * Visits a record type definition.
+     */
+    @Override
+    public void visit(RecordTy exp) {
+       if(this.typeSymbolTable.contains(exp.fields.typ.name)) {
+           
+
+       } else {
+            this.errorMsg.error(exp.pos, "undefined type:" + exp.fields.typ.name);
+       }
     }
 
     @Override
@@ -279,17 +306,6 @@ public class Binder extends DefaultVisitor {
         }
         if(exp.tail != null) {
             this.visit(exp.tail);
-        }
-    }
-
-    /**
-     * Visits an array type within a type declaration. Contructs an ARRAY type and
-     * stores it in the symbol table.
-     */
-    @Override
-    public void visit(ArrayTy exp) {
-        if (!this.typeSymbolTable.contains(exp.typ)) {
-            this.errorMsg.error(exp.pos, "undefined type:" + exp.typ);
         }
     }
 }

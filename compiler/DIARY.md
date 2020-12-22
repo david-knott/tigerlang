@@ -11,6 +11,8 @@ uses and definitions in the AST.
 
 So the question is, if we see a AST type, how do we map that to an actual compiler type ?
 
+Whats the difference between a ConstructorType and a Typable ?
+
 ## Sunday 20th December 2020
 I have started the refactoring of the binder. I want to remove the TYPE references
 so that we are concened only with bind uses of syntax to their definitions. Given that

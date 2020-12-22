@@ -1,10 +1,12 @@
 package com.chaosopher.tigerlang.compiler.types;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import com.chaosopher.tigerlang.compiler.absyn.Absyn;
 import com.chaosopher.tigerlang.compiler.absyn.ArrayExp;
+import com.chaosopher.tigerlang.compiler.absyn.ArrayTy;
 import com.chaosopher.tigerlang.compiler.absyn.AssignExp;
 import com.chaosopher.tigerlang.compiler.absyn.BreakExp;
 import com.chaosopher.tigerlang.compiler.absyn.CallExp;
@@ -23,6 +25,7 @@ import com.chaosopher.tigerlang.compiler.absyn.NameTy;
 import com.chaosopher.tigerlang.compiler.absyn.NilExp;
 import com.chaosopher.tigerlang.compiler.absyn.OpExp;
 import com.chaosopher.tigerlang.compiler.absyn.RecordExp;
+import com.chaosopher.tigerlang.compiler.absyn.RecordTy;
 import com.chaosopher.tigerlang.compiler.absyn.SeqExp;
 import com.chaosopher.tigerlang.compiler.absyn.SimpleVar;
 import com.chaosopher.tigerlang.compiler.absyn.StringExp;
@@ -32,6 +35,7 @@ import com.chaosopher.tigerlang.compiler.absyn.VarDec;
 import com.chaosopher.tigerlang.compiler.absyn.VarExp;
 import com.chaosopher.tigerlang.compiler.absyn.WhileExp;
 import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
+import com.chaosopher.tigerlang.compiler.symbol.Symbol;
 import com.chaosopher.tigerlang.compiler.util.Assert;
 
 /**
@@ -234,14 +238,6 @@ public class TypeChecker extends DefaultVisitor {
     }
 
     /**
-     * Visit a NameTy node.
-     */
-    @Override
-    public void visit(NameTy exp) {
-        // todo: implement.
-    }
-
-    /**
      * Type check implementation for ForExp. Checks that the hi and low values are
      * integers and marks the loop low variable declaration as readonly.
      */
@@ -354,24 +350,105 @@ public class TypeChecker extends DefaultVisitor {
      */
     @Override
     public void visit(TypeDec exp) {
-        //figure out the type type 
+        HashMap<Symbol, NAME> types = new HashMap<>();
+        // create placeholders first for the left side
+        for(TypeDec typeDec = exp; typeDec != null; typeDec = typeDec.next) {
+            types.put(typeDec.name, new NAME(typeDec.name));
+        }
+        //visit the right site to back patch the item created above.
+        for(TypeDec typeDec = exp; typeDec != null; typeDec = typeDec.next) {
+            NAME namedType = types.get(typeDec.name);
+            typeDec.ty.accept(this);
+            namedType.bind(typeDec.ty.getCreatedType());
+        }
     }
 
+    /**
+     * Visit an explicit type, eg a:int := 1, where int
+     * is a NameTy. This can be used in a type declation 
+     * or a variable declaration.
+     */
+    @Override
+    public void visit(NameTy exp) {
+        TypeDec typeDec = (TypeDec)exp.def;
+        // set the type of the namety to the created type at definition
+        exp.setType(typeDec.getCreatedType());
+    }
 
     /**
-     * Visit a function declaration, compute the type of the
+     * Vist an array type. 
+     * This can only ever be used in a TypeDec.
+     * It will never be present as a use.
+      */
+    @Override
+    public void visit(ArrayTy exp) {
+        // for exp.ty change type from symbol to  namety
+        // this will allow us to retrieve the namety definition
+        // and from that its type.
+        // we can then contruct a new ARRAY type and set it on the exp
+        ARRAY arrayType = null;// new ARRAY(exp.)
+        // visit NameTy so ?
+        //exp.typ.accept(this);
+        // set the created type on this
+        exp.setCreatedType(arrayType);
+        // Question: What is the type of this class ?
+        // exp.setType(type);
+    }
+
+    /**
+     * Visit a record type.
+     * This can only ever be used in a TypeDec.
+     * It will never be present anywhere else.
+     */
+    @Override
+    public void visit(RecordTy exp) {
+        RECORD recordType = null, last = null; 
+        for (FieldList fieldList = exp.fields; fieldList != null; fieldList = fieldList.tail) {
+            if(recordType == null) {
+                recordType = last = new RECORD(fieldList.name, fieldList.typ.getType(), null);
+            } else {
+                last = last.tail = new RECORD(fieldList.name, fieldList.typ.getType(), null);
+            }
+        }
+        exp.setCreatedType(recordType);
+    }
+
+    /**
+     * Visit a function declaration, compute the constructor type of the
      * of the function.
      */
     @Override
     public void visit(FunctionDec exp) {
         // first pass
         for (FunctionDec functionDec = exp; functionDec != null; functionDec = functionDec.next) {
- 
+            RECORD formals = null, last = null;
+            // visit each variable declarion
+            for(DecList args = functionDec.params; args != null; args = args.tail) {
+                // visit declarations
+                VarDec varDec = (VarDec)args.head;
+                varDec.accept(this);
+                // varDec type is not set.
+                Type decType = varDec.getType();
+                // set the type of this function.
+                if(formals == null) {
+                    formals = last = new RECORD(varDec.name, decType, null);
+                } else {
+                    last = last.tail = new RECORD(varDec.name, decType, null);
+                }
+            }
+            // visit result type.
+            functionDec.result.accept(this);
+            // result type is now set.
+            Type returnType = functionDec.result.getType();
+            // set this functions type.
+            functionDec.setCreatedType(new FUNCTION(formals, returnType));
         }
+        // type check the body now.
         for (FunctionDec functionDec = exp; functionDec != null; functionDec = functionDec.next) {
-
+            if(functionDec.body != null) {
+                functionDec.body.accept(this);
+                //now body type is set.
+            }
         }
-        //figure out the function type.
     }
-
 }

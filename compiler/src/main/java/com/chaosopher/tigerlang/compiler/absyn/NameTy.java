@@ -24,5 +24,4 @@ public class NameTy extends Ty {
    public void setDef(Absyn exp) {
       this.def = exp;
    }
-
 }
