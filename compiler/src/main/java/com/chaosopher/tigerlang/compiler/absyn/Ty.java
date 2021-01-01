@@ -1,6 +1,7 @@
 package com.chaosopher.tigerlang.compiler.absyn;
 
 import com.chaosopher.tigerlang.compiler.types.Type;
+import com.chaosopher.tigerlang.compiler.util.Assert;
 
 /**
  * Abstract base class that represents type information in the abstract syntax
@@ -22,6 +23,7 @@ abstract public class Ty extends Absyn implements Typable, TypeConstructor {
      * Sets the type of this AST node.
      */
     public void setType(Type type) {
+        Assert.assertNotNull(type);
         this.type = type;
     }
 

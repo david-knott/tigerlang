@@ -1,5 +1,7 @@
 package com.chaosopher.tigerlang.compiler.types;
 
+import com.chaosopher.tigerlang.compiler.util.Assert;
+
 /**
  * This class represents an user defined type. Such as type t = int
  */
@@ -35,6 +37,7 @@ public class NAME extends Type {
    }
 
    public void bind(Type t) {
+      Assert.assertNotNull(t);
       binding = t;
    }
 

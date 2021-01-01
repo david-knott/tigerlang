@@ -1,5 +1,9 @@
 # Diary
 
+## Monday 31st December 2020
+
+Renamer broken ( RecordExp and ArrayExp ).
+
 ## Monday 21st December 2020
 Refactoring in progress. I need to figure out how named types translate into their
 type representation in the compiler. At present the following throws an error

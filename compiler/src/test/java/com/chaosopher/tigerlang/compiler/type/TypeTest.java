@@ -84,7 +84,7 @@ public class TypeTest {
         program.accept(new TypeChecker(errorMsg));
         PrettyPrinter prettyPrinter = new PrettyPrinter(System.out, false, false);
         program.accept(prettyPrinter);
-        assertTrue(errorMsg.anyErrors);
+        assertFalse(errorMsg.anyErrors);
     }
 
     @Test

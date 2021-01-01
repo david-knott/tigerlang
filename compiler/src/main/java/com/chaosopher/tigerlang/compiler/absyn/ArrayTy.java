@@ -9,9 +9,9 @@ import com.chaosopher.tigerlang.compiler.types.Type;
  * is captured in the TypeDec. 
  */
 public class ArrayTy extends Ty {
-   public Symbol typ;
+   public NameTy typ;
 
-   public ArrayTy(int p, Symbol t) {
+   public ArrayTy(int p, NameTy t) {
       pos = p;
       typ = t;
    }

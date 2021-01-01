@@ -129,8 +129,7 @@ public class Renamer extends DefaultVisitor {
      */
     @Override
     public void visit(RecordExp exp) {
-        exp.typ = newNames.get(exp.def);
-        exp.fields.accept(this);
+     throw new Error();
     }
     
     /**

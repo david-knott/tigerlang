@@ -789,7 +789,7 @@ class CUP$Grm$actions {
 		int fclleft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).left;
 		int fclright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-1)).right;
 		com.chaosopher.tigerlang.compiler.absyn.FieldExpList fcl = (com.chaosopher.tigerlang.compiler.absyn.FieldExpList)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-1)).value;
-		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.RecordExp(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), fcl); 
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.RecordExp(ileft, new com.chaosopher.tigerlang.compiler.absyn.NameTy(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i)), fcl); 
               CUP$Grm$result = new java_cup.runtime.Symbol(26/*recCreate*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-3)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -807,7 +807,7 @@ class CUP$Grm$actions {
 		int e2left = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
 		com.chaosopher.tigerlang.compiler.absyn.Exp e2 = (com.chaosopher.tigerlang.compiler.absyn.Exp)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.ArrayExp(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i), e1, e2); 
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.ArrayExp(ileft, new com.chaosopher.tigerlang.compiler.absyn.NameTy(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i)), e1, e2); 
               CUP$Grm$result = new java_cup.runtime.Symbol(32/*arrCreate*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-5)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;
@@ -1782,7 +1782,7 @@ class CUP$Grm$actions {
 		int ileft = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right;
 		String i = (String)((java_cup.runtime.Symbol) CUP$Grm$stack.elementAt(CUP$Grm$top-0)).value;
-		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.ArrayTy(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i)); 
+		 RESULT = new com.chaosopher.tigerlang.compiler.absyn.ArrayTy(ileft, new com.chaosopher.tigerlang.compiler.absyn.NameTy(ileft, com.chaosopher.tigerlang.compiler.symbol.Symbol.symbol(i))); 
               CUP$Grm$result = new java_cup.runtime.Symbol(21/*arrTy*/, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-2)).left, ((java_cup.runtime.Symbol)CUP$Grm$stack.elementAt(CUP$Grm$top-0)).right, RESULT);
             }
           return CUP$Grm$result;

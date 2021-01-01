@@ -1,6 +1,7 @@
 package com.chaosopher.tigerlang.compiler.absyn;
 
 import com.chaosopher.tigerlang.compiler.symbol.Symbol;
+import com.chaosopher.tigerlang.compiler.util.Assert;
 
 /**
  * A NameTy class represents a named type within the asbtract syntax tree. This
@@ -22,6 +23,7 @@ public class NameTy extends Ty {
    }
 
    public void setDef(Absyn exp) {
+      Assert.assertNotNull(exp);
       this.def = exp;
    }
 }

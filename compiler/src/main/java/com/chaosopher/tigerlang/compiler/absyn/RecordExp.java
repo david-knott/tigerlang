@@ -1,13 +1,12 @@
 package com.chaosopher.tigerlang.compiler.absyn;
 
-import com.chaosopher.tigerlang.compiler.symbol.Symbol;
-
 public class RecordExp extends Exp {
-   public Symbol typ;
+   //public Symbol typ;
+   public NameTy typ;
    public Absyn def;
    public FieldExpList fields;
 
-   public RecordExp(int p, Symbol t, FieldExpList f) {
+   public RecordExp(int p, NameTy t, FieldExpList f) {
       pos = p;
       typ = t;
       fields = f;
@@ -21,6 +20,4 @@ public class RecordExp extends Exp {
     public void setDef(Absyn exp) {
         this.def = exp;
     }
-
-
 }

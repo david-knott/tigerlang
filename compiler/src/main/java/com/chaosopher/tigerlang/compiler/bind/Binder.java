@@ -12,6 +12,7 @@ import com.chaosopher.tigerlang.compiler.absyn.CallExp;
 import com.chaosopher.tigerlang.compiler.absyn.DecList;
 import com.chaosopher.tigerlang.compiler.absyn.DefaultVisitor;
 import com.chaosopher.tigerlang.compiler.absyn.FieldList;
+import com.chaosopher.tigerlang.compiler.absyn.FieldVar;
 import com.chaosopher.tigerlang.compiler.absyn.ForExp;
 import com.chaosopher.tigerlang.compiler.absyn.FunctionDec;
 import com.chaosopher.tigerlang.compiler.absyn.IntTypeDec;
@@ -130,26 +131,27 @@ public class Binder extends DefaultVisitor {
      */
     @Override
     public void visit(ArrayExp exp) {
+        exp.typ.accept(this);
+        exp.init.accept(this);
+        exp.size.accept(this);
+        /*
         super.visit(exp);
-        if (this.typeSymbolTable.contains(exp.typ)) {
-            SymbolTableElement def = this.typeSymbolTable.lookup(exp.typ);
+        if (this.typeSymbolTable.contains(exp.typ.name)) {
+            SymbolTableElement def = this.typeSymbolTable.lookup(exp.typ.name);
             exp.setDef(def.exp);
         } else {
             this.errorMsg.error(exp.pos, "undefined type:" + exp.typ);
-        }
+        }*/
     }
 
     /**
-     * Visit a record expression. This is where a record is used in a rvalue expression.
+     * Visit a record initilizer expression.
      */
     @Override
     public void visit(RecordExp exp) {
-        super.visit(exp);
-        if (this.typeSymbolTable.contains(exp.typ)) {
-            SymbolTableElement def = this.typeSymbolTable.lookup(exp.typ);
-            exp.setDef(def.exp);
-        } else {
-            this.errorMsg.error(exp.pos, "undefined type:" + exp.typ);
+        exp.typ.accept(this);
+        if(exp.fields != null) {
+            exp.fields.accept(this);
         }
     }
 
@@ -217,6 +219,8 @@ public class Binder extends DefaultVisitor {
             for (DecList decList = functionDec.params; decList != null; decList = decList.tail) {
                 // params are a list of variable declarations.
                 VarDec param = (VarDec)decList.head; 
+                // visit the type to bind it.
+                param.typ.accept(this);
                 // formal variable definition
                 if (!this.varSymbolTable.contains(param.name, false)) {
                     this.varSymbolTable.put(param.name, new SymbolTableElement(param));
@@ -280,9 +284,8 @@ public class Binder extends DefaultVisitor {
      */
     @Override
     public void visit(ArrayTy exp) {
-        if (!this.typeSymbolTable.contains(exp.typ)) {
-            this.errorMsg.error(exp.pos, "undefined type:" + exp.typ);
-        }
+        // visit the NameTy to bind
+        exp.typ.accept(this);
     }
 
     /**
@@ -290,20 +293,18 @@ public class Binder extends DefaultVisitor {
      */
     @Override
     public void visit(RecordTy exp) {
-       if(this.typeSymbolTable.contains(exp.fields.typ.name)) {
-           
-
-       } else {
-            this.errorMsg.error(exp.pos, "undefined type:" + exp.fields.typ.name);
-       }
+        if(exp.fields != null) {
+            exp.fields.accept(this);
+        }
     }
 
+    /**
+     * Visit fields in a record type definition.
+     */
     @Override
     public void visit(FieldList exp) {
         // check that types are defined.
-        if (!this.typeSymbolTable.contains(exp.typ.name)) {
-            this.errorMsg.error(exp.pos, "undefined type:" + exp.typ.name);
-        }
+        exp.typ.accept(this);
         if(exp.tail != null) {
             this.visit(exp.tail);
         }

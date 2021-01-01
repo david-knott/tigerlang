@@ -75,6 +75,7 @@ public class BugTest {
         program.accept(new EscapeVisitor(errorMsg));
         TranslatorVisitor translator = new TranslatorVisitor();
         program.accept(new Binder(errorMsg));
+        program.accept(new TypeChecker(errorMsg));
         program.accept(translator);
         FragList fragList = translator.getFragList();
         assertNotNull(fragList);

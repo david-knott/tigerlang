@@ -22,6 +22,7 @@ import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
 import com.chaosopher.tigerlang.compiler.findescape.EscapeVisitor;
 import com.chaosopher.tigerlang.compiler.parse.ParserFactory;
 import com.chaosopher.tigerlang.compiler.parse.ParserService;
+import com.chaosopher.tigerlang.compiler.types.TypeChecker;
 
 
 @RunWith(Theories.class)
@@ -44,13 +45,12 @@ public class TranslateRegTest {
         System.out.println("Testing Translator" + fileName);
         ErrorMsg errorMsg = new ErrorMsg("f", System.out);
         ParserService parserService = new ParserService(new ParserFactory());
-        parserService.configure(config -> config.setNoPrelude(false));
-        parserService.configure(config -> config.setParserTrace(false));
         try (FileInputStream fin = new FileInputStream(fileName)) {
             Absyn program = parserService.parse(fin, errorMsg);
             program.accept(new EscapeVisitor(errorMsg));
-            TranslatorVisitor translator = new TranslatorVisitor();
             program.accept(new Binder(errorMsg));
+            program.accept(new TypeChecker(errorMsg));
+            TranslatorVisitor translator = new TranslatorVisitor();
             program.accept(translator);
             FragList fragList = translator.getFragList();
             assertNotNull(fragList);
@@ -72,6 +72,7 @@ public class TranslateRegTest {
             program.accept(new EscapeVisitor(errorMsg));
             TranslatorVisitor translator = new TranslatorVisitor();
             program.accept(new Binder(errorMsg));
+            program.accept(new TypeChecker(errorMsg));
             program.accept(translator);
             FragList fragList = translator.getFragList();
             assertNotNull(fragList);

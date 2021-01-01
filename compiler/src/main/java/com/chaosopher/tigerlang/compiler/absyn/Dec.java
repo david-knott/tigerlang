@@ -1,6 +1,7 @@
 package com.chaosopher.tigerlang.compiler.absyn;
 
 import com.chaosopher.tigerlang.compiler.types.Type;
+import com.chaosopher.tigerlang.compiler.util.Assert;
 
 abstract public class Dec extends Absyn implements Typable {
     Type type;
@@ -16,6 +17,7 @@ abstract public class Dec extends Absyn implements Typable {
     }
 
     public void setType(Type type) {
+        Assert.assertNotNull(type);
         this.type = type;
     }
 }

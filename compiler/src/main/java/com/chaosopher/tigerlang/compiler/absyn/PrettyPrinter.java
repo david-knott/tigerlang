@@ -50,7 +50,7 @@ public class PrettyPrinter implements AbsynVisitor {
 
     @Override
     public void visit(ArrayExp exp) {
-        say(exp.typ);
+        exp.typ.accept(this);
         say("[");
         exp.size.accept(this);
         say("]");
@@ -66,7 +66,7 @@ public class PrettyPrinter implements AbsynVisitor {
         space();
         say("of");
         space();
-        say(exp.typ);
+        exp.typ.accept(this);
     }
 
     @Override
@@ -355,7 +355,7 @@ public class PrettyPrinter implements AbsynVisitor {
 
     @Override
     public void visit(RecordExp exp) {
-        say(exp.typ);
+        exp.typ.accept(this);
         // type usage
         if(this.bindingsDisplay) {
             space();

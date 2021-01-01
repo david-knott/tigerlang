@@ -8,6 +8,7 @@ public class StringTypeDec extends TypeDec {
     public StringTypeDec() {
         super(0, Symbol.symbol("string"), null, null);
         super.setCreatedType(Constants.STRING);
+        super.setType(Constants.STRING);
     }
 
 }
