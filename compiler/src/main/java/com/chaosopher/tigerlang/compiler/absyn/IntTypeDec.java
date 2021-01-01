@@ -5,7 +5,9 @@ import com.chaosopher.tigerlang.compiler.types.Constants;
 
 public final class IntTypeDec extends TypeDec {
 
-    public IntTypeDec() {
+    public static IntTypeDec instance = new IntTypeDec();
+
+    private IntTypeDec() {
         super(0, Symbol.symbol("int"), null, null);
         super.setCreatedType(Constants.INT);
         super.setType(Constants.INT);

@@ -8,9 +8,11 @@ import com.chaosopher.tigerlang.compiler.absyn.DecList;
 import com.chaosopher.tigerlang.compiler.absyn.DefaultVisitor;
 import com.chaosopher.tigerlang.compiler.absyn.FieldList;
 import com.chaosopher.tigerlang.compiler.absyn.FunctionDec;
+import com.chaosopher.tigerlang.compiler.absyn.IntTypeDec;
 import com.chaosopher.tigerlang.compiler.absyn.NameTy;
 import com.chaosopher.tigerlang.compiler.absyn.RecordExp;
 import com.chaosopher.tigerlang.compiler.absyn.SimpleVar;
+import com.chaosopher.tigerlang.compiler.absyn.StringTypeDec;
 import com.chaosopher.tigerlang.compiler.absyn.TypeDec;
 import com.chaosopher.tigerlang.compiler.absyn.VarDec;
 import com.chaosopher.tigerlang.compiler.symbol.Symbol;
@@ -26,6 +28,11 @@ public class Renamer extends DefaultVisitor {
     private int id = 0;
     private Hashtable<Absyn, Symbol> newNames = new Hashtable<Absyn, Symbol>();
 
+    public Renamer() {
+        this.newNames.put(IntTypeDec.instance, Symbol.symbol("int"));
+        this.newNames.put(StringTypeDec.instance, Symbol.symbol("string"));
+    }
+
     @Override
     public void visit(TypeDec exp) {
         String uniqueTypeName = exp.name.toString() + "_" + (this.id++);
@@ -39,7 +46,6 @@ public class Renamer extends DefaultVisitor {
 
     @Override
     public void visit(VarDec exp) {
-        // exp.typ can be null eg var a := 0
         if(exp.typ != null) {
             exp.typ.name = newNames.get(exp.typ.def);
         }
@@ -72,9 +78,10 @@ public class Renamer extends DefaultVisitor {
                         VarDec varDec = (VarDec)decList.head;
                         // set the renamed type symbol.
                         // null would indicate typ is int or string.
-                        if(varDec.typ.def != null) {
+                     //   if(varDec.typ.def != null) {
                             varDec.typ.name =  newNames.get(varDec.typ.def);
-                        }
+                            Assert.assertNotNull(varDec.typ.name);
+                      //  }
                         // create new param names for formal arguments.
                         String uniqueParamName = varDec.name + "_" + (this.id++);
                         Symbol newPSymbol = Symbol.symbol(uniqueParamName);
@@ -129,7 +136,8 @@ public class Renamer extends DefaultVisitor {
      */
     @Override
     public void visit(RecordExp exp) {
-     throw new Error();
+        exp.typ.name = newNames.get(exp.typ.def);
+        exp.fields.accept(this);
     }
     
     /**

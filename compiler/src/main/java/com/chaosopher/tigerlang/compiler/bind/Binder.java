@@ -50,8 +50,8 @@ public class Binder extends DefaultVisitor {
         // install int and string as built in types, these are defined
         // by the language itself.
         HashMap<Symbol, SymbolTableElement> tinit = new HashMap<>();
-        tinit.put(Symbol.symbol("int"), new SymbolTableElement(new IntTypeDec())); 
-        tinit.put(Symbol.symbol("string"), new SymbolTableElement(new StringTypeDec())); 
+        tinit.put(Symbol.symbol("int"), new SymbolTableElement(IntTypeDec.instance)); 
+        tinit.put(Symbol.symbol("string"), new SymbolTableElement(StringTypeDec.instance)); 
         this.typeSymbolTable = new SymbolTable(tinit);
         // base functions
         this.functionSymbolTable = new SymbolTable();
