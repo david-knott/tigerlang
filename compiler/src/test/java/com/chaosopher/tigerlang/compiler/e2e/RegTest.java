@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -80,7 +81,6 @@ public class RegTest {
     public void good(String fileName) throws InterruptedException, IOException {
         String baseName = fileName.substring(fileName.lastIndexOf("/") + 1);
         System.out.println("Testing program:" + baseName);
-        ErrorMsg errorMsg = new ErrorMsg("f", System.out);
         ParserService parserService = new ParserService(new ParserFactory());
         parserService.configure(config -> config.setNoPrelude(false));
         parserService.configure(config -> config.setParserTrace(false));
@@ -102,7 +102,8 @@ public class RegTest {
             ByteArrayOutputStream errorStream = new ByteArrayOutputStream();
             Main main = new Main(outputStream, errorStream);
             main.execute(new String[]{fileName});
-         //   System.out.println(new String(outputStream.toByteArray(), StandardCharsets.UTF_8));
+            System.out.println(new String(outputStream.toByteArray(), StandardCharsets.UTF_8));
+            System.out.println(new String(errorStream.toByteArray(), StandardCharsets.UTF_8));
             Runtime runtime = Runtime.getRuntime();
             Process gccProcess = runtime.exec(
                     "gcc -x assembler-with-cpp -g -w -no-pie -Wimplicit-function-declaration -Wl,--wrap,getchar -o /tmp/" + baseName +".o -");

@@ -484,7 +484,7 @@ public class TypeChecker extends DefaultVisitor {
             if(functionDec.body != null) {
                 functionDec.body.accept(this);
                 FUNCTION functionType = (FUNCTION)functionDec.getType();
-                checkTypes(functionDec, "f1", functionDec.body.getType(), "f2", functionType.result);
+                checkTypes(functionDec, functionDec.name + " body type", functionDec.body.getType(), "declared return type", functionType.result);
             }
         }
     }
