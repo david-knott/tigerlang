@@ -59,7 +59,7 @@ public class TypeChecker extends DefaultVisitor {
     }
 
     private void checkTypes(Absyn loc, String synCat1, Type first, String synCat2, Type second) {
-        if (!first.coerceTo(second)) {
+        if (!first.coerceTo(second) && !second.coerceTo(first)) {
             this.errorMsg.error(loc.pos,
                     String.format("type mismatch%n%s:%s%n%s:%s", synCat1, first.actual(), synCat2, second.actual()));
         }
@@ -253,7 +253,6 @@ public class TypeChecker extends DefaultVisitor {
         Type hiType = exp.hi.getType();
         this.checkTypes(exp, "for hi type", hiType, "expected type", Constants.INT);
         exp.var.accept(this);
-      //  exp.var.init.accept(this);
         Type varType = exp.var.init.getType();
         // loop var marked as readonly.
         this.readonlyVarDecs.add(exp.var);
@@ -268,10 +267,10 @@ public class TypeChecker extends DefaultVisitor {
     @Override
     public void visit(OpExp exp) {
         exp.left.accept(this);
-        Type leftType = exp.left.getType();
+        Type leftType = exp.left.getType().actual();
         exp.right.accept(this);
-        Type rightType = exp.right.getType();
-        this.checkTypes(exp, "left type", leftType, "right type", rightType);
+        Type rightType = exp.right.getType().actual();
+        this.checkTypes(exp, "opexp left type", leftType, "right type", rightType);
         // if the operation is a comparision, rather than arithmetic
         switch(exp.oper) {
             case OpExp.DIV: case OpExp.MINUS: case OpExp.MUL: case OpExp.PLUS:
@@ -362,7 +361,6 @@ public class TypeChecker extends DefaultVisitor {
             }
             varDec.setType(declaredType);
         }
-        //exp.setType(Constants.VOID);
     }
 
     /**

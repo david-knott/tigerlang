@@ -7,8 +7,10 @@ import java.nio.charset.Charset;
 import com.chaosopher.tigerlang.compiler.absyn.Absyn;
 import com.chaosopher.tigerlang.compiler.absyn.DecList;
 import com.chaosopher.tigerlang.compiler.absyn.Exp;
+import com.chaosopher.tigerlang.compiler.absyn.ExpList;
 import com.chaosopher.tigerlang.compiler.absyn.FunctionDec;
 import com.chaosopher.tigerlang.compiler.absyn.LetExp;
+import com.chaosopher.tigerlang.compiler.absyn.SeqExp;
 import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
 import com.chaosopher.tigerlang.compiler.symbol.Symbol;
 import com.chaosopher.tigerlang.compiler.util.Assert;
@@ -62,9 +64,23 @@ public class ParserService {
             program = new DecList(new FunctionDec(0, Symbol.symbol("tigermain"), null, null,
                     new LetExp(0, (DecList) tree, null), null), null);
         }
-        // if passed an exp, wrap in function dec
+        // if passed an exp, wrap in function dec, and append an empty () to tree. This is
+        // ensure that the expression evaluates to a void.
         if (tree instanceof Exp) {
-            program = new DecList(new FunctionDec(0, Symbol.symbol("tigermain"), null, null, (Exp) tree, null), null);
+            SeqExp seqExp = new SeqExp(
+                0, 
+                new ExpList(
+                    (Exp)tree, 
+                    new ExpList(
+                        new SeqExp(
+                            0,
+                            null
+                        ),
+                        null
+                    )
+                )
+            );
+            program = new DecList(new FunctionDec(0, Symbol.symbol("tigermain"), null, null, seqExp, null), null);
         }
         if (parserServiceConfiguration.isNoPrelude()) {
             return program;
