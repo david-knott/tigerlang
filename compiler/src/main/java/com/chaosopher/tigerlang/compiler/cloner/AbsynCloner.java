@@ -364,4 +364,5 @@ public class AbsynCloner implements AbsynVisitor {
         Exp clonedBodyExp = this.visitedExp;
         this.visitedExp = new WhileExp(exp.pos, clonedTestExp, clonedBodyExp);
     }
+
 }

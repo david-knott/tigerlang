@@ -10,6 +10,13 @@ import com.chaosopher.tigerlang.compiler.bind.Binder;
 import com.chaosopher.tigerlang.compiler.bind.Renamer;
 import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
 import com.chaosopher.tigerlang.compiler.inlining.Inliner;
+import com.chaosopher.tigerlang.compiler.main.Main;
+import com.chaosopher.tigerlang.compiler.parse.ParserFactory;
+import com.chaosopher.tigerlang.compiler.parse.ParserService;
+import com.chaosopher.tigerlang.compiler.types.TypeChecker;
+import com.chaosopher.tigerlang.compiler.absyn.Absyn;
+import com.chaosopher.tigerlang.compiler.absyn.PrettyPrinter;
+import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
 import com.chaosopher.tigerlang.compiler.parse.ParserFactory;
 import com.chaosopher.tigerlang.compiler.parse.ParserService;
 
@@ -71,5 +78,37 @@ public class InlinerTest {
         program.accept(inliner);
         inliner.visitedDecList.accept(new PrettyPrinter(System.out));
         assertEquals(0, inliner.inlinedCount);
+    }
+
+    @Test
+    public void relopLt() {
+        ErrorMsg errorMsg = new ErrorMsg("", System.out);
+        Absyn program = parserService.parse("let var a:int := 2 var b:int := 1 in printi(a > b) end", new ErrorMsg("", System.out));
+        program.accept(new Binder(errorMsg));
+        program.accept(new TypeChecker(errorMsg));
+        program.accept(new Renamer());
+        program.accept(new PrettyPrinter(System.out));
+        Inliner inliner = new Inliner(program);
+        program.accept(inliner);
+        inliner.visitedDecList.accept(new PrettyPrinter(System.out));
+        assertEquals(0, inliner.inlinedCount);
+    }
+
+    @Test
+    public void primeTest() {
+    ErrorMsg errorMsg = new ErrorMsg("", System.out);
+        Absyn program = parserService.parse("let function aa(a:int) : int = a function bb():int = ( aa(3);aa(2) ) in bb() end", new ErrorMsg("", System.out));
+        program.accept(new Binder(errorMsg));
+        program.accept(new TypeChecker(errorMsg));
+        program.accept(new Renamer());
+        program.accept(new PrettyPrinter(System.out));
+        Inliner inliner = new Inliner(program);
+        program.accept(inliner);
+    //    inliner.callGraph.show(System.out);
+        inliner.visitedDecList.accept(new PrettyPrinter(System.out));
+   //     Pruner pruner = new Pruner(inliner.visitedDecList);
+  //      inliner.visitedDecList.accept(pruner);
+       // pruner.visitedDecList.accept(new PrettyPrinter(System.out));
+
     }
 }

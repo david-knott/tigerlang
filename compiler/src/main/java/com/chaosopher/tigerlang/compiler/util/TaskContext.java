@@ -35,6 +35,7 @@ public class TaskContext {
     }
 */
     public void setDecList(final DecList value) {
+        Assert.assertNotNull(value);
         this.decList = value;
     }
 
@@ -47,10 +48,12 @@ public class TaskContext {
     }
 
     public void setFragList(final FragList frags) {
+        Assert.assertNotNull(frags);
         this.hirFragList = frags;
     }
 
     public void setLIR(final FragList lirFragList) {
+        Assert.assertNotNull(lirFragList);
         this.lirFragList = lirFragList;
 	}
 
@@ -59,6 +62,7 @@ public class TaskContext {
 	}
 
 	public void setAssemFragList(com.chaosopher.tigerlang.compiler.assem.FragList frags) {
+        Assert.assertNotNull(frags);
         this.assemFragList = frags;
 	}
 }

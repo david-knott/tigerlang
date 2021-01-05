@@ -45,7 +45,7 @@ public class PrettyPrinter implements AbsynVisitor {
     }
 
     private void say(String str) {
-        out.print(str);
+        out.print(str.replace("\n", "\n"));
     }
 
     @Override
@@ -418,7 +418,7 @@ public class PrettyPrinter implements AbsynVisitor {
 
     @Override
     public void visit(StringExp exp) {
-        say("\"" + exp.value + "\"");
+        say("\"" + exp.value.replace("\n", "\\n") + "\"");
     }
 
     @Override

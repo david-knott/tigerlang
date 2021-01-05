@@ -3,6 +3,7 @@ package com.chaosopher.tigerlang.compiler.bind;
 import java.util.Hashtable;
 
 import com.chaosopher.tigerlang.compiler.absyn.Absyn;
+import com.chaosopher.tigerlang.compiler.absyn.ArrayExp;
 import com.chaosopher.tigerlang.compiler.absyn.CallExp;
 import com.chaosopher.tigerlang.compiler.absyn.DecList;
 import com.chaosopher.tigerlang.compiler.absyn.DefaultVisitor;
@@ -11,6 +12,7 @@ import com.chaosopher.tigerlang.compiler.absyn.FunctionDec;
 import com.chaosopher.tigerlang.compiler.absyn.IntTypeDec;
 import com.chaosopher.tigerlang.compiler.absyn.NameTy;
 import com.chaosopher.tigerlang.compiler.absyn.RecordExp;
+import com.chaosopher.tigerlang.compiler.absyn.RecordTy;
 import com.chaosopher.tigerlang.compiler.absyn.SimpleVar;
 import com.chaosopher.tigerlang.compiler.absyn.StringTypeDec;
 import com.chaosopher.tigerlang.compiler.absyn.TypeDec;
@@ -39,6 +41,7 @@ public class Renamer extends DefaultVisitor {
         Symbol newSymbol = Symbol.symbol(uniqueTypeName);
         newNames.put(exp, newSymbol);
         exp.name = newSymbol;
+        exp.ty.accept(this);
         if(exp.next != null) {
             exp.next.accept(this);
         }
@@ -147,5 +150,28 @@ public class Renamer extends DefaultVisitor {
     @Override
     public void visit(SimpleVar exp) {
         exp.name = newNames.get(exp.def);
+    }
+
+    @Override
+    public void visit(ArrayExp exp) {
+        exp.typ.name = newNames.get(exp.typ.def);
+        exp.init.accept(this);
+        exp.size.accept(this);
+    }
+
+
+    @Override
+    public void visit(RecordTy exp) {
+        if(exp.fields != null) {
+            exp.fields.accept(this);
+        }
+    }
+
+    @Override
+    public void visit(FieldList exp) {
+        exp.typ.name = newNames.get(exp.typ.def);
+        if(exp.tail != null)  {
+            exp.tail.accept(this);
+        }
     }
 }

@@ -6,6 +6,7 @@ import com.chaosopher.tigerlang.compiler.absyn.CallExp;
 import com.chaosopher.tigerlang.compiler.absyn.DefaultVisitor;
 import com.chaosopher.tigerlang.compiler.absyn.FunctionDec;
 import com.chaosopher.tigerlang.compiler.graph.Node;
+import com.chaosopher.tigerlang.compiler.util.Assert;
 
 /**
  * Creates a call graph of functions, 
@@ -32,8 +33,10 @@ public class CallGraphVisitor extends DefaultVisitor {
     @Override
     public void visit(CallExp exp) {
         FunctionDec src = this.visitedFunction;
+        FunctionDec def = (FunctionDec)exp.def;
+        Assert.assertNotNull(def, "No definition found for " + exp.func);
         if(src != null) {
-            this.functionCallGraph.addEdge(src, (FunctionDec)exp.def);
+            this.functionCallGraph.addEdge(src, def);
         }
         super.visit(exp);
     }

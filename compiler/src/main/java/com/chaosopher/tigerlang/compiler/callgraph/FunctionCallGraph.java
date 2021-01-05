@@ -5,6 +5,8 @@ import java.util.Hashtable;
 import com.chaosopher.tigerlang.compiler.absyn.FunctionDec;
 import com.chaosopher.tigerlang.compiler.graph.Graph;
 import com.chaosopher.tigerlang.compiler.graph.Node;
+import com.chaosopher.tigerlang.compiler.graph.NodeList;
+import com.chaosopher.tigerlang.compiler.util.Assert;
 
 public class FunctionCallGraph extends Graph {
 
@@ -12,6 +14,7 @@ public class FunctionCallGraph extends Graph {
     Hashtable<Node, FunctionDec> functionDecsRev = new Hashtable<Node, FunctionDec>();
 
 	public boolean inCycle(FunctionDec exp) {
+        Assert.assertNotNull(this.functionDecs.get(exp), "No declaration found for " + exp.name);
 		return super.inCycle(this.functionDecs.get(exp));
     }
 
@@ -41,4 +44,23 @@ public class FunctionCallGraph extends Graph {
         this.addEdge(srcNode, destNode);
     }
 
+    /**
+     * Print a human-readable dump for debugging.
+     */
+    public void show(java.io.PrintStream out) {
+        for (NodeList p = nodes(); p != null; p = p.tail) {
+            Node n = p.head;
+            FunctionDec functionDec = this.getFunctionDec(n);
+            out.print(functionDec.name);
+            //out.print(" id " + n.inDegree());
+            //out.print(" od " + n.outDegree());
+            out.print(" calls ");
+            for (NodeList q = n.succ(); q != null; q = q.tail) {
+                FunctionDec functionDecS = this.getFunctionDec(q.head);
+                out.print(functionDecS.name);
+                out.print(" ");
+            }
+            out.println();
+        }
+    }
 }

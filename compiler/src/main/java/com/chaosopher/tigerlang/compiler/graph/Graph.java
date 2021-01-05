@@ -5,6 +5,7 @@ import java.util.Hashtable;
 import java.util.Stack;
 
 import com.chaosopher.tigerlang.compiler.parse.sym;
+import com.chaosopher.tigerlang.compiler.util.Assert;
 
 public class Graph {
 
@@ -64,6 +65,7 @@ public class Graph {
     }
 
     private boolean inCycle(Node n, boolean[] visited) {
+        Assert.assertNotNull(n, "node argument is null");
         if(visited[n.mykey]) {
             return true;
         }

@@ -24,7 +24,6 @@ import com.chaosopher.tigerlang.compiler.parse.ParserFactory;
 import com.chaosopher.tigerlang.compiler.parse.ParserService;
 import com.chaosopher.tigerlang.compiler.types.TypeChecker;
 
-
 @RunWith(Theories.class)
 public class TranslateRegTest {
     
