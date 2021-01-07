@@ -33,6 +33,7 @@ public class Tasks implements TaskProvider {
                     Pruner pruner = new Pruner(taskContext.decList);
                     taskContext.decList.accept(pruner);
                     taskContext.setDecList(pruner.visitedDecList);
+                    taskContext.decList.accept(new Binder(taskContext.errorMsg));
                 }
             }, "prune", "prune unused functions", "types-compute rename")
         );
