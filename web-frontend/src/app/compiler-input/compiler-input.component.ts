@@ -6,10 +6,14 @@ import { CompilerService } from "../services/compiler.service";
   templateUrl: "./compiler-input.component.html",
   styleUrls: ["./compiler-input.component.scss"],
 })
-export class CompilerInputComponent {
+export class CompilerInputComponent implements OnInit {
   data: string = 'print("Hello World")';
 
   constructor(private compilerService: CompilerService) {}
+  ngOnInit(): void {
+
+    this.compilerService.compilationRequest({ code: this.data, args: null });
+  }
 
   inputChanged($event): void {
     // notify the output window to call the compiler...

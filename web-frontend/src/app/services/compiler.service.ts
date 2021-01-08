@@ -20,8 +20,9 @@ export class CompilerService extends BaseService {
     this.compilerRequest.next(body);
   }
 
-  compile(body: string): Observable<Assembly> {
-    const url = "http://localhost:10000/compile";
+  compile(body: any): Observable<Assembly> {
+    const url = "http://localhost:8080/compile";
+    console.log(body);
     return this.http.post<Assembly>(url, body).pipe(map(data => {
       this.compilerEvent.next(data);
       return data;

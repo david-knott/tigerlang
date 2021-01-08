@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { OptionsService } from '../services/options.service';
 
 @Component({
   selector: 'app-layout',
@@ -7,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LayoutComponent implements OnInit {
 
-  constructor() { }
+  constructor(private optionsService: OptionsService) { }
+
 
   ngOnInit() {
   }

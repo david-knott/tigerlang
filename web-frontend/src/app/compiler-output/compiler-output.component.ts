@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { throwMatDialogContentAlreadyAttachedError } from "@angular/material/dialog";
 import { CompilerService } from "../services/compiler.service";
+import { OptionsService } from "../services/options.service";
 
 @Component({
   selector: "app-compiler-output",
@@ -17,13 +18,50 @@ export class CompilerOutputComponent implements OnInit {
   asm: string = "";
   lastRequest: any;
 
-  constructor(private compilerService: CompilerService) {
+  constructor(private compilerService: CompilerService, private optionsService: OptionsService) {
     this.compilerService.compilerRequest.subscribe((s) => {
-      s.args = this.activeTab;
+      if(this.activeTab == 'ast') {
+          s.astDisplay = true;
+          s.hirDisplay = false;
+          s.lirDisplay = false;
+          s.regAlloc = false;
+        }
+        if(this.activeTab == 'hir') {
+          s.astDisplay = false;
+          s.hirDisplay = true;
+          s.lirDisplay = false;
+          s.regAlloc = false;
+
+        }
+        if(this.activeTab == 'lir') {
+          s.astDisplay = false;
+          s.hirDisplay = false;
+          s.lirDisplay = true;
+          s.regAlloc = false;
+
+        }
+        if(this.activeTab == 'asm') {
+          s.astDisplay = false;
+          s.hirDisplay = false;
+          s.lirDisplay = false;
+          s.regAlloc = true;
+        }
+      
       this.lastRequest = s;
       console.log("call compiler for assembly", s);
       this.compilerService.compile(s).subscribe((c) => {
-        this.ast = c.assembly;
+        if(this.activeTab == 'ast') {
+          this.ast = c.errors;
+        }
+        if(this.activeTab == 'hir') {
+          this.hir = c.errors;
+        }
+        if(this.activeTab == 'lir') {
+          this.lir = c.errors;
+        }
+        if(this.activeTab == 'asm') {
+          this.asm = c.assembly;
+        }
       });
     });
   }
@@ -37,5 +75,6 @@ export class CompilerOutputComponent implements OnInit {
   ngOnDestroy() {
     this.compilerSubscription.unsubsribe();
   }
+
   ngOnInit() {}
 }

@@ -3,4 +3,9 @@ export interface Assembly {
     name: string;
     assembly: string;
     errors: string;
+    ast: string;
+    hir: string;
+    lir: string;
+    asm: string;
+
   }

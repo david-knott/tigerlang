@@ -132,6 +132,10 @@
         role="tabpanel"
         aria-labelledby="v-pills-profile-tab"
       >
+
+        <pre class="code">
+        <div [innerHTML]="hir"></div>
+        </pre>
         <ul>
           <li>Execute IR</li>
           <li>Optimisation - Liveness Analysis</li>
@@ -146,6 +150,10 @@
         role="tabpanel"
         aria-labelledby="v-pills-messages-tab"
       >
+
+        <pre class="code">
+        <div [innerHTML]="lir"></div>
+        </pre>
         <ul>
           <li>Execute IR</li>
         </ul>
@@ -156,6 +164,9 @@
         role="tabpanel"
         aria-labelledby="v-pills-settings-tab"
       >
+        <pre class="code">
+        <div [innerHTML]="asm"></div>
+        </pre>
         <ul>
           <li>Pick Liveness Source ( Assembly Liveness / IR Liveness )</li>
           <li>Pick Target Arch</li>
