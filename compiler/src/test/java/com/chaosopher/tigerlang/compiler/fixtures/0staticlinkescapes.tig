@@ -1,0 +1,1 @@
+let var v := 7 function outer() : int = let function inner() : int = v in inner() end function sister() : int = outer() in printi(sister()) end
