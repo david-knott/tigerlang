@@ -2,6 +2,7 @@ package com.chaosopher.tigerlang.compiler.canon;
 
 import com.chaosopher.tigerlang.compiler.translate.DataFrag;
 import com.chaosopher.tigerlang.compiler.translate.FragList;
+import com.chaosopher.tigerlang.compiler.translate.FragmentPrinter;
 import com.chaosopher.tigerlang.compiler.translate.FragmentVisitor;
 import com.chaosopher.tigerlang.compiler.translate.ProcFrag;
 import com.chaosopher.tigerlang.compiler.tree.PrettyPrinter;
@@ -35,7 +36,7 @@ public class Tasks implements TaskProvider {
             }, "lir-compute", "Perform canonicalisation of HIR tree", "hir-compute")
         );
         taskRegister.register(
-            new SimpleTask((taskContext) -> taskContext.lirFragList.accept(new FragPrettyPrinter(new PrettyPrinter(taskContext.log))),
+            new SimpleTask((taskContext) -> taskContext.lirFragList.accept(new FragmentPrinter(taskContext.log)),
                 "lir-display", "Displays the lir", "lir-compute")
         );
         taskRegister.register(

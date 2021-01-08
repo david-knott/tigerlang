@@ -17,7 +17,7 @@ public class Tasks implements TaskProvider {
                     FunctionStaticLinkVisitor functionStaticLinkVisitor = new FunctionStaticLinkVisitor();
                     taskContext.decList.accept(functionStaticLinkVisitor);
                 }
-            }, "optimise-staticlinks", "parse", "")
+            }, "optimise-staticlinks", "", "bindings-compute")
         );
         taskRegister.register(
             new SimpleTask(new SimpleTaskProvider() {
@@ -26,7 +26,7 @@ public class Tasks implements TaskProvider {
                     StaticLinkEscapeVisitor staticLinkEscapeVisitor = new StaticLinkEscapeVisitor(taskContext.decList);
                     taskContext.decList.accept(staticLinkEscapeVisitor);
                 }
-            }, "optimise-staticlinks-escapes", "parse", "")
+            }, "optimise-staticlinks-escapes", "", "optimise-staticlinks")
         );
     }
 }

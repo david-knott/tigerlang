@@ -19,13 +19,19 @@ public class Level {
     com.chaosopher.tigerlang.compiler.frame.Frame frame;
     Level parent;
     public AccessList formals;
+    public final boolean useStaticLink;
+    public final boolean staticLinkEscapes;
 
     /**
-     * Creates the root Level using frame reference f.
+     * Creates the root Level using frame reference f. The root level
+     * which corresponds to the tigermain function does not use static
+     * links.
      * @param f
      */
     public Level(com.chaosopher.tigerlang.compiler.frame.Frame f) {
         frame = f;
+        useStaticLink = false;
+        staticLinkEscapes = false;
     }
 
     /**
@@ -39,9 +45,12 @@ public class Level {
      * @param name the label of the function
      * @param fmls the list of formal arguments
      * @param useStaticLink should a static link be created in the frame
+     * @param staticLinkEscapes should a static link be stored in the frame or a temporary.
      */
     public Level(Level prnt, Label name, BoolList fmls, boolean useStaticLink, boolean staticLinkEscapes) {
         parent = prnt;
+        this.useStaticLink = useStaticLink;
+        this.staticLinkEscapes = staticLinkEscapes;
         frame = prnt.frame.newFrame(name, useStaticLink ? new BoolList(staticLinkEscapes, fmls) : fmls);
         com.chaosopher.tigerlang.compiler.frame.AccessList frameFormals = frame.formals;
         for(; frameFormals != null; frameFormals = frameFormals.tail) {

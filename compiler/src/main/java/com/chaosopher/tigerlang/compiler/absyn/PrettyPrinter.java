@@ -218,9 +218,9 @@ public class PrettyPrinter implements AbsynVisitor {
             say("/* " + System.identityHashCode(functionDec) + " */");
             space();
         }
-        if(this.escapesDisplay && functionDec.staticLink()) {
+        if(this.escapesDisplay && functionDec.includeStaticLink()) {
             space();
-            if(functionDec.slEscapes) {
+            if(functionDec.staticLinkEscapes) {
                 say("/* escaping static link */");
             } else {
                 say("/* static link */");

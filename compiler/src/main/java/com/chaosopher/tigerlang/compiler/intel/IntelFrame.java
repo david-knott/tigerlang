@@ -210,17 +210,20 @@ public class IntelFrame extends Frame {
                 //rpb + 16 : frame arg1
                 //rpb + 24 : frame arg2
                 int offset = 16 + (frameArgPos * 8); 
+                // move value on stack to mem address ( offset + fp ) into dest temporary
                 var memLocation = new MEM(new BINOP(BINOP.PLUS, new CONST(offset), new TEMP(this.FP())));
+                // save move for later use
                 this.addCallingConvention(new com.chaosopher.tigerlang.compiler.tree.MOVE(new com.chaosopher.tigerlang.compiler.tree.TEMP(dest), memLocation));
                 return;
         }
+        // generate move for src and dest temporaries, then save move for later use.
         this.addCallingConvention(new com.chaosopher.tigerlang.compiler.tree.MOVE(new com.chaosopher.tigerlang.compiler.tree.TEMP(dest), new com.chaosopher.tigerlang.compiler.tree.TEMP(src)));
     }
 
     /*
      * Moves from calling conventions registers and frame into current frame.
      */
-    private void moveFrameToFormal(int offset, int i) {
+    private void moveRegArgsToFrame(int offset, int i) {
         Temp src;
         var memDest = new MEM(new BINOP(BINOP.PLUS, new CONST(offset), new TEMP(this.FP())));
         switch (i) {
@@ -293,7 +296,7 @@ public class IntelFrame extends Frame {
                 local = new InReg(temp);
             } else {
                 local = this.allocLocal(true);
-                this.moveFrameToFormal(this.localOffset, i);
+                this.moveRegArgsToFrame(this.localOffset, i);
             }
             super.formals = AccessList.append(super.formals, local);
             frml = frml.tail;

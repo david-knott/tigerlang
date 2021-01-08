@@ -10,11 +10,12 @@ public class FunctionDec extends Dec implements TypeConstructor {
    public Exp body;
    public FunctionDec next;
    public boolean sl = true;
-   public boolean slEscapes = true;
+   /* defaults to true, meaning static link is stored in frame */
+   public boolean staticLinkEscapes = true;
    public int level; 
    private Type createdType;
 
-   public boolean staticLink() {
+   public boolean includeStaticLink() {
       return sl && body != null;
    }
 

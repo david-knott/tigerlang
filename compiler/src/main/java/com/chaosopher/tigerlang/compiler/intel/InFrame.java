@@ -10,6 +10,7 @@ class InFrame extends Access {
     int offset;
 
     InFrame(int os) {
+        System.out.println("Inframe Var " + os);
         offset = os;
     }
 

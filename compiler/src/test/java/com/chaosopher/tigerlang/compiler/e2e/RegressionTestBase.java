@@ -113,7 +113,7 @@ public abstract class RegressionTestBase {
                     "/tmp/" + baseName +".o");
             compiledProcess.waitFor();
             String actualResult = inputStreamToString(compiledProcess.getInputStream()).trim();
-            System.out.println(" --> " + baseName + ":" + compiledProcess.exitValue());
+            System.out.println("Finished  --> " + baseName + ":" + compiledProcess.exitValue());
             assertEquals(strResult, actualResult);
         } catch (IOException e) {
             e.printStackTrace();

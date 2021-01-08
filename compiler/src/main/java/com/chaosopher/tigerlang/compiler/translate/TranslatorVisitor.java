@@ -95,19 +95,32 @@ public class TranslatorVisitor extends DefaultVisitor {
      * @return a @see com.chaosopher.tigerlang.compiler.tree.Exp containing MEM expressions.
      */
     private com.chaosopher.tigerlang.compiler.tree.Exp staticLinkOffset(Access access, Level level) {
-        // variable is defined at same level as use,
-        // just return the fp as framePointer
-        // get current frames static link ( in rbp - 8),
-        // lookup value, which is a pointer to the previous
-        // frames static link, etc
+        // start with the assumption that access is defined at same level 
+        // create expression for frame pointer.
         com.chaosopher.tigerlang.compiler.tree.Exp exp = new TEMP(level.frame.FP());
+        // if access is defined at same level as usage or
+        // we dont need a static link to resolve the frame access, 
+        // just return the frame pointer.
+        if(!level.useStaticLink || level == access.home) {
+            return exp;
+        }
+        // if level requires static link, the first argument of level formals will be the static link.
+        AccessList levelFormals = level.formals;
+        Access staticLink = levelFormals.head;
+        // resolve the static link to either a temporary access or frame access expression.
+        // if its a frame access, the returned value will be ( frame pointer - 8 )
+        // if its a temp, it will just be a temp.
+        com.chaosopher.tigerlang.compiler.tree.Exp resolvedSl = staticLink.acc.exp(exp);
         var slinkLevel = level;
         int staticLinkOffset = -8;
-        while (slinkLevel != access.home) {
-            exp = new MEM(new BINOP(BINOP.PLUS, new CONST(staticLinkOffset), exp));
+        // if access defined at a different level to usage, we need to calculate the static link
+        while (slinkLevel.parent != access.home) {
+            // for each nesting level, follow the pointer at frame pointer - 8, which is the static link.
+         //   exp = new MEM(new BINOP(BINOP.PLUS, new CONST(staticLinkOffset), exp));
+            resolvedSl = new MEM(new BINOP(BINOP.PLUS, new CONST(staticLinkOffset), resolvedSl));
             slinkLevel = slinkLevel.parent;
         }
-        return exp;
+        return resolvedSl;
     }
 
     @Override
@@ -148,6 +161,16 @@ public class TranslatorVisitor extends DefaultVisitor {
         this.visitedExp = new Nx(new JUMP(loopEnd));
     }
 
+    private com.chaosopher.tigerlang.compiler.tree.Exp getFunctionStaticLink(Level usageLevel, Level definedLevel) {
+        AccessList levelFormals = usageLevel.formals;
+        Access staticLink = levelFormals.head;
+        com.chaosopher.tigerlang.compiler.tree.Exp sle = staticLink.acc.exp(new TEMP(definedLevel.frame.FP()));
+        return sle;
+    }
+
+    /**
+     * Translates a call ast node into IR code.
+     */
     @Override
     public void visit(CallExp exp) {
         Level usageLevel = this.getCurrentLevel();
@@ -155,27 +178,44 @@ public class TranslatorVisitor extends DefaultVisitor {
         // if the function being called has no body its a primitive
         // and doesn't need a static link.
         FunctionDec defined = (FunctionDec) exp.def;
-        boolean useStaticLink = defined.staticLink();
         ExpList expList = null;
         // add the static link to expression list. This is a refernce to the
         // current activation records frame pointer address. This is passed
         // as the first argument to the callee function.
+        boolean useStaticLink = defined.includeStaticLink();
         if (useStaticLink) {
+            // if we calling from a function with a static link..
             com.chaosopher.tigerlang.compiler.tree.Exp staticLink = null;
-            if (definedLevel == usageLevel) { // recusive or same level, pass calleers static link ( not frame pointer )
-                staticLink = new MEM(new BINOP(BINOP.MINUS, new TEMP(definedLevel.frame.FP()),
-                        new CONST(definedLevel.frame.wordSize())));
+            if (definedLevel == usageLevel) { // recursive or same level, pass callers static link ( not frame pointer )
+
+                staticLink = getFunctionStaticLink(usageLevel, definedLevel);
+                /*
+                staticLink = new MEM(
+                    new BINOP(
+                        BINOP.MINUS, 
+                        new TEMP(definedLevel.frame.FP()),
+                        new CONST(definedLevel.frame.wordSize())
+                    )
+                );*/
+                //throw new Error("Can this happen ?");
             } else {
                 // if calling a function in a higher level, we pass the callers frame pointer
-                // if calling a function in a lower level, we pass the callers static link
                 if (definedLevel.parent == usageLevel) {
                     staticLink = new TEMP(usageLevel.frame.FP());
                 } else {
+                    // if calling a function in a lower level, we pass the callers static link
                     Level l = usageLevel;
-                    // get callers static link ( frame pointer address of parent frame)
-                    staticLink = new MEM(new BINOP(BINOP.MINUS, new TEMP(l.frame.FP()), new CONST(l.frame.wordSize())));
-                    // if callee and caller have a common parent
-                    // if callee is not parent of caller,
+                    // get callers static link
+                    /*
+                    staticLink = new MEM(
+                        new BINOP(
+                            BINOP.MINUS, 
+                            new TEMP(l.frame.FP()), 
+                            new CONST(l.frame.wordSize())
+                        )
+                    );*/
+                    staticLink = getFunctionStaticLink(usageLevel, definedLevel);
+                    // keep adding pointer dereferences until we find a common parent level.
                     while (l.parent != definedLevel.parent) {
                         staticLink = new MEM(new BINOP(BINOP.MINUS, staticLink, new CONST(l.frame.wordSize())));
                         l = l.parent;
@@ -320,9 +360,9 @@ public class TranslatorVisitor extends DefaultVisitor {
         // visiting the sub expressions as they need to
         // present when visit them.
         // Create non escaping variable for lowVar
-        Access translateAccess = this.getCurrentLevel().allocLocal(false);
+        Access lowVarTranslateAccess = this.getCurrentLevel().allocLocal(false);
         // store in hash table for future usage.
-        functionAccesses.put(exp.var, translateAccess);
+        functionAccesses.put(exp.var, lowVarTranslateAccess);
         // create labels and temps
         Temp limit = Temp.create();
         Label forStart = Label.create();
@@ -338,7 +378,8 @@ public class TranslatorVisitor extends DefaultVisitor {
         Exp explo = this.visitedExp;
         exp.body.accept(this);
         Exp expbody = this.visitedExp;
-        com.chaosopher.tigerlang.compiler.tree.Exp lowVar = translateAccess.acc.exp(staticLinkOffset(translateAccess, this.getCurrentLevel()));
+        // TODO: is static link needed here ? lowVar will always be defined at same nesting level.
+        com.chaosopher.tigerlang.compiler.tree.Exp lowVar = lowVarTranslateAccess.acc.exp(staticLinkOffset(lowVarTranslateAccess, this.getCurrentLevel()));
 		this.visitedExp = new Nx(
             new SEQ(
                 new MOVE(lowVar, explo.unEx()),
@@ -405,8 +446,8 @@ public class TranslatorVisitor extends DefaultVisitor {
                         getBoolList(
                             current.params
                         ),
-                        current.staticLink() /* create static link */,
-                        current.slEscapes
+                        current.includeStaticLink() /* create static link */,
+                        current.staticLinkEscapes
                     );
                 this.functionLabels.put(current, label);
                 this.functionLevels.put(current, level);
@@ -419,12 +460,12 @@ public class TranslatorVisitor extends DefaultVisitor {
                 Level parent = this.getCurrentLevel();
                 // find level created for function and enter it.
                 this.setCurrentLevel(this.functionLevels.get(current));
-                // get the translate access list ( frame.access & level )
+                // get functions formal list from the ast, no static link.
                 DecList formalVarDecs = current.params;
                 // get reference to level formals
                 AccessList formals = this.getCurrentLevel().formals;
-                //skip static link if not in main function.
-                if(!current.name.toString().equals("tigermain")) {
+                // skip the static link, if present.
+                if(!current.name.toString().equals("tigermain") && current.includeStaticLink()) {
                     formals = formals.tail;
                 }
                 // add formal parameters to access lookup so they
@@ -754,6 +795,7 @@ public class TranslatorVisitor extends DefaultVisitor {
         com.chaosopher.tigerlang.compiler.tree.Exp stateLinkExp =  staticLinkOffset(access, this.getCurrentLevel());
         // Set visited expression.
         this.visitedExp = new Ex(access.acc.exp(stateLinkExp));
+        System.out.println("exp " + exp.name + " " + this.visitedExp);
     }
 
     @Override
