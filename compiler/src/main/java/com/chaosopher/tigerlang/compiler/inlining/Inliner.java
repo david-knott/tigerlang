@@ -47,6 +47,7 @@ public class Inliner extends AbsynCloner {
             if(
                 functionDec.body == null 
                 || functionDec.name.toString().equals("tigermain") /* must go before next statement or we get errors */
+                || this.callGraph.getNode(functionDec) == null
                 || this.callGraph.inCycle(functionDec)
                 ) {
                 ignore.add(functionDec);

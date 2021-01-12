@@ -2,6 +2,7 @@ package com.chaosopher.tigerlang.compiler.inlining;
 
 import com.chaosopher.tigerlang.compiler.absyn.Absyn;
 import com.chaosopher.tigerlang.compiler.bind.Binder;
+import com.chaosopher.tigerlang.compiler.findescape.EscapeVisitor;
 import com.chaosopher.tigerlang.compiler.util.SimpleTask;
 import com.chaosopher.tigerlang.compiler.util.SimpleTaskProvider;
 import com.chaosopher.tigerlang.compiler.util.TaskContext;
@@ -22,6 +23,7 @@ public class Tasks implements TaskProvider {
                     Inliner inliner = new Inliner(taskContext.decList);
                     taskContext.decList.accept(inliner);
                     taskContext.setDecList(inliner.visitedDecList);
+                    taskContext.decList.accept(new EscapeVisitor(taskContext.errorMsg));
                     taskContext.decList.accept(new Binder(taskContext.errorMsg));
                 }
             }, "inline", "inline functions", "types-compute rename")
@@ -33,6 +35,7 @@ public class Tasks implements TaskProvider {
                     Pruner pruner = new Pruner(taskContext.decList);
                     taskContext.decList.accept(pruner);
                     taskContext.setDecList(pruner.visitedDecList);
+                    taskContext.decList.accept(new EscapeVisitor(taskContext.errorMsg));
                     taskContext.decList.accept(new Binder(taskContext.errorMsg));
                 }
             }, "prune", "prune unused functions", "types-compute rename")

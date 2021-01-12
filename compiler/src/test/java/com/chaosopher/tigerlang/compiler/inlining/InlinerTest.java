@@ -134,6 +134,30 @@ public class InlinerTest {
 
     }
 
+    @Test
+    public void inlineInline() {
+        ErrorMsg errorMsg = new ErrorMsg("", System.out);
+        Absyn program = parserService.parse("let function a():int = 1 function b(): int = 1 in a() end", errorMsg);
+        program.accept(new Binder(errorMsg));
+        program.accept(new TypeChecker(errorMsg));
+        program.accept(new Renamer());
+        program.accept(new PrettyPrinter(System.out));
+
+        Inliner inliner = new Inliner(program);
+        program.accept(inliner);
+        inliner.visitedDecList.accept(new Binder(errorMsg));
+        inliner.visitedDecList.accept(new PrettyPrinter(System.out));
+        //inliner.callGraph.show(System.out);
+
+        Pruner pruner = new Pruner(inliner.visitedDecList);
+       inliner.visitedDecList.accept(pruner);
+        pruner.visitedDecList.accept(new Binder(errorMsg));
+        pruner.visitedDecList.accept(new PrettyPrinter(System.out));
+
+    }
+
+
+
 
 
 }
