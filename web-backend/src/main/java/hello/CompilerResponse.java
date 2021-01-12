@@ -4,10 +4,20 @@ public class CompilerResponse {
 
     private String assembly;
     private String errors;
+    private String command;
 
-    public CompilerResponse(String assembly, String errors) {
+    public CompilerResponse(String assembly, String errors, String command) {
         this.assembly = assembly;
         this.setErrors(errors);
+        this.setCommand(command);
+    }
+
+    public String getCommand() {
+        return command;
+    }
+
+    public void setCommand(String command) {
+        this.command = command;
     }
 
     public String getErrors() {

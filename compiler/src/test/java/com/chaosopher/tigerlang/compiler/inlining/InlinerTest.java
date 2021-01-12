@@ -111,4 +111,29 @@ public class InlinerTest {
        // pruner.visitedDecList.accept(new PrettyPrinter(System.out));
 
     }
+
+    @Test
+    public void forTest() {
+    ErrorMsg errorMsg = new ErrorMsg("", System.out);
+        Absyn program = parserService.parse(" let function a() = (for i := 0 to 10 do printi(i)) in a() end", new ErrorMsg("", System.out));
+        program.accept(new Binder(errorMsg));
+        program.accept(new TypeChecker(errorMsg));
+        program.accept(new Renamer());
+      //  program.accept(new PrettyPrinter(System.out));
+
+        Inliner inliner = new Inliner(program);
+        program.accept(inliner);
+        inliner.visitedDecList.accept(new Binder(errorMsg));
+        inliner.visitedDecList.accept(new PrettyPrinter(System.out));
+        //inliner.callGraph.show(System.out);
+
+        Pruner pruner = new Pruner(inliner.visitedDecList);
+        inliner.visitedDecList.accept(pruner);
+  //      pruner.visitedDecList.accept(new Binder(errorMsg));
+        pruner.visitedDecList.accept(new PrettyPrinter(System.out));
+
+    }
+
+
+
 }

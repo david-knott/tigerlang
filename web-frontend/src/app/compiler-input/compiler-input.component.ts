@@ -11,12 +11,13 @@ export class CompilerInputComponent implements OnInit {
 
   constructor(private compilerService: CompilerService) {}
   ngOnInit(): void {
-
+    this.compilerService.setCode(this.data);
     this.compilerService.compilationRequest({ code: this.data, args: null });
   }
 
   inputChanged($event): void {
     // notify the output window to call the compiler...
+    this.compilerService.setCode($event);
     this.compilerService.compilationRequest({ code: $event, args: null });
   }
 }

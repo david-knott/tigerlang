@@ -28,7 +28,7 @@ public class PrettyPrinterTest {
             "print(\"\\\"\u0045\u0050ITA\\\"\\n\")",
             new ErrorMsg("f", System.out)
         );
-        PrettyPrinter prettyPrinter = new PrettyPrinter(System.out, false, false);
+        PrettyPrinter prettyPrinter = new PrettyPrinter(System.out, true, true);
         program.accept(prettyPrinter);
     }
 }

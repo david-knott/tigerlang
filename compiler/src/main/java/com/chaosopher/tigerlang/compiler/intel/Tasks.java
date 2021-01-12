@@ -43,7 +43,7 @@ public class Tasks implements TaskProvider {
                 @Override
                 public void only(TaskContext taskContext) {
                     com.chaosopher.tigerlang.compiler.assem.FragList assemblyFragList = taskContext.assemFragList;
-                    assemblyFragList.accept(new UnallocatedAssmeblyDump(taskContext.log));
+                    assemblyFragList.accept(new UnallocatedAssmeblyDump(taskContext.out));
 
                 }
             }, "instr-display", "Dump the unallocated assembly", "instr-compute")
@@ -56,7 +56,7 @@ public class Tasks implements TaskProvider {
                     com.chaosopher.tigerlang.compiler.assem.FragList assemblyFragList = taskContext.assemFragList;
                     UnAllocatedAssemblyStats assemblyStats = new UnAllocatedAssemblyStats();
                     assemblyFragList.accept(assemblyStats);
-                    assemblyStats.dump(taskContext.log);
+                    assemblyStats.dump(taskContext.out);
 
                 }
             }, "instr-stats", "Display instruction type counts", "instr-compute")

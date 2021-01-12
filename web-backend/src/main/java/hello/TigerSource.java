@@ -8,16 +8,34 @@ public class TigerSource {
     private boolean bindingsDisplay;
     private boolean escapesDisplay;
     private boolean rename;
+    private boolean inline;
+    private boolean prune;
     private boolean hirDisplay;
     private boolean lirDisplay;
-    private boolean staticLinkEscape;
-    private boolean staticLink;
+    private boolean staticLinkEscapes;
+    private boolean staticLinks;
     private boolean escapes;
     private boolean demove;
     private boolean regAlloc;
 
     public String getCode() {
         return this.code;
+    }
+
+    public boolean isPrune() {
+        return prune;
+    }
+
+    public void setPrune(boolean prune) {
+        this.prune = prune;
+    }
+
+    public boolean isInline() {
+        return inline;
+    }
+
+    public void setInline(boolean inline) {
+        this.inline = inline;
     }
 
     public boolean isRename() {
@@ -76,20 +94,20 @@ public class TigerSource {
         this.escapes = escapes;
     }
 
-    public boolean isStaticLink() {
-        return staticLink;
+    public boolean isStaticLinks() {
+        return staticLinks;
     }
 
-    public void setStaticLink(boolean staticLink) {
-        this.staticLink = staticLink;
+    public void setStaticLinks(boolean staticLinks) {
+        this.staticLinks = staticLinks;
     }
 
-    public boolean isStaticLinkEscape() {
-        return staticLinkEscape;
+    public boolean isStaticLinkEscapes() {
+        return staticLinkEscapes;
     }
 
-    public void setStaticLinkEscape(boolean staticLinkEscape) {
-        this.staticLinkEscape = staticLinkEscape;
+    public void setStaticLinkEscapes(boolean staticLinkEscapes) {
+        this.staticLinkEscapes = staticLinkEscapes;
     }
 
     public boolean isLirDisplay() {

@@ -33,6 +33,18 @@ public class PrunerTest {
     }
 
     @Test
+    public void pruneNested() {
+        ErrorMsg errorMsg = new ErrorMsg("", System.out);
+        Absyn program = parserService.parse("let function prune() :int = 1 function prune2() = printi(1) in prune() end", new ErrorMsg("", System.out));
+        program.accept(new Binder(errorMsg));
+        program.accept(new Renamer());
+        Pruner pruner = new Pruner(program);
+        program.accept(pruner);
+        pruner.visitedDecList.accept(new PrettyPrinter(System.out));
+        assertEquals(1, pruner.pruneCount);
+    }
+
+    @Test
     public void noPrune() {
         ErrorMsg errorMsg = new ErrorMsg("", System.out);
         Absyn program = parserService.parse("let function prune() :int = 1 in prune() end", new ErrorMsg("", System.out));
@@ -42,5 +54,18 @@ public class PrunerTest {
         program.accept(pruner);
         pruner.visitedDecList.accept(new PrettyPrinter(System.out));
         assertEquals(0, pruner.pruneCount);
+    }
+
+    @Test
+    public void assignPrune() {
+        ErrorMsg errorMsg = new ErrorMsg("", System.out);
+        Absyn program = parserService.parse(" let var a:int := 99 in end", new ErrorMsg("", System.out));
+        program.accept(new Binder(errorMsg));
+        program.accept(new Renamer());
+        Pruner pruner = new Pruner(program);
+        program.accept(pruner);
+        pruner.visitedDecList.accept(new PrettyPrinter(System.out));
+        assertEquals(0, pruner.pruneCount);
+
     }
 }

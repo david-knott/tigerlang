@@ -76,6 +76,25 @@ public class Application {
 		if(tigerSource.isEscapesDisplay()) {
 			argList.add("--escapes-display");
 		}
+		if(tigerSource.isBindingsDisplay()) {
+			argList.add("--bindings-display");
+		}
+		if(tigerSource.isStaticLinks()) {
+			argList.add("--optimise-staticlinks");
+		}
+		if(tigerSource.isStaticLinkEscapes()) {
+			argList.add("--optimise-staticlinks-escapes");
+		}
+		
+		if(tigerSource.isInline()) {
+			argList.add("--inline");
+		}
+		if(tigerSource.isPrune()) {
+			argList.add("--prune");
+		}
+		if(tigerSource.isRename()) {
+			argList.add("--rename");
+		}
 		if(tigerSource.isAstDisplay()) {
 			argList.add("--ast-display");
 		}
@@ -84,15 +103,6 @@ public class Application {
 		}
 		if(tigerSource.isLirDisplay()) {
 			argList.add("--lir-display");
-		}
-		if(tigerSource.isBindingsDisplay()) {
-			argList.add("--binds-display");
-		}
-		if(tigerSource.isStaticLink()) {
-			argList.add("--static-links");
-		}
-		if(tigerSource.isStaticLinkEscape()) {
-			argList.add("--static-link-escapes");
 		}
 		if(tigerSource.isRegAlloc()) {
 			argList.add("--reg-alloc");
@@ -113,6 +123,7 @@ public class Application {
 		.register(new com.chaosopher.tigerlang.compiler.sugar.Tasks())
 		.register(new com.chaosopher.tigerlang.compiler.findescape.Tasks())
 		.register(new com.chaosopher.tigerlang.compiler.bind.Tasks())
+		.register(new com.chaosopher.tigerlang.compiler.staticlink.Tasks())
 		.register(new com.chaosopher.tigerlang.compiler.inlining.Tasks())
 		.register(new com.chaosopher.tigerlang.compiler.types.Tasks())
 		.register(new com.chaosopher.tigerlang.compiler.translate.Tasks())
@@ -121,7 +132,7 @@ public class Application {
 		.register(new com.chaosopher.tigerlang.compiler.regalloc.Tasks(new RegAllocFactory()))
 		.parseArgs(args)
 		.execute(in, out, err, errorMsg);
-		return new CompilerResponse(backingOutputStream.toString(), backingErrorStream.toString());
+		return new CompilerResponse(backingOutputStream.toString(), backingErrorStream.toString(), String.join(" ", args));
 	}
 
 	@GetMapping("/")

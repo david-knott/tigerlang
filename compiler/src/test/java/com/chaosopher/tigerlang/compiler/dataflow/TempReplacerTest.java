@@ -8,8 +8,12 @@ import javax.xml.stream.FactoryConfigurationError;
 import javax.xml.stream.XMLStreamException;
 
 import com.chaosopher.tigerlang.compiler.canon.CanonicalizationImpl;
+import com.chaosopher.tigerlang.compiler.temp.Temp;
 import com.chaosopher.tigerlang.compiler.tree.BINOP;
 import com.chaosopher.tigerlang.compiler.tree.CONST;
+import com.chaosopher.tigerlang.compiler.tree.MOVE;
+import com.chaosopher.tigerlang.compiler.tree.PrettyPrinter;
+import com.chaosopher.tigerlang.compiler.tree.TEMP;
 import com.chaosopher.tigerlang.compiler.tree.XmlPrinter;
 
 import org.junit.Test;
@@ -61,22 +65,25 @@ public class TempReplacerTest {
     @Test
     public void binopBinop() throws FileNotFoundException, XMLStreamException, FactoryConfigurationError {
         TreeAtomizer treeAtomizer = new TreeAtomizer(new CanonicalizationImpl());
-        BINOP binop = new BINOP(
-            BINOP.PLUS,
-            new CONST(1),
+        MOVE move = new MOVE(
+            new TEMP(Temp.create()),
             new BINOP(
                 BINOP.PLUS,
-                new CONST(2),
-                new CONST(3)
+                new CONST(7),
+                new BINOP(
+                    BINOP.PLUS,
+                    new CONST(3),
+                    new CONST(5)
+                )
             )
         );
-        binop.accept(treeAtomizer);
-        XmlPrinter printer = new XmlPrinter(System.out);
-        treeAtomizer.getCanonicalisedAtoms().accept(printer);
+        move.accept(treeAtomizer);
+        treeAtomizer.getCanonicalisedAtoms().accept(new PrettyPrinter(System.out));
+        /*
         assertNotNull(treeAtomizer.getCanonicalisedAtoms());
         TempReplacer blah = new TempReplacer(treeAtomizer);
         treeAtomizer.getCanonicalisedAtoms().accept(blah);
         assertNotNull(blah.getStmList());
-        blah.getStmList().accept(printer);
+        blah.getStmList().accept(printer);*/
     }
 }

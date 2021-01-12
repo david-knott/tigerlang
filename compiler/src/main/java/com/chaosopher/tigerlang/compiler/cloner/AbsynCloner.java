@@ -43,8 +43,8 @@ public class AbsynCloner implements AbsynVisitor {
 
     public Exp visitedExp;
     public DecList visitedDecList;
-    private Ty visitedTy;
-    private Var visitedVar;
+    protected Ty visitedTy;
+    protected Var visitedVar;
     protected Dec visitedDec;
 
     @Override

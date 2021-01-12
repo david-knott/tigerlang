@@ -35,7 +35,7 @@ public class Tasks implements TaskProvider {
             new SimpleTask(new SimpleTaskProvider() {
                 @Override
                 public void only(TaskContext taskContext) {
-                    taskContext.hirFragList.accept(new FragmentPrinter(taskContext.log));
+                    taskContext.hirFragList.accept(new FragmentPrinter(taskContext.out));
                 }
             }, "hir-display", "Display the HIR", "hir-compute")
         );
@@ -62,7 +62,7 @@ public class Tasks implements TaskProvider {
                     }
 
 
-                    taskContext.hirFragList.accept(new FragmentPrinter(taskContext.log));
+                    taskContext.hirFragList.accept(new FragmentPrinter(taskContext.out));
                 }
             }, "serialize", "Serialize the HIR", "hir-compute")
         );

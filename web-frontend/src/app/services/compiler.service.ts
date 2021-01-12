@@ -11,9 +11,19 @@ import { mergeMap, map } from 'rxjs/operators';
 export class CompilerService extends BaseService {
   compilerEvent: Subject<Assembly> = new Subject<Assembly>();
   compilerRequest: Subject<any> = new Subject<any>();
+  code: string;
+
   constructor(protected http: HttpClient) {
     super();
     //there is a compiler request.
+  }
+
+  setCode(code: string): void {
+    this.code = code;
+  }
+
+  getCode(): string {
+    return this.code;
   }
 
   compilationRequest(body: any) {
@@ -22,7 +32,6 @@ export class CompilerService extends BaseService {
 
   compile(body: any): Observable<Assembly> {
     const url = "http://localhost:8080/compile";
-    console.log(body);
     return this.http.post<Assembly>(url, body).pipe(map(data => {
       this.compilerEvent.next(data);
       return data;

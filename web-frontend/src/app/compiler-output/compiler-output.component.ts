@@ -18,48 +18,63 @@ export class CompilerOutputComponent implements OnInit {
   asm: string = "";
   lastRequest: any;
 
-  constructor(private compilerService: CompilerService, private optionsService: OptionsService) {
+  constructor(
+    private compilerService: CompilerService,
+    private optionsService: OptionsService
+  ) {
     this.compilerService.compilerRequest.subscribe((s) => {
-      if(this.activeTab == 'ast') {
-          s.astDisplay = true;
-          s.hirDisplay = false;
-          s.lirDisplay = false;
-          s.regAlloc = false;
-        }
-        if(this.activeTab == 'hir') {
-          s.astDisplay = false;
-          s.hirDisplay = true;
-          s.lirDisplay = false;
-          s.regAlloc = false;
+      if (this.activeTab == "ast") {
+        s.astDisplay = true;
+        s.hirDisplay = false;
+        s.lirDisplay = false;
+        s.regAlloc = false;
+        console.log(this.optionsService.getOptions());
+        s.rename = this.optionsService.getOption("rename");
+        s.inline = this.optionsService.getOption("inline");
+        s.prune = this.optionsService.getOption("prune");
+        s.bindingsDisplay = this.optionsService.getOption("bindingsDisplay");
+        s.desugarForLoop = this.optionsService.getOption("desugarFor");
+        s.desguarStringComp = this.optionsService.getOption(
+          "desugarStringComp"
+        );
+        s.escapesCompute = this.optionsService.getOption("escapesCompute");
+        s.escapesDisplay = this.optionsService.getOption("escapesDisplay");
+        s.staticLinks = this.optionsService.getOption("staticLinks");
+        s.staticLinkEscapes = this.optionsService.getOption(
+          "staticLinkEscapes"
+        );
+      }
+      if (this.activeTab == "hir") {
+        s.astDisplay = false;
+        s.hirDisplay = true;
+        s.lirDisplay = false;
+        s.regAlloc = false;
+      }
+      if (this.activeTab == "lir") {
+        s.astDisplay = false;
+        s.hirDisplay = false;
+        s.lirDisplay = true;
+        s.regAlloc = false;
+      }
+      if (this.activeTab == "asm") {
+        s.astDisplay = false;
+        s.hirDisplay = false;
+        s.lirDisplay = false;
+        s.regAlloc = true;
+      }
 
-        }
-        if(this.activeTab == 'lir') {
-          s.astDisplay = false;
-          s.hirDisplay = false;
-          s.lirDisplay = true;
-          s.regAlloc = false;
-
-        }
-        if(this.activeTab == 'asm') {
-          s.astDisplay = false;
-          s.hirDisplay = false;
-          s.lirDisplay = false;
-          s.regAlloc = true;
-        }
-      
       this.lastRequest = s;
-      console.log("call compiler for assembly", s);
       this.compilerService.compile(s).subscribe((c) => {
-        if(this.activeTab == 'ast') {
-          this.ast = c.errors;
+        if (this.activeTab == "ast") {
+          this.ast = c.assembly;
         }
-        if(this.activeTab == 'hir') {
-          this.hir = c.errors;
+        if (this.activeTab == "hir") {
+          this.hir = c.assembly;
         }
-        if(this.activeTab == 'lir') {
-          this.lir = c.errors;
+        if (this.activeTab == "lir") {
+          this.lir = c.assembly;
         }
-        if(this.activeTab == 'asm') {
+        if (this.activeTab == "asm") {
           this.asm = c.assembly;
         }
       });

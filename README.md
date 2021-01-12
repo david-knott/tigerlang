@@ -17,3 +17,8 @@ docker image rm tiger-front-end:latest
 docker build -t tiger-front-end .
 docker run --rm -d --name tiger-frontend-container  -p 4200:80 tiger-front-end
 ```
+
+
+## Diary
+
+Getting options to work for angular app.

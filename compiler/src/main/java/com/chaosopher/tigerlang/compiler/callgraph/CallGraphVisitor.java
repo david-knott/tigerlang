@@ -36,6 +36,7 @@ public class CallGraphVisitor extends DefaultVisitor {
         FunctionDec def = (FunctionDec)exp.def;
         Assert.assertNotNull(def, "No definition found for " + exp.func);
         if(src != null) {
+            System.out.println("adding edge " + src.name + "->" + def.name );
             this.functionCallGraph.addEdge(src, def);
         }
         super.visit(exp);

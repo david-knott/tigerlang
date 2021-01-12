@@ -8,6 +8,6 @@ public class RegTest extends RegressionTestBase{
 
     @Override
     public String[] getArgs() {
-        return new String[]{};
+        return new String[]{"--inline", "--prune", "--reg-alloc"};
     }
 }

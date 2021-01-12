@@ -26,7 +26,7 @@ public class Tasks implements TaskProvider {
                 public void only(TaskContext taskContext) {
                     taskContext.setBindingsDisplay(true);
                 }
-            }, "B|bindings-display", "escape", "bindings-compute")
+            }, "B|bindings-display", "Show bindings", "bindings-compute")
         );
         taskRegister.register(
             new SimpleTask(new SimpleTaskProvider() {

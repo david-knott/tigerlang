@@ -62,9 +62,7 @@ public class TaskRegister {
  
     private void resolveDeps(Task task) {
         task.active = true;
-        if(!activeTasks.contains(task)) {
-            activeTasks.add(task);
-        }
+        // add dependancies first
         if(task.deps != null) {
             for(String dep : task.deps.split("\\s+")) {
                 if(!dep.equals("")) {
@@ -72,6 +70,10 @@ public class TaskRegister {
                     this.resolveDeps(depTask);
                 }
             }
+        }
+        //add the task, if not already added.
+        if(!activeTasks.contains(task)) {
+            activeTasks.add(task);
         }
     }
 
@@ -102,13 +104,13 @@ public class TaskRegister {
      */
     public TaskRegister execute(InputStream in, OutputStream out, OutputStream log, ErrorMsg errorMsg) {
         TaskContext taskContext = new TaskContext(in, out, log, errorMsg);
-        for (LL<TaskWrapper> t = this.tasks; t != null; t = t.tail) {
-            if(t.head.task.active) {
+        for(Task t : this.activeTasks) {
+            if(t.active) {
                 if(taskContext.errorMsg.anyErrors) {
                     return this;
                 }
-                Timer.instance.push(t.head.task.name);
-                t.head.task.execute(taskContext);
+                Timer.instance.push(t.name);
+                t.execute(taskContext);
                 Timer.instance.pop();
             }
         }

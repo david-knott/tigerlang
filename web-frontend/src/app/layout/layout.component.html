@@ -48,105 +48,23 @@
           aria-label="Close"
         ></button>
       </div>
+
       <div class="modal-body">
-        <div class="form-check form-switch">
+        <div *ngFor="let option of options.astSettings | keyvalue" class="form-check form-switch">
           <input
             class="form-check-input"
             type="checkbox"
-            id="flexSwitchCheckDefault"
+            [(ngModel)]="option.value.checked"
+            (change)="onChange()"
+            id="{{option.value.elId}}"
           />
           <label
             class="form-check-label"
             data-bs-toggle="tooltip"
             data-bs-placement="top"
-            title="Renames variables so they are globally unique"
-            for="flexSwitchCheckDefault"
-            >Rename Symbols</label
-          >
-        </div>
-        <div class="form-check form-switch">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            id="flexSwitchCheckDefault"
-          />
-          <label class="form-check-label" for="flexSwitchCheckDefault"
-            >Inline Functions</label
-          >
-        </div>
-        <div class="form-check form-switch">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            id="flexSwitchCheckDefault"
-          />
-          <label class="form-check-label" for="flexSwitchCheckDefault"
-            >Prune Unused Functions</label
-          >
-        </div>
-        <div class="form-check form-switch">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            id="flexSwitchCheckDefault"
-          />
-          <label class="form-check-label" for="flexSwitchCheckDefault"
-            >Show Binding Comments</label
-          >
-        </div>
-
-        <div class="form-check form-switch">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            id="flexSwitchCheckChecked"
-            checked
-          />
-          <label class="form-check-label" for="flexSwitchCheckChecked"
-            >Desugar For Loops</label
-          >
-        </div>
-        <div class="form-check form-switch">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            id="flexSwitchCheckChecked"
-            checked
-          />
-          <label class="form-check-label" for="flexSwitchCheckChecked"
-            >Desugar String Comparisions</label
-          >
-        </div>
-        <div class="form-check form-switch">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            id="flexSwitchCheckChecked"
-            checked
-          />
-          <label class="form-check-label" for="flexSwitchCheckChecked"
-            >Detect Escaping Variables</label
-          >
-        </div>
-        <div class="form-check form-switch">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            id="flexSwitchCheckDefault"
-          />
-          <label class="form-check-label" for="flexSwitchCheckDefault"
-            >Show Escapes Comments</label
-          >
-        </div>
-        <div class="form-check form-switch">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            id="flexSwitchCheckChecked"
-            checked
-          />
-          <label class="form-check-label" for="flexSwitchCheckChecked"
-            >Detect Escaping Static Link</label
+            title="{{option.value.title}}"
+            for="{{option.value.elId}}"
+            >{{option.value.label}}</label
           >
         </div>
       </div>
@@ -154,7 +72,6 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Close
         </button>
-        <button type="button" class="btn btn-primary">Apply</button>
       </div>
     </div>
   </div>
@@ -278,7 +195,6 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Close
         </button>
-        <button type="button" class="btn btn-primary">Apply</button>
       </div>
     </div>
   </div>
