@@ -52,10 +52,27 @@ Build an executable jar file into the compiler/target directory
 mvn package
 ```
 
-Test if jar was built.
+Testing.
+
+For executable jar
 
 ```
 java -jar compiler-1.0-SNAPSHOT.jar ../src/test/java/com/chaosopher/tigerlang/compiler/fixtures/merge_simple.tig
+
+```
+For library jar
+```
+java -cp target/compiler-1.0-SNAPSHOT.jar com.chaosopher.tigerlang.compiler.main.Main
+```
+
+on the classes directly
+```
+java -cp target/classes/ com.chaosopher.tigerlang.compiler.main.Main for.tig
+```
+
+Test compilation works using runtime assembly.
+```
+gcc -x assembler-with-cpp -g -w -no-pie -Wimplicit-function-declaration -Wl,--wrap,getchar src/main/resources/runtimes/runtime.s as 
 
 ```
 

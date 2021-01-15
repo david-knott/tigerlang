@@ -15,39 +15,7 @@ const protocol = vsDevelopment ? 'https' : 'http';
 
 export const environment = {
   production: false,
-  useJsonServer: !vsDevelopment,
-
-  // -------------------------
-  // Custom configuration
-  // -------------------------
-
-  // Api Url
-  apiUrl: 'http://localhost:7628',
-
-  // Development Api Url
-  // devApiUrl: 'https://localhost:44373/api/sample',
-  devApiUrl: `https://localhost:${port}`,
-
-  // Parent Url
-  parentUrl: `https://localhost:${port}`,
-
-  // Default settings for any list of items being displayed in a table.
-  tableFilterDefaults: {
-    // The default number of records to skip from the database.
-    skip: 0,
-
-    // The default number of records to return from the database.
-    limit: 15,
-  },
-
-  // Quote list filter default settings
-  quoteFilterDefaults: {
-    // Default number of months to search back.
-    months: 6,
-
-    // Index of the default quote status (1 = Quote Created, skipping the 'All' option).
-    status: 1,
-  },
+  apiUrl: 'http://localhost:8080',
 };
 
 /*
@@ -57,4 +25,4 @@ export const environment = {
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+import 'zone.js/dist/zone-error';  // Included with Angular CLI.

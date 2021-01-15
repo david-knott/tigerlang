@@ -795,7 +795,6 @@ public class TranslatorVisitor extends DefaultVisitor {
         com.chaosopher.tigerlang.compiler.tree.Exp stateLinkExp =  staticLinkOffset(access, this.getCurrentLevel());
         // Set visited expression.
         this.visitedExp = new Ex(access.acc.exp(stateLinkExp));
-        System.out.println("exp " + exp.name + " " + this.visitedExp);
     }
 
     @Override

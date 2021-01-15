@@ -1,5 +1,41 @@
 # Diary
 
+## Friday 15th January 2020
+I think the colouring bug is due to a problem in the generated IR for nested whiles.
+I will need to generate the flow graph for the IR so I can see the structure.
+The following demonstrates the error
+
+```
+/*
+caused a bug where rsp we used for register allocation
+*/
+        let
+                var i:int := 1
+                var j:int := 1
+            function printb() =
+                (
+                            while 1 do
+                            (
+                                        while 1 do
+                                        (
+                                                j := j + 3
+                                        );
+                                        i := i + 5
+                        )
+                )
+        in
+            (
+                printb()
+            )
+        end
+```
+
+## Thursday 14th January 2020
+Weird bug in generated assemnly when we desugar for loops into while. 
+It seems that values are being assigned into the rsp register ! This should
+not happen as rsp conflicts with every other register in the graph colour phase.
+I have no idea why this is happening.
+
 ## Monday 31st December 2020
 
 Renamer broken ( RecordExp and ArrayExp ).

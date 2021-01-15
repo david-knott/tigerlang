@@ -92,7 +92,6 @@ export class OptionsService {
   }
 
   getOption(name: String) {
-    console.log(name);
     return this.options["astSettings"][name].checked;
   }
 }

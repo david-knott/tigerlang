@@ -17,9 +17,36 @@ public class TigerSource {
     private boolean escapes;
     private boolean demove;
     private boolean regAlloc;
+    private boolean desugar;
+    private boolean desugarStringComp;
+    private boolean desugarFor;
 
     public String getCode() {
         return this.code;
+    }
+
+    public boolean isDesugarFor() {
+        return desugarFor;
+    }
+
+    public void setDesugarFor(boolean desugarFor) {
+        this.desugarFor = desugarFor;
+    }
+
+    public boolean isDesugarStringComp() {
+        return desugarStringComp;
+    }
+
+    public void setDesugarStringComp(boolean desugarStringComp) {
+        this.desugarStringComp = desugarStringComp;
+    }
+
+    public boolean isDesugar() {
+        return desugar;
+    }
+
+    public void setDesugar(boolean desugar) {
+        this.desugar = desugar;
     }
 
     public boolean isPrune() {

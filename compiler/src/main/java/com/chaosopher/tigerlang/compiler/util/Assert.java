@@ -12,6 +12,16 @@ public class Assert {
             throw new Error("Value is false.");
     }
 
+	public static void assertIsFalse(boolean b) {
+        if (b)
+            throw new Error("Value is true.");
+	}
+
+    public static void assertIsFalse(boolean b, String message) {
+        if (b)
+            throw new Error(message);
+    }
+
     public static void assertNotNull(Object o, String message) {
         if (o == null)
             throw new Error("Object is null:" + message);
@@ -34,4 +44,5 @@ public class Assert {
 	public static void unreachable(String string) {
         throw new Error("unreachable:" + string);
 	}
+
 }

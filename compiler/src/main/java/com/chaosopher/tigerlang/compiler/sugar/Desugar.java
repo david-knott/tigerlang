@@ -3,7 +3,9 @@ package com.chaosopher.tigerlang.compiler.sugar;
 import com.chaosopher.tigerlang.compiler.absyn.AssignExp;
 import com.chaosopher.tigerlang.compiler.absyn.BreakExp;
 import com.chaosopher.tigerlang.compiler.absyn.CallExp;
+import com.chaosopher.tigerlang.compiler.absyn.Dec;
 import com.chaosopher.tigerlang.compiler.absyn.DecList;
+import com.chaosopher.tigerlang.compiler.absyn.Exp;
 import com.chaosopher.tigerlang.compiler.absyn.ExpList;
 import com.chaosopher.tigerlang.compiler.absyn.ForExp;
 import com.chaosopher.tigerlang.compiler.absyn.IfExp;
@@ -23,9 +25,20 @@ import com.chaosopher.tigerlang.compiler.types.STRING;
 
 public class Desugar extends AbsynCloner {
 
+    private final boolean stringComparision;
+    private final boolean forLoop;
+
+    public Desugar(boolean stringComparision, boolean forLoop) {
+        super();
+        this.stringComparision = stringComparision;
+        this.forLoop = forLoop;
+    }
+
     @Override
     public void visit(OpExp exp) {
         if(
+            this.stringComparision
+            &&
             exp.left.getType() instanceof STRING
             &&
             exp.right.getType() instanceof STRING
@@ -41,6 +54,7 @@ public class Desugar extends AbsynCloner {
                     )
                 )
             );
+
             callExp.setType(Constants.INT);
             this.visitedExp = new OpExp(exp.pos, callExp, exp.oper, new IntExp(exp.pos, 0));
         } else {
@@ -50,8 +64,11 @@ public class Desugar extends AbsynCloner {
 
     @Override
     public void visit(ForExp forExp) {
+        if(!this.forLoop) {
+            super.visit(forExp);
+            return;
+        }
         //convert forexp into a while loop
-
         //vardec i = 0
         //test condition 
         // - true execute body back to test condition
@@ -61,14 +78,20 @@ public class Desugar extends AbsynCloner {
         Symbol _i = forExp.var.name;
         int _ipos = forExp.var.pos;
         int _hipos = forExp.hi.pos;
+        forExp.body.accept(this);
+        Exp clonedBody = this.visitedExp;
+        forExp.hi.accept(this);
+        Exp clonedHi = this.visitedExp;
+        forExp.var.accept(this);
+        VarDec clonedVarDec = (VarDec)this.visitedDec;
         this.visitedExp = new LetExp(
             forExp.pos,
             new DecList(
                 new VarDec(
-                    _hipos, _lo, null, forExp.var.init
+                    _hipos, _lo, null, clonedVarDec.init
                 ), 
                 new DecList(
-                    new VarDec(_hipos, _hi, null, forExp.hi),
+                    new VarDec(_hipos, _hi, null,  clonedHi),
                     new DecList(
                         new VarDec(_ipos, _i, null, new VarExp(0, new SimpleVar(0, _lo))), 
                         null
@@ -100,13 +123,13 @@ public class Desugar extends AbsynCloner {
                         ), 
                         new WhileExp(
                             forExp.pos, 
-                            new IntExp(forExp.pos, 1),
+                            new IntExp(forExp.pos, 1), // while(1)
                             new SeqExp(
                                forExp.body.pos,
                                new ExpList(
-                                    forExp.body,
+                                    clonedBody, // body
                                     new ExpList(
-                                        new IfExp(
+                                        new IfExp( // if i = hi
                                             forExp.pos,
                                             new OpExp(
                                                 forExp.pos,
@@ -126,8 +149,8 @@ public class Desugar extends AbsynCloner {
                                                     )
                                                 )
                                             ),
-                                            new BreakExp(0) /* true so break */,
-                                            new AssignExp(/* false so increment */
+                                            new BreakExp(0), // i = hi then break
+                                            new AssignExp(// false add 1 to i
                                                 _ipos,
                                                 new SimpleVar(
                                                     _ipos, 
@@ -154,12 +177,11 @@ public class Desugar extends AbsynCloner {
                                     )
                                )
                             )
-                        )
+                        ) // end while.
                     ), 
                     null
                 )
             )
         );
     }
-
 }

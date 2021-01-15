@@ -13,6 +13,7 @@ import com.chaosopher.tigerlang.compiler.flowgraph.FlowGraph;
 import com.chaosopher.tigerlang.compiler.frame.Access;
 import com.chaosopher.tigerlang.compiler.frame.Frame;
 import com.chaosopher.tigerlang.compiler.graph.Node;
+import com.chaosopher.tigerlang.compiler.intel.IntelFrame;
 import com.chaosopher.tigerlang.compiler.liveness.Liveness;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
 import com.chaosopher.tigerlang.compiler.temp.TempList;
@@ -114,7 +115,7 @@ public class IterativeCoalescing extends Component implements RegAlloc {
      * Builds the interference graph and move list.
      */
     private void build() {
-        // System.out.println("# build");
+        //System.out.println("# build");
         for (InstrList il = this.instrList; il != null; il = il.tail) {
             LL<Temp> live = liveOut(il.head);
             var uses = use(il.head);
@@ -149,7 +150,7 @@ public class IterativeCoalescing extends Component implements RegAlloc {
      * work list
      */
     private void makeWorklist() {
-        // System.out.println("# makeworklist");
+        //System.out.println("# makeworklist");
         while (initial != null) {
             Temp temp = initial.head;
             initial = LL.<Temp>andNot(initial, new LL<Temp>(temp));
@@ -207,7 +208,7 @@ public class IterativeCoalescing extends Component implements RegAlloc {
      * Removes item from simplifyWorkList and pushes it onto the stack
      */
     private void simplify() {
-        // System.out.println("# simplify");
+        //System.out.println("# simplify");
         LL<Temp> n = new LL<Temp>(this.simplifyWorkList.head);
         this.simplifyWorkList = LL.<Temp>andNot(this.simplifyWorkList, n);
         this.stack = LL.<Temp>insertRear(this.stack, n.head);
@@ -228,7 +229,7 @@ public class IterativeCoalescing extends Component implements RegAlloc {
     private void decrementDegree(Temp m) {
         Integer d = this.degree.get(m);
         this.degree.put(m, d - 1);
-        // System.out.println("decrement degree " + m + " " + d);
+        //System.out.println("decrement degree " + m + " " + d);
         if (d == this.K) {
             this.enableMoves(LL.<Temp>or(new LL<Temp>(m), this.adjacent(m)));
             this.spillWorkList = LL.<Temp>andNot(this.spillWorkList, new LL<Temp>(m));
@@ -252,7 +253,7 @@ public class IterativeCoalescing extends Component implements RegAlloc {
     }
 
     private void coalesce() {
-        // System.out.println("# coalesce");
+        //System.out.println("# coalesce");
         Instr m = this.workListMoves.head;
         Temp u, v;
         // defuse
@@ -270,21 +271,21 @@ public class IterativeCoalescing extends Component implements RegAlloc {
         this.workListMoves = LL.<Instr>andNot(this.workListMoves, new LL<Instr>(m));
         if (u == v) { /* alias(u) = alias(v) => add to coalesced moves */
             this.coalescedMoves = LL.<Instr>or(this.coalescedMoves, new LL<Instr>(m));
-            // System.out.println("u == v u:" + u + " v:" + v);
+            //System.out.println("u == v u:" + u + " v:" + v);
             this.addSimplifyWorkList(u);
         } else if (LL.<Temp>contains(this.precoloured, v)
                 || this.inAdjSet(u, v)) { /* v is precoloured or u & v are in adjSet => constrained */
             this.constrainedMoves = LL.<Instr>or(this.constrainedMoves, new LL<Instr>(m));
             this.addSimplifyWorkList(u);
             this.addSimplifyWorkList(v);
-            // System.out.println("Constrained td:" + m.def() + " tu:" + m.use());
+            //System.out.println("Constrained td:" + m.def() + " tu:" + m.use());
         } else if ((LL.<Temp>contains(this.precoloured, u) && isOkay(u, v)) || (!LL.<Temp>contains(this.precoloured, u)
                 && conservative(u, v))) { /*
                                            * u is precoloured and its okay to coalesce u & v OR u is not precoloured and
                                            * u & v can be conservatively coalesced => combine & coalesce
                                            */
             this.coalescedMoves = LL.<Instr>or(this.coalescedMoves, new LL<Instr>(m));
-            // System.out.println("Combining: u:"+ u + " v:"+ v);
+            //System.out.println("Combining: u:"+ u + " v:"+ v);
             this.combine(u, v);
             this.addSimplifyWorkList(u);
         } else { /* otherwise move not yet ready for coalescing */
@@ -311,7 +312,7 @@ public class IterativeCoalescing extends Component implements RegAlloc {
         }
         // add to coalesce worklist
         this.coalescedNodes = LL.<Temp>or(this.coalescedNodes, new LL<Temp>(v));
-        // System.out.println("Moving " + v + " to coalesce nodes.");
+        //System.out.println("Moving " + v + " to coalesce nodes.");
         this.alias.put(v, u);
         this.moveList.put(u, LL.<Instr>or(this.moveList.get(u), this.moveList.get(v)));
         this.enableMoves(new LL<Temp>(v));
@@ -321,7 +322,7 @@ public class IterativeCoalescing extends Component implements RegAlloc {
             this.addEdge(t.head, u);
             // degrement degree of t as its degree doesn't change after merge.
             this.decrementDegree(t.head);
-            // System.out.println("merge " + t.head + " into " + u);
+            ////System.out.println("merge " + t.head + " into " + u);
         }
         if (this.degree.get(u) >= this.K && LL.<Temp>contains(this.freezeWorkList, u)) {
             this.freezeWorkList = LL.<Temp>andNot(this.freezeWorkList, new LL<Temp>(u));
@@ -370,7 +371,7 @@ public class IterativeCoalescing extends Component implements RegAlloc {
     }
 
     private void freeze() {
-        // System.out.println("# freeze");
+        ////System.out.println("# freeze");
         Temp u = this.freezeWorkList.head;
         this.freezeWorkList = LL.<Temp>andNot(this.freezeWorkList, new LL<Temp>(u));
         this.simplifyWorkList = LL.<Temp>or(this.simplifyWorkList, new LL<Temp>(u));
@@ -432,7 +433,7 @@ public class IterativeCoalescing extends Component implements RegAlloc {
      * simplifyWorkList.
      */
     private void selectSpill() {
-        // System.out.println("# selectSpill");
+        //System.out.println("# selectSpill");
         Temp m = this.nodeToSpill();
         this.spillWorkList = LL.<Temp>andNot(this.spillWorkList, new LL<Temp>(m));
         this.simplifyWorkList = LL.<Temp>or(this.simplifyWorkList, new LL<Temp>(m));
@@ -452,13 +453,13 @@ public class IterativeCoalescing extends Component implements RegAlloc {
                 this.adjList.put(u, LL.<Temp>or(this.adjList.get(u), new LL<Temp>(v)));
                 int d = this.degree.getOrDefault(u, 0);
                 this.degree.put(u, d + 1);
-                // System.out.println("increment degree " + u + " " + d);
+                //System.out.println("increment degree " + u + " " + d);
             }
             if (!LL.<Temp>contains(this.precoloured, v)) {
                 this.adjList.put(v, LL.<Temp>or(this.adjList.get(v), new LL<Temp>(u)));
                 int d = this.degree.getOrDefault(v, 0);
                 this.degree.put(v, d + 1);
-                // System.out.println("increment degree " + v + " " + d);
+                //System.out.println("increment degree " + v + " " + d);
             }
         }
     }
@@ -487,11 +488,16 @@ public class IterativeCoalescing extends Component implements RegAlloc {
             } else {
                 this.colouredNodes = LL.<Temp>or(this.colouredNodes, new LL<Temp>(n));
                 var c = okColours.head;
+                Assert.assertIsFalse(c == IntelFrame.rsp, "Cannot use rsp for colour");
+                Assert.assertIsFalse(c == IntelFrame.rbp, "Cannont use rbp for colour");
                 this.colour.put(n, c);
             }
         }
         for (var n = this.coalescedNodes; n != null; n = n.tail) {
-            this.colour.put(n.head, this.getAlias(n.head));
+            Temp c =  this.getAlias(n.head);
+            Assert.assertIsFalse(c == IntelFrame.rsp, "Cannont use rsp for coalesce colour");
+            Assert.assertIsFalse(c == IntelFrame.rbp, "Cannot use rbp for coalesce colour");
+            this.colour.put(n.head, c);
         }
     }
 

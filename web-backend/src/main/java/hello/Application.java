@@ -85,7 +85,6 @@ public class Application {
 		if(tigerSource.isStaticLinkEscapes()) {
 			argList.add("--optimise-staticlinks-escapes");
 		}
-		
 		if(tigerSource.isInline()) {
 			argList.add("--inline");
 		}
@@ -94,6 +93,12 @@ public class Application {
 		}
 		if(tigerSource.isRename()) {
 			argList.add("--rename");
+		}
+		if(tigerSource.isDesugarFor()) {
+			argList.add("--desugar");
+		}
+		if(tigerSource.isDesugarStringComp()) {
+			argList.add("--desugar");
 		}
 		if(tigerSource.isAstDisplay()) {
 			argList.add("--ast-display");

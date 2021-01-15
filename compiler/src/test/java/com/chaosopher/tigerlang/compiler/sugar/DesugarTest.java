@@ -10,7 +10,6 @@ import com.chaosopher.tigerlang.compiler.parse.ParserService;
 import org.junit.Test;
 
 
-
 public class DesugarTest {
 
     private ParserService parserService;
@@ -25,10 +24,10 @@ public class DesugarTest {
         Absyn program = this.parserService.parse("for i := 0 to 10 do print_int(i)", errorMsg);
         program.accept(new Binder(errorMsg));
 
-        Desugar absynCloner = new Desugar();
+        Desugar absynCloner = new Desugar(true, true);
         program.accept(absynCloner);
         absynCloner.visitedDecList.accept(new Binder(errorMsg));
-        absynCloner.visitedDecList.accept(new PrettyPrinter(System.out, true, true));
+        absynCloner.visitedDecList.accept(new PrettyPrinter(System.out, false, false));
     }
 
     @Test
@@ -36,7 +35,7 @@ public class DesugarTest {
         ErrorMsg errorMsg = new ErrorMsg("", System.out);
         Absyn program = this.parserService.parse("\"foo\" = \"bar\"", errorMsg);
         program.accept(new Binder(errorMsg));
-        Desugar absynCloner = new Desugar();
+        Desugar absynCloner = new Desugar(true, true);
         program.accept(absynCloner);
         absynCloner.visitedDecList.accept(new Binder(errorMsg));
         absynCloner.visitedDecList.accept(new PrettyPrinter(System.out, true, true));
@@ -47,7 +46,7 @@ public class DesugarTest {
         ErrorMsg errorMsg = new ErrorMsg("", System.out);
         Absyn program = this.parserService.parse("\"foo\" < \"bar\"", errorMsg);
         program.accept(new Binder(errorMsg));
-        Desugar absynCloner = new Desugar();
+        Desugar absynCloner = new Desugar(true, true);
         program.accept(absynCloner);
         absynCloner.visitedDecList.accept(new Binder(errorMsg));
         absynCloner.visitedDecList.accept(new PrettyPrinter(System.out, true, true));
@@ -60,10 +59,23 @@ public class DesugarTest {
         Absyn program = this.parserService.parse("\"foo\" > \"bar\"", errorMsg);
         program.accept(new Binder(new ErrorMsg("", System.out)));
 
-        Desugar absynCloner = new Desugar();
+        Desugar absynCloner = new Desugar(true, true);
         program.accept(absynCloner);
         absynCloner.visitedDecList.accept(new Binder(errorMsg));
         absynCloner.visitedDecList.accept(new PrettyPrinter(System.out, true, true));
     }
+
+
+    @Test
+    public void tbiDesugar() {
+        ErrorMsg errorMsg = new ErrorMsg("", System.out);
+        Absyn program = this.parserService.parse("let var N := 8 function printb() = (for i := 0 to N - 1 do (for j := 0 to N - 1 do print(if i > j then \"x\" else \"y\"); print(\"\\\n\")); print(\"\\\n\")) in printb() end", errorMsg);
+        program.accept(new Binder(new ErrorMsg("", System.out)));
+        Desugar absynCloner = new Desugar(true, false);
+        program.accept(absynCloner);
+        absynCloner.visitedDecList.accept(new Binder(errorMsg));
+        absynCloner.visitedDecList.accept(new PrettyPrinter(System.out, true, true));
+    }
+
 }
 

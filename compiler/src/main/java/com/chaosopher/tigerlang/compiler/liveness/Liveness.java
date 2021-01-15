@@ -10,6 +10,7 @@ import com.chaosopher.tigerlang.compiler.core.LL;
 import com.chaosopher.tigerlang.compiler.flowgraph.FlowGraph;
 import com.chaosopher.tigerlang.compiler.graph.Node;
 import com.chaosopher.tigerlang.compiler.graph.NodeList;
+import com.chaosopher.tigerlang.compiler.temp.DefaultMap;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
 import com.chaosopher.tigerlang.compiler.temp.TempList;
 
@@ -179,9 +180,9 @@ public class Liveness {
     }
 
 	public void dumpLiveness(InstrList instrList) {
-		//System.out.println("### Liveness ###");
+		System.out.println("### Liveness ###");
 		for(; instrList != null; instrList = instrList.tail) {
-    //        System.out.println(instrList.head.format(new DefaultMap()) + " => " + this.liveMap(instrList.head));
+            System.out.println(instrList.head.format(new DefaultMap()) + " => " + this.liveMap(instrList.head));
         }
     }
 
