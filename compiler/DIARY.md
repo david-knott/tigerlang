@@ -1,5 +1,42 @@
 # Diary
 
+## Tuesday 19th January 2020
+
+Upon further testing the issue discovered on the 19th is evident in more basic code.
+The issue appears to be related to the 1 predicate. When I change while 1 to while i < 10,
+the code compiles correctly. 
+```
+/*
+caused a bug where rsp we used for register allocation
+*/
+        let
+                var i:int := 1
+            function printb() =
+                (
+                            while 1 do
+                            (
+                                        i := i + 5
+                        )
+                )
+        in
+            (
+                printb()
+            )
+        end
+```
+
+The code that generates the conditional translation for a constant is to blame. If the
+conditional expression is a constant we replace a cjump with a jump as there is nothing
+to evaluate. I suspect the problem is in the construction of the flow graph.
+
+I generated a graphiz flow graph from the assembly and as I suspected there are 2 disconnected
+graphs. This is certainly the cause of the bug.  Either the generated translated IR code is
+wrong, or the flow graph generation is wrong. 
+
+Looking at the generated IR I can see the graph is indeed correct. We always jump to the true
+branch which means the false branch is never executed. The flow graph analysis recognises this
+as a seperate graph.
+
 ## Friday 15th January 2020
 I think the colouring bug is due to a problem in the generated IR for nested whiles.
 I will need to generate the flow graph for the IR so I can see the structure.

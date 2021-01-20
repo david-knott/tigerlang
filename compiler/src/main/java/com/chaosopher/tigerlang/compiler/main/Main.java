@@ -74,6 +74,7 @@ public class Main {
                 .register(new com.chaosopher.tigerlang.compiler.inlining.Tasks())
                 .register(new com.chaosopher.tigerlang.compiler.types.Tasks())
                 .register(new com.chaosopher.tigerlang.compiler.translate.Tasks())
+                .register(new com.chaosopher.tigerlang.compiler.liveness.Tasks())
                 .register(new com.chaosopher.tigerlang.compiler.canon.Tasks(new CanonicalizationImpl()))
                 .register(new com.chaosopher.tigerlang.compiler.intel.Tasks(null, null))
                 .register(new com.chaosopher.tigerlang.compiler.regalloc.Tasks(new RegAllocFactory()))

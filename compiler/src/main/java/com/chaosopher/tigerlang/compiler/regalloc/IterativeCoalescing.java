@@ -312,7 +312,7 @@ public class IterativeCoalescing extends Component implements RegAlloc {
         }
         // add to coalesce worklist
         this.coalescedNodes = LL.<Temp>or(this.coalescedNodes, new LL<Temp>(v));
-        //System.out.println("Moving " + v + " to coalesce nodes.");
+        //System.out.println("Creating alias " + v + " " + u);
         this.alias.put(v, u);
         this.moveList.put(u, LL.<Instr>or(this.moveList.get(u), this.moveList.get(v)));
         this.enableMoves(new LL<Temp>(v));
@@ -488,15 +488,21 @@ public class IterativeCoalescing extends Component implements RegAlloc {
             } else {
                 this.colouredNodes = LL.<Temp>or(this.colouredNodes, new LL<Temp>(n));
                 var c = okColours.head;
-                Assert.assertIsFalse(c == IntelFrame.rsp, "Cannot use rsp for colour");
                 Assert.assertIsFalse(c == IntelFrame.rbp, "Cannont use rbp for colour");
+                Assert.assertIsFalse(c == IntelFrame.rsp, "Cannot use rsp for colour");
                 this.colour.put(n, c);
             }
         }
+        // loop through all the coalesced nodes, find the precoloured
+        // with which they were coalesed with and add to the temp map. 
+        // The reorder canon phase can create new moves which move the rbp into
+        // new temps, this means we can see coalesce that resolve to the rbp.
+        // this is ok. 
+        // There should never be any of these for an rsp.
         for (var n = this.coalescedNodes; n != null; n = n.tail) {
             Temp c =  this.getAlias(n.head);
+            //System.out.println("Coalesced: assign " + n.head + " to " + c);
             Assert.assertIsFalse(c == IntelFrame.rsp, "Cannont use rsp for coalesce colour");
-            Assert.assertIsFalse(c == IntelFrame.rbp, "Cannot use rbp for coalesce colour");
             this.colour.put(n.head, c);
         }
     }

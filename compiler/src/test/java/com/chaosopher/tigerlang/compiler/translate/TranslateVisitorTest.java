@@ -874,4 +874,17 @@ public class TranslateVisitorTest {
         FragList fragList = translator.getFragList();
         fragList.accept(new FragmentPrinter(System.out));
     }
+
+    @Test
+    public void whileBugTest() {
+        TranslatorVisitor translator = new TranslatorVisitor();
+        ErrorMsg errorMsg = new ErrorMsg("", System.out);
+        Absyn program = parserService.parse("let var i:int := 1 function printb() = ( while 1 do ( i := i + 5 ) ) in ( printb() ) end", errorMsg);
+        program.accept(new EscapeVisitor(errorMsg));
+        program.accept(new Binder(errorMsg));
+        program.accept(new TypeChecker(errorMsg));
+        program.accept(translator);
+        FragList fragList = translator.getFragList();
+        fragList.accept(new FragmentPrinter(System.out));
+    }
 }

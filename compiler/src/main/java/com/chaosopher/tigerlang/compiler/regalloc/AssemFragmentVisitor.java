@@ -10,6 +10,7 @@ import com.chaosopher.tigerlang.compiler.assem.MOVE;
 import com.chaosopher.tigerlang.compiler.assem.ProcFrag;
 import com.chaosopher.tigerlang.compiler.frame.Proc;
 import com.chaosopher.tigerlang.compiler.temp.CombineMap;
+import com.chaosopher.tigerlang.compiler.temp.DefaultMap;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
 import com.chaosopher.tigerlang.compiler.temp.TempMap;
 
