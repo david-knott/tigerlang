@@ -32,10 +32,10 @@ class Ex extends Exp {
         if(exp instanceof com.chaosopher.tigerlang.compiler.tree.CONST){
             var c = (com.chaosopher.tigerlang.compiler.tree.CONST)exp;
             if(c.value == 0){
-            //    return new com.chaosopher.tigerlang.compiler.tree.JUMP(f);
+                return new com.chaosopher.tigerlang.compiler.tree.JUMP(f);
             }
             if(c.value != 0){
-             //   return new com.chaosopher.tigerlang.compiler.tree.JUMP(t);
+               return new com.chaosopher.tigerlang.compiler.tree.JUMP(t);
             }
         }
         return new com.chaosopher.tigerlang.compiler.tree.CJUMP(com.chaosopher.tigerlang.compiler.tree.CJUMP.EQ, this.exp, new com.chaosopher.tigerlang.compiler.tree.CONST(1), t, f);

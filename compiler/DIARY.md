@@ -5,6 +5,10 @@
 It looks like the issue is related to the break statement inside the while loop.
 I modified tbi-desugar so that the test condition would terminate, this worked.
 
+I reenabled the condition optimisation, which I had previously thought was causing 
+problems due to it creating 2 disconnected graphs. This doesn't appear to be causing
+problems now. I will keep it in mind for any future bugs.
+
 ## Tuesday 19th January 2020
 
 Upon further testing the issue discovered on the 19th is evident in more basic code.
