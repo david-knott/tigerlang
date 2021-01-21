@@ -10,7 +10,7 @@ public class DesugarRegTest extends RegressionTestBase{
 
     @Override
     public String[] getArgs() {
-        //return new String[]{"--desugar",  "--reg-alloc"};
-        return new String[]{"--escapes-compute", "--reg-alloc"};
+        return new String[]{"--desugar",  "--reg-alloc"};
+        //return new String[]{"--reg-alloc"};
     }
 }

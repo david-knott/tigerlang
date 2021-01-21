@@ -1,5 +1,10 @@
 # Diary
 
+## Thursday 21st January 2020
+
+It looks like the issue is related to the break statement inside the while loop.
+I modified tbi-desugar so that the test condition would terminate, this worked.
+
 ## Tuesday 19th January 2020
 
 Upon further testing the issue discovered on the 19th is evident in more basic code.

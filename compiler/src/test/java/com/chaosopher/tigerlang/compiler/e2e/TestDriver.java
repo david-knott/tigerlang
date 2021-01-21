@@ -1,7 +1,5 @@
 package com.chaosopher.tigerlang.compiler.e2e;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
@@ -20,48 +18,21 @@ import java.util.stream.Stream;
 
 import com.chaosopher.tigerlang.compiler.main.Main;
 
-import org.junit.experimental.theories.DataPoints;
-import org.junit.experimental.theories.Theory;
+import org.junit.Test;
 
-public abstract class RegressionTestBase {
+public class TestDriver {
 
-    protected static String[] getPath() {
-        try (Stream<Path> walk = Files.walk(Paths.get("./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/"))) {
-            return walk.filter(Files::isRegularFile).map(x -> x.toString()).filter(f -> f.endsWith(".tig"))
-                    .collect(Collectors.toList()).toArray(String[]::new);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
+    @Test
+    public void testTbiDesugar() throws InterruptedException, IOException {
+
+        good("./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/tbi-desguar.tig", new String[]{"--reg-alloc"});
     }
 
-    @DataPoints
-    public static String[] paths() {
-        return RegressionTestBase.getPath();
-    }
 
-    private void dumpOutputForProcess(Process gccProcess) throws IOException {
-        BufferedReader gccStdInput = new BufferedReader(new InputStreamReader(gccProcess.getInputStream()));
-        BufferedReader gccStdError = new BufferedReader(new InputStreamReader(gccProcess.getErrorStream()));
-        System.out.println("Here is the standard output of the command:\n");
-        String s = null;
-        while ((s = gccStdInput.readLine()) != null) {
-            System.out.println(s);
-        }
-        System.out.println("Here is the standard error of the command (if any):\n");
-        while ((s = gccStdError.readLine()) != null) {
-            System.out.println(s);
-        }
-    }
+    @Test
+    public void testTbiDesugarTerminate() throws InterruptedException, IOException {
 
-    public static String inputStreamToString(InputStream inputStream) throws IOException {
-        ByteArrayOutputStream result = new ByteArrayOutputStream();
-        byte[] buffer = new byte[1024];
-        int length;
-        while ((length = inputStream.read(buffer)) != -1) {
-            result.write(buffer, 0, length);
-        }
-        return result.toString("UTF-8");
+        good("./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/tbi-desguar-terminate.tig", new String[]{"--reg-alloc"});
     }
 
     public static String getFileContent(FileInputStream fis, String encoding) throws IOException {
@@ -76,10 +47,18 @@ public abstract class RegressionTestBase {
         }
     }
 
-    public abstract String[] getArgs();
 
-    @Theory
-    public void good(String fileName) throws InterruptedException, IOException {
+    public static String inputStreamToString(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream result = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = inputStream.read(buffer)) != -1) {
+            result.write(buffer, 0, length);
+        }
+        return result.toString("UTF-8");
+    }
+
+    public void good(String fileName,String args[]) throws InterruptedException, IOException {
         String baseName = fileName.substring(fileName.lastIndexOf("/") + 1);
         System.out.println("Testing program:" + baseName);
         InputStream runtimeAssemblyStream = getClass().getResourceAsStream("/runtimes/runtime.s");
@@ -98,27 +77,25 @@ public abstract class RegressionTestBase {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             ByteArrayOutputStream errorStream = new ByteArrayOutputStream();
             Main main = new Main(outputStream, errorStream);
-            String[] both = Stream.concat(Arrays.stream(getArgs()), Arrays.stream(new String[]{fileName}))
-                      .toArray(String[]::new);
+            String[] both = Stream.concat(Arrays.stream(args), Arrays.stream(new String[] { fileName }))
+                    .toArray(String[]::new);
             main.execute(both);
             System.out.println(new String(outputStream.toByteArray(), StandardCharsets.UTF_8));
             System.out.println(new String(errorStream.toByteArray(), StandardCharsets.UTF_8));
             Runtime runtime = Runtime.getRuntime();
             Process gccProcess = runtime.exec(
-                    "gcc -x assembler-with-cpp -g -w -no-pie -Wimplicit-function-declaration -Wl,--wrap,getchar -o /tmp/" + baseName +".o -");
+                    "gcc -x assembler-with-cpp -g -w -no-pie -Wimplicit-function-declaration -Wl,--wrap,getchar -o /tmp/"
+                            + baseName + ".o -");
             BufferedWriter gccStdOut = new BufferedWriter(new OutputStreamWriter(gccProcess.getOutputStream()));
             gccStdOut.write(runtimeAssem);
             gccStdOut.write(outputStream.toString());
             gccStdOut.close();
             gccProcess.waitFor();
-            assertEquals(gccProcess.exitValue(), 0);
-            //execute the binary that was created.
-            Process compiledProcess = runtime.exec(
-                    "/tmp/" + baseName +".o");
+            // execute the binary that was created.
+            Process compiledProcess = runtime.exec("/tmp/" + baseName + ".o");
             compiledProcess.waitFor();
             String actualResult = inputStreamToString(compiledProcess.getInputStream()).trim();
-            System.out.println("Finished  --> " + baseName + ":" + compiledProcess.exitValue());
-            assertEquals(strResult, actualResult);
+            System.out.println("Finished  --> " + baseName + " result:" + actualResult + " :exit" + compiledProcess.exitValue());
         } catch (IOException e) {
             e.printStackTrace();
         }
