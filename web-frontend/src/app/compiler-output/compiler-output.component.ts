@@ -34,7 +34,7 @@ export class CompilerOutputComponent implements OnInit {
         s.prune = this.optionsService.getOption("prune");
         s.bindingsDisplay = this.optionsService.getOption("bindingsDisplay");
         s.desugarForLoop = this.optionsService.getOption("desugarFor");
-        s.desguarStringComp = this.optionsService.getOption(
+        s.desugarStringComp = this.optionsService.getOption(
           "desugarStringComp"
         );
         s.escapesCompute = this.optionsService.getOption("escapesCompute");
