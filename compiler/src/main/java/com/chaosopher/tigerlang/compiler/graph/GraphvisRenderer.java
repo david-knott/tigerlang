@@ -2,6 +2,7 @@ package com.chaosopher.tigerlang.compiler.graph;
 
 import java.io.PrintStream;
 
+import com.chaosopher.tigerlang.compiler.dataflow.CFG;
 import com.chaosopher.tigerlang.compiler.flowgraph.FlowGraph;
 import com.chaosopher.tigerlang.compiler.regalloc.InterferenceGraph;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
@@ -84,6 +85,29 @@ public class GraphvisRenderer implements GraphRenderer {
         for (NodeList p = flowGraph.nodes(); p != null; p = p.tail) {
             Node n = p.head;
             String tm = flowGraph.instr(n).format(tempMap);
+            out.println(n.toString() + " [ label=\"" + tm + "\"]");
+        }
+        for (NodeList p = flowGraph.nodes(); p != null; p = p.tail) {
+            Node n = p.head;
+            out.print(n.toString());
+            out.print(" -> {");
+            for (NodeList q = n.succ(); q != null; q = q.tail) {
+                out.print(q.head.toString());
+                if (q.tail != null) {
+
+                    out.print(",");
+                }
+            }
+            out.println("}");
+        }
+        out.println("}");
+    }
+
+    public void render(PrintStream out, CFG flowGraph) {
+        out.println("digraph D{");
+        for (NodeList p = flowGraph.nodes(); p != null; p = p.tail) {
+            Node n = p.head;
+            String tm = flowGraph.get(n);
             out.println(n.toString() + " [ label=\"" + tm + "\"]");
         }
         for (NodeList p = flowGraph.nodes(); p != null; p = p.tail) {

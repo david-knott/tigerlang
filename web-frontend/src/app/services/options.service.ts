@@ -83,6 +83,7 @@ export class OptionsService {
     };
   }
 
+
   update(options) {
     this.options = options;
   }

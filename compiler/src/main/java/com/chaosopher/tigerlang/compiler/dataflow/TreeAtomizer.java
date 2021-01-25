@@ -26,6 +26,7 @@ import com.chaosopher.tigerlang.compiler.tree.TEMP;
 public class TreeAtomizer extends CloningTreeVisitor {
 
     private final Canonicalization canonicalization;
+    private final Hashtable<Temp, Exp> temps = new Hashtable<>();
 
     public TreeAtomizer(Canonicalization canonicalization) {
         this.canonicalization = canonicalization;
@@ -35,14 +36,17 @@ public class TreeAtomizer extends CloningTreeVisitor {
         return this.canonicalization.canon(this.stm != null ? this.stm : new EXP(this.exp));
     }
 
+    public Hashtable<Temp, Exp> getTemps() {
+        return this.temps;
+    }
+
     public Stm getAtoms() {
         return this.stm != null ? this.stm : new EXP(this.exp);
     }
 
-    private Hashtable<Temp, Temp> temps = new Hashtable<>();
-    private Temp createTemp() {
+    private Temp createTemp(Exp exp) {
         Temp temp = Temp.create();
-        this.temps.put(temp, temp);
+        this.temps.put(temp, exp);
         return temp;
     }
 
@@ -52,7 +56,7 @@ public class TreeAtomizer extends CloningTreeVisitor {
 
     private Exp rewrite(Exp exp) {
         if(exp instanceof MEM || exp instanceof BINOP) {
-            Temp temp = this.createTemp();
+            Temp temp = this.createTemp(exp);
             return new ESEQ(new MOVE(new TEMP(temp), exp), new TEMP(temp));
         }
         return exp; 

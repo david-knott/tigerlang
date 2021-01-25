@@ -1,6 +1,16 @@
 # Diary
 
-## Thursday 21st January 2020
+## Monday 25 January 2021
+
+Working on the dataflow. So far atomisation and recombination work.
+
+java -cp ./target/classes/ com.chaosopher.tigerlang.compiler.main.Main -A ./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/tbi.tig
+
+
+java -cp ./target/classes/ com.chaosopher.tigerlang.compiler.main.Main --cfg  ./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/div.tig > dot;dot -Tpng -O dot
+
+
+## Thursday 21st January 2021
 
 It looks like the issue is related to the break statement inside the while loop.
 I modified tbi-desugar so that the test condition would terminate, this worked.
@@ -9,7 +19,7 @@ I reenabled the condition optimisation, which I had previously thought was causi
 problems due to it creating 2 disconnected graphs. This doesn't appear to be causing
 problems now. I will keep it in mind for any future bugs.
 
-## Tuesday 19th January 2020
+## Tuesday 19th January 2021
 
 Upon further testing the issue discovered on the 19th is evident in more basic code.
 The issue appears to be related to the 1 predicate. When I change while 1 to while i < 10,
