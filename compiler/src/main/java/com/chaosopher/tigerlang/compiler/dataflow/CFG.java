@@ -1,30 +1,18 @@
 package com.chaosopher.tigerlang.compiler.dataflow;
 
 import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Set;
 
 import com.chaosopher.tigerlang.compiler.graph.Graph;
 import com.chaosopher.tigerlang.compiler.graph.Node;
 import com.chaosopher.tigerlang.compiler.temp.Label;
 import com.chaosopher.tigerlang.compiler.temp.LabelList;
-import com.chaosopher.tigerlang.compiler.tree.BINOP;
-import com.chaosopher.tigerlang.compiler.tree.CALL;
 import com.chaosopher.tigerlang.compiler.tree.CJUMP;
-import com.chaosopher.tigerlang.compiler.tree.CONST;
 import com.chaosopher.tigerlang.compiler.tree.DefaultTreeVisitor;
 import com.chaosopher.tigerlang.compiler.tree.ESEQ;
-import com.chaosopher.tigerlang.compiler.tree.EXP;
 import com.chaosopher.tigerlang.compiler.tree.JUMP;
 import com.chaosopher.tigerlang.compiler.tree.LABEL;
-import com.chaosopher.tigerlang.compiler.tree.MEM;
-import com.chaosopher.tigerlang.compiler.tree.MOVE;
-import com.chaosopher.tigerlang.compiler.tree.NAME;
-import com.chaosopher.tigerlang.compiler.tree.SEQ;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.StmList;
-import com.chaosopher.tigerlang.compiler.tree.TEMP;
-import com.chaosopher.tigerlang.compiler.tree.TreeVisitor;
 import com.chaosopher.tigerlang.compiler.util.Assert;
 
 
@@ -64,6 +52,22 @@ public class CFG extends Graph {
 
         public void addStatement(Stm stm) {
             this.first.append(stm);
+        }
+
+        @Override
+        public String toString() {
+            BasicBlock me = this;
+            String result = "";
+            while(me.tail != null) {
+                 result+= me.label.toString() + "\n";
+                 StmList sl = me.first;
+                 while(sl.tail != null) {
+                    result+= sl.head.toString() + "\n";
+                    sl = sl.tail;
+                 }
+                 me = me.tail;
+            }
+            return result;
         }
     } 
 
@@ -134,6 +138,8 @@ public class CFG extends Graph {
     private final StmList stmList;
     private final BuildBasicBlocks buildBasicBlocks;
     private final HashMap<Label, BasicBlock> labelBlockMap = new HashMap<>();
+    private final HashMap<BasicBlock, Node> map = new HashMap<>();
+    private final HashMap<Node, BasicBlock> revMap = new HashMap<>();
 
     public CFG(StmList stmList) {
         this.stmList = stmList;
@@ -141,29 +147,35 @@ public class CFG extends Graph {
         this.init();
     }
 
+    public String get(Node node) {
+        return this.revMap.get(node).toString();
+    }
+
     private void init() {
         this.stmList.accept(this.buildBasicBlocks);
         new BuildGraph(this.buildBasicBlocks.basicBlock).start();
     }
 
-    private HashMap<BasicBlock, Node> map = new HashMap<>();
 
     private void addNode(BasicBlock basicBlock) {
         Node node = super.newNode();
         this.map.put(basicBlock, node);
+        this.revMap.put(node, basicBlock);
     }
 
     private void addEdge(BasicBlock start, BasicBlock end) {
-        Node nodeStart = this.map.computeIfAbsent(start, k -> {
-            Node node = super.newNode();
-            this.map.put(start, node);
-            return node;
-        });
-        Node nodeEnd = this.map.computeIfAbsent(end, k -> {
-            Node node = super.newNode();
-            this.map.put(end, node);
-            return node;
-        });
+        Node nodeStart = this.map.get(start);
+        if(nodeStart == null) {
+            nodeStart = super.newNode();
+            this.map.put(start, nodeStart);
+            this.revMap.put(nodeStart, start);
+        }
+        Node nodeEnd = this.map.get(end);
+        if(nodeEnd == null) {
+            nodeEnd = super.newNode();
+            this.map.put(end, nodeEnd);
+            this.revMap.put(nodeEnd, end);
+        }
         super.addEdge(nodeStart, nodeEnd);
     }
 }

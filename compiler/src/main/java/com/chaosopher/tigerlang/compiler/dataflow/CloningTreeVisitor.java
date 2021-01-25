@@ -133,8 +133,10 @@ class CloningTreeVisitor implements TreeVisitor {
         for(;stmList != null; stmList = stmList.tail) {
             stmList.head.accept(this);
             Stm clonedStm = this.stm;
-            cloned = StmList.append(cloned, clonedStm);
+            if(clonedStm != null) {
+                cloned = StmList.append(cloned, clonedStm);
+            }
         }
-        this.stm = stmList;
+        this.stm = cloned;
     }
 }
