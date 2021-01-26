@@ -50,7 +50,7 @@ public class CFG extends Graph {
             this.tail = tail;
         }
 
-        public void addStatement(Stm stm) {
+        public void addStatement(Stm stm) { 
             this.first.append(stm);
         }
 
@@ -58,15 +58,13 @@ public class CFG extends Graph {
         public String toString() {
             BasicBlock me = this;
             String result = "";
-            while(me.tail != null) {
-                 result+= me.label.toString() + "\n";
+                 result+= me.label.toString() + ",";
                  StmList sl = me.first;
                  while(sl.tail != null) {
-                    result+= sl.head.toString() + "\n";
+                 //   result+= sl.head.toString() + "\n";
                     sl = sl.tail;
                  }
                  me = me.tail;
-            }
             return result;
         }
     } 
@@ -82,7 +80,8 @@ public class CFG extends Graph {
         }
 
         private void addEdge(BasicBlock basicBlock, LabelList labelList) {
-            CFG.this.addEdge(basicBlock, labelBlockMap.get(labelList.head));
+            BasicBlock target = labelBlockMap.get(labelList.head);
+            CFG.this.addEdge(basicBlock, target);
             if(labelList.tail != null) {
                 this.addEdge(basicBlock, labelList.tail);
             }
@@ -105,6 +104,7 @@ public class CFG extends Graph {
     class BuildBasicBlocks extends DefaultTreeVisitor {
 
         BasicBlock basicBlock;
+        BasicBlock prevBasicBlock;
 
         @Override
         public void visit(ESEQ op) {
@@ -113,7 +113,13 @@ public class CFG extends Graph {
 
         @Override
         public void visit(LABEL op) {
+            this.prevBasicBlock = this.basicBlock;
             this.basicBlock = new BasicBlock(op, op.label, this.basicBlock);
+            // this will be clobbered if there are jumps / cjumps in this block.
+            if(prevBasicBlock != null && this.prevBasicBlock.labelList == null) {
+             //   this.basicBlock.labelList = new LabelList(this.prevBasicBlock.label, null);
+                this.prevBasicBlock.labelList = new LabelList(this.basicBlock.label, null);
+            }
             labelBlockMap.put(op.label, this.basicBlock);
         }
 
@@ -129,9 +135,13 @@ public class CFG extends Graph {
 
         @Override
         public void visit(StmList stmList) {
-            super.visit(stmList);
+            stmList.head.accept(this);
             Assert.assertNotNull(this.basicBlock, "Basic block should not be null, perhaps there is no label ?");
             this.basicBlock.addStatement(stmList.head);
+            if(stmList.tail != null) {
+                stmList.tail.accept(this);
+            }
+            
         }
     }
     
@@ -156,26 +166,19 @@ public class CFG extends Graph {
         new BuildGraph(this.buildBasicBlocks.basicBlock).start();
     }
 
-
-    private void addNode(BasicBlock basicBlock) {
-        Node node = super.newNode();
-        this.map.put(basicBlock, node);
-        this.revMap.put(node, basicBlock);
+    private Node addNode(BasicBlock basicBlock) {
+        Node node = this.map.get(basicBlock);
+        if(node == null) {
+            node = super.newNode();
+            this.map.put(basicBlock, node);
+            this.revMap.put(node, basicBlock);
+        }
+        return node;
     }
 
     private void addEdge(BasicBlock start, BasicBlock end) {
-        Node nodeStart = this.map.get(start);
-        if(nodeStart == null) {
-            nodeStart = super.newNode();
-            this.map.put(start, nodeStart);
-            this.revMap.put(nodeStart, start);
-        }
-        Node nodeEnd = this.map.get(end);
-        if(nodeEnd == null) {
-            nodeEnd = super.newNode();
-            this.map.put(end, nodeEnd);
-            this.revMap.put(nodeEnd, end);
-        }
+        Node nodeStart = this.addNode(start);
+        Node nodeEnd = this.addNode(end);
         super.addEdge(nodeStart, nodeEnd);
     }
 }

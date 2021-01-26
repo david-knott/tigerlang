@@ -1,5 +1,10 @@
 # Diary
 
+## Tuesday 26th January 2021
+
+Need to tidy up the CFG generator. It appears correct for if's and basic inline program.
+While loops dont look correct.
+
 ## Monday 25 January 2021
 
 Working on the dataflow. So far atomisation and recombination work.
