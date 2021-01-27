@@ -1,5 +1,11 @@
 # Diary
 
+## Wednesday 27th January 2021
+
+Remove second jump where there are two side by side.
+
+I am not sure if this will handle 3 side by side.
+
 ## Tuesday 26th January 2021
 
 Need to tidy up the CFG generator. It appears correct for if's and basic inline program.
