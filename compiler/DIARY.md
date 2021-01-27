@@ -3,7 +3,18 @@
 ## Tuesday 26th January 2021
 
 Need to tidy up the CFG generator. It appears correct for if's and basic inline program.
-While loops dont look correct.
+While loops dont look correct. This appears to be due to having the break as the then
+condition of an ifthenelse. These expressions use a join label which both conditions jump
+to after the body. In the case of the break, it inserts a new jump inside branch body,
+which is directly before the join jump. This results in two consequtive jumps, where
+the second one is never hit.  Maybe there is no work around for this ?
+
+When we apply the canonicalisation to this hir tree, it adds an extra label before the join jump
+so that the tree makes sense. This is why the while loop looks strange when visualised. This
+problem is also in the LRDE implementation. See the break sample at the end of this page
+https://assignments.lrde.epita.fr/compiler_stages/tc_5/primitive_samples.html
+
+Possible solutions would be to remove the second jump after canonicalisation as it never used.
 
 ## Monday 25 January 2021
 

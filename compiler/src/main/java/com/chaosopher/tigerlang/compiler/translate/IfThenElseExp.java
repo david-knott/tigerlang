@@ -2,10 +2,17 @@ package com.chaosopher.tigerlang.compiler.translate;
 
 import com.chaosopher.tigerlang.compiler.temp.Label;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
+import com.chaosopher.tigerlang.compiler.tree.CONST;
+import com.chaosopher.tigerlang.compiler.tree.ESEQ;
+import com.chaosopher.tigerlang.compiler.tree.JUMP;
+import com.chaosopher.tigerlang.compiler.tree.LABEL;
+import com.chaosopher.tigerlang.compiler.tree.MOVE;
+import com.chaosopher.tigerlang.compiler.tree.SEQ;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
+import com.chaosopher.tigerlang.compiler.tree.TEMP;
 
 /**
- * A subclass to handle if then else expressions. Where condition is the if
+ * A subclass to handle 'if then else' expressions. Where condition is the if
  * condition, aa is the expression in the then block and bb is the optional
  * expression in the else block
  * 
@@ -18,83 +25,91 @@ class IfThenElseExp extends Exp {
     Label trueLabel = new Label();
     // begining of the else clause
     Label falseLabel = new Label();
-    // both branches jump to this when the complete
+    // both branches jump to this when they complete
     Label joinLabel = new Label();
 
+    /**
+     * Constructor for creating a new instance.
+     * @param tst
+     * @param aa
+     * @param bb
+     */
     IfThenElseExp(Exp tst, Exp aa, Exp bb) {
         testExp = tst;
         a = aa;
         b = bb;
         if(b == null)
-        b = new Ex(new com.chaosopher.tigerlang.compiler.tree.CONST(0));
+        b = new Ex(new CONST(0));
     }
 
     /**
      * Returns the result where the then and else have the same type that is not
-     * void.
+     * void. In this case both the then and else branches must be provided as
+     * if we only provide a then, the return type is VOID.
      */
     @Override
     com.chaosopher.tigerlang.compiler.tree.Exp unEx() {
         var r = Temp.create();
-        return new com.chaosopher.tigerlang.compiler.tree.ESEQ(
-            new com.chaosopher.tigerlang.compiler.tree.SEQ(
-                new com.chaosopher.tigerlang.compiler.tree.SEQ(
-                    //evaluate test expression and just to true or false
+        return new ESEQ(
+            new SEQ(
+                new SEQ(
+                    //test expression as conditional, passing in references to the true and false labels
+                    // the actual jump is generated inside this method.
                     testExp.unCx(trueLabel, falseLabel), 
-                    new com.chaosopher.tigerlang.compiler.tree.SEQ(
-                        new com.chaosopher.tigerlang.compiler.tree.LABEL(trueLabel), // add label t, evaluate expression a put resuult into register r.
-                        new com.chaosopher.tigerlang.compiler.tree.SEQ( // eval then expression
-                                new com.chaosopher.tigerlang.compiler.tree.MOVE( // move ex result into r
-                                    new com.chaosopher.tigerlang.compiler.tree.TEMP(r), 
+                    new SEQ(
+                        new LABEL(trueLabel), // add label t, evaluate expression a put result into register r.
+                        new SEQ( // eval then expression
+                                new MOVE( // move ex result into r
+                                    new TEMP(r), 
                                     a.unEx()
                                 ),
-                                new com.chaosopher.tigerlang.compiler.tree.SEQ(
-                                    new com.chaosopher.tigerlang.compiler.tree.JUMP(joinLabel),  //go to join label
-                                    new com.chaosopher.tigerlang.compiler.tree.SEQ(
-                                        new com.chaosopher.tigerlang.compiler.tree.LABEL(falseLabel), // add label f
-                                        new com.chaosopher.tigerlang.compiler.tree.SEQ(new com.chaosopher.tigerlang.compiler.tree.MOVE( // eval expression b put result into register r
-                                                new com.chaosopher.tigerlang.compiler.tree.TEMP(r), 
+                                new SEQ(
+                                    new JUMP(joinLabel),  //go to join label
+                                    new SEQ(
+                                        new LABEL(falseLabel), // add label f
+                                        new SEQ(new MOVE( // eval expression b put result into register r
+                                                new TEMP(r), 
                                                 b.unEx() // into register r
                                         ), 
-                                        new com.chaosopher.tigerlang.compiler.tree.JUMP(joinLabel)) //jump to join label.
+                                        new JUMP(joinLabel)) //jump to join label.
                                     )
                                 )
                         )
                     )
                 ), 
-                new com.chaosopher.tigerlang.compiler.tree.LABEL(joinLabel) //join label
+                new LABEL(joinLabel) //join label
             ), 
-            new com.chaosopher.tigerlang.compiler.tree.TEMP(r) //return temp to to calling expression.
+            new TEMP(r) //return temp to to calling expression.
         );
     }
 
     @Override
     Stm unNx() {
-        return new com.chaosopher.tigerlang.compiler.tree.SEQ(
-            new com.chaosopher.tigerlang.compiler.tree.SEQ(
+        return new SEQ(
+            new SEQ(
                 testExp.unCx(trueLabel, falseLabel), // eval cx with labels t and f
-                new com.chaosopher.tigerlang.compiler.tree.SEQ(
-                    new com.chaosopher.tigerlang.compiler.tree.LABEL(trueLabel), // add label t
-                    new com.chaosopher.tigerlang.compiler.tree.SEQ( // eval then express
+                new SEQ(
+                    new LABEL(trueLabel), // add label t
+                    new SEQ( // eval then express
                         a.unNx(), 
-                        new com.chaosopher.tigerlang.compiler.tree.SEQ(
-                            new com.chaosopher.tigerlang.compiler.tree.JUMP(joinLabel), 
-                            new com.chaosopher.tigerlang.compiler.tree.SEQ(
-                                new com.chaosopher.tigerlang.compiler.tree.LABEL(falseLabel), // add label
-                                    new com.chaosopher.tigerlang.compiler.tree.SEQ(
+                        new SEQ(
+                            new JUMP(joinLabel), 
+                            new SEQ(
+                                new LABEL(falseLabel), // add label
+                                    new SEQ(
                                         b.unNx(), // into register r
-                                        new com.chaosopher.tigerlang.compiler.tree.JUMP(joinLabel))
+                                        new JUMP(joinLabel))
                             )
                         )
                     )
                 )
             ),
-            new com.chaosopher.tigerlang.compiler.tree.LABEL(joinLabel)
+            new LABEL(joinLabel)
         );
     }
 
     /**
-     * This handle the case when an IF is being used in an IF.
+     * This handles the case when an IF is being used in an IF.
      * 
      * Used by & and | operators. Label tt is the position where conditions in else
      * or then must jump if they evaluate to true. Label ff is the position where
@@ -115,18 +130,18 @@ class IfThenElseExp extends Exp {
      */
     @Override
     Stm unCx(Label tt, Label ff) {
-        return new com.chaosopher.tigerlang.compiler.tree.SEQ(
+        return new SEQ(
             testExp.unCx(trueLabel, falseLabel), // eval test expression (AND: if (a > b) then (b > c) else (0) )
-            new com.chaosopher.tigerlang.compiler.tree.SEQ(
-                new com.chaosopher.tigerlang.compiler.tree.LABEL(trueLabel), // add label t
-                    new com.chaosopher.tigerlang.compiler.tree.SEQ( // eval then express
-                        a.unCx(tt, ff), 
-                        new com.chaosopher.tigerlang.compiler.tree.SEQ(
-                                new com.chaosopher.tigerlang.compiler.tree.LABEL(falseLabel), // add
-                                b.unCx(tt, ff) 
-                            )
-                        )
+            new SEQ(
+                new LABEL(trueLabel), // true label
+                new SEQ( // evaluate the 'then' expression as a conditional
+                    a.unCx(tt, ff), 
+                    new SEQ(
+                        new LABEL(falseLabel), // false label
+                        b.unCx(tt, ff)  // evalue the else expression
                     )
+                )
+            )
         );
     }
 }

@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 
 import com.chaosopher.tigerlang.compiler.absyn.Absyn;
 import com.chaosopher.tigerlang.compiler.bind.Binder;
+import com.chaosopher.tigerlang.compiler.canon.CanonVisitor;
+import com.chaosopher.tigerlang.compiler.canon.CanonicalizationImpl;
 import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
 import com.chaosopher.tigerlang.compiler.findescape.EscapeVisitor;
 import com.chaosopher.tigerlang.compiler.parse.ParserFactory;
@@ -18,6 +20,24 @@ import org.junit.Test;
 
 public class BugTest {
      
+
+
+    @Test
+    public void twoJumps() {
+        ErrorMsg errorMsg = new ErrorMsg("f", System.out);
+        ParserService parserService = new ParserService(new ParserFactory());
+        Absyn program = parserService.parse("while 101 do (if 102 then break)", errorMsg);
+        program.accept(new Binder(errorMsg));
+        program.accept(new TypeChecker(errorMsg));
+        TranslatorVisitor translator = new TranslatorVisitor();
+        program.accept(translator);
+        CanonVisitor canonVisitor = new CanonVisitor(new CanonicalizationImpl());
+        translator.getFragList().accept(canonVisitor);
+        FragList fragList = canonVisitor.fragList;
+        
+        assertNotNull(program);
+    }
+
     @Test
     public void syntaxError() throws FileNotFoundException {
         ErrorMsg errorMsg = new ErrorMsg("f", System.out);
