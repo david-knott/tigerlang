@@ -219,17 +219,17 @@ public class Canon {
         // if the current item and the previous item are JUMPs, ignore the current item.
         if(previous instanceof JUMP && stmList.head instanceof JUMP) {
             if(stmList.tail == null) {
-                Stm nop = new com.chaosopher.tigerlang.compiler.tree.EXP(new com.chaosopher.tigerlang.compiler.tree.CONST(0));
-                return new StmList(nop);
+                //Stm nop = new com.chaosopher.tigerlang.compiler.tree.EXP(new com.chaosopher.tigerlang.compiler.tree.CONST(0));
+                //return new StmList(nop);
+                throw new Error("Jump/jump removal - inside tail = null branch.");
             }
-            // move to next item in list and proceed.
             stmList = stmList.tail;
         }
         return stmList.tail != null ? new StmList(stmList.head, removeJumps(stmList.tail, stmList.head)) : new StmList(stmList.head);
     }
 
     static public com.chaosopher.tigerlang.compiler.tree.StmList linearize(com.chaosopher.tigerlang.compiler.tree.Stm s) {
-        StmList stmList =linear(do_stm(s), null);
+        StmList stmList = linear(do_stm(s), null);
         return removeJumps(stmList, stmList.head);
     }
 }

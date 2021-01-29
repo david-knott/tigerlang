@@ -1,7 +1,5 @@
 package com.chaosopher.tigerlang.compiler.absyn;
 
-import com.chaosopher.tigerlang.compiler.symbol.Symbol;
-
 /**
  * An ArrayExp class used to define a new tiger array. This
  * includes the array size expression and array initializer values. 

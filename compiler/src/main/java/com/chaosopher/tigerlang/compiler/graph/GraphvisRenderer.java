@@ -107,7 +107,7 @@ public class GraphvisRenderer implements GraphRenderer {
         out.println("digraph D{");
         for (NodeList p = flowGraph.nodes(); p != null; p = p.tail) {
             Node n = p.head;
-            String tm = flowGraph.get(n);
+            String tm = p.head.toString();
             out.println(n.toString() + " [ label=\"" + tm + "\"]");
         }
         for (NodeList p = flowGraph.nodes(); p != null; p = p.tail) {

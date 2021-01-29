@@ -11,7 +11,6 @@ import com.chaosopher.tigerlang.compiler.tree.DefaultTreeVisitor;
 import com.chaosopher.tigerlang.compiler.tree.ESEQ;
 import com.chaosopher.tigerlang.compiler.tree.JUMP;
 import com.chaosopher.tigerlang.compiler.tree.LABEL;
-import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.StmList;
 import com.chaosopher.tigerlang.compiler.util.Assert;
 
@@ -31,43 +30,6 @@ import com.chaosopher.tigerlang.compiler.util.Assert;
  * leader. Thus every basic block has a leader.
  */
 public class CFG extends Graph {
-
-    class BasicBlock {
-
-        public final StmList first;
-        public final Label label;
-        public BasicBlock tail;
-        public LabelList labelList;
-
-        public BasicBlock(Stm first, Label label) {
-            this.first = new StmList(first);
-            this.label = label;
-        }
-
-        public BasicBlock(Stm first, Label label, BasicBlock tail) {
-            this.first = new StmList(first);
-            this.label = label;
-            this.tail = tail;
-        }
-
-        public void addStatement(Stm stm) { 
-            this.first.append(stm);
-        }
-
-        @Override
-        public String toString() {
-            BasicBlock me = this;
-            String result = "";
-                 result+= me.label.toString() + ",";
-                 StmList sl = me.first;
-                 while(sl.tail != null) {
-                 //   result+= sl.head.toString() + "\n";
-                    sl = sl.tail;
-                 }
-                 me = me.tail;
-            return result;
-        }
-    } 
 
     class BuildGraph {
         private  BasicBlock basicBlock;
@@ -141,7 +103,6 @@ public class CFG extends Graph {
             if(stmList.tail != null) {
                 stmList.tail.accept(this);
             }
-            
         }
     }
     
@@ -157,8 +118,8 @@ public class CFG extends Graph {
         this.init();
     }
 
-    public String get(Node node) {
-        return this.revMap.get(node).toString();
+    public BasicBlock get(Node node) {
+        return this.revMap.get(node);
     }
 
     private void init() {

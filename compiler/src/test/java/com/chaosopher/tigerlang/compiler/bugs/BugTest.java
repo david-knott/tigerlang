@@ -13,6 +13,7 @@ import com.chaosopher.tigerlang.compiler.findescape.EscapeVisitor;
 import com.chaosopher.tigerlang.compiler.parse.ParserFactory;
 import com.chaosopher.tigerlang.compiler.parse.ParserService;
 import com.chaosopher.tigerlang.compiler.translate.FragList;
+import com.chaosopher.tigerlang.compiler.translate.FragmentPrinter;
 import com.chaosopher.tigerlang.compiler.translate.TranslatorVisitor;
 import com.chaosopher.tigerlang.compiler.types.TypeChecker;
 
@@ -21,6 +22,23 @@ import org.junit.Test;
 public class BugTest {
      
 
+
+    @Test
+    public void ifbreak() {
+        ErrorMsg errorMsg = new ErrorMsg("f", System.out);
+        ParserService parserService = new ParserService(new ParserFactory());
+        Absyn program = parserService.parse("while 1 do if 102 then break else ()", errorMsg);
+        program.accept(new Binder(errorMsg));
+        program.accept(new TypeChecker(errorMsg));
+        TranslatorVisitor translator = new TranslatorVisitor();
+        program.accept(translator);
+        CanonVisitor canonVisitor = new CanonVisitor(new CanonicalizationImpl());
+        translator.getFragList().accept(canonVisitor);
+        FragList fragList = canonVisitor.fragList;
+        fragList.accept(new FragmentPrinter(System.out));
+        
+        assertNotNull(program);
+    }
 
     @Test
     public void twoJumps() {
@@ -34,6 +52,7 @@ public class BugTest {
         CanonVisitor canonVisitor = new CanonVisitor(new CanonicalizationImpl());
         translator.getFragList().accept(canonVisitor);
         FragList fragList = canonVisitor.fragList;
+        fragList.accept(new FragmentPrinter(System.out));
         
         assertNotNull(program);
     }

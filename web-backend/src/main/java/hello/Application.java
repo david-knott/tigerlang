@@ -94,7 +94,7 @@ public class Application {
 		if(tigerSource.isRename()) {
 			argList.add("--rename");
 		}
-		if(tigerSource.isDesugarFor()) {
+		if(tigerSource.isDesugarForLoop()) {
 			argList.add("--desugar");
 		}
 		if(tigerSource.isDesugarStringComp()) {

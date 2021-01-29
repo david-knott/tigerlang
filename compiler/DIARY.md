@@ -1,10 +1,16 @@
 # Diary
 
+## Thursday 28th January 2020
+
+Added error inside new JUMP/JUMP remove function in Canon. I want to 
+catch cases where the JUMP/JUMP is at the end of the statement list.
 ## Wednesday 27th January 2021
 
 Remove second jump where there are two side by side.
 
 I am not sure if this will handle 3 side by side.
+
+Next step is to get the flow diagram into the angular application.
 
 ## Tuesday 26th January 2021
 

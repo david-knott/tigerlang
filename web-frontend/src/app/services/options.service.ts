@@ -39,6 +39,7 @@ export class OptionsService {
         },
         desugarFor:
         {
+
           elId: 5,
           title: "Desugar For Loops",
           label: "Desugar For Loops",
@@ -48,7 +49,7 @@ export class OptionsService {
         {
           elId: 6,
           title: "Desugar String Operations",
-          label: "Desugar String Operations",
+          label: "Desugar String Operationss.",
           checked: false,
         },
         escapesCompute:
