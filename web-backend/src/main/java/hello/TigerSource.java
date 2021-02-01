@@ -19,18 +19,18 @@ public class TigerSource {
     private boolean regAlloc;
     private boolean desugar;
     private boolean desugarStringComp;
-    private boolean desugarFor;
+    private boolean desugarForLoop;
 
     public String getCode() {
         return this.code;
     }
 
-    public boolean isDesugarFor() {
-        return desugarFor;
+    public boolean isDesugarForLoop() {
+        return desugarForLoop;
     }
 
-    public void setDesugarFor(boolean desugarFor) {
-        this.desugarFor = desugarFor;
+    public void setDesugarForLoop(boolean desugarFor) {
+        this.desugarForLoop = desugarFor;
     }
 
     public boolean isDesugarStringComp() {

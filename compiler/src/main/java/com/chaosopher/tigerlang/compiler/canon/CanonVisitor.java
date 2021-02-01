@@ -15,7 +15,7 @@ import com.chaosopher.tigerlang.compiler.tree.StmList;
 public class CanonVisitor implements FragmentVisitor {
 
     final Canonicalization canonicalization;
-    FragList fragList = null;
+    public FragList fragList = null;
 
     public CanonVisitor(Canonicalization canonicalization) {
         this.canonicalization = canonicalization;

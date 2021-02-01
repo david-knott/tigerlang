@@ -65,7 +65,6 @@ public class TranslatorVisitor extends DefaultVisitor {
         return this.fragList;
     }
 
-
     /**
      * Returns the current level or creates a new one if one is not
      * present.
@@ -186,17 +185,7 @@ public class TranslatorVisitor extends DefaultVisitor {
             // if we calling from a function with a static link..
             com.chaosopher.tigerlang.compiler.tree.Exp staticLink = null;
             if (definedLevel == usageLevel) { // recursive or same level, pass callers static link ( not frame pointer )
-
                 staticLink = getFunctionStaticLink(usageLevel, definedLevel);
-                /*
-                staticLink = new MEM(
-                    new BINOP(
-                        BINOP.MINUS, 
-                        new TEMP(definedLevel.frame.FP()),
-                        new CONST(definedLevel.frame.wordSize())
-                    )
-                );*/
-                //throw new Error("Can this happen ?");
             } else {
                 // if calling a function in a higher level, we pass the callers frame pointer
                 if (definedLevel.parent == usageLevel) {
@@ -205,14 +194,6 @@ public class TranslatorVisitor extends DefaultVisitor {
                     // if calling a function in a lower level, we pass the callers static link
                     Level l = usageLevel;
                     // get callers static link
-                    /*
-                    staticLink = new MEM(
-                        new BINOP(
-                            BINOP.MINUS, 
-                            new TEMP(l.frame.FP()), 
-                            new CONST(l.frame.wordSize())
-                        )
-                    );*/
                     staticLink = getFunctionStaticLink(usageLevel, definedLevel);
                     // keep adding pointer dereferences until we find a common parent level.
                     while (l.parent != definedLevel.parent) {

@@ -1,6 +1,9 @@
 package com.chaosopher.tigerlang.compiler.canon;
 
 import com.chaosopher.tigerlang.compiler.tree.IR;
+import com.chaosopher.tigerlang.compiler.tree.JUMP;
+import com.chaosopher.tigerlang.compiler.tree.Stm;
+import com.chaosopher.tigerlang.compiler.tree.StmList;
 import com.chaosopher.tigerlang.compiler.tree.TreeVisitor;
 
 class MoveCall extends com.chaosopher.tigerlang.compiler.tree.Stm {
@@ -169,16 +172,19 @@ public class Canon {
             return nopNull;
         else {
             com.chaosopher.tigerlang.compiler.tree.Exp a = exps.head;
+            // handle a call expression
             if (a instanceof com.chaosopher.tigerlang.compiler.tree.CALL) {
                 com.chaosopher.tigerlang.compiler.temp.Temp t = com.chaosopher.tigerlang.compiler.temp.Temp.create();
                 com.chaosopher.tigerlang.compiler.tree.Exp e = new com.chaosopher.tigerlang.compiler.tree.ESEQ(new com.chaosopher.tigerlang.compiler.tree.MOVE(new com.chaosopher.tigerlang.compiler.tree.TEMP(t), a), new com.chaosopher.tigerlang.compiler.tree.TEMP(t));
                 return reorder(new com.chaosopher.tigerlang.compiler.tree.ExpList(e, exps.tail));
-            } else {
+            } else { //its not a call, lets build an ESEQ from the head a.
                 com.chaosopher.tigerlang.compiler.tree.ESEQ aa = do_exp(a);
+                // reorder the tail of the expresion list argument.
                 StmExpList bb = reorder(exps.tail);
+                // if state bb commutes with aa, just swpy them.
                 if (commute(bb.stm, aa.exp))
                     return new StmExpList(seq(aa.stm, bb.stm), new com.chaosopher.tigerlang.compiler.tree.ExpList(aa.exp, bb.exps));
-                else {
+                else { //the dont commute so create new temporaries to hold the expression
                     com.chaosopher.tigerlang.compiler.temp.Temp t = com.chaosopher.tigerlang.compiler.temp.Temp.create();
                     return new StmExpList(seq(aa.stm, seq(new com.chaosopher.tigerlang.compiler.tree.MOVE(new com.chaosopher.tigerlang.compiler.tree.TEMP(t), aa.exp), bb.stm)),
                             new com.chaosopher.tigerlang.compiler.tree.ExpList(new com.chaosopher.tigerlang.compiler.tree.TEMP(t), bb.exps));
@@ -209,7 +215,21 @@ public class Canon {
             return new com.chaosopher.tigerlang.compiler.tree.StmList(s, l);
     }
 
+    static public com.chaosopher.tigerlang.compiler.tree.StmList removeJumps(com.chaosopher.tigerlang.compiler.tree.StmList stmList, Stm previous) {
+        // if the current item and the previous item are JUMPs, ignore the current item.
+        if(previous instanceof JUMP && stmList.head instanceof JUMP) {
+            if(stmList.tail == null) {
+                //Stm nop = new com.chaosopher.tigerlang.compiler.tree.EXP(new com.chaosopher.tigerlang.compiler.tree.CONST(0));
+                //return new StmList(nop);
+                throw new Error("Jump/jump removal - inside tail = null branch.");
+            }
+            stmList = stmList.tail;
+        }
+        return stmList.tail != null ? new StmList(stmList.head, removeJumps(stmList.tail, stmList.head)) : new StmList(stmList.head);
+    }
+
     static public com.chaosopher.tigerlang.compiler.tree.StmList linearize(com.chaosopher.tigerlang.compiler.tree.Stm s) {
-        return linear(do_stm(s), null);
+        StmList stmList = linear(do_stm(s), null);
+        return removeJumps(stmList, stmList.head);
     }
 }

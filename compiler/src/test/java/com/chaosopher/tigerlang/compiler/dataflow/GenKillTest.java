@@ -2,6 +2,17 @@ package com.chaosopher.tigerlang.compiler.dataflow;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import com.chaosopher.tigerlang.compiler.temp.Label;
+import com.chaosopher.tigerlang.compiler.temp.Temp;
+import com.chaosopher.tigerlang.compiler.tree.JUMP;
+import com.chaosopher.tigerlang.compiler.tree.LABEL;
+import com.chaosopher.tigerlang.compiler.tree.MOVE;
+import com.chaosopher.tigerlang.compiler.tree.StmList;
+import com.chaosopher.tigerlang.compiler.tree.TEMP;
+
+
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -35,22 +46,75 @@ import junit.framework.AssertionFailedError;
 
 public class GenKillTest {
 
-    public void basic() {
+    @Test
+    public void simpleBlock() {
+        Temp a = Temp.create();
+        Temp b = Temp.create();
+        Temp c = Temp.create();
+        Temp d = Temp.create();
+        StmList test = new StmList(
+            new LABEL(
+                Label.create()
+            ),
+            new StmList(
+                new MOVE(
+                    new TEMP(d),
+                    new TEMP(c)
+                ),
+                new StmList(
+                    new MOVE(
+                        new TEMP(c),
+                        new TEMP(b)
+                    ),
+                    new StmList(
+                        new MOVE(
+                            new TEMP(b),
+                            new TEMP(a))
+                    )
+                )
+            )
+        );
+        CFG cfg = new CFG(test);
+        GenKillSets genKillSets = new  GenKillSets(cfg);
 
-        String code = "let var a:int := 0 in while a < 10 do ( if a = 5 then break; a := a - 1 ) end";
-        Main main = new Main(System.out, System.err);
-        //main.execute(args);
-        // load basic program with a loop and a logic branch.
 
-        // atomise the hir
-
-        // construct the quadruples 
-        
-        // generate the flow graph from the quads
-
-        // generate the gen / kill sets using flow graph
-
-    
+        genKillSets.generate();
+        cfg.show(System.out);
+        // expect one block, with 3 statements.
     }
-    
+
+    @Test
+    public void simpleLoop() {
+        Temp a = Temp.create();
+        Temp b = Temp.create();
+        Temp c = Temp.create();
+        Label label = Label.create();
+        StmList test = new StmList(
+            new LABEL(
+                label
+            ),
+            new StmList(
+                new MOVE(
+                    new TEMP(a),
+                    new TEMP(b)
+                ),
+                new StmList(
+                    new MOVE(
+                        new TEMP(c),
+                        new TEMP(a)
+                    ),
+                    new StmList(
+                        new JUMP(label)
+                    )
+                )
+            )
+        );
+        CFG cfg = new CFG(test);
+        cfg.show(System.out);
+        // expect one block, with 3 statements.
+    }
+
+
+
+
 }

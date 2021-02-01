@@ -5,10 +5,12 @@ import java.util.Hashtable;
 import com.chaosopher.tigerlang.compiler.canon.Canonicalization;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
 import com.chaosopher.tigerlang.compiler.tree.BINOP;
+import com.chaosopher.tigerlang.compiler.tree.CALL;
 import com.chaosopher.tigerlang.compiler.tree.CJUMP;
 import com.chaosopher.tigerlang.compiler.tree.ESEQ;
 import com.chaosopher.tigerlang.compiler.tree.EXP;
 import com.chaosopher.tigerlang.compiler.tree.Exp;
+import com.chaosopher.tigerlang.compiler.tree.ExpList;
 import com.chaosopher.tigerlang.compiler.tree.JUMP;
 import com.chaosopher.tigerlang.compiler.tree.MEM;
 import com.chaosopher.tigerlang.compiler.tree.MOVE;
@@ -54,6 +56,13 @@ public class TreeAtomizer extends CloningTreeVisitor {
         return this.temps.containsKey(temp);
     }
 
+    /**
+     * This method takes expression exp and converts it into a new expression
+     * that evaluetes it and places its result into a new temp, which is returned
+     * by an ESEQ. This only operates on MEM and BINOP IR.
+     * @param exp the expression to be rewritten.
+     * @return a new expression
+     */
     private Exp rewrite(Exp exp) {
         if(exp instanceof MEM || exp instanceof BINOP) {
             Temp temp = this.createTemp(exp);
@@ -92,5 +101,18 @@ public class TreeAtomizer extends CloningTreeVisitor {
         cjump.right.accept(this);
         Exp rightClone = rewrite(this.exp);
         this.stm = new CJUMP(cjump.relop, leftClone, rightClone, cjump.iftrue, cjump.iffalse);
+    }
+
+    @Override
+    public void visit(CALL op) {
+        op.func.accept(this);
+        Exp funcClone = this.exp;
+        ExpList cloneExpList = null;
+        for (ExpList arg = op.args; arg != null; arg = arg.tail) {
+            arg.head.accept(this);
+            Exp cloneArg = rewrite(this.exp);
+            cloneExpList = ExpList.append(cloneExpList, cloneArg);
+        }
+        this.exp = new CALL(funcClone, cloneExpList);
     }
 }
