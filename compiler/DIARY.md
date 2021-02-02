@@ -1,6 +1,11 @@
 # Diary
+## Tuesday 2nd February 2021
 
-## Thursday 28th January 2020
+Started refactoring so that additional cpu targets can be introduced.
+The frame procedure entry exit call has been moved out of the translate phase
+into the assembly generator phase.
+
+## Thursday 28th January 2021
 
 Added error inside new JUMP/JUMP remove function in Canon. I want to 
 catch cases where the JUMP/JUMP is at the end of the statement list.

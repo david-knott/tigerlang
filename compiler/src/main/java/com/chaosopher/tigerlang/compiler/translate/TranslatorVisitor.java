@@ -499,8 +499,8 @@ public class TranslatorVisitor extends DefaultVisitor {
     private void procEntryExit(Level level, Exp body) {
         if (body == null)
             return;
-        Stm procStat =  level.frame.procEntryExit1(body.unNx());
-        this.addFrag(new ProcFrag(procStat, level.frame));
+        //Stm procStat =  level.frame.procEntryExit1(body.unNx());
+        this.addFrag(new ProcFrag(body.unNx(), level.frame));
     }
 
     /**

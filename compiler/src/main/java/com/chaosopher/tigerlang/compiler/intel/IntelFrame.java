@@ -1,6 +1,5 @@
 package com.chaosopher.tigerlang.compiler.intel;
 
-
 import com.chaosopher.tigerlang.compiler.temp.Label;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
 import com.chaosopher.tigerlang.compiler.temp.TempList;
@@ -13,7 +12,6 @@ import com.chaosopher.tigerlang.compiler.tree.ExpList;
 import com.chaosopher.tigerlang.compiler.tree.MEM;
 import com.chaosopher.tigerlang.compiler.tree.MOVE;
 import com.chaosopher.tigerlang.compiler.tree.NAME;
-import com.chaosopher.tigerlang.compiler.tree.SEQ;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.StmList;
 import com.chaosopher.tigerlang.compiler.tree.TEMP;
@@ -377,7 +375,7 @@ public class IntelFrame extends Frame {
      * 
      * @return a linked list of move statements.
      */
-    Stm calleeSaveToTemp() {
+    StmList calleeSaveToTemp() {
         StmList list = null;
         for (TempList callee = IntelFrame.calleeSaves; callee != null; callee = callee.tail) {
             Temp calleeTemp = Temp.create();
@@ -385,7 +383,7 @@ public class IntelFrame extends Frame {
             MOVE move = new MOVE(new TEMP(calleeTemp), new TEMP(callee.head));
             list = StmList.append(list, move);
         }
-        return list.toSEQ();
+        return list;
     }
 
     /**
@@ -394,14 +392,14 @@ public class IntelFrame extends Frame {
      * 
      * @return a linked list of move statements.
      */
-    Stm calleeRestoreFromTemp() {
+    StmList calleeRestoreFromTemp() {
         StmList list = null;
         for (TempList callee = IntelFrame.calleeSaves; callee != null; callee = callee.tail) {
             Temp calleeTemp = calleeTempMap.get(callee.head);
             MOVE move = new MOVE(new TEMP(callee.head), new TEMP(calleeTemp));
             list = StmList.append(list, move);
         }
-        return list.toSEQ();
+        return list;
     }
 
     /**
@@ -411,31 +409,26 @@ public class IntelFrame extends Frame {
      * 
      * @return a linked list of move statements.
      */
-    private Stm moveArgs() {
+    private StmList moveArgs() {
         if (this.callingConventions == null) {
-            return new EXP(new CONST(0));
+            // Noop
+            return new StmList(new EXP(new CONST(0)));
         }
-        return this.callingConventions.toSEQ();
+        return this.callingConventions;
     }
 
     /**
-     * Returns the Tree representation. This is has yet to be put into canonical form.
-     * The idea here is that the register allocator will spill the callee Temps if
-     * it needs to. The precoloured temps ( callee ) cannot be spilled as they are
-     * precoloured so we move them into new temps that are not coloured. 
+     * This prepends statements that move function registers into
+     * their respective temporaries, appends the callee register save
+     * moves and appends the callee register restore moves. This method
+     * is called after canonicalisation and is target cpu specific.  
      */
     @Override
     public Stm procEntryExit1(Stm body) {
-        return new SEQ(
-            moveArgs(), 
-            new SEQ(
-                calleeSaveToTemp(), 
-                new SEQ(
-                    body, 
-                    calleeRestoreFromTemp()
-                )
-            )
-        );
+        return this.moveArgs()
+            .append(this.calleeSaveToTemp())
+            .append((StmList)body)
+            .append(this.calleeRestoreFromTemp());
     }
 
     /**

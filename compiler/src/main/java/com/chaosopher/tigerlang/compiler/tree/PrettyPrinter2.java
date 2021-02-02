@@ -2,10 +2,8 @@ package com.chaosopher.tigerlang.compiler.tree;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
-/**
- * Prints out the LIR and HIR trees.
- */
-public class PrettyPrinter implements TreeVisitor {
+
+public class PrettyPrinter2 implements TreeVisitor {
 
     final PrintStream printStream;
     int level = 0;
@@ -18,43 +16,35 @@ public class PrettyPrinter implements TreeVisitor {
         level--;
     }
 
-    public PrettyPrinter(OutputStream out) {
+    public PrettyPrinter2(OutputStream out) {
         this.printStream = new PrintStream(out);
-        this.printStream.println("### Tree Pretty Printer ###");
     }
 
     private void write(String s) {
-        for (int i = 0; i < level; ++i) {
-            this.printStream.print("  ");
-        }
-        this.printStream.println(s);
+        this.printStream.print(s);
     }
 
     @Override
     public void visit(BINOP op) {
-        this.write("binop(");
-        this.incLevel();
+        op.left.accept(this);
         switch (op.binop) {
             case BINOP.PLUS:
-                this.write("PLUS");
+                this.write(" + ");
                 break;
             case BINOP.MINUS:
-                this.write("MINUS");
+                this.write(" - ");
                 break;
             case BINOP.MUL:
-                this.write("MUL");
+                this.write(" * ");
                 break;
             case BINOP.DIV:
-                this.write("DIV");
+                this.write(" / ");
                 break;
             default:
                 this.write(Integer.toString(op.binop));
                 break;
         }
-        op.left.accept(this);
         op.right.accept(this);
-        this.decLevel();
-        this.write(")");
     }
 
     @Override
@@ -72,7 +62,7 @@ public class PrettyPrinter implements TreeVisitor {
 
     @Override
     public void visit(CONST op) {
-        this.write("const(" + op.value + ")");
+        this.write(Integer.toString(op.value));
     }
 
     @Override
@@ -96,42 +86,34 @@ public class PrettyPrinter implements TreeVisitor {
 
     @Override
     public void visit(JUMP op) {
-        this.write("jump(");
-        this.incLevel();
+        this.write("jump:");
         op.exp.accept(this);
-        this.decLevel();
-        this.write(")");
-        // Targets
-
     }
 
     @Override
     public void visit(LABEL op) {
-        this.write("label(" + op.label + ")");
+        this.write("label:" + op.label);
     }
 
     @Override
     public void visit(MEM op) {
-        this.write("mem(");
+        this.write("mem[");
         this.incLevel();
         op.exp.accept(this);
         this.decLevel();
-        this.write(")");
+        this.write("]");
     }
 
     @Override
     public void visit(MOVE op) {
-        this.write("move(");
-        this.incLevel();
         op.dst.accept(this);
+        this.write(" ← ");
         op.src.accept(this);
-        this.decLevel();
-        this.write(")");
     }
 
     @Override
     public void visit(NAME op) {
-        this.write("name(" + op.label + ")");
+        this.write(op.label.toString());
     }
 
     @Override
@@ -146,59 +128,61 @@ public class PrettyPrinter implements TreeVisitor {
 
     @Override
     public void visit(TEMP op) {
-        this.write("temp(" + op.temp.toString() + ")");
+        this.write(op.temp.toString());
     }
 
     @Override
     public void visit(CJUMP cjump) {
-        this.write("cjump(");
-        this.incLevel();
+        this.write("cjump:");
+        cjump.left.accept(this);
+        this.write(" ");
         String op = null;
         switch(cjump.relop) {
             case CJUMP.EQ:
-                op = "EQ";
+                op = "==";
                 break;
              case CJUMP.GE:
-                op = "GE";
+                op = ">=";
                 break;
              case CJUMP.GT:
-                op = "GT";
+                op = ">";
                 break;
              case CJUMP.LE:
-                op = "LE";
+                op = "<=";
                 break;
              case CJUMP.LT:
-                op = "LT";
+                op = "<";
                 break;
              case CJUMP.NE:
-                op = "NE";
+                op = "<>";
                 break;
              case CJUMP.UGE:
-                op = "UGE";
+                op = ">=";
                 break;
              case CJUMP.UGT:
-                op = "UGT";
+                op = ">";
                 break;
               case CJUMP.ULE:
-                op = "ULE";
+                op = "<=";
                 break;
                case CJUMP.ULT:
-                op = "ULT";
+                op = "<";
                 break;
         }
         this.write(op);
-        cjump.left.accept(this);
+        this.write(" ");
         cjump.right.accept(this);
+        this.write(" ? ");
         this.write(cjump.iftrue.toString());
+        this.write(" : ");
         this.write(cjump.iffalse.toString());
-        this.decLevel();
-        this.write(")");
     }
 
     @Override
     public void visit(StmList stmList) {
         for(;stmList != null; stmList = stmList.tail) {
             stmList.head.accept(this);
+            this.write("\n");
         }
     }
 }

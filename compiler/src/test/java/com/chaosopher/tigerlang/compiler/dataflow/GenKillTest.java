@@ -1,86 +1,85 @@
 package com.chaosopher.tigerlang.compiler.dataflow;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
+import com.chaosopher.tigerlang.compiler.absyn.Absyn;
+import com.chaosopher.tigerlang.compiler.bind.Binder;
+import com.chaosopher.tigerlang.compiler.canon.CanonVisitor;
+import com.chaosopher.tigerlang.compiler.canon.CanonicalizationImpl;
+import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
+import com.chaosopher.tigerlang.compiler.findescape.EscapeVisitor;
+import com.chaosopher.tigerlang.compiler.parse.ParserFactory;
+import com.chaosopher.tigerlang.compiler.parse.ParserService;
 import com.chaosopher.tigerlang.compiler.temp.Label;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
+import com.chaosopher.tigerlang.compiler.translate.DataFrag;
+import com.chaosopher.tigerlang.compiler.translate.FragList;
+import com.chaosopher.tigerlang.compiler.translate.FragmentVisitor;
+import com.chaosopher.tigerlang.compiler.translate.ProcFrag;
+import com.chaosopher.tigerlang.compiler.translate.TranslatorVisitor;
 import com.chaosopher.tigerlang.compiler.tree.JUMP;
 import com.chaosopher.tigerlang.compiler.tree.LABEL;
 import com.chaosopher.tigerlang.compiler.tree.MOVE;
+import com.chaosopher.tigerlang.compiler.tree.NAME;
+import com.chaosopher.tigerlang.compiler.tree.PrettyPrinter;
+import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.StmList;
 import com.chaosopher.tigerlang.compiler.tree.TEMP;
-
-
-
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.StringReader;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.stream.FactoryConfigurationError;
-import javax.xml.stream.XMLStreamException;
-
-import com.chaosopher.tigerlang.compiler.canon.CanonicalizationImpl;
-import com.chaosopher.tigerlang.compiler.main.Main;
-import com.chaosopher.tigerlang.compiler.temp.Label;
-import com.chaosopher.tigerlang.compiler.tree.BINOP;
-import com.chaosopher.tigerlang.compiler.tree.CJUMP;
-import com.chaosopher.tigerlang.compiler.tree.CONST;
-import com.chaosopher.tigerlang.compiler.tree.MEM;
-import com.chaosopher.tigerlang.compiler.tree.Stm;
-import com.chaosopher.tigerlang.compiler.tree.XmlPrinter;
+import com.chaosopher.tigerlang.compiler.types.TypeChecker;
 
 import org.junit.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-
-import junit.framework.AssertionFailedError;
 
 public class GenKillTest {
 
     @Test
-    public void simpleBlock() {
-        Temp a = Temp.create();
-        Temp b = Temp.create();
-        Temp c = Temp.create();
-        Temp d = Temp.create();
-        StmList test = new StmList(
-            new LABEL(
-                Label.create()
-            ),
-            new StmList(
-                new MOVE(
-                    new TEMP(d),
-                    new TEMP(c)
-                ),
-                new StmList(
-                    new MOVE(
-                        new TEMP(c),
-                        new TEMP(b)
-                    ),
-                    new StmList(
-                        new MOVE(
-                            new TEMP(b),
-                            new TEMP(a))
-                    )
-                )
-            )
-        );
-        CFG cfg = new CFG(test);
+    public void inlineBlock() {
+        TranslatorVisitor translator = new TranslatorVisitor();
+        ParserService parserService = new ParserService(new ParserFactory());
+        ErrorMsg errorMsg = new ErrorMsg("", System.out);
+        Absyn program = parserService.parse("let var a:int := 1 in a := a + 1 end", new ErrorMsg("", System.out));
+        // need binder to bind types to expressions.
+        program.accept(new Binder(errorMsg));
+        program.accept(new TypeChecker(errorMsg));
+        program.accept(translator);
+
+        TreeAtomizer treeAtomizer = new TreeAtomizer(new CanonicalizationImpl());
+        translator.getFragList().accept(new FragmentVisitor(){
+			@Override
+			public void visit(ProcFrag procFrag) {
+                procFrag.body.accept(treeAtomizer);
+                procFrag.body = treeAtomizer.getCanonicalisedAtoms();
+			}
+			@Override
+			public void visit(DataFrag dataFrag) {
+				// TODO Auto-generated method stub
+			}
+            
+        });
+        StmList stmList = (StmList)((ProcFrag)translator.getFragList().head).body;
+        CFG cfg = new CFG(stmList);
         GenKillSets genKillSets = new  GenKillSets(cfg);
-
-
         genKillSets.generate();
         cfg.show(System.out);
         // expect one block, with 3 statements.
+    }
+
+
+    @Test
+    public void simpleLoopBlock() {
+        TranslatorVisitor translator = new TranslatorVisitor();
+        ParserService parserService = new ParserService(new ParserFactory());
+        ErrorMsg errorMsg = new ErrorMsg("", System.out);
+        Absyn program = parserService.parse("let var a:int := 13 var b:int := 11 in while a <> 10 do (a := a + b; b := a + 1; a := a) end", new ErrorMsg("", System.out));
+        // need binder to bind types to expressions.
+        program.accept(new Binder(errorMsg));
+        program.accept(new TypeChecker(errorMsg));
+        program.accept(new EscapeVisitor(errorMsg));
+        program.accept(translator);
+        CanonVisitor canonVisitor = new CanonVisitor(new CanonicalizationImpl());
+        translator.getFragList().accept(canonVisitor);
+        StmList stmList = (StmList)((ProcFrag)canonVisitor.fragList.head).body;
+        CFG cfg = new CFG(stmList);
+        GenKillSets genKillSets = new  GenKillSets(cfg);
+        genKillSets.generate();
+        genKillSets.displayGenKill(System.out);
     }
 
     @Test

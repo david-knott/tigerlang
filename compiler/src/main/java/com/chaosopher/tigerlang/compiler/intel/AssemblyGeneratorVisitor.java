@@ -4,6 +4,7 @@ import com.chaosopher.tigerlang.compiler.assem.FragList;
 import com.chaosopher.tigerlang.compiler.translate.DataFrag;
 import com.chaosopher.tigerlang.compiler.translate.FragmentVisitor;
 import com.chaosopher.tigerlang.compiler.translate.ProcFrag;
+import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.StmList;
 
 /**
@@ -21,10 +22,12 @@ class AssemblyGeneratorVisitor implements FragmentVisitor {
 
     @Override
     public void visit(ProcFrag procFrag) {
+        // wrap the function body in register move and callee save and restore moves.
+        Stm entryExitBody = procFrag.frame.procEntryExit1(procFrag.body);
+        // use burm reduced to generate assembly for our target.
         var reducer = new Reducer(null); 
         codeGen.setReducer(reducer);
-        // yuck, this smells.
-        StmList stmList = (StmList)procFrag.body;
+        StmList stmList = (StmList)entryExitBody;
         for(; stmList != null; stmList = stmList.tail) {
             try {
                 this.codeGen.burm(stmList.head);

@@ -50,13 +50,14 @@ public class CFG extends Graph {
         }
 
         private void start(BasicBlock basicBlock) {
+            if(basicBlock.tail != null) {
+                this.start(basicBlock.tail);
+            }
             addNode(basicBlock);
             if(basicBlock.labelList != null) {
                 addEdge(basicBlock, basicBlock.labelList);
             }
-            if(basicBlock.tail != null) {
-                this.start(basicBlock.tail);
-            }
+            
         }
     }
 

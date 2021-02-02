@@ -152,4 +152,9 @@ public class TaskRegister {
         String shortName = !names[1].equals("") ? names[0] : names[1];
         this.tasks = LL.<TaskWrapper>insertRear(this.tasks, new TaskWrapper(booleanTask, longName, shortName));
     }
+
+    public void register(DisjunctiveTask disjunctiveTask) {
+
+        //how does this work ???
+    }
 }

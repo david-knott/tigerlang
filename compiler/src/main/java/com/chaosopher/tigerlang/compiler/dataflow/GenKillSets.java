@@ -1,39 +1,45 @@
 package com.chaosopher.tigerlang.compiler.dataflow;
 
+import java.io.PrintStream;
 import java.util.BitSet;
 import java.util.HashMap;
 
 import com.chaosopher.tigerlang.compiler.graph.NodeList;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
 import com.chaosopher.tigerlang.compiler.tree.MOVE;
+import com.chaosopher.tigerlang.compiler.tree.PrettyPrinter;
+import com.chaosopher.tigerlang.compiler.tree.PrettyPrinter2;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.StmList;
 import com.chaosopher.tigerlang.compiler.tree.TEMP;
 
 public class GenKillSets {
 
+    private final HashMap<Stm, Integer> defs = new HashMap<>();
+    private final HashMap<BasicBlock, BitSet> genMap = new HashMap<>();
+    private final HashMap<BasicBlock, BitSet> killMap = new HashMap<>();
+    private final HashMap<BasicBlock, BitSet> inMap = new HashMap<>();
+    private final HashMap<BasicBlock, BitSet> outMap = new HashMap<>();
     private final CFG cfg;
 
     public GenKillSets(CFG cfg) {
         this.cfg = cfg;
     }
 
-    private HashMap<Stm, Integer> defs = new HashMap<>();
-
     /**
      * Returns the set of all defs generated in the basic block.
      * @param basicBlock who's gen set we are looking for
      * @return a kill set of definition ids.
      */
-    private Integer getKillGenSets(BasicBlock basicBlock, HashMap<BasicBlock, BitSet> genMap, HashMap<BasicBlock, BitSet> killMap) {
+    private Integer getKillGenSets(BasicBlock basicBlock) {
         StmList stmList = basicBlock.first;
         BitSet blockGen = new BitSet();
         BitSet blockKill = new BitSet();
         HashMap<Temp, BitSet> defTemps = new HashMap<>();
         for (; stmList != null; stmList = stmList.tail) {
             Stm s = stmList.head;
-            // we are only interested in MOVEs
-            if(s instanceof MOVE) {
+            // we are only interested in MOVE with a destination
+            if(s instanceof MOVE && ((MOVE)s).dst instanceof TEMP) {
                 MOVE move = (MOVE)s;
                 // get destination temp.
                 Temp temp = ((TEMP)move.dst).temp;
@@ -74,85 +80,95 @@ public class GenKillSets {
                 // assign kill and gen block 
                 blockGen = comGen;
                 blockKill = comKill;
-
-                /*
-                BitSet comGen = new BitSet();
-                comGen.and(gen);
-                BitSet comGenOp2 = new BitSet();
-                comGenOp2.and(blockGen);
-                comGenOp2.andNot(kill);
-
-                BitSet comKill = new BitSet();
-                comKill.and(blockKill);
-                comKill.and(kill);
-                */
-
             }
         }
-        System.out.println("blockGen " + blockGen);
-        System.out.println("blockKill" + blockKill);
         genMap.put(basicBlock, blockGen);
         killMap.put(basicBlock, blockKill);
         return 1;
     }
 
+    public void displayGenKill(PrintStream out) {
+        for (NodeList nodes = this.cfg.nodes(); nodes != null; nodes = nodes.tail) {
+            out.println("# Block");
+            BasicBlock b = this.cfg.get(nodes.head);
+            for (StmList stmList = b.first; stmList != null; stmList = stmList.tail) {
+                out.print(this.defs.get(stmList.head));
+                out.print(":");
+                stmList.head.accept(new PrettyPrinter2(System.out));
+                out.println();
+            }
+            BitSet gen = genMap.get(b);
+            BitSet kill = killMap.get(b);
+            BitSet outSet = outMap.get(b);
+            BitSet inSet = inMap.get(b);
+            out.println("gen:" + gen);
+            out.println("kill:" + kill);
+            out.println("in:" + inSet);
+            out.println("out:" + outSet);
+        }
+    }
+
     //https://karkare.github.io/cs738/lecturenotes/03DataFlowAnalysisHandout.pdf
 
+    private int compare(BitSet lhs, BitSet rhs) {
+        if (lhs.equals(rhs))
+            return 0;
+        BitSet xor = (BitSet) lhs.clone();
+        xor.xor(rhs);
+        int firstDifferent = xor.length() - 1;
+        if (firstDifferent == -1)
+            return 0;
+        return rhs.get(firstDifferent) ? 1 : -1;
+    }
     
     public void generate() {
+        genMap.clear();
+        killMap.clear();
         // create def ids for each statement.
         int id = 0;
         for(NodeList nodes = this.cfg.nodes(); nodes != null; nodes = nodes.tail) {
             BasicBlock b = this.cfg.get(nodes.head);
             for (StmList stmList = b.first; stmList != null; stmList = stmList.tail) {
                 Stm s = stmList.head;
-                System.out.println("adding " + s);
                 this.defs.put(s, id++);
             }
         }
-        
-        HashMap<BasicBlock, BitSet> genMap = new HashMap<>();
-        HashMap<BasicBlock, BitSet> killMap = new HashMap<>();
-        // gen, kill for each block
-        // for moves use the temporary references to calculate gen & kill
+        // calculate gen and kill for each basic block.
         for(NodeList nodes = this.cfg.nodes(); nodes != null; nodes = nodes.tail) {
             BasicBlock b = this.cfg.get(nodes.head);
-            this.getKillGenSets(b, genMap, killMap);
+            this.getKillGenSets(b);
         }
-
         // compute in[n] and out[n] for each block.
-        HashMap<BasicBlock, BitSet> inMap = new HashMap<>();
-        HashMap<BasicBlock, BitSet> outMap = new HashMap<>();
         for(NodeList nodes = this.cfg.nodes(); nodes != null; nodes = nodes.tail) {
             BasicBlock b = this.cfg.get(nodes.head);
             inMap.put(b, new BitSet());
             outMap.put(b, new BitSet());
         }
-        for(NodeList nodes = this.cfg.nodes(); nodes != null; nodes = nodes.tail) {
-            BitSet pout = new BitSet();
-            for(NodeList pred = nodes.head.pred(); pred != null; pred = pred.tail) {
-                BasicBlock pb = this.cfg.get(pred.head);
-                pout.and(outMap.get(pb));
+        boolean changed = true;
+        do
+        {
+            changed = false;
+            for(NodeList nodes = this.cfg.nodes(); nodes != null; nodes = nodes.tail) {
+                BasicBlock b = this.cfg.get(nodes.head);
+                BitSet outPrev = (BitSet)outMap.get(b).clone(); 
+                BitSet inPrev = (BitSet)inMap.get(b).clone();
+                BitSet pout = new BitSet();
+                for(NodeList preds = nodes.head.pred(); preds != null; preds = preds.tail) {
+                    BasicBlock pb = this.cfg.get(preds.head);
+                    pout.or(outMap.get(pb));
+                }
+                inMap.put(b, pout);
+                BitSet gen = (BitSet)genMap.get(b).clone(); // get this from the block, clone it first !
+                BitSet kill = (BitSet)killMap.get(b).clone(); // get this from the block, clone it first !
+                BitSet inDiff = (BitSet)inMap.get(b).clone();
+                inDiff.andNot(kill);
+                gen.or(inDiff);
+                outMap.put(b, gen);
+                var c1 = compare(inMap.get(b), inPrev);
+                var c2 = compare(outMap.get(b), outPrev);
+                changed = changed || c1 != 0 || c2 != 0;
             }
-            BasicBlock b = this.cfg.get(nodes.head);
-            inMap.put(b, pout);
-            BitSet gen = (BitSet)genMap.get(b).clone(); // get this from the block, clone it first !
-            BitSet kill = (BitSet)killMap.get(b).clone(); // get this from the block, clone it first !
-            BitSet inDiff = (BitSet)inMap.get(b).clone();
-            inDiff.andNot(kill);
-            gen.and(inDiff);
-            outMap.put(b, gen);
-        }
-        for(NodeList nodes = this.cfg.nodes(); nodes != null; nodes = nodes.tail) {
-            BasicBlock b = this.cfg.get(nodes.head);
-            System.out.print(b.label);
-            System.out.print(" in");
-            System.out.print(inMap.get(b));
-            System.out.println(" out");
-            System.out.println(outMap.get(b));
-
-        }
- 
-
+            if(!changed) break;
+        } while(true);
     }
 }
