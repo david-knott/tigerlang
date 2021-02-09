@@ -20,9 +20,18 @@ public class TigerSource {
     private boolean desugar;
     private boolean desugarStringComp;
     private boolean desugarForLoop;
+    private boolean cfg;
 
     public String getCode() {
         return this.code;
+    }
+
+    public boolean isCfg() {
+        return cfg;
+    }
+
+    public void setCfg(boolean cfg) {
+        this.cfg = cfg;
     }
 
     public boolean isDesugarForLoop() {

@@ -101,6 +101,7 @@ public class Application {
 			argList.add("--desugar");
 		}
 		if(tigerSource.isAstDisplay()) {
+			argList.add("--no-prelude");
 			argList.add("--ast-display");
 		}
 		if(tigerSource.isHirDisplay()) {
@@ -114,6 +115,9 @@ public class Application {
 		}
 		if(tigerSource.isDemove()) {
 			argList.add("--demove");
+		}
+		if(tigerSource.isCfg()) {
+			argList.add("--cfg");
 		}
 		argList.add("filenameplaceholder");
 		//String[] args = new String[] {"--reg-alloc", "--escapes-compute", "--demove", "filenameplaceholder"};
@@ -132,7 +136,10 @@ public class Application {
 		.register(new com.chaosopher.tigerlang.compiler.inlining.Tasks())
 		.register(new com.chaosopher.tigerlang.compiler.types.Tasks())
 		.register(new com.chaosopher.tigerlang.compiler.translate.Tasks())
+
+		.register(new com.chaosopher.tigerlang.compiler.dataflow.Tasks())
 		.register(new com.chaosopher.tigerlang.compiler.canon.Tasks(new CanonicalizationImpl()))
+		.register(new com.chaosopher.tigerlang.compiler.target.Tasks())
 		.register(new com.chaosopher.tigerlang.compiler.intel.Tasks(null, null))
 		.register(new com.chaosopher.tigerlang.compiler.regalloc.Tasks(new RegAllocFactory()))
 		.parseArgs(args)

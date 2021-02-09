@@ -40,23 +40,35 @@
         class="nav-link"
         [ngClass]="{ 'active':activeTab==='ast'}"
         (click)="setActiveTab('ast')"
-        id="v-pills-home-tab"
+        id="ast-tab"
         data-bs-toggle="pill"
-        href="#v-pills-home"
+        href="#ast"
         role="tab"
-        aria-controls="v-pills-home"
+        aria-controls="ast"
         aria-selected="true"
         >AST</a
       >
       <a
         class="nav-link"
+        [ngClass]="{ 'active':activeTab==='fcg'}"
+        (click)="setActiveTab('fcg')"
+        id="fcg-tab"
+        data-bs-toggle="pill"
+        href="#fcg"
+        role="tab"
+        aria-controls="fcg"
+        aria-selected="true"
+        >Function Call Graph</a
+      >
+      <a
+        class="nav-link"
         [ngClass]="{ 'active':activeTab==='hir'}"
         (click)="setActiveTab('hir')"
-        id="v-pills-profile-tab"
+        id="hir-tab"
         data-bs-toggle="pill"
-        href="#v-pills-profile"
+        href="#hir"
         role="tab"
-        aria-controls="v-pills-profile"
+        aria-controls="hir"
         aria-selected="false"
         >HIR</a
       >
@@ -64,33 +76,46 @@
         class="nav-link"
         [ngClass]="{ 'active':activeTab==='lir'}"
         (click)="setActiveTab('lir')"
-        id="v-pills-messages-tab"
+        id="lir-tab"
         data-bs-toggle="pill"
-        href="#v-pills-messages"
+        href="#lir"
         role="tab"
-        aria-controls="v-pills-messages"
+        aria-controls="lir"
         aria-selected="false"
         >LIR</a
       >
       <a
         class="nav-link"
+        [ngClass]="{ 'active':activeTab==='cfg'}"
+        (click)="setActiveTab('cfg')"
+        id="cfg-tab"
+        data-bs-toggle="pill"
+        href="#cfg"
+        role="tab"
+        aria-controls="cfg"
+        aria-selected="false"
+        >CFG</a
+      >
+      <a
+        class="nav-link"
         [ngClass]="{ 'active':activeTab==='asm'}"
         (click)="setActiveTab('asm')"
-        id="v-pills-settings-tab"
+        id="asm-tab"
         data-bs-toggle="pill"
-        href="#v-pills-settings"
+        href="#asm"
         role="tab"
-        aria-controls="v-pills-settings"
+        aria-controls="asm"
         aria-selected="false"
         >Assembly</a
       >
     </div>
     <div class="compiler-output tab-content" id="v-pills-tabContent">
+
       <div
         class="tab-pane fade show active"
-        id="v-pills-home"
+        id="ast"
         role="tabpanel"
-        aria-labelledby="v-pills-home-tab"
+        aria-labelledby="ast-tab"
       >
         <div class="row">
           <div class="col-md-6">
@@ -126,11 +151,23 @@
           <div [innerHTML]="ast"></div>
         </pre>
       </div>
+
       <div
         class="tab-pane fade"
-        id="v-pills-profile"
+        id="fcg"
         role="tabpanel"
-        aria-labelledby="v-pills-profile-tab"
+        aria-labelledby="fcg-tab"
+      >
+        <pre class="code">
+        <div [innerHTML]="fcg"></div>
+        </pre>
+      </div>
+
+      <div
+        class="tab-pane fade"
+        id="hir"
+        role="tabpanel"
+        aria-labelledby="hir-tab"
       >
 
         <pre class="code">
@@ -144,11 +181,12 @@
           <li>Optimisation - Expression Elimination</li>
         </ul>
       </div>
+
       <div
         class="tab-pane fade"
-        id="v-pills-messages"
+        id="lir"
         role="tabpanel"
-        aria-labelledby="v-pills-messages-tab"
+        aria-labelledby="lir-tab"
       >
 
         <pre class="code">
@@ -158,11 +196,27 @@
           <li>Execute IR</li>
         </ul>
       </div>
+
       <div
         class="tab-pane fade"
-        id="v-pills-settings"
+        id="cfg"
         role="tabpanel"
-        aria-labelledby="v-pills-settings-tab"
+        aria-labelledby="cfg-tab"
+      >
+
+        <pre class="code">
+        <div [innerHTML]="cfg"></div>
+        </pre>
+        <ul>
+          <li>Dataflow</li>
+        </ul>
+      </div>
+
+      <div
+        class="tab-pane fade"
+        id="asm"
+        role="tabpanel"
+        aria-labelledby="asm-tab"
       >
         <pre class="code">
         <div [innerHTML]="asm"></div>

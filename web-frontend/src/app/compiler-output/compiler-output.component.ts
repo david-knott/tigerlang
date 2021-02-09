@@ -16,6 +16,8 @@ export class CompilerOutputComponent implements OnInit {
   hir: string = "";
   lir: string = "";
   asm: string = "";
+  cfg: string = "";
+  fcg: string = "";
   lastRequest: any;
 
   constructor(
@@ -28,7 +30,7 @@ export class CompilerOutputComponent implements OnInit {
         s.hirDisplay = false;
         s.lirDisplay = false;
         s.regAlloc = false;
-        console.log(this.optionsService.getOptions());
+        s.cfg = false;
         s.rename = this.optionsService.getOption("rename");
         s.inline = this.optionsService.getOption("inline");
         s.prune = this.optionsService.getOption("prune");
@@ -49,20 +51,41 @@ export class CompilerOutputComponent implements OnInit {
         s.hirDisplay = true;
         s.lirDisplay = false;
         s.regAlloc = false;
+        s.cfg = false;
+        s.fcg = false;
       }
       if (this.activeTab == "lir") {
         s.astDisplay = false;
         s.hirDisplay = false;
         s.lirDisplay = true;
         s.regAlloc = false;
+        s.cfg = false;
+        s.fcg = false;
       }
       if (this.activeTab == "asm") {
         s.astDisplay = false;
         s.hirDisplay = false;
         s.lirDisplay = false;
         s.regAlloc = true;
+        s.cfg = false;
+        s.fcg = false;
       }
-
+      if (this.activeTab == "cfg") {
+        s.astDisplay = false;
+        s.hirDisplay = false;
+        s.lirDisplay = false;
+        s.regAlloc = false;
+        s.cfg = true;
+        s.fcg = false;
+      }
+    if (this.activeTab == "fcg") {
+        s.astDisplay = false;
+        s.hirDisplay = false;
+        s.lirDisplay = false;
+        s.regAlloc = false;
+        s.cfg = false;
+        s.fcg = true;
+      }
       this.lastRequest = s;
       this.compilerService.compile(s).subscribe((c) => {
         if (this.activeTab == "ast") {
@@ -76,6 +99,12 @@ export class CompilerOutputComponent implements OnInit {
         }
         if (this.activeTab == "asm") {
           this.asm = c.assembly;
+        }
+        if (this.activeTab == "cfg") {
+          this.cfg = c.assembly;
+        }
+        if (this.activeTab == "fcg") {
+          this.fcg = c.assembly;
         }
       });
     });
