@@ -1,4 +1,8 @@
 # Diary
+## Tuesday 9th February 2021
+
+Fix compiler so that no-prelude hides the primitive function references.
+
 ## Tuesday 2nd February 2021
 
 Started refactoring so that additional cpu targets can be introduced.
