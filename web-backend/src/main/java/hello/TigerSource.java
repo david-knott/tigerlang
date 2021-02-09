@@ -29,8 +29,8 @@ public class TigerSource {
         return desugarForLoop;
     }
 
-    public void setDesugarForLoop(boolean desugarFor) {
-        this.desugarForLoop = desugarFor;
+    public void setDesugarForLoop(boolean desugarForLoop) {
+        this.desugarForLoop = desugarForLoop;
     }
 
     public boolean isDesugarStringComp() {
