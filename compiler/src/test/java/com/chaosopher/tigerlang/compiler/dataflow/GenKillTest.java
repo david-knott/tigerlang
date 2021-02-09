@@ -11,16 +11,12 @@ import com.chaosopher.tigerlang.compiler.parse.ParserService;
 import com.chaosopher.tigerlang.compiler.temp.Label;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
 import com.chaosopher.tigerlang.compiler.translate.DataFrag;
-import com.chaosopher.tigerlang.compiler.translate.FragList;
 import com.chaosopher.tigerlang.compiler.translate.FragmentVisitor;
 import com.chaosopher.tigerlang.compiler.translate.ProcFrag;
 import com.chaosopher.tigerlang.compiler.translate.TranslatorVisitor;
 import com.chaosopher.tigerlang.compiler.tree.JUMP;
 import com.chaosopher.tigerlang.compiler.tree.LABEL;
 import com.chaosopher.tigerlang.compiler.tree.MOVE;
-import com.chaosopher.tigerlang.compiler.tree.NAME;
-import com.chaosopher.tigerlang.compiler.tree.PrettyPrinter;
-import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.StmList;
 import com.chaosopher.tigerlang.compiler.tree.TEMP;
 import com.chaosopher.tigerlang.compiler.types.TypeChecker;
@@ -39,7 +35,6 @@ public class GenKillTest {
         program.accept(new Binder(errorMsg));
         program.accept(new TypeChecker(errorMsg));
         program.accept(translator);
-
         TreeAtomizer treeAtomizer = new TreeAtomizer(new CanonicalizationImpl());
         translator.getFragList().accept(new FragmentVisitor(){
 			@Override
@@ -57,8 +52,7 @@ public class GenKillTest {
         CFG cfg = new CFG(stmList);
         GenKillSets genKillSets = new  GenKillSets(cfg);
         genKillSets.generate();
-        cfg.show(System.out);
-        // expect one block, with 3 statements.
+        genKillSets.displayGenKill(System.out);
     }
 
 
@@ -67,7 +61,7 @@ public class GenKillTest {
         TranslatorVisitor translator = new TranslatorVisitor();
         ParserService parserService = new ParserService(new ParserFactory());
         ErrorMsg errorMsg = new ErrorMsg("", System.out);
-        Absyn program = parserService.parse("let var a:int := 13 var b:int := 11 in while a <> 10 do (a := a + b; b := a + 1; a := a) end", new ErrorMsg("", System.out));
+        Absyn program = parserService.parse("let var a:int := 5 var c:int := 1 in (while c <= a do (c := c + c ); a := c - a; c := 0) end", new ErrorMsg("", System.out));
         // need binder to bind types to expressions.
         program.accept(new Binder(errorMsg));
         program.accept(new TypeChecker(errorMsg));
@@ -110,10 +104,5 @@ public class GenKillTest {
         );
         CFG cfg = new CFG(test);
         cfg.show(System.out);
-        // expect one block, with 3 statements.
     }
-
-
-
-
 }

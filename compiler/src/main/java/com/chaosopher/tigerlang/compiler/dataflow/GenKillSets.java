@@ -4,10 +4,10 @@ import java.io.PrintStream;
 import java.util.BitSet;
 import java.util.HashMap;
 
+import com.chaosopher.tigerlang.compiler.tree.LABEL;
 import com.chaosopher.tigerlang.compiler.graph.NodeList;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
 import com.chaosopher.tigerlang.compiler.tree.MOVE;
-import com.chaosopher.tigerlang.compiler.tree.PrettyPrinter;
 import com.chaosopher.tigerlang.compiler.tree.PrettyPrinter2;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.StmList;
@@ -16,6 +16,7 @@ import com.chaosopher.tigerlang.compiler.tree.TEMP;
 public class GenKillSets {
 
     private final HashMap<Stm, Integer> defs = new HashMap<>();
+    private final HashMap<Temp, BitSet> defTemps = new HashMap<>();
     private final HashMap<BasicBlock, BitSet> genMap = new HashMap<>();
     private final HashMap<BasicBlock, BitSet> killMap = new HashMap<>();
     private final HashMap<BasicBlock, BitSet> inMap = new HashMap<>();
@@ -26,65 +27,68 @@ public class GenKillSets {
         this.cfg = cfg;
     }
 
-    /**
-     * Returns the set of all defs generated in the basic block.
-     * @param basicBlock who's gen set we are looking for
-     * @return a kill set of definition ids.
-     */
-    private Integer getKillGenSets(BasicBlock basicBlock) {
+    private void initSets(BasicBlock basicBlock) {
         StmList stmList = basicBlock.first;
-        BitSet blockGen = new BitSet();
-        BitSet blockKill = new BitSet();
-        HashMap<Temp, BitSet> defTemps = new HashMap<>();
         for (; stmList != null; stmList = stmList.tail) {
             Stm s = stmList.head;
-            // we are only interested in MOVE with a destination
+            // we are only interested in MOVE with a destination thats a temp.
             if(s instanceof MOVE && ((MOVE)s).dst instanceof TEMP) {
                 MOVE move = (MOVE)s;
                 // get destination temp.
                 Temp temp = ((TEMP)move.dst).temp;
-                // get the defintion id.
-                int defId = this.defs.get(s);
                 // add reference for temp and def
-                if (!defTemps.containsKey(temp)) {
-                    defTemps.put(temp, new BitSet());
-                }
-                defTemps.get(temp).set(defId);
-                // gen(s) = { defId }
-                BitSet gen = new BitSet();
-                gen.set(defId);
-                // kill(s) = defs(t) - { defId }
-                BitSet kill = (BitSet)defTemps.get(temp).clone();
-                kill.andNot(gen);
-
-                // combine the previous and next statements kill and gen
-                // previous item ( gen[p] - kill[n])
-                // gen[p] is blockGen
-                // gen[n] is gen
-                // kill[p] is blockKill
-                // kill[n] is kill
-
-                // gen combined
-                BitSet comGen = new BitSet();
-                comGen.or(gen);
-                BitSet comGenOp2 = new BitSet();
-                comGenOp2.or(blockGen);
-                comGenOp2.andNot(kill);
-                comGen.or(comGenOp2);
-
-                // kill combined
-                BitSet comKill = new BitSet();
-                comKill.or(blockKill);
-                comKill.or(kill);
-
-                // assign kill and gen block 
-                blockGen = comGen;
-                blockKill = comKill;
+                defTemps.put(temp, new BitSet());
             }
         }
-        genMap.put(basicBlock, blockGen);
-        killMap.put(basicBlock, blockKill);
-        return 1;
+    }
+
+    private void calculateGenSet(BasicBlock basicBlock) {
+        StmList stmList = basicBlock.first;
+        BitSet genBlock = new BitSet();
+        for (; stmList != null; stmList = stmList.tail) {
+            Stm s = stmList.head;
+            // we are only interested in MOVE with a destination thats a temp.
+            if(s instanceof MOVE && ((MOVE)s).dst instanceof TEMP) {
+                MOVE move = (MOVE)s;
+                // get destination temp.
+                Temp temp = ((TEMP)move.dst).temp;
+                // get the defintion id for the statement.
+                int defId = this.defs.get(s);
+                // add defId to gen set for this block.
+                genBlock.set(defId);
+                // remove any previous definition of gen from gen set
+                genBlock.andNot(defTemps.get(temp));
+                // add key temp -> [defId] 
+                defTemps.get(temp).set(defId);
+            }
+        }
+        genMap.put(basicBlock, genBlock);
+    }
+
+    /**
+     * Generate a kill set.
+     * @param basicBlock
+     */
+    private void calculateKillSet(BasicBlock basicBlock) {
+        StmList stmList = basicBlock.first;
+        BitSet killBlock = new BitSet();
+        for (; stmList != null; stmList = stmList.tail) {
+            Stm s = stmList.head;
+            // kill set for this block is all redefinitions of
+            // previously seen facts ( gen ) minus generated 
+            // items in this block.
+            if(s instanceof MOVE && ((MOVE)s).dst instanceof TEMP) {
+                MOVE move = (MOVE)s;// get destination temp.
+                Temp temp = ((TEMP)move.dst).temp;
+                int defId = this.defs.get(s);
+                // redefinitions.
+                BitSet redefinitions = (BitSet)defTemps.get(temp).clone();
+                redefinitions.set(defId, false);
+                killBlock.or(redefinitions);
+
+            }
+        }
+        killMap.put(basicBlock, killBlock);
     }
 
     public void displayGenKill(PrintStream out) {
@@ -125,18 +129,29 @@ public class GenKillSets {
         genMap.clear();
         killMap.clear();
         // create def ids for each statement.
-        int id = 0;
+        int id = 1;
         for(NodeList nodes = this.cfg.nodes(); nodes != null; nodes = nodes.tail) {
             BasicBlock b = this.cfg.get(nodes.head);
             for (StmList stmList = b.first; stmList != null; stmList = stmList.tail) {
                 Stm s = stmList.head;
-                this.defs.put(s, id++);
+                if(!(s instanceof LABEL)) {
+                    this.defs.put(s, id++);
+                }
             }
         }
         // calculate gen and kill for each basic block.
         for(NodeList nodes = this.cfg.nodes(); nodes != null; nodes = nodes.tail) {
             BasicBlock b = this.cfg.get(nodes.head);
-            this.getKillGenSets(b);
+            this.initSets(b);
+        }
+        // calculate gen and kill for each basic block.
+        for(NodeList nodes = this.cfg.nodes(); nodes != null; nodes = nodes.tail) {
+            BasicBlock b = this.cfg.get(nodes.head);
+            this.calculateGenSet(b);
+        }
+        for(NodeList nodes = this.cfg.nodes(); nodes != null; nodes = nodes.tail) {
+            BasicBlock b = this.cfg.get(nodes.head);
+            this.calculateKillSet(b);
         }
         // compute in[n] and out[n] for each block.
         for(NodeList nodes = this.cfg.nodes(); nodes != null; nodes = nodes.tail) {

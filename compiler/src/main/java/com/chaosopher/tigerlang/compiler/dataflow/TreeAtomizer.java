@@ -22,7 +22,7 @@ import com.chaosopher.tigerlang.compiler.tree.TEMP;
 /**
  * Creates an atomized tree. This transforms the HIR into
  * a form where there are no nested expressions. After canonicalisation
- * this is similar to a quadruple set, which can be fed into data flow
+ * this is a quadruple set, which can be fed into data flow
  * analyses.
  */
 public class TreeAtomizer extends CloningTreeVisitor {
