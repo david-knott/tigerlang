@@ -100,8 +100,10 @@ public class Application {
 		if(tigerSource.isDesugarStringComp()) {
 			argList.add("--desugar");
 		}
-		if(tigerSource.isAstDisplay()) {
+		if(tigerSource.isNoPrelude()) {
 			argList.add("--no-prelude");
+		}
+		if(tigerSource.isAstDisplay()) {
 			argList.add("--ast-display");
 		}
 		if(tigerSource.isHirDisplay()) {

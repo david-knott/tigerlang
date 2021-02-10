@@ -21,9 +21,18 @@ public class TigerSource {
     private boolean desugarStringComp;
     private boolean desugarForLoop;
     private boolean cfg;
+    private boolean noPrelude;
 
     public String getCode() {
         return this.code;
+    }
+
+    public boolean isNoPrelude() {
+        return noPrelude;
+    }
+
+    public void setNoPrelude(boolean noPrelude) {
+        this.noPrelude = noPrelude;
     }
 
     public boolean isCfg() {
