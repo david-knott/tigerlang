@@ -32,7 +32,7 @@ public class Tasks implements TaskProvider {
                 public void set() {
                     parserService.configure(p -> p.setParserTrace(true));
                 }
-            }, "parse-trace", "Enable parsers traces.", "parse")
+            }, "parse-trace", "Enable parsers traces.", "")
         );
         taskRegister.register(
             new BooleanTask(new BooleanTaskFlag() {
@@ -40,7 +40,7 @@ public class Tasks implements TaskProvider {
                 public void set() {
                     parserService.configure(p -> p.setNoPrelude(true));
                 }
-            }, "X|no-prelude", "Don’t include prelude.", "parse")
+            }, "X|no-prelude", "Don’t include prelude.", "")
         );
         taskRegister.register(
             new SimpleTask(new SimpleTaskProvider() {

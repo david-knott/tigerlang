@@ -66,13 +66,13 @@ public class Tasks implements TaskProvider {
         taskRegister.register(new SimpleTask(new SimpleTaskProvider() {
             @Override
             public void only(TaskContext taskContext) {
-                GraphvisRenderer graphvisRenderer = new GraphvisRenderer();
                 taskContext.lirFragList.accept(new FragmentVisitor() {
 
                     @Override
                     public void visit(ProcFrag procFrag) {
                         CFG cfg = new CFG((StmList)procFrag.body);
-                        graphvisRenderer.render(new PrintStream(taskContext.out), cfg);
+                        CFGRenderer cfgRenderer = new CFGGraphizRender(cfg);
+                        cfgRenderer.write(new PrintStream(taskContext.out));
                     }
                     @Override
                     public void visit(DataFrag dataFrag) {

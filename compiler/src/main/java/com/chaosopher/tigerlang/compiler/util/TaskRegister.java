@@ -73,7 +73,11 @@ public class TaskRegister {
         }
         //add the task, if not already added.
         if(!activeTasks.contains(task)) {
-            activeTasks.add(task);
+            if(task instanceof BooleanTask) {
+                activeTasks.add(0, task);
+            } else {
+                activeTasks.add(task);
+            }
         }
     }
 

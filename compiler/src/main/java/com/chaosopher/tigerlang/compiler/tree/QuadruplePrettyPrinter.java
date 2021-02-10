@@ -3,7 +3,7 @@ package com.chaosopher.tigerlang.compiler.tree;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
-public class PrettyPrinter2 implements TreeVisitor {
+public class QuadruplePrettyPrinter implements TreeVisitor {
 
     final PrintStream printStream;
     int level = 0;
@@ -16,7 +16,7 @@ public class PrettyPrinter2 implements TreeVisitor {
         level--;
     }
 
-    public PrettyPrinter2(OutputStream out) {
+    public QuadruplePrettyPrinter(OutputStream out) {
         this.printStream = new PrintStream(out);
     }
 

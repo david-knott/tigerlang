@@ -8,7 +8,7 @@ import com.chaosopher.tigerlang.compiler.tree.LABEL;
 import com.chaosopher.tigerlang.compiler.graph.NodeList;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
 import com.chaosopher.tigerlang.compiler.tree.MOVE;
-import com.chaosopher.tigerlang.compiler.tree.PrettyPrinter2;
+import com.chaosopher.tigerlang.compiler.tree.QuadruplePrettyPrinter;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.StmList;
 import com.chaosopher.tigerlang.compiler.tree.TEMP;
@@ -98,7 +98,7 @@ public class GenKillSets {
             for (StmList stmList = b.first; stmList != null; stmList = stmList.tail) {
                 out.print(this.defs.get(stmList.head));
                 out.print(":");
-                stmList.head.accept(new PrettyPrinter2(System.out));
+                stmList.head.accept(new QuadruplePrettyPrinter(System.out));
                 out.println();
             }
             BitSet gen = genMap.get(b);

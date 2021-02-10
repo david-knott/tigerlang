@@ -1,7 +1,23 @@
 # Diary
+
+## Wednesday 10th February 2021
+Worked on the CFG Graphiz Renderer.
+
+Ideas: 
+
+Load all the test programs into app
+
+Find program -> autosuggest with preloaded programs
+
+Allow a program to be saved, this stores the program in a mongodb instance.
+
+Allow a program to be assembled and linked, checks if program can be compiled and then sends a request
+to a target docker instance that compiles the assembly, zips the executable and sends it to the output
+stream.
+
 ## Tuesday 9th February 2021
 
-Fix compiler so that no-prelude hides the primitive function references.
+Fixed compiler so that no-prelude hides the primitive function references.
 
 ## Tuesday 2nd February 2021
 
