@@ -3,17 +3,26 @@
 ## Wednesday 10th February 2021
 Worked on the CFG Graphiz Renderer.
 
+Next up, display cfg using angular graphiz renderer.
+
+https://github.com/magjac/d3-graphviz-angular
+
+Then do the same for the function call graph.
+
+
 Ideas: 
 
-Load all the test programs into app
+Load all the test programs into web app.
 
-Find program -> autosuggest with preloaded programs
+Find program -> autosuggest with preloaded programs.
 
 Allow a program to be saved, this stores the program in a mongodb instance.
 
 Allow a program to be assembled and linked, checks if program can be compiled and then sends a request
 to a target docker instance that compiles the assembly, zips the executable and sends it to the output
 stream.
+
+Write interpreter.
 
 ## Tuesday 9th February 2021
 

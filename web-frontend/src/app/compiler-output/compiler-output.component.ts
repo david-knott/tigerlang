@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { throwMatDialogContentAlreadyAttachedError } from "@angular/material/dialog";
 import { CompilerService } from "../services/compiler.service";
 import { OptionsService } from "../services/options.service";
+import { graphviz }  from 'd3-graphviz';
+import { wasmFolder } from "@hpcc-js/wasm";
 
 @Component({
   selector: "app-compiler-output",
@@ -101,7 +103,7 @@ export class CompilerOutputComponent implements OnInit {
           this.asm = c.assembly;
         }
         if (this.activeTab == "cfg") {
-          this.cfg = c.assembly;
+          graphviz('div.cfg').renderDot(c.assembly);
         }
         if (this.activeTab == "fcg") {
           this.fcg = c.assembly;
@@ -120,5 +122,7 @@ export class CompilerOutputComponent implements OnInit {
     this.compilerSubscription.unsubsribe();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    wasmFolder('/assets/');
+  }
 }
