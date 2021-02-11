@@ -33,6 +33,7 @@ export class CompilerOutputComponent implements OnInit {
         s.lirDisplay = false;
         s.regAlloc = false;
         s.cfg = false;
+        s.callGraphDisplay = false;
         s.rename = this.optionsService.getOption("rename");
         s.inline = this.optionsService.getOption("inline");
         s.prune = this.optionsService.getOption("prune");
@@ -54,7 +55,7 @@ export class CompilerOutputComponent implements OnInit {
         s.lirDisplay = false;
         s.regAlloc = false;
         s.cfg = false;
-        s.fcg = false;
+        s.callGraphDisplay = false;
       }
       if (this.activeTab == "lir") {
         s.astDisplay = false;
@@ -62,7 +63,7 @@ export class CompilerOutputComponent implements OnInit {
         s.lirDisplay = true;
         s.regAlloc = false;
         s.cfg = false;
-        s.fcg = false;
+        s.callGraphDisplay = false;
       }
       if (this.activeTab == "asm") {
         s.astDisplay = false;
@@ -70,7 +71,7 @@ export class CompilerOutputComponent implements OnInit {
         s.lirDisplay = false;
         s.regAlloc = true;
         s.cfg = false;
-        s.fcg = false;
+        s.callGraphDisplay = false;
       }
       if (this.activeTab == "cfg") {
         s.astDisplay = false;
@@ -78,7 +79,7 @@ export class CompilerOutputComponent implements OnInit {
         s.lirDisplay = false;
         s.regAlloc = false;
         s.cfg = true;
-        s.fcg = false;
+        s.callGraphDisplay = false;
       }
     if (this.activeTab == "fcg") {
         s.astDisplay = false;
@@ -86,7 +87,7 @@ export class CompilerOutputComponent implements OnInit {
         s.lirDisplay = false;
         s.regAlloc = false;
         s.cfg = false;
-        s.fcg = true;
+        s.callGraphDisplay = true;
       }
       this.lastRequest = s;
       this.compilerService.compile(s).subscribe((c) => {
@@ -106,7 +107,7 @@ export class CompilerOutputComponent implements OnInit {
           graphviz('div.cfg').renderDot(c.assembly);
         }
         if (this.activeTab == "fcg") {
-          this.fcg = c.assembly;
+          graphviz('div.fcg').renderDot(c.assembly);
         }
       });
     });

@@ -22,9 +22,18 @@ public class TigerSource {
     private boolean desugarForLoop;
     private boolean cfg;
     private boolean noPrelude;
+    private boolean callGraphDisplay;
 
     public String getCode() {
         return this.code;
+    }
+
+    public boolean isCallGraphDisplay() {
+        return callGraphDisplay;
+    }
+
+    public void setCallGraphDisplay(boolean callGraphDisplay) {
+        this.callGraphDisplay = callGraphDisplay;
     }
 
     public boolean isNoPrelude() {

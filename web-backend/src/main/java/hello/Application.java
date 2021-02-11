@@ -121,15 +121,16 @@ public class Application {
 		if(tigerSource.isCfg()) {
 			argList.add("--cfg");
 		}
+		if(tigerSource.isCallGraphDisplay()) {
+			argList.add("--callgraph-display");
+		}
 		argList.add("filenameplaceholder");
 		//String[] args = new String[] {"--reg-alloc", "--escapes-compute", "--demove", "filenameplaceholder"};
 		String[] args = argList.toArray(new String[argList.size()]);
 		new TaskRegister()
 		.register(new com.chaosopher.tigerlang.compiler.main.Tasks())
 		.register(new com.chaosopher.tigerlang.compiler.parse.Tasks(new ParserService(new ParserFactory())))
-	//	.register(new com.chaosopher.tigerlang.compiler.cloner.Tasks())
-	//	.register(new com.chaosopher.tigerlang.compiler.callgraph.Tasks())
-	//	.register(new com.chaosopher.tigerlang.compiler.liveness.Tasks())
+		.register(new com.chaosopher.tigerlang.compiler.callgraph.Tasks())
 		.register(new com.chaosopher.tigerlang.compiler.absyn.Tasks())
 		.register(new com.chaosopher.tigerlang.compiler.sugar.Tasks())
 		.register(new com.chaosopher.tigerlang.compiler.findescape.Tasks())
@@ -138,7 +139,6 @@ public class Application {
 		.register(new com.chaosopher.tigerlang.compiler.inlining.Tasks())
 		.register(new com.chaosopher.tigerlang.compiler.types.Tasks())
 		.register(new com.chaosopher.tigerlang.compiler.translate.Tasks())
-
 		.register(new com.chaosopher.tigerlang.compiler.dataflow.Tasks())
 		.register(new com.chaosopher.tigerlang.compiler.canon.Tasks(new CanonicalizationImpl()))
 		.register(new com.chaosopher.tigerlang.compiler.target.Tasks())
