@@ -49,14 +49,18 @@ public class QuadruplePrettyPrinter implements TreeVisitor {
 
     @Override
     public void visit(CALL op) {
-        this.write("call(");
         this.incLevel();
-        ;
+        this.write("call(");
         op.func.accept(this);
+        this.write("(");
         for (ExpList el = op.args; el != null; el = el.tail) {
             el.head.accept(this);
+            if(el.tail != null) {
+                this.write(", ");
+            }
         }
         this.decLevel();
+        this.write(")");
         this.write(")");
     }
 

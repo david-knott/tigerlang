@@ -1,4 +1,10 @@
 # Diary
+## Thursday 18th February 2021
+
+Rough version of constant propagation finished.
+
+## Thursday 11th February 2021
+Added call graph and data flow graph renderers to the front end.
 
 ## Wednesday 10th February 2021
 Worked on the CFG Graphiz Renderer.

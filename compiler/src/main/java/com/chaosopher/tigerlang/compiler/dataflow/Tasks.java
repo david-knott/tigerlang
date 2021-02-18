@@ -63,26 +63,14 @@ public class Tasks implements TaskProvider {
             }, "deatomize", "Deatomize lir tree", "lir-compute")
         );
 
-        taskRegister.register(new SimpleTask(new SimpleTaskProvider() {
+        taskRegister.register(
+            new SimpleTask(new SimpleTaskProvider() {
             @Override
-            public void only(TaskContext taskContext) {
-                taskContext.lirFragList.accept(new FragmentVisitor() {
-
-                    @Override
-                    public void visit(ProcFrag procFrag) {
-                        CFG cfg = new CFG((StmList)procFrag.body);
-                        CFGRenderer cfgRenderer = new CFGGraphizRender(cfg);
-                        cfgRenderer.write(new PrintStream(taskContext.out));
-                    }
-                    @Override
-                    public void visit(DataFrag dataFrag) {
-                        // do nothing.
-                    }
-                    });
+                public void only(TaskContext taskContext) {
+                    (new CFGGraphizRender2(new PrintStream(taskContext.out))).start(taskContext.lirFragList);
                 }
             }, "cfg", "Build cfg", "deatomize")
         );
-
 
         taskRegister.register(
             new SimpleTask(new SimpleTaskProvider() {
