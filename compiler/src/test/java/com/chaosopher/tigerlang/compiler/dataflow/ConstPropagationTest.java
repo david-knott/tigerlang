@@ -31,14 +31,8 @@ public class ConstPropagationTest {
                     ),
                     new StmList(
                         new MOVE(
-                            new TEMP(Temp.create("a")), 
-                            new TEMP(Temp.create("e"))
-                        ) , 
-                        new StmList(
-                            new MOVE(
-                                new TEMP(Temp.create("a")), 
-                                new BINOP(0, new TEMP(Temp.create("a")), new TEMP(Temp.create("b")))
-                            )
+                            new TEMP(Temp.create("c")), 
+                            new BINOP(0, new TEMP(Temp.create("a")), new TEMP(Temp.create("b")))
                         )
                     )
                 )
