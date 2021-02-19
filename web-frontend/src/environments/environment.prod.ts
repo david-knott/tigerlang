@@ -5,5 +5,5 @@ const isIE =
 
 export const environment = {
   production: true,
-  apiUrl: 'https://tigerlang.chaosopher.com:8080',
+  baseUrl: 'https://tigerlang.chaosopher.com/api/',
 };

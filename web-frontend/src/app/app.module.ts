@@ -12,6 +12,8 @@ import { CompilerConsoleComponent } from './compiler-console/compiler-console.co
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../environments/environment';
+import { HttpModule } from './services/http.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { FormsModule } from '@angular/forms';
     NgbModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
+    HttpModule.forRoot({ environment })
   ],
   entryComponents: [],
   providers: [],

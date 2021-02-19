@@ -43,3 +43,5 @@ docker run --rm --name tiger-front-end-container  -p 4200:80 tiger-front-end-ui
 Graph software
 
 https://swimlane.github.io/ngx-graph/demos/examples#examples
+
+https://indepth.dev/posts/1188/how-to-use-the-environment-for-specific-http-services
