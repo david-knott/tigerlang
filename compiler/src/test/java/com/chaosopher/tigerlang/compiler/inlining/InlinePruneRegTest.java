@@ -10,6 +10,6 @@ public class InlinePruneRegTest extends RegressionTestBase{
 
     @Override
     public String[] getArgs() {
-      return new String[] {"--reg-alloc", "--inline", "--prune" };
+      return new String[] {"--inline", "--prune", "--lir-compute", "--reg-alloc"};
     }
 }

@@ -1,5 +1,7 @@
 package com.chaosopher.tigerlang.compiler.util;
 
+import java.util.List;
+
 /**
  * A task that sets a boolean value.
  */
@@ -14,5 +16,10 @@ public class BooleanTask extends Task {
     @Override
     public void execute(TaskContext taskContext) {
         this.booleanTaskFlag.set();
+    }
+
+    @Override
+    public String[] resolveDeps(List<Task> activeTasks) {
+        return this.deps();
     }
 }

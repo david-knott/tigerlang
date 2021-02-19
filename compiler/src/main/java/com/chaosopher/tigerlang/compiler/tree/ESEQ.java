@@ -1,10 +1,14 @@
 package com.chaosopher.tigerlang.compiler.tree;
 
+import com.chaosopher.tigerlang.compiler.util.Assert;
+
 public class ESEQ extends Exp {
     public Stm stm;
     public Exp exp;
 
     public ESEQ(Stm s, Exp e) {
+        Assert.assertNotNull(s);
+        Assert.assertNotNull(e);
         stm = s;
         exp = e;
     }

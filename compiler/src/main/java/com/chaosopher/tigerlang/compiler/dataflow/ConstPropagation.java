@@ -10,7 +10,6 @@ import com.chaosopher.tigerlang.compiler.tree.Exp;
 import com.chaosopher.tigerlang.compiler.tree.MOVE;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.TEMP;
-import com.chaosopher.tigerlang.compiler.util.Assert;
 
 class ConstPropagation extends CloningTreeVisitor {
     
@@ -49,12 +48,13 @@ class ConstPropagation extends CloningTreeVisitor {
             BitSet reachableIn = (BitSet) (this.genKillSets.getIn(this.currentMove).clone());
             TEMP leftTemp = (TEMP) exp;
             BitSet tempDefs = this.genKillSets.getDefinitions(leftTemp.temp);
-            Assert.assertNotNull(tempDefs, "Definitions for temp should not be null");
-            reachableIn.and(tempDefs);
-            reachableIn.and(this.conDefs);
-            if (!reachableIn.isEmpty()) {
-                System.out.println("Exp is constant:" + exp + " " + this.constants.get(reachableIn.nextSetBit(0)));
-                return new CONST(this.constants.get(reachableIn.nextSetBit(0)));
+            if(tempDefs != null) {
+                reachableIn.and(tempDefs);
+                reachableIn.and(this.conDefs);
+                if (!reachableIn.isEmpty()) {
+                    //System.out.println("Exp is constant:" + exp + " " + this.constants.get(reachableIn.nextSetBit(0)));
+                    return new CONST(this.constants.get(reachableIn.nextSetBit(0)));
+                }
             }
         }
         exp.accept(this);

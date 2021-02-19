@@ -9,6 +9,8 @@ import com.chaosopher.tigerlang.compiler.core.LL;
 import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
 
 public class TaskRegister {
+    private LL<TaskWrapper> tasks = null;
+    private List<Task> activeTasks = new ArrayList<Task>();
     InputStream in = null;
     OutputStream out = null;
     ErrorMsg errorMsg = null;
@@ -32,15 +34,14 @@ public class TaskRegister {
         }
     }
 
-    private LL<TaskWrapper> tasks = null;
-    private List<Task> activeTasks = new ArrayList<Task>();
-
     public TaskRegister parseArgs(String[] args) {
+        List<Task> taskList = new ArrayList<>();
         //only interested in n - 1 args, as nth arg is filename.
         for(int i = 0; i < args.length - 1; i++) {
             if(args[i].startsWith("--")) {
                 Task task = this.findTaskByLongName(args[i].substring(2));
-                this.resolveDeps(task);
+                taskList.add(task);
+                //this.resolveDeps(task);
                 if(i + 1 < args.length - 1  && args[i + 1].length() > 2 && !args[i + 1].substring(0, 2).equals("--")) {
                     //System.out.println("lvalue =" + args[i + 1]);
                     i++;
@@ -51,27 +52,45 @@ public class TaskRegister {
             } else if(args[i].startsWith("-")) {
                 for(int j = 1; j < args[i].length(); j++) {
                     Task task = this.findTaskByShortName(args[i].substring(j, j + 1));
-                    this.resolveDeps(task);
+                    taskList.add(task);
+                 //   this.resolveDeps(task);
                 }
             } else {
                 throw new Error("Invalid argument syntax, show help.. " + args[i]);
             }
         }
+        // process selected tasks
+        this.process(taskList);
+        //
         return this;
     }
+
+    private void process(List<Task> taskList) {
+        // iterate through all selected tasks
+        for(Task task : taskList) {
+            this.enableTask(task.getLongName());
+        }
+    }
  
-    private void resolveDeps(Task task) {
-        task.active = true;
-        // add dependancies first
-        if(task.deps != null) {
-            for(String dep : task.deps.split("\\s+")) {
-                if(!dep.equals("")) {
-                    Task depTask = this.findTaskByLongName(dep);
-                    this.resolveDeps(depTask);
-                }
+    private void resolveDependancies(Task task) {
+        List<Task> subList = new ArrayList<>();
+        for(String dep : task.deps()) {
+            if(dep.equals("")) continue;
+            subList.add(this.findTaskByLongName(dep));
+        }
+        String[] depTask = task.resolveDeps(subList);
+        for(String s: depTask) {
+            if(s.equals("")) continue;
+            if(null != this.findTaskByLongName(s)) {
+                this.enableTask(s);
             }
         }
-        //add the task, if not already added.
+    }
+
+    private void enableTask(String s) {
+        Task task = this.findTaskByLongName(s);
+        task.active = true;
+        this.resolveDependancies(task);
         if(!activeTasks.contains(task)) {
             if(task instanceof BooleanTask) {
                 activeTasks.add(0, task);
@@ -126,39 +145,15 @@ public class TaskRegister {
         return this;
     }
 
-    /**
-     * Returns short and long name in result[0] and
-     * result[1] respectively. It is assumed at least the
-     * long form is present.
-     * @param task
-     * @return
-     */
-    public String[] extractNames(Task task) {
-        String name = task.name;
-        String[] results = new String[2];
-        int i = 0;
-        for(; i < name.length() && name.charAt(i) != '|'; i++);
-        results[0] = name.substring(0, i);
-        results[1] = i < name.length() - 1? name.substring(i + 1) : "";
-        return results;
-    }
-
     public void register(SimpleTask simpleTask) {
-        String[] names = this.extractNames(simpleTask);
-        String longName = !names[1].equals("") ? names[1] : names[0];
-        String shortName = !names[1].equals("") ? names[0] : names[1];
-        this.tasks = LL.<TaskWrapper>insertRear(this.tasks, new TaskWrapper(simpleTask, longName, shortName));
+        this.tasks = LL.<TaskWrapper>insertRear(this.tasks, new TaskWrapper(simpleTask, simpleTask.getLongName(), simpleTask.getShortName()));
     }
 
     public void register(BooleanTask booleanTask) {
-        String[] names = this.extractNames(booleanTask);
-        String longName = !names[1].equals("") ? names[1] : names[0];
-        String shortName = !names[1].equals("") ? names[0] : names[1];
-        this.tasks = LL.<TaskWrapper>insertRear(this.tasks, new TaskWrapper(booleanTask, longName, shortName));
+        this.tasks = LL.<TaskWrapper>insertRear(this.tasks, new TaskWrapper(booleanTask, booleanTask.getLongName(), booleanTask.getShortName()));
     }
 
     public void register(DisjunctiveTask disjunctiveTask) {
-
-        //how does this work ???
+        this.tasks = LL.<TaskWrapper>insertRear(this.tasks, new TaskWrapper(disjunctiveTask, disjunctiveTask.getLongName(), disjunctiveTask.getShortName()));
     }
 }

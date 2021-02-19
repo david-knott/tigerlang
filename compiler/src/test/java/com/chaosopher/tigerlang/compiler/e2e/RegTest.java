@@ -7,6 +7,6 @@ public class RegTest extends RegressionTestBase{
 
     @Override
     public String[] getArgs() {
-        return new String[]{"--reg-alloc"};
+        return new String[]{"--lir-compute", "--reg-alloc"};
     }
 }

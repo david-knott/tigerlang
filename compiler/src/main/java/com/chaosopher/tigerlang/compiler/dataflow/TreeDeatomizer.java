@@ -21,6 +21,7 @@ public class TreeDeatomizer extends CloningTreeVisitor {
         this.temps = temps;
     }
 
+    
     @Override
     public void visit(MOVE op) {
         // if destination is a temp in our list,
@@ -50,5 +51,4 @@ public class TreeDeatomizer extends CloningTreeVisitor {
             super.visit(op);
         }
     }
-
 }

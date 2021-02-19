@@ -11,6 +11,6 @@ public class RenamerRegTest extends RegressionTestBase{
 
     @Override
     public String[] getArgs() {
-        return new String[] {"--reg-alloc", "--rename" };
+        return new String[] {"--rename", "--lir-compute", "--reg-alloc" };
     }
 }

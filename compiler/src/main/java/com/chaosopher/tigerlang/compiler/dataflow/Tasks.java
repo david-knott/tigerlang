@@ -3,64 +3,51 @@ package com.chaosopher.tigerlang.compiler.dataflow;
 import java.io.PrintStream;
 
 import com.chaosopher.tigerlang.compiler.canon.CanonicalizationImpl;
-import com.chaosopher.tigerlang.compiler.graph.GraphvisRenderer;
-import com.chaosopher.tigerlang.compiler.temp.DefaultMap;
-import com.chaosopher.tigerlang.compiler.translate.DataFrag;
-import com.chaosopher.tigerlang.compiler.translate.FragmentVisitor;
-import com.chaosopher.tigerlang.compiler.translate.ProcFrag;
-import com.chaosopher.tigerlang.compiler.tree.Stm;
-import com.chaosopher.tigerlang.compiler.tree.StmList;
-import com.chaosopher.tigerlang.compiler.util.Assert;
 import com.chaosopher.tigerlang.compiler.util.SimpleTask;
 import com.chaosopher.tigerlang.compiler.util.SimpleTaskProvider;
 import com.chaosopher.tigerlang.compiler.util.TaskContext;
 import com.chaosopher.tigerlang.compiler.util.TaskProvider;
 import com.chaosopher.tigerlang.compiler.util.TaskRegister;
 
-public class Tasks implements TaskProvider {
 
-    private final TreeAtomizer treeAtomizer = new TreeAtomizer(new CanonicalizationImpl());
-    private final TreeDeatomizer treeDeatomizer = new TreeDeatomizer(treeAtomizer.getTemps());
+public class Tasks implements TaskProvider {
 
     @Override
     public void build(TaskRegister taskRegister) {
         taskRegister.register(new SimpleTask(new SimpleTaskProvider() {
             @Override
             public void only(TaskContext taskContext) {
-                taskContext.hirFragList.accept(new FragmentVisitor() {
-                    @Override
-                    public void visit(ProcFrag procFrag) {
-                        procFrag.body.accept(treeAtomizer);
-                        Stm atomized = treeAtomizer.stm;
-                        procFrag.body = atomized;
-                    }
-                    @Override
-                    public void visit(DataFrag dataFrag) {
-                        // do nothing.
-                    }
-                    });
-                }
-            }, "atomize", "Atomize hir tree", "hir-compute")
-        );
+                TreeAtomizer treeAtomizer = new TreeAtomizer(new CanonicalizationImpl());
+                TreeDeatomizer treedeatomizer = new TreeDeatomizer(treeAtomizer.getTemps());
 
+                FragmentTreeAtomizer atomizerVisitor = new FragmentTreeAtomizer(treeAtomizer);
+                taskContext.hirFragList.accept(atomizerVisitor);
+                taskContext.setLIR(atomizerVisitor.fragList);
+
+                NopFragmentOptimizer fragmentOptimezer = new NopFragmentOptimizer(new CloningTreeVisitor());
+                taskContext.lirFragList.accept(fragmentOptimezer);
+                taskContext.setFragList(fragmentOptimezer.fragList);
+
+                ConstantPropagationFragmentOptimizer constOptimezer = new ConstantPropagationFragmentOptimizer();
+                taskContext.lirFragList.accept(constOptimezer);
+                taskContext.setFragList(constOptimezer.fragList);
+
+                FragmentTreeDeatomizer fragmentVisitor = new FragmentTreeDeatomizer(treedeatomizer);
+                taskContext.lirFragList.accept(fragmentVisitor);
+                taskContext.setLIR(fragmentVisitor.fragList);
+            }
+            }, "deatomize", "Atomize hir tree", "hir-compute")
+        );
+        
         taskRegister.register(new SimpleTask(new SimpleTaskProvider() {
             @Override
             public void only(TaskContext taskContext) {
-                taskContext.lirFragList.accept(new FragmentVisitor() {
-                    @Override
-                    public void visit(ProcFrag procFrag) {
-                        procFrag.body.accept(treeDeatomizer);
-                        Stm deatomized = treeDeatomizer.stm;
-                        Assert.assertNotNull(deatomized, "Deatomized LIR cannot be null");
-                        procFrag.body = deatomized;
-                    }
-                    @Override
-                    public void visit(DataFrag dataFrag) {
-                        // do nothing.
-                    }
-                    });
+                TreeAtomizer treeAtomizer = new TreeAtomizer(new CanonicalizationImpl());
+                FragmentTreeAtomizer atomizerVisitor = new FragmentTreeAtomizer(treeAtomizer);
+                taskContext.hirFragList.accept(atomizerVisitor);
+                taskContext.setLIR(atomizerVisitor.fragList);
                 }
-            }, "deatomize", "Deatomize lir tree", "lir-compute")
+            }, "atomize", "Atomize lir tree", "hir-compute")
         );
 
         taskRegister.register(

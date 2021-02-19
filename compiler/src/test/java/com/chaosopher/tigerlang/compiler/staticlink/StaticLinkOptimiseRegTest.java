@@ -10,7 +10,7 @@ public class StaticLinkOptimiseRegTest extends RegressionTestBase{
 
     @Override
     public String[] getArgs() {
-        return new String[] {"--reg-alloc", "--optimise-staticlinks" };
+        return new String[] {"--lir-compute", "--optimise-staticlinks","--reg-alloc" };
     }
 }
 

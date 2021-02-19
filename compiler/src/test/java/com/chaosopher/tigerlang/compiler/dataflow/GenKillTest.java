@@ -51,7 +51,6 @@ public class GenKillTest {
         StmList stmList = (StmList)((ProcFrag)translator.getFragList().head).body;
         CFG cfg = new CFG(stmList);
         GenKillSets genKillSets = new  GenKillSets(cfg);
-        genKillSets.generate();
         genKillSets.displayGenKill(System.out);
     }
 
@@ -72,7 +71,6 @@ public class GenKillTest {
         StmList stmList = (StmList)((ProcFrag)canonVisitor.fragList.head).body;
         CFG cfg = new CFG(stmList);
         GenKillSets genKillSets = new  GenKillSets(cfg);
-        genKillSets.generate();
         genKillSets.displayGenKill(System.out);
     }
 

@@ -40,7 +40,11 @@ public class ConstPropagationTest {
         );
         CFG cfg = new CFG(stmList);
         GenKillSets genKillSets = new GenKillSets(cfg);
+        // move into constructor
         genKillSets.generate();
+//        CycleDetector cd = new CycleDetector(cfg);
+
+
         ConstPropagation constPropagation = new ConstPropagation(genKillSets);
         stmList.accept(constPropagation);
         new GenKillSetsXmlSerializer(genKillSets).serialize(System.out);

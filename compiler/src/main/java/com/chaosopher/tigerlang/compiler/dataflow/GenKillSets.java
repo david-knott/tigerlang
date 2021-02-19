@@ -33,11 +33,13 @@ public class GenKillSets {
     public GenKillSets(CFG cfg) {
         this.cfg = cfg;
         this.maxIterations = -1;
+        this.generate();
     }
    
     GenKillSets(CFG cfg, int maxIterations) {
         this.cfg = cfg;
         this.maxIterations = maxIterations;
+        this.generate();
     }
  
     public int getIterations() {

@@ -9,11 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.chaosopher.tigerlang.compiler.main.Main;
@@ -23,16 +19,23 @@ import org.junit.Test;
 public class TestDriver {
 
     @Test
+    public void deatomise() throws InterruptedException, IOException {
+
+        good("./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/tbi.tig", new String[]{"--optimize", "--deatomize", "--reg-alloc"});
+    }
+
+
+    @Test
     public void testTbiDesugar() throws InterruptedException, IOException {
 
-        good("./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/tbi-desguar.tig", new String[]{"--reg-alloc"});
+        good("./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/tbi-desguar.tig", new String[]{"--lir-compute", "--reg-alloc"});
     }
 
 
     @Test
     public void testTbiDesugarTerminate() throws InterruptedException, IOException {
 
-        good("./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/tbi-desguar-terminate.tig", new String[]{"--reg-alloc"});
+        good("./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/tbi-desguar-terminate.tig", new String[]{"--lir-compute","--reg-alloc"});
     }
 
     public static String getFileContent(FileInputStream fis, String encoding) throws IOException {

@@ -10,6 +10,6 @@ public class StaticLinkEscapesOptimiseRegTest extends RegressionTestBase{
 
     @Override
     public String[] getArgs() {
-        return new String[] {"--reg-alloc", "--escapes-compute", "--optimise-staticlinks-escapes" };
+        return new String[] {"--optimise-staticlinks-escapes", "--escapes-compute", "--lir-compute", "--reg-alloc"};
     }
 }

@@ -35,7 +35,7 @@ public class Tasks implements TaskProvider {
                     lirFragList.accept(assemblyFragmentVisitor);
                     taskContext.setAssemFragList(assemblyFragmentVisitor.getAssemFragList());
                 }
-            }, "instr-compute", "Select x64 as target", "lir-compute" )
+        }, "instr-compute", "Select x64 as target", "optimize" )
         );
         
         taskRegister.register(
