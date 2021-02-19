@@ -12,6 +12,7 @@ import com.chaosopher.tigerlang.compiler.tree.MEM;
 import com.chaosopher.tigerlang.compiler.tree.MOVE;
 import com.chaosopher.tigerlang.compiler.tree.NAME;
 import com.chaosopher.tigerlang.compiler.tree.SEQ;
+import com.chaosopher.tigerlang.compiler.tree.StmList;
 import com.chaosopher.tigerlang.compiler.tree.TEMP;
 import com.chaosopher.tigerlang.compiler.tree.TreeVisitor;
 
@@ -91,6 +92,12 @@ class ExecutionNodeVisitor implements TreeVisitor {
 
 	@Override
 	public void visit(CJUMP arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void visit(StmList stmList) {
 		// TODO Auto-generated method stub
 
 	}

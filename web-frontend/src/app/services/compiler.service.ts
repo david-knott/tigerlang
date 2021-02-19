@@ -4,7 +4,7 @@ import { Assembly } from "../assembly";
 import { BaseService } from "../core/base.service";
 import { Observable, Subject } from "rxjs";
 import { mergeMap, map } from 'rxjs/operators';
-import { ENV_CONFIG, EnvironmentConfig } from './environment-config.interface';
+import { environment } from '@env/environment';
 
 @Injectable({
   providedIn: "root",
@@ -15,9 +15,10 @@ export class CompilerService extends BaseService {
   code: string;
   public apiUrl: string;
 
-  constructor(protected http: HttpClient, @Inject(ENV_CONFIG) private config: EnvironmentConfig) {
+  constructor(protected http: HttpClient) {
     super();
-    this.apiUrl = `${config.environment.baseUrl}`;
+    this.apiUrl = `${environment.baseUrl}`;
+    console.log("XX" + this.apiUrl);
     //there is a compiler request.
   }
 

@@ -11,11 +11,10 @@ export class LayoutComponent implements OnInit {
   options: {};
 
   constructor(private optionsService: OptionsService, private compilerService: CompilerService) {
-    this.options = this.optionsService.getOptions();
   }
 
   ngOnInit() {
-
+    this.options = this.optionsService.getOptions();
   }
 
   onChange() {

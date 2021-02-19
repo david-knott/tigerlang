@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, Inject, OnInit, ViewChild } from "@angular/core";
 import { throwMatDialogContentAlreadyAttachedError } from "@angular/material/dialog";
 import { CompilerService } from "../services/compiler.service";
 import { OptionsService } from "../services/options.service";
 import { graphviz }  from 'd3-graphviz';
 import { wasmFolder } from "@hpcc-js/wasm";
+import { APP_BASE_HREF } from "@angular/common";
 
 @Component({
   selector: "app-compiler-output",
@@ -24,7 +25,8 @@ export class CompilerOutputComponent implements OnInit {
 
   constructor(
     private compilerService: CompilerService,
-    private optionsService: OptionsService
+    private optionsService: OptionsService,
+    @Inject(APP_BASE_HREF) public baseHref: string
   ) {
     this.compilerService.compilerRequest.subscribe((s) => {
       if (this.activeTab == "ast") {
@@ -118,12 +120,11 @@ export class CompilerOutputComponent implements OnInit {
     this.compilerService.compilationRequest(this.lastRequest);
   }
 
-  /** depending on the option & flags selected we call the compiler backend. */
   ngOnDestroy() {
     this.compilerSubscription.unsubsribe();
   }
 
   ngOnInit() {
-    wasmFolder('/assets/');
+    wasmFolder("./assets/");
   }
 }

@@ -109,6 +109,8 @@ public class Application {
 		if(tigerSource.isHirDisplay()) {
 			argList.add("--hir-display");
 		}
+		argList.add("--optimize");
+		argList.add("--lir-compute");
 		if(tigerSource.isLirDisplay()) {
 			argList.add("--lir-display");
 		}

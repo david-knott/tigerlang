@@ -13,48 +13,49 @@ import com.chaosopher.tigerlang.compiler.tree.MEM;
 import com.chaosopher.tigerlang.compiler.tree.MOVE;
 import com.chaosopher.tigerlang.compiler.tree.NAME;
 import com.chaosopher.tigerlang.compiler.tree.SEQ;
+import com.chaosopher.tigerlang.compiler.tree.StmList;
 import com.chaosopher.tigerlang.compiler.tree.TEMP;
 import com.chaosopher.tigerlang.compiler.tree.TreeVisitor;
 
 class ExecutionOrderProcFragVisitor implements TreeVisitor {
 
-    private ExecutionNode executionNode = null;
+	private ExecutionNode executionNode = null;
 
 	@Override
 	public void visit(BINOP arg0) {
-        // visit this left node f
-        arg0.left.accept(this);
-        executionNode = new ExecutionNode(arg0.left, executionNode);
-        // visit the right node
-        arg0.right.accept(this);
-        executionNode = new ExecutionNode(arg0.right, executionNode);
-        // this node
-        executionNode = new ExecutionNode(arg0, executionNode);
+		// visit this left node f
+		arg0.left.accept(this);
+		executionNode = new ExecutionNode(arg0.left, executionNode);
+		// visit the right node
+		arg0.right.accept(this);
+		executionNode = new ExecutionNode(arg0.right, executionNode);
+		// this node
+		executionNode = new ExecutionNode(arg0, executionNode);
 	}
 
 	@Override
 	public void visit(CALL arg0) {
-        for(ExpList expList = arg0.args; expList != null; expList = expList.tail) {
-            // visit each argument
-            expList.head.accept(this);
-            executionNode = new ExecutionNode(expList.head, executionNode);
-        }
-        // visit the call 
-        executionNode = new ExecutionNode(arg0, executionNode);
+		for (ExpList expList = arg0.args; expList != null; expList = expList.tail) {
+			// visit each argument
+			expList.head.accept(this);
+			executionNode = new ExecutionNode(expList.head, executionNode);
+		}
+		// visit the call
+		executionNode = new ExecutionNode(arg0, executionNode);
 	}
 
 	@Override
 	public void visit(CONST arg0) {
-        // visit the int
-        executionNode = new ExecutionNode(arg0, executionNode);
+		// visit the int
+		executionNode = new ExecutionNode(arg0, executionNode);
 	}
 
 	@Override
 	public void visit(ESEQ arg0) {
-        arg0.stm.accept(this);
-        executionNode = new ExecutionNode(arg0.stm, executionNode);
-        arg0.exp.accept(this);
-        executionNode = new ExecutionNode(arg0.exp, executionNode);
+		arg0.stm.accept(this);
+		executionNode = new ExecutionNode(arg0.stm, executionNode);
+		arg0.exp.accept(this);
+		executionNode = new ExecutionNode(arg0.exp, executionNode);
 	}
 
 	@Override
@@ -113,5 +114,11 @@ class ExecutionOrderProcFragVisitor implements TreeVisitor {
 
 	public ExecutionNode getExecutionNode() {
 		return null;
+	}
+
+	@Override
+	public void visit(StmList stmList) {
+		// TODO Auto-generated method stub
+
 	}
 }
