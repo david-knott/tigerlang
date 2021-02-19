@@ -1,4 +1,13 @@
 # Diary
+## Thursday 19th February 2021
+
+Task Register updated to handle disjunctive tasks. I am not happy with the implementation
+as the cli flags must be provided in the correct order and disjunctive tasks ( optimize )
+are messy.
+
+Constant propagation has been integrated however I am not sure if it works yet.
+
+
 ## Thursday 18th February 2021
 
 Rough version of constant propagation finished.
