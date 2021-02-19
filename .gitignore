@@ -1,4 +1,5 @@
 *.class
-target
 .vscode
+compiler/target
+web-backend/target
 tmp
