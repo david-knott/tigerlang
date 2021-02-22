@@ -80,6 +80,13 @@ export class OptionsService {
           label: "Compute Non Escaping Static Link",
           checked: false,
         },
+        deatomize:
+        {
+          elId: 9,
+          title: "Dataflow Analysis",
+          label: "Dataflow Analysis",
+          checked: false,
+        },
       },
     };
   }
