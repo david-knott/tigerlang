@@ -70,7 +70,7 @@ public class Application {
 		PrintStream err = new PrintStream(backingErrorStream);
 		ErrorMsg errorMsg = new ErrorMsg("", err);
 		ArrayList<String> argList = new ArrayList<>();
-		if(tigerSource.isEscapes()) {
+		if(tigerSource.isEscapesCompute()) {
 			argList.add("--escapes-compute");
 		}
 		if(tigerSource.isEscapesDisplay()) {
@@ -106,11 +106,22 @@ public class Application {
 		if(tigerSource.isAstDisplay()) {
 			argList.add("--ast-display");
 		}
+		if(tigerSource.isCfg()) {
+			argList.add("--cfg");
+		}
+		if(tigerSource.isCallGraphDisplay()) {
+			argList.add("--callgraph-display");
+		}
 		if(tigerSource.isHirDisplay()) {
 			argList.add("--hir-display");
 		}
-		argList.add("--optimize");
-		argList.add("--lir-compute");
+		if(tigerSource.isDeatomize()) {
+			argList.add("--optimize");
+			argList.add("--deatomize");
+		} else {
+			argList.add("--optimize");
+			argList.add("--lir-compute");
+		}
 		if(tigerSource.isLirDisplay()) {
 			argList.add("--lir-display");
 		}
@@ -119,12 +130,6 @@ public class Application {
 		}
 		if(tigerSource.isDemove()) {
 			argList.add("--demove");
-		}
-		if(tigerSource.isCfg()) {
-			argList.add("--cfg");
-		}
-		if(tigerSource.isCallGraphDisplay()) {
-			argList.add("--callgraph-display");
 		}
 		argList.add("filenameplaceholder");
 		//String[] args = new String[] {"--reg-alloc", "--escapes-compute", "--demove", "filenameplaceholder"};

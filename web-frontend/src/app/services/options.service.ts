@@ -61,28 +61,29 @@ export class OptionsService {
         },
         escapesDisplay:
         {
-          elId: 7,
+          elId: 8,
           title: "Show Escaping Variables",
           label: "Show Escaping Variables",
           checked: false,
         },
         staticLinks:
         {
-          elId: 8,
+          elId: 9,
           title: "Compute Static Link",
           label: "Compute Static Link",
           checked: false,
         },
         staticLinkEscapes:
         {
-          elId: 9,
+          elId: 10,
           title: "Compute Non Escaping Static Link",
           label: "Compute Non Escaping Static Link",
           checked: false,
         },
+        
         deatomize:
         {
-          elId: 9,
+          elId: 11,
           title: "Dataflow Analysis",
           label: "Dataflow Analysis",
           checked: false,
@@ -100,7 +101,7 @@ export class OptionsService {
     return this.options;
   }
 
-  getOption(name: String) {
+  getOption(name: string) {
     return this.options["astSettings"][name].checked;
   }
 }

@@ -7,7 +7,7 @@ import { CompilerService } from "../services/compiler.service";
   styleUrls: ["./compiler-input.component.scss"],
 })
 export class CompilerInputComponent implements OnInit {
-  data: string = 'print("Hello World")';
+  data: string = 'function add():int = (let var a:= 3 var b:= 4 in a + b end)' ;
 
   constructor(private compilerService: CompilerService) {}
   ngOnInit(): void {

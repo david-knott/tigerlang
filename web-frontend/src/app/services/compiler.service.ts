@@ -18,7 +18,6 @@ export class CompilerService extends BaseService {
   constructor(protected http: HttpClient) {
     super();
     this.apiUrl = `${environment.baseUrl}`;
-    console.log("XX" + this.apiUrl);
     //there is a compiler request.
   }
 

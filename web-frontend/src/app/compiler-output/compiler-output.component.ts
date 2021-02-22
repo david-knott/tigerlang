@@ -50,6 +50,7 @@ export class CompilerOutputComponent implements OnInit {
         s.staticLinkEscapes = this.optionsService.getOption(
           "staticLinkEscapes"
         );
+        s.deatomize = this.optionsService.getOption("deatomize");
       }
       if (this.activeTab == "hir") {
         s.astDisplay = false;

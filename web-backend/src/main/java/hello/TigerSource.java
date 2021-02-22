@@ -14,7 +14,7 @@ public class TigerSource {
     private boolean lirDisplay;
     private boolean staticLinkEscapes;
     private boolean staticLinks;
-    private boolean escapes;
+    private boolean escapesCompute;
     private boolean demove;
     private boolean regAlloc;
     private boolean desugar;
@@ -27,6 +27,14 @@ public class TigerSource {
 
     public String getCode() {
         return this.code;
+    }
+
+    public boolean isDeatomize() {
+        return deatomize;
+    }
+
+    public void setDeatomize(boolean deatomize) {
+        this.deatomize = deatomize;
     }
 
     public boolean isCallGraphDisplay() {
@@ -141,12 +149,12 @@ public class TigerSource {
         this.demove = demove;
     }
 
-    public boolean isEscapes() {
-        return escapes;
+    public boolean isEscapesCompute() {
+        return escapesCompute;
     }
 
-    public void setEscapes(boolean escapes) {
-        this.escapes = escapes;
+    public void setEscapesCompute(boolean escapes) {
+        this.escapesCompute = escapes;
     }
 
     public boolean isStaticLinks() {
