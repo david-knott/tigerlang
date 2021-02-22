@@ -30,7 +30,7 @@ public class Tasks implements TaskProvider {
 
                 ConstantPropagationFragmentOptimizer constOptimezer = new ConstantPropagationFragmentOptimizer();
                 taskContext.lirFragList.accept(constOptimezer);
-                taskContext.setFragList(constOptimezer.fragList);
+                taskContext.setLIR(constOptimezer.fragList);
 
                 FragmentTreeDeatomizer fragmentVisitor = new FragmentTreeDeatomizer(treedeatomizer);
                 taskContext.lirFragList.accept(fragmentVisitor);

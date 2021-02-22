@@ -52,8 +52,10 @@ class ConstPropagation extends CloningTreeVisitor {
                 reachableIn.and(tempDefs);
                 reachableIn.and(this.conDefs);
                 if (!reachableIn.isEmpty()) {
-                    //System.out.println("Exp is constant:" + exp + " " + this.constants.get(reachableIn.nextSetBit(0)));
+                    System.out.println("Exp is constantx:" + exp + " " + this.constants.get(reachableIn.nextSetBit(0)));
                     return new CONST(this.constants.get(reachableIn.nextSetBit(0)));
+                } else {
+                    System.out.println("Not in.");
                 }
             }
         }

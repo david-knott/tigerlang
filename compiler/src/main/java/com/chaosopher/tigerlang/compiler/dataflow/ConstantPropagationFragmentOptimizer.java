@@ -11,9 +11,6 @@ class ConstantPropagationFragmentOptimizer implements FragmentVisitor {
 
     public FragList fragList = null;
 
-    public ConstantPropagationFragmentOptimizer() {
-    }
-
     @Override
     public void visit(ProcFrag procFrag) {
         ConstPropagation constPropagation = new ConstPropagation(new GenKillSets(new CFG((StmList)procFrag.body)));
