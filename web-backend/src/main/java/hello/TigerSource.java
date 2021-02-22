@@ -23,6 +23,7 @@ public class TigerSource {
     private boolean cfg;
     private boolean noPrelude;
     private boolean callGraphDisplay;
+    private boolean deatomize;
 
     public String getCode() {
         return this.code;
