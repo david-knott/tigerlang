@@ -75,6 +75,25 @@ public class GenKillTest {
     }
 
     @Test
+    public void forLoop() {
+        TranslatorVisitor translator = new TranslatorVisitor();
+        ParserService parserService = new ParserService(new ParserFactory());
+        ErrorMsg errorMsg = new ErrorMsg("", System.out);
+        Absyn program = parserService.parse("let var a:int := 99 var b:int := 555 var c:int := 999 var d:int := 88 in (for i := b to c do a := a - d ); a end", new ErrorMsg("", System.out));
+        // need binder to bind types to expressions.
+        program.accept(new Binder(errorMsg));
+        program.accept(new TypeChecker(errorMsg));
+        program.accept(new EscapeVisitor(errorMsg));
+        program.accept(translator);
+        CanonVisitor canonVisitor = new CanonVisitor(new CanonicalizationImpl());
+        translator.getFragList().accept(canonVisitor);
+        StmList stmList = (StmList)((ProcFrag)canonVisitor.fragList.head).body;
+        CFG cfg = new CFG(stmList);
+        GenKillSets genKillSets = new  GenKillSets(cfg);
+        genKillSets.displayGenKill(System.out);
+    }
+
+    @Test
     public void simpleLoop() {
         Temp a = Temp.create();
         Temp b = Temp.create();

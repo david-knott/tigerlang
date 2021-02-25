@@ -4,6 +4,7 @@ import java.util.BitSet;
 import java.util.HashMap;
 
 import com.chaosopher.tigerlang.compiler.tree.BINOP;
+import com.chaosopher.tigerlang.compiler.tree.CJUMP;
 import com.chaosopher.tigerlang.compiler.tree.CONST;
 import com.chaosopher.tigerlang.compiler.tree.CloningTreeVisitor;
 import com.chaosopher.tigerlang.compiler.tree.Exp;
@@ -14,9 +15,9 @@ import com.chaosopher.tigerlang.compiler.tree.TEMP;
 class ConstPropagation extends CloningTreeVisitor {
     
     private final GenKillSets genKillSets;
-    private final BitSet conDefs = new BitSet();
+    private final BitSet constantDefintiions = new BitSet();
     private final HashMap<Integer, Integer> constants = new HashMap<>();
-    private Stm currentMove;
+    private Stm currentStatement;
     
     public ConstPropagation(GenKillSets genKillSets) {
         this.genKillSets = genKillSets;
@@ -24,35 +25,60 @@ class ConstPropagation extends CloningTreeVisitor {
 
     @Override
     public void visit(MOVE op) {
+        this.currentStatement = op;
         // look for definitions of form a <- const
         if(op.src instanceof CONST) {
             // get definition id for const definition
             int defId = this.genKillSets.getDefinitionId(op);
             // add defId to constant defs set
-            conDefs.set(defId);
+            constantDefintiions.set(defId);
             // get the constant value
             Integer val = ((CONST)op.src).value;
             // sort a map of definition id -> value,
             // this is used for the actual rewrite
             constants.put(defId, val);
+        } else {
+            Exp clonedSrc = this.rewrite(op.src);
+            op.dst.accept(this);
+            Exp clonedDst = this.exp;
+            this.stm = new MOVE(clonedDst, clonedSrc);
+            return;
         }
         // store the current move, this is
         // used to get the in set if we
         // visit a binop.
-        this.currentMove = op;
         super.visit(op);
+    }
+
+    
+    @Override
+    public void visit(CJUMP cjump) {
+        this.currentStatement = cjump;
+        Exp leftClone = this.rewrite(cjump.left);
+        Exp rightClone = this.rewrite(cjump.right);
+        this.stm = new CJUMP(cjump.relop, leftClone, rightClone, cjump.iftrue, cjump.iffalse);
     }
 
     private Exp rewrite(Exp exp) {
         if (exp instanceof TEMP) {
-            BitSet reachableIn = (BitSet) (this.genKillSets.getIn(this.currentMove).clone());
-            TEMP leftTemp = (TEMP) exp;
-            BitSet tempDefs = this.genKillSets.getDefinitions(leftTemp.temp);
+            int defId = this.genKillSets.getDefinitionId(this.currentStatement);
+            BitSet reachableIn = (BitSet) (this.genKillSets.getIn(this.currentStatement).clone()); // all definitions that reach this statement,
+            TEMP leftTemp = (TEMP) exp; 
+            BitSet tempDefs = this.genKillSets.getDefinitions(leftTemp.temp); // all definitions for temp that may be replaced.
             if(tempDefs != null) {
-                reachableIn.and(tempDefs);
-                reachableIn.and(this.conDefs);
-                if (!reachableIn.isEmpty()) {
-                    return new CONST(this.constants.get(reachableIn.nextSetBit(0)));
+                reachableIn.and(tempDefs); // all definitions for temp that reach this statement.
+                if(reachableIn.cardinality() == 1) { //only one def for this temp that reaches this statement
+                    reachableIn.and(this.constantDefintiions);
+                    if(reachableIn.cardinality() == 1) { //only one def for temp that reaches this statement and is a constant.
+                        Integer t = this.constants.get(reachableIn.nextSetBit(0));
+                        System.out.println("rewrite " + leftTemp + " to const " + t + ",  adding def " + defId);
+                        // update list of constant definitions
+                        this.constantDefintiions.set(defId);
+                        // update map of definitions ids to constant values.
+                        this.constants.put(defId, t);
+                        // update list of constant defintions
+                        return new CONST(t);
+                    }
                 }
             }
         }
@@ -63,50 +89,7 @@ class ConstPropagation extends CloningTreeVisitor {
     @Override
     public void visit(BINOP op) {
         Exp leftClone, rightClone;
-        // find what is reachable-in for the parent statement
-        // if set of defs live at in
-        // AND set of associated defs for temp left or right 
-        // AND set of const defs is not empty
-        // Get the first set bit in the resultant set
-        // lookup its constant value and rewrite.
-
-        /*
-        if(op.left instanceof TEMP) {
-            BitSet reachableIn = (BitSet)(this.genKillSets.getIn(this.currentMove).clone());
-            TEMP leftTemp = (TEMP)op.left;
-            BitSet tempDefs = this.genKillSets.getDefinitions(leftTemp.temp);
-            reachableIn.and(tempDefs);
-            reachableIn.and(this.conDefs);
-            if(!reachableIn.isEmpty()) {
-                System.out.println("Op Left is constant:" + op.left + " " + this.constants.get(reachableIn.nextSetBit(0)));
-                leftClone = new CONST(this.constants.get(reachableIn.nextSetBit(0)));
-            } else {
-                op.left.accept(this);
-                leftClone = this.exp;
-            }
-        } else {
-            op.left.accept(this);
-            leftClone = this.exp;
-        }*/
         leftClone = this.rewrite(op.left);
-        /*
-        if(op.right instanceof TEMP) {
-            BitSet reachableIn = (BitSet)(this.genKillSets.getIn(this.currentMove).clone());
-            TEMP rightTemp = (TEMP)op.right;
-            BitSet tempDefs = this.genKillSets.getDefinitions(rightTemp.temp);
-            reachableIn.and(tempDefs);
-            reachableIn.and(this.conDefs);
-            if(!reachableIn.isEmpty()) {
-                System.out.println("Op right is constant:" + op.right + " " + this.constants.get(reachableIn.nextSetBit(0)));
-                rightClone = new CONST(this.constants.get(reachableIn.nextSetBit(0)));
-            } else {
-                op.right.accept(this);
-                rightClone = this.exp;
-            }
-        } else {
-            op.right.accept(this);
-            rightClone = this.exp;
-        }*/
         rightClone = this.rewrite(op.right);
         this.exp = new BINOP(op.binop, leftClone, rightClone);
     }

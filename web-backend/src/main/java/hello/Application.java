@@ -132,7 +132,6 @@ public class Application {
 			argList.add("--demove");
 		}
 		argList.add("filenameplaceholder");
-		//String[] args = new String[] {"--reg-alloc", "--escapes-compute", "--demove", "filenameplaceholder"};
 		String[] args = argList.toArray(new String[argList.size()]);
 		new TaskRegister()
 		.register(new com.chaosopher.tigerlang.compiler.main.Tasks())

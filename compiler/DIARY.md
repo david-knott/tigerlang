@@ -1,4 +1,25 @@
 # Diary
+
+## Thursday 25th February 2021
+
+Working on lexer for tree. At the moment I am using a simple buffering technique
+that will fail if the lexeme being parsed is longer that the buffer.
+
+Multiple calls to the scan function are not working correctly, we skip the last non
+matching character from the previous call to scan.
+
+
+There is a dataflow constant propagation bug for this function. It seems
+to be missing the a in the addition ((a + b) + c)
+
+```
+function add():int = (let var a:= 3 var b:= 4 var c:= 5 in a + b + c end)
+```
+
+
+Another approach would be to prefill a buffer
+
+
 ## Thursday 19th February 2021
 
 Task Register updated to handle disjunctive tasks. I am not happy with the implementation

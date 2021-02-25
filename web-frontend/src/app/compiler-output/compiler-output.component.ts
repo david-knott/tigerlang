@@ -29,13 +29,6 @@ export class CompilerOutputComponent implements OnInit {
     @Inject(APP_BASE_HREF) public baseHref: string
   ) {
     this.compilerService.compilerRequest.subscribe((s) => {
-      if (this.activeTab == "ast") {
-        s.astDisplay = true;
-        s.hirDisplay = false;
-        s.lirDisplay = false;
-        s.regAlloc = false;
-        s.cfg = false;
-        s.callGraphDisplay = false;
         s.rename = this.optionsService.getOption("rename");
         s.inline = this.optionsService.getOption("inline");
         s.prune = this.optionsService.getOption("prune");
@@ -51,6 +44,14 @@ export class CompilerOutputComponent implements OnInit {
           "staticLinkEscapes"
         );
         s.deatomize = this.optionsService.getOption("deatomize");
+      if (this.activeTab == "ast") {
+        s.astDisplay = true;
+        s.hirDisplay = false;
+        s.lirDisplay = false;
+        s.regAlloc = false;
+        s.cfg = false;
+        s.callGraphDisplay = false;
+        
       }
       if (this.activeTab == "hir") {
         s.astDisplay = false;

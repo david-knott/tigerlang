@@ -10,6 +10,6 @@ public class DataFlowRegTest extends RegressionTestBase{
 
     @Override
     public String[] getArgs() {
-        return new String[]{"--deatomize", "--reg-alloc"};
+        return new String[]{"--escapes-compute", "--deatomize", "--reg-alloc"};
     }
 }

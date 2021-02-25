@@ -519,7 +519,7 @@ public Yylex(java.io.InputStream s, com.chaosopher.tigerlang.compiler.errormsg.E
 					case -22:
 						break;
 					case 22:
-						{return tok(sym.INT, new Integer(yytext()));}
+						{return tok(sym.INT, Integer.parseInt(yytext()));}
 					case -23:
 						break;
 					case 23:

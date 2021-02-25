@@ -1,8 +1,11 @@
 let
 	var a:int := 99
+	var b:int := 555
+	var c:int := 999
+	var d:int := 88
 in
-	(for i := 555 to 999 do
-		a := a - 88
+	(for i := b to c do
+		a := a - d
 	);
 	a
 end
