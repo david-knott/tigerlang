@@ -60,7 +60,6 @@ class ConstPropagation extends CloningTreeVisitor {
 
     private Exp rewrite(Exp exp) {
         if (exp instanceof TEMP) {
-            int defId = this.genKillSets.getDefinitionId(this.currentStatement);
             BitSet reachableIn = (BitSet) (this.genKillSets.getIn(this.currentStatement).clone()); // all definitions that reach this statement,
             TEMP leftTemp = (TEMP) exp; 
             BitSet tempDefs = this.genKillSets.getDefinitions(leftTemp.temp); // all definitions for temp that may be replaced.
