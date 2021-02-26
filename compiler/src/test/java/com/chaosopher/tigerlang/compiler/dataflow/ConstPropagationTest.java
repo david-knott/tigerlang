@@ -20,6 +20,7 @@ import com.chaosopher.tigerlang.compiler.tree.PrettyPrinter;
 import com.chaosopher.tigerlang.compiler.tree.StmList;
 import com.chaosopher.tigerlang.compiler.tree.TEMP;
 import com.chaosopher.tigerlang.compiler.types.TypeChecker;
+import com.chaosopher.tigerlang.compiler.translate.FragList;
 import com.chaosopher.tigerlang.compiler.translate.ProcFrag;
 
 import org.junit.Test;
@@ -67,7 +68,31 @@ public class ConstPropagationTest {
         TranslatorVisitor translator = new TranslatorVisitor();
         ParserService parserService = new ParserService(new ParserFactory());
         ErrorMsg errorMsg = new ErrorMsg("", System.out);
-        Absyn program = parserService.parse("let var a:= 3 var b:= 4 in a + b end", new ErrorMsg("", System.out));
+        Absyn program = parserService.parse("function add():int = (let var a:= 3 var b:= 4 var c:= 5 in a + b + c end)", new ErrorMsg("", System.out));
+        // need binder to bind types to expressions.
+        program.accept(new Binder(errorMsg));
+        program.accept(new TypeChecker(errorMsg));
+        program.accept(new EscapeVisitor(errorMsg));
+        program.accept(translator);
+        TreeAtomizer treeAtomizer = new TreeAtomizer(new CanonicalizationImpl());
+        FragList fragList = translator.getFragList();
+        ((ProcFrag)fragList.head).body.accept(treeAtomizer);
+      //  treeAtomizer.getCanonicalisedAtoms().accept(new PrettyPrinter(System.out));
+        TreeDeatomizer deatomizer = new TreeDeatomizer(treeAtomizer.getTemps());
+        CFG cfg = new CFG(treeAtomizer.getCanonicalisedAtoms());
+        GenKillSets genKillSets = new GenKillSets(cfg);
+        new GenKillSetsXmlSerializer(genKillSets).serialize(System.out);
+      //  genKillSets.displayGenKill(System.out);
+        //treeAtomizer.getCanonicalisedAtoms().accept(deatomizer);
+        //deatomizer.stm.accept(new PrettyPrinter(System.out));
+    }
+    
+    @Test
+    public void constProp3() {
+        TranslatorVisitor translator = new TranslatorVisitor();
+        ParserService parserService = new ParserService(new ParserFactory());
+        ErrorMsg errorMsg = new ErrorMsg("", System.out);
+        Absyn program = parserService.parse("function add():int = (let var a:= 3 var b:= 4 var c:= 5 in a + b + c end)", new ErrorMsg("", System.out));
         // need binder to bind types to expressions.
         program.accept(new Binder(errorMsg));
         program.accept(new TypeChecker(errorMsg));
@@ -75,4 +100,7 @@ public class ConstPropagationTest {
         program.accept(translator);
         TreeAtomizer treeAtomizer = new TreeAtomizer(new CanonicalizationImpl());
     }
+ 
+
+    
 }

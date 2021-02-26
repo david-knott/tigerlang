@@ -49,7 +49,6 @@ class ConstPropagation extends CloningTreeVisitor {
         // visit a binop.
         super.visit(op);
     }
-
     
     @Override
     public void visit(CJUMP cjump) {
@@ -71,12 +70,6 @@ class ConstPropagation extends CloningTreeVisitor {
                     reachableIn.and(this.constantDefintiions);
                     if(reachableIn.cardinality() == 1) { //only one def for temp that reaches this statement and is a constant.
                         Integer t = this.constants.get(reachableIn.nextSetBit(0));
-                        System.out.println("rewrite " + leftTemp + " to const " + t + ",  adding def " + defId);
-                        // update list of constant definitions
-                        this.constantDefintiions.set(defId);
-                        // update map of definitions ids to constant values.
-                        this.constants.put(defId, t);
-                        // update list of constant defintions
                         return new CONST(t);
                     }
                 }
