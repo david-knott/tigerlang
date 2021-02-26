@@ -1,7 +1,6 @@
 package com.chaosopher.tigerlang.compiler.tree;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -27,12 +26,12 @@ public class LexerTest {
 
     @Test
     public void identifier() throws Exception {
-        String code = "MOVE123";
+        String code = "t1";
         Lexer lexer = new Lexer(new ByteArrayInputStream(code.getBytes()));
         Token token;
         token = lexer.scan();
         Assert.assertEquals(TokenType.ID, token.getTokenType());
-        Assert.assertEquals("MOVE123", token.getLexeme());
+        Assert.assertEquals("t1", token.getLexeme());
     }
 
     @Test
@@ -58,10 +57,15 @@ public class LexerTest {
     public void unknownLexicalTokenEnd() throws Exception {
         String code = "MOVE123;!";
         Lexer lexer = new Lexer(new ByteArrayInputStream(code.getBytes()));
-        Token token;
-        token = lexer.scan(); //return move123
-        token = lexer.scan();
-        Assert.assertEquals(TokenType.EOF, token.getTokenType());
+        lexer.scan(); //return move123
+        lexer.scan();
+    }
+
+    @Test(expected = java.lang.Error.class)
+    public void rubbish() throws Exception {
+        String code = "@~}{[]";
+        Lexer lexer = new Lexer(new ByteArrayInputStream(code.getBytes()));
+        lexer.scan(); 
     }
 
     @Test

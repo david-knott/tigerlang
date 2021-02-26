@@ -1,10 +1,6 @@
 package com.chaosopher.tigerlang.compiler.tree;
 
-import java.io.Serializable;
-
-public abstract class IR implements Serializable {
-
-    private static final long serialVersionUID = 538341853519182529L;
+public abstract class IR {
 
     abstract public void accept(TreeVisitor treeVisitor);
 

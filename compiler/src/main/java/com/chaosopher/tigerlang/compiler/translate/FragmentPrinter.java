@@ -19,7 +19,7 @@ public class FragmentPrinter implements FragmentVisitor {
 
 	@Override
     public void visit(ProcFrag procFrag) {
-        this.out.println("Fragment " + procFrag.frame.name);
+        this.out.println("# Fragment " + procFrag.frame.name);
         procFrag.body.accept(new PrettyPrinter(this.out));
        // this.out.println("Frame:");
        // this.out.println("Wordsize:" + procFrag.frame.wordSize());
@@ -28,7 +28,7 @@ public class FragmentPrinter implements FragmentVisitor {
 
     @Override
     public void visit(DataFrag dataFrag) {
-        this.out.println("Data:");
+        this.out.println("# Data:");
         this.out.println(dataFrag.data);
     }
 

@@ -1,5 +1,4 @@
 package com.chaosopher.tigerlang.compiler.tree;
-
 class Token {
 
     private final String lexeme;
@@ -20,5 +19,10 @@ class Token {
 
     public TokenType getTokenType() {
         return this.tokenType;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("{ lexeme=\"%s\", tokenType=\"%s\" }", this.lexeme, this.tokenType);
     }
 }

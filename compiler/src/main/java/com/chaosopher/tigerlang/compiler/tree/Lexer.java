@@ -25,6 +25,7 @@ public class Lexer {
         hashMap.put("cjump", TokenType.CJUMP);
         hashMap.put("label", TokenType.LABEL);
         hashMap.put("name", TokenType.NAME);
+        hashMap.put("call", TokenType.CALL);
     }
 	public static final int EOF = 129;
     private final BufferedReader bufferedReader;

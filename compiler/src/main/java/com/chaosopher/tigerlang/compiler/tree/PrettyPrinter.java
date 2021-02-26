@@ -20,7 +20,6 @@ public class PrettyPrinter implements TreeVisitor {
 
     public PrettyPrinter(OutputStream out) {
         this.printStream = new PrintStream(out);
-        this.printStream.println("### Tree Pretty Printer ###");
     }
 
     private void write(String s) {
@@ -61,7 +60,6 @@ public class PrettyPrinter implements TreeVisitor {
     public void visit(CALL op) {
         this.write("call(");
         this.incLevel();
-        ;
         op.func.accept(this);
         for (ExpList el = op.args; el != null; el = el.tail) {
             el.head.accept(this);
