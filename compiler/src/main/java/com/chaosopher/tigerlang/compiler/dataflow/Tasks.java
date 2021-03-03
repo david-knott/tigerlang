@@ -3,6 +3,7 @@ package com.chaosopher.tigerlang.compiler.dataflow;
 import java.io.PrintStream;
 
 import com.chaosopher.tigerlang.compiler.canon.CanonicalizationImpl;
+import com.chaosopher.tigerlang.compiler.tree.CloningTreeVisitor;
 import com.chaosopher.tigerlang.compiler.util.SimpleTask;
 import com.chaosopher.tigerlang.compiler.util.SimpleTaskProvider;
 import com.chaosopher.tigerlang.compiler.util.TaskContext;
@@ -31,7 +32,11 @@ public class Tasks implements TaskProvider {
                 ConstantPropagationFragmentOptimizer constOptimezer = new ConstantPropagationFragmentOptimizer();
                 taskContext.lirFragList.accept(constOptimezer);
                 taskContext.setLIR(constOptimezer.fragList);
-                
+
+                CopyPropagationFragmentOptimizer copyOptimiser = new CopyPropagationFragmentOptimizer();
+                taskContext.lirFragList.accept(copyOptimiser);
+                taskContext.setLIR(copyOptimiser.fragList);
+
                 FragmentTreeDeatomizer fragmentVisitor = new FragmentTreeDeatomizer(treedeatomizer);
                 taskContext.lirFragList.accept(fragmentVisitor);
                 taskContext.setLIR(fragmentVisitor.fragList);
@@ -61,39 +66,22 @@ public class Tasks implements TaskProvider {
 
         taskRegister.register(
             new SimpleTask(new SimpleTaskProvider() {
-                @Override
+            @Override
                 public void only(TaskContext taskContext) {
-
-                    throw new UnsupportedOperationException();
+                    taskContext.lirFragList.accept(new KillGenDisplayFragmentVisitor(taskContext.out));
                 }
-            }, "common-subexpression-elimination", "Eliminate common subexpressions from quadruples", "hir-compute")
+            }, "killgen-display", "Display Killgen Information", "atomize")
         );
+
         taskRegister.register(
             new SimpleTask(new SimpleTaskProvider() {
-                @Override
+            @Override
                 public void only(TaskContext taskContext) {
-                    throw new UnsupportedOperationException();
-
+                    (new CFGGraphizRender2(new PrintStream(taskContext.out))).start(taskContext.lirFragList);
                 }
-            }, "constant-propagation", "Propogate constants expressions", "escapes-compute")
+            }, "reachdef-display", "Display Reachable Definitions Information", "deatomize")
         );
-        taskRegister.register(
-            new SimpleTask(new SimpleTaskProvider() {
-                @Override
-                public void only(TaskContext taskContext) {
-                    throw new UnsupportedOperationException();
 
-                }
-            }, "copy-propagation", "Propogate variable expressions", "escapes-compute")
-        );
-        taskRegister.register(
-            new SimpleTask(new SimpleTaskProvider() {
-                @Override
-                public void only(TaskContext taskContext) {
-                    throw new UnsupportedOperationException();
 
-                }
-            }, "deadcode-elimination", "Remove dead code from quadruples", "escapes-compute")
-        );
     }
 }

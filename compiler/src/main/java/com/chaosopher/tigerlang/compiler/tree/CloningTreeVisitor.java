@@ -3,7 +3,7 @@ package com.chaosopher.tigerlang.compiler.tree;
 public class CloningTreeVisitor extends DefaultTreeVisitor {
 
     protected Exp exp;
-    protected Stm stm;
+    public Stm stm;
     private StmList stmList;
 
     public StmList getStmList() {

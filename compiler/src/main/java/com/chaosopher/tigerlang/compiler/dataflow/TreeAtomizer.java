@@ -7,6 +7,7 @@ import com.chaosopher.tigerlang.compiler.temp.Temp;
 import com.chaosopher.tigerlang.compiler.tree.BINOP;
 import com.chaosopher.tigerlang.compiler.tree.CALL;
 import com.chaosopher.tigerlang.compiler.tree.CJUMP;
+import com.chaosopher.tigerlang.compiler.tree.CloningTreeVisitor;
 import com.chaosopher.tigerlang.compiler.tree.ESEQ;
 import com.chaosopher.tigerlang.compiler.tree.EXP;
 import com.chaosopher.tigerlang.compiler.tree.Exp;
@@ -59,7 +60,7 @@ public class TreeAtomizer extends CloningTreeVisitor {
     /**
      * This method takes expression exp and converts it into a new expression
      * that evaluetes it and places its result into a new temp, which is returned
-     * by an ESEQ. This only operates on MEM and BINOP IR.
+     * by an ESEQ.
      * @param exp the expression to be rewritten.
      * @return a new expression
      */

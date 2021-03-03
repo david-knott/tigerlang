@@ -7,10 +7,12 @@ import com.chaosopher.tigerlang.compiler.tree.BINOP;
 import com.chaosopher.tigerlang.compiler.tree.CJUMP;
 import com.chaosopher.tigerlang.compiler.tree.CONST;
 import com.chaosopher.tigerlang.compiler.tree.CloningTreeVisitor;
+import com.chaosopher.tigerlang.compiler.tree.EXP;
 import com.chaosopher.tigerlang.compiler.tree.Exp;
 import com.chaosopher.tigerlang.compiler.tree.MOVE;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.TEMP;
+import com.chaosopher.tigerlang.compiler.util.Assert;
 
 class ConstPropagation extends CloningTreeVisitor {
     
@@ -28,14 +30,10 @@ class ConstPropagation extends CloningTreeVisitor {
         this.currentStatement = op;
         // look for definitions of form a <- const
         if(op.src instanceof CONST) {
-            // get definition id for const definition
-            int defId = this.genKillSets.getDefinitionId(op);
-            // add defId to constant defs set
-            constantDefintiions.set(defId);
-            // get the constant value
             Integer val = ((CONST)op.src).value;
-            // sort a map of definition id -> value,
-            // this is used for the actual rewrite
+            Integer defId = this.genKillSets.getDefinitionId(op);
+            Assert.assertNotNull(defId, "No definition found for move: " + op.dst + " <- " + val);
+            constantDefintiions.set(defId);
             constants.put(defId, val);
         } else {
             Exp clonedSrc = this.rewrite(op.src);
@@ -44,9 +42,6 @@ class ConstPropagation extends CloningTreeVisitor {
             this.stm = new MOVE(clonedDst, clonedSrc);
             return;
         }
-        // store the current move, this is
-        // used to get the in set if we
-        // visit a binop.
         super.visit(op);
     }
     
@@ -56,6 +51,12 @@ class ConstPropagation extends CloningTreeVisitor {
         Exp leftClone = this.rewrite(cjump.left);
         Exp rightClone = this.rewrite(cjump.right);
         this.stm = new CJUMP(cjump.relop, leftClone, rightClone, cjump.iftrue, cjump.iffalse);
+    }
+
+    public void visit(EXP op) {
+        this.currentStatement = op;
+        Exp expClone = this.rewrite(op.exp);
+        this.stm = new EXP(expClone);
     }
 
     private Exp rewrite(Exp exp) {

@@ -1,5 +1,22 @@
 # Diary
 
+## Tuesday 2nd of March 2021
+
+Parser and lexer for LIR/HIR is complete.
+
+Refactor kill and gen / reachable definitions.
+
+Refactor dataflow package into sub packages.
+
+KillGen needs proper unit tests
+
+Reachable Definitions needs proper unit tests.
+
+Copy Propagation is not working correctly. I have commented out the 
+actual rewrite so that the tests all pass. I need to investigate this.
+The problem is caused by propagation of temporaries created in the atomize
+phase. When deatomise is called, these are recombined.
+
 ## Thursday 25th February 2021
 
 Working on lexer for tree. At the moment I am using a simple buffering technique

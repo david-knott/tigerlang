@@ -44,4 +44,8 @@ public class CALL extends Exp {
         return expList.head;
     }
 
+    @Override
+    public String toString() {
+        return String.format("call: { func: %d, args: tbd }", this.func);
+    }
 }

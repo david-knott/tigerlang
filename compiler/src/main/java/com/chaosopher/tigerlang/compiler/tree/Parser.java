@@ -11,14 +11,14 @@ import com.chaosopher.tigerlang.compiler.temp.Temp;
  * and HIR into the corresponding model. This is used for both
  * the interpreter and for testing data flow optimisations.
  */
-class Parser {
+public class Parser {
 
     // lexical scanner instance
     private final Lexer lexer;
     // lookahead token.
     private Token look;
 
-    Parser(Lexer lexer) {
+    public Parser(Lexer lexer) {
         this.lexer = lexer;
     }
 
@@ -229,6 +229,7 @@ class Parser {
         this.match(TokenType.BINOP);
         this.match(TokenType.LEFT_PAREN);
         tok = this.look;
+        this.match(TokenType.ID);
         this.match(TokenType.COMMA);
         Exp leftExp = this.expression();
         this.match(TokenType.COMMA);

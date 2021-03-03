@@ -23,6 +23,21 @@ public class ParserTest {
     }
 
     @Test
+    public void parseMoveBinop() throws IOException {
+        String code = "move(temp(t1), binop(PLUS, temp(t2), temp(t3)))";
+        Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
+        IR ir = parser.parse();
+    }
+
+    @Test
+    public void parseStatementList() throws IOException {
+        String code = "move(temp(t1), binop(PLUS, temp(t2), temp(t3))) move(temp(t1), binop(PLUS, temp(t2), temp(t3))) ";
+        Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
+        IR ir = parser.parse();
+    }
+
+
+    @Test
     public void parseMoveConst() throws IOException {
         String code = "move(temp(t1), const(10))";
         Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));

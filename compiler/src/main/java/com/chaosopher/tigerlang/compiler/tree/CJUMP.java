@@ -79,4 +79,9 @@ public class CJUMP extends Stm {
                 throw new Error("Index out of range");
         }
     }
+
+    @Override
+    public String toString() {
+        return String.format("cjump: { relop: %d,  left: %s, right %s, iftrue: %s, iffalse: %s}", this.relop, this.left, this.right, this.iftrue, this.iffalse);
+    }
 }

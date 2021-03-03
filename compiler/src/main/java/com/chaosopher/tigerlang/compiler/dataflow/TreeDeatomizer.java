@@ -1,27 +1,70 @@
 package com.chaosopher.tigerlang.compiler.dataflow;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Hashtable;
 
 import com.chaosopher.tigerlang.compiler.temp.Temp;
+import com.chaosopher.tigerlang.compiler.tree.BINOP;
+import com.chaosopher.tigerlang.compiler.tree.CALL;
+import com.chaosopher.tigerlang.compiler.tree.CJUMP;
+import com.chaosopher.tigerlang.compiler.tree.CloningTreeVisitor;
 import com.chaosopher.tigerlang.compiler.tree.Exp;
+import com.chaosopher.tigerlang.compiler.tree.JUMP;
+import com.chaosopher.tigerlang.compiler.tree.MEM;
 import com.chaosopher.tigerlang.compiler.tree.MOVE;
+import com.chaosopher.tigerlang.compiler.tree.Stm;
+import com.chaosopher.tigerlang.compiler.tree.StmList;
 import com.chaosopher.tigerlang.compiler.tree.TEMP;
 
 public class TreeDeatomizer extends CloningTreeVisitor {
 
-    /**
-     * This hashtable contains all the temporaries that
-     * were created during the atomisation of the orignal
-     * HIR tree.
-     */
-    private final Hashtable<Temp, Exp> temps;
-    private final Hashtable<Temp, Exp> sources = new Hashtable<>();
+    private final HashMap<Temp, Exp> defs = new HashMap<>();
+    private final HashSet<Stm> delete = new HashSet<>();
+    private final HashMap<Temp, Stm> defStatement = new HashMap<>();
 
     public TreeDeatomizer(Hashtable<Temp, Exp> temps) {
-        this.temps = temps;
+
+    private Exp replace(Exp left) {
+        Exp original = this.exp;
+        if(left instanceof TEMP) {
+            Temp t = ((TEMP)left).temp;
+            if(this.defs.containsKey(t)) {
+                left = this.defs.get(t);
+                this.delete.add(this.defStatement.get(t));
+                this.defStatement.remove(t);
+                this.defs.remove(t);
+            }
+        }
+        left.accept(this);
+        Exp result = this.exp;
+        this.exp = original;
+        return result;
     }
 
-    
+    @Override
+    public void visit(BINOP op) {
+        this.replace(op.left).accept(this);
+        Exp leftClone = this.exp;
+        this.replace(op.right).accept(this);
+        Exp rightClone = this.exp;
+        this.exp = new BINOP(op.binop, leftClone, rightClone);
+    }
+
+    @Override
+    public void visit(MOVE op) {
+        if(op.dst instanceof TEMP && (op.src instanceof BINOP || op.src instanceof MEM)) {
+            // get dst temp
+            Temp tempDst = ((TEMP)op.dst).temp;
+            // store entry for dest temp -> src expression.
+            this.defs.put(tempDst, op.src);
+            // store entry for dest temp -> move operation.
+            this.defStatement.put(tempDst, op);
+        }
+        op.accept(this);
+    }
+
+/*
     @Override
     public void visit(MOVE op) {
         // if destination is a temp in our list,
@@ -50,5 +93,32 @@ public class TreeDeatomizer extends CloningTreeVisitor {
         } else {
             super.visit(op);
         }
+    }
+*/
+    /**
+     * Reverses the statement list.
+     * @param source
+     * @return
+     */
+    private StmList reverse(StmList source) {
+        StmList reversed = new StmList(source.head);
+        for(; source.tail != null; source = source.tail) {
+            reversed = new StmList(source.head, reversed);
+        }
+        return reversed;
+    }
+
+    @Override
+    public void visit(StmList stmList) {
+        StmList cloned = null;
+        for(;stmList != null; stmList = stmList.tail) {
+            stmList.head.accept(this);
+            Stm clonedStm = this.stm;
+            // check if the original stm was marked for deletion.
+            if(!this.delete.contains(stmList.head)) {
+                cloned = StmList.append(cloned, clonedStm);
+            }
+        }
+        this.stm = cloned;
     }
 }

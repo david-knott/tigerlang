@@ -1,27 +1,21 @@
 package com.chaosopher.tigerlang.compiler.dataflow;
 
 import com.chaosopher.tigerlang.compiler.translate.DataFrag;
+import com.chaosopher.tigerlang.compiler.translate.FragList;
 import com.chaosopher.tigerlang.compiler.translate.FragmentVisitor;
 import com.chaosopher.tigerlang.compiler.translate.ProcFrag;
-import com.chaosopher.tigerlang.compiler.tree.CloningTreeVisitor;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
-import com.chaosopher.tigerlang.compiler.translate.FragList;
+import com.chaosopher.tigerlang.compiler.tree.StmList;
 
-
-class NopFragmentOptimizer implements FragmentVisitor {
-
-    private final CloningTreeVisitor cloningTreeVisitor;
+class CopyPropagationFragmentOptimizer implements FragmentVisitor {
     public FragList fragList = null;
-
-    public NopFragmentOptimizer(CloningTreeVisitor cloningTreeVisitor) {
-        this.cloningTreeVisitor = cloningTreeVisitor;
-    }
 
     @Override
     public void visit(ProcFrag procFrag) {
-        procFrag.body.accept(cloningTreeVisitor);
-        Stm deatomized = cloningTreeVisitor.stm;
-        ProcFrag lirProcFrag = new ProcFrag(deatomized, procFrag.frame);
+        CopyPropagation copyPropagation = new CopyPropagation(new GenKillSets(new CFG((StmList)procFrag.body)));
+        procFrag.body.accept(copyPropagation);
+        Stm optimized = copyPropagation.getStmList();
+        ProcFrag lirProcFrag = new ProcFrag(optimized, procFrag.frame);
         this.fragList = new FragList(lirProcFrag, this.fragList);
     }
 

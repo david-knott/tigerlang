@@ -4,8 +4,6 @@ import java.io.PrintStream;
 import java.util.BitSet;
 import java.util.HashMap;
 
-import javax.swing.plaf.basic.BasicHTML;
-
 import com.chaosopher.tigerlang.compiler.tree.LABEL;
 import com.chaosopher.tigerlang.compiler.graph.NodeList;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
@@ -15,7 +13,6 @@ import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.StmList;
 import com.chaosopher.tigerlang.compiler.tree.TEMP;
 import com.chaosopher.tigerlang.compiler.util.Assert;
-
 
 public class GenKillSets {
 
@@ -54,7 +51,7 @@ public class GenKillSets {
         return this.killMap.get(basicBlock);
     }
 
-    private boolean isDefinition(Stm stm) {
+    boolean isDefinition(Stm stm) {
         return (stm instanceof MOVE && ((MOVE)stm).dst instanceof TEMP);
     }
 
@@ -114,8 +111,7 @@ public class GenKillSets {
             if(s == stm) {
                 return blockIn;
             }
-            // we are only interested in MOVE with a destination thats a temp.
-            if(s instanceof MOVE && ((MOVE)s).dst instanceof TEMP) {
+            if(this.isDefinition(s)) {
                 // reconstitute kill and gen from in.
                 BitSet gen = this.getGen(s);
                 // current block generates these
@@ -138,7 +134,7 @@ public class GenKillSets {
             // for each statement, we get the gen and kill
             Stm s = stmList.head;
             // we are only interested in MOVE with a destination thats a temp.
-            if(s instanceof MOVE && ((MOVE)s).dst instanceof TEMP) {
+            if(this.isDefinition(s)) {
                 // reconstitute kill and gen from in.
                 BitSet gen = this.getGen(s);
                 // current block generates these
@@ -153,81 +149,6 @@ public class GenKillSets {
         Assert.unreachable("Statment was not contained in any block");
         return null;
 	}
-
-
-
-    /*
-    public BitSet getOut(Stm stm) {
-        BasicBlock basicBlock = this.blockReference.get(stm);
-        StmList stmList = basicBlock.first;
-        // set of all definitions that reach the start of this block
-        BitSet blockIn = (BitSet)(this.inMap.get(basicBlock).clone());
-        HashMap<Temp, BitSet> blockDefTemps = new HashMap<>();
-        for (; stmList != null; stmList = stmList.tail) {
-            // for each statement, we get the gen and kill
-            Stm s = stmList.head;
-            // we are only interested in MOVE with a destination thats a temp.
-            if(s instanceof MOVE && ((MOVE)s).dst instanceof TEMP) {
-                // reconstitute kill and gen from in.
-                MOVE move = (MOVE)s;
-                // get destination temp.
-                Temp temp = ((TEMP)move.dst).temp;
-                // get the defintion id for the statement.
-                int defId = this.defs.get(s);
-                // this statement generates a new def
-                blockIn.set(defId);
-                // remove any previous definition of temp in this block.
-                blockIn.andNot(blockDefTemps.get(temp)); 
-                // add new def to set of defs for temp.
-                if(!blockDefTemps.containsKey(temp)) {
-                    blockDefTemps.put(temp, new BitSet());
-                }
-                blockDefTemps.get(temp).set(defId);
-            }
-
-            
-        }
-        Assert.unreachable("Statment was not contained in any block");
-        return null;
-    }
-
-    public BitSet getIn(Stm stm) {
-        BasicBlock basicBlock = this.blockReference.get(stm);
-        StmList stmList = basicBlock.first;
-        // set of all definitions that reach the start of this block
-        BitSet blockIn = (BitSet)(this.inMap.get(basicBlock).clone());
-        BitSet blockOut = (BitSet)blockIn.clone();
-        HashMap<Temp, BitSet> blockDefTemps = new HashMap<>();
-        for (; stmList != null; stmList = stmList.tail) {
-            // for each statement, we get the gen and kill
-            Stm s = stmList.head;
-            // we are only interested in MOVE with a destination thats a temp.
-            if(s instanceof MOVE && ((MOVE)s).dst instanceof TEMP) {
-                // reconstitute kill and gen from in set.
-                MOVE move = (MOVE)s;
-                // get destination temp.
-                Temp temp = ((TEMP)move.dst).temp;
-                // get the defintion id for the statement.
-                int defId = this.defs.get(s);
-                // this statement generates a new def
-                blockOut.set(defId);
-                // remove any previous definition of temp in this block.
-                blockOut.andNot(blockDefTemps.get(temp)); 
-                // add new def to set of defs for temp.
-                if(!blockDefTemps.containsKey(temp)) {
-                    blockDefTemps.put(temp, new BitSet());
-                }
-                blockDefTemps.get(temp).set(defId);
-                
-            }
-
-            if(s == stm) {
-                return blockIn;
-            }
-        }
-        Assert.unreachable("Statment was not contained in any block");
-        return null;
-    }*/
 
     private void initSets(BasicBlock basicBlock) {
         StmList stmList = basicBlock.first;
@@ -332,7 +253,7 @@ public class GenKillSets {
     public void generate() {
         genMap.clear();
         killMap.clear();
-        // create def ids for each statement.
+        // create def ids for each statement that is not a label.
         int id = 1;
         for(NodeList nodes = this.cfg.nodes(); nodes != null; nodes = nodes.tail) {
             BasicBlock b = this.cfg.get(nodes.head);
@@ -343,7 +264,7 @@ public class GenKillSets {
                 }
             }
         }
-        // calculate gen and kill for each basic block.
+        // initialise empty sets.
         for(NodeList nodes = this.cfg.nodes(); nodes != null; nodes = nodes.tail) {
             BasicBlock b = this.cfg.get(nodes.head);
             this.initSets(b);
@@ -357,12 +278,13 @@ public class GenKillSets {
             BasicBlock b = this.cfg.get(nodes.head);
             this.calculateKillSet(b);
         }
-        // compute in[n] and out[n] for each block.
+        // initialise in[n] and out[n] to be empty sets. 
         for(NodeList nodes = this.cfg.nodes(); nodes != null; nodes = nodes.tail) {
             BasicBlock b = this.cfg.get(nodes.head);
             inMap.put(b, new BitSet());
             outMap.put(b, new BitSet());
         }
+        // compute in[n] and out[n] for each block.
         boolean changed = true;
         do
         {

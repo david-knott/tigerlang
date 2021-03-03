@@ -47,4 +47,9 @@ public class BINOP extends Exp {
                 throw new Error("Index out of range");
         }
     }
+
+    @Override
+    public String toString() {
+        return String.format("binop: { op: %d,  left: %s, right %s}", this.binop, this.left, this.right);
+    }
 }

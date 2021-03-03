@@ -38,4 +38,9 @@ public class CONST extends Exp {
     public IR getNthChild(int index) {
         throw new Error("Illegal operations");
     }
+
+    @Override
+    public String toString() {
+        return String.format("const: { val: %d}", this.value);
+    }
 }
