@@ -30,7 +30,7 @@ public class Temp implements Comparable<Temp> {
         if (temps.containsKey(name)) {
             return temps.get(name);
         }
-        Temp temp = new Temp();
+        Temp temp = new Temp(name);
         temps.put(name, temp);
         revTemps.put(temp, name);
         return temp;
@@ -41,14 +41,21 @@ public class Temp implements Comparable<Temp> {
 	}
 
     private int num;
+    private String name;
 
     private Temp() {
-        num = count++;
+        this.num = count++;
+        this.name = "t" + num;
+    }
+
+    private Temp(String name) {
+        this.num = count++;
+        this.name = name;
     }
 
     @Override
     public String toString() {
-        return "t" + num;
+       return this.name;
     }
 
     @Override

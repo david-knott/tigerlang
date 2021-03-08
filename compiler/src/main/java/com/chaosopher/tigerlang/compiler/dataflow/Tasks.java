@@ -1,9 +1,6 @@
 package com.chaosopher.tigerlang.compiler.dataflow;
 
-import java.io.PrintStream;
-
 import com.chaosopher.tigerlang.compiler.canon.CanonicalizationImpl;
-import com.chaosopher.tigerlang.compiler.tree.CloningTreeVisitor;
 import com.chaosopher.tigerlang.compiler.util.SimpleTask;
 import com.chaosopher.tigerlang.compiler.util.SimpleTaskProvider;
 import com.chaosopher.tigerlang.compiler.util.TaskContext;
@@ -19,12 +16,10 @@ public class Tasks implements TaskProvider {
             @Override
             public void only(TaskContext taskContext) {
                 TreeAtomizer treeAtomizer = new TreeAtomizer(new CanonicalizationImpl());
-                TreeDeatomizer treedeatomizer = new TreeDeatomizer(treeAtomizer.getTemps());
+                taskContext.hirFragList.accept(treeAtomizer);
+                taskContext.setLIR(treeAtomizer.fragList);
 
-                FragmentTreeAtomizer atomizerVisitor = new FragmentTreeAtomizer(treeAtomizer);
-                taskContext.hirFragList.accept(atomizerVisitor);
-                taskContext.setLIR(atomizerVisitor.fragList);
-
+                /*
                 NopFragmentOptimizer fragmentOptimezer = new NopFragmentOptimizer(new CloningTreeVisitor());
                 taskContext.lirFragList.accept(fragmentOptimezer);
                 taskContext.setFragList(fragmentOptimezer.fragList);
@@ -37,9 +32,12 @@ public class Tasks implements TaskProvider {
                 taskContext.lirFragList.accept(copyOptimiser);
                 taskContext.setLIR(copyOptimiser.fragList);
 
-                FragmentTreeDeatomizer fragmentVisitor = new FragmentTreeDeatomizer(treedeatomizer);
-                taskContext.lirFragList.accept(fragmentVisitor);
-                taskContext.setLIR(fragmentVisitor.fragList);
+*/
+
+
+            //    TreeDeatomizer2 treedeatomizer = new TreeDeatomizer2();
+            //    taskContext.lirFragList.accept(treedeatomizer);
+              //  taskContext.setLIR(treedeatomizer.fragList);
             }
             }, "deatomize", "Atomize hir tree", "hir-compute")
         );
@@ -48,9 +46,8 @@ public class Tasks implements TaskProvider {
             @Override
             public void only(TaskContext taskContext) {
                 TreeAtomizer treeAtomizer = new TreeAtomizer(new CanonicalizationImpl());
-                FragmentTreeAtomizer atomizerVisitor = new FragmentTreeAtomizer(treeAtomizer);
-                taskContext.hirFragList.accept(atomizerVisitor);
-                taskContext.setLIR(atomizerVisitor.fragList);
+                taskContext.hirFragList.accept(treeAtomizer);
+                taskContext.setLIR(treeAtomizer.fragList);
                 }
             }, "atomize", "Atomize lir tree", "hir-compute")
         );
@@ -59,7 +56,7 @@ public class Tasks implements TaskProvider {
             new SimpleTask(new SimpleTaskProvider() {
             @Override
                 public void only(TaskContext taskContext) {
-                    (new CFGGraphizRender2(new PrintStream(taskContext.out))).start(taskContext.lirFragList);
+              //      (new CFGGraphizRender2(new PrintStream(taskContext.out))).start(taskContext.lirFragList);
                 }
             }, "cfg", "Build cfg", "deatomize")
         );
@@ -68,7 +65,7 @@ public class Tasks implements TaskProvider {
             new SimpleTask(new SimpleTaskProvider() {
             @Override
                 public void only(TaskContext taskContext) {
-                    taskContext.lirFragList.accept(new KillGenDisplayFragmentVisitor(taskContext.out));
+                //    taskContext.lirFragList.accept(new KillGenDisplay(taskContext.out));
                 }
             }, "killgen-display", "Display Killgen Information", "atomize")
         );
@@ -77,7 +74,7 @@ public class Tasks implements TaskProvider {
             new SimpleTask(new SimpleTaskProvider() {
             @Override
                 public void only(TaskContext taskContext) {
-                    (new CFGGraphizRender2(new PrintStream(taskContext.out))).start(taskContext.lirFragList);
+             //       (new CFGGraphizRender2(new PrintStream(taskContext.out))).start(taskContext.lirFragList);
                 }
             }, "reachdef-display", "Display Reachable Definitions Information", "deatomize")
         );

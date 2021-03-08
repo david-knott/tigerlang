@@ -99,22 +99,15 @@ public class Parser {
     private Stm handleCjump() throws IOException {
         Exp cjumpLeft = null, cjumpRight = null;
         String cjumpIdLeft = null, cjumpIdRight = null;
+        Token optoken;
+        Token tok2;
         this.match(TokenType.CJUMP);
         this.match(TokenType.LEFT_PAREN);
-        cjumpLeft = this.expression();
-        this.match(TokenType.COMMA);
-        cjumpRight = this.expression();
-        this.match(TokenType.COMMA);
-        Token tok2 = this.look;
+        // operator
+        optoken = this.look;
         this.match(TokenType.ID);
-        cjumpIdLeft = tok2.getLexeme();
-        this.match(TokenType.COMMA);
-        tok2 = this.look;
-        this.match(TokenType.ID);
-        cjumpIdRight = tok2.getLexeme();
-        this.match(TokenType.RIGHT_PAREN);
         int op;
-        switch(tok2.getLexeme()) {
+        switch(optoken.getLexeme()) {
             case "LT":
                 op = CJUMP.LT;
                 break;
@@ -146,8 +139,25 @@ public class Parser {
                 op = CJUMP.UGE;
                 break;
             default:
-                throw new Error("Unknown CJUMP op:" + tok2.getLexeme());
+                throw new Error("Unknown CJUMP op:" + optoken.getLexeme());
         }
+        this.match(TokenType.COMMA);
+        // left value
+        cjumpLeft = this.expression();
+        this.match(TokenType.COMMA);
+        // right value
+        cjumpRight = this.expression();
+        this.match(TokenType.COMMA);
+        // laeft left
+        tok2 = this.look;
+        this.match(TokenType.ID);
+        cjumpIdLeft = tok2.getLexeme();
+        this.match(TokenType.COMMA);
+        // right left
+        tok2 = this.look;
+        this.match(TokenType.ID);
+        cjumpIdRight = tok2.getLexeme();
+        this.match(TokenType.RIGHT_PAREN);
         return new CJUMP(op, cjumpLeft, cjumpRight, Label.create(cjumpIdLeft), Label.create(cjumpIdRight));
     }
 

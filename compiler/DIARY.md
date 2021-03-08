@@ -1,5 +1,13 @@
 # Diary
 
+## Friday 5th March 2021
+
+Converting quadruples back into tree's requires data flow analysis, in particular
+reaching definitions and available expressions. This makes sense as merging move src's
+into subsequent moves changes the order of execution, which could change the result
+of the program. We need to check first that the original move expression is available at
+the point we want to merge it.
+
 ## Tuesday 2nd of March 2021
 
 Parser and lexer for LIR/HIR is complete.

@@ -118,4 +118,9 @@ public class StmList extends Stm {
     public IR getNthChild(int index) {
         return null;
     }
+
+    @Override
+    public String toString() {
+        return String.format("stmList: { head: %s, tail: %s}", this.head, this.tail);
+    }
 }

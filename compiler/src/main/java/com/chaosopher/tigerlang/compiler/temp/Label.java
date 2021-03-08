@@ -43,7 +43,7 @@ public class Label {
     * @return a Label.
     */
    public static Label create(String string) {
-      if(labels.contains(string)){
+      if(labels.containsKey(string)){
          return labels.get(string);
       }
       Label label = new Label(string);
@@ -72,14 +72,14 @@ public class Label {
    /**
     * Makes a new label with an arbitrary name.
     */
-   public Label() {
+   private Label() {
       this("L" + count++);
    }
 
    /**
     * Makes a new label whose name is the same as a symbol.
     */
-   public Label(Symbol s) {
+   private Label(Symbol s) {
       this(s.toString());
    }
 }

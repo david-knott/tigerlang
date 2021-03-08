@@ -4,6 +4,10 @@ import java.util.Hashtable;
 
 import com.chaosopher.tigerlang.compiler.canon.Canonicalization;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
+import com.chaosopher.tigerlang.compiler.translate.DataFrag;
+import com.chaosopher.tigerlang.compiler.translate.FragList;
+import com.chaosopher.tigerlang.compiler.translate.FragmentVisitor;
+import com.chaosopher.tigerlang.compiler.translate.ProcFrag;
 import com.chaosopher.tigerlang.compiler.tree.BINOP;
 import com.chaosopher.tigerlang.compiler.tree.CALL;
 import com.chaosopher.tigerlang.compiler.tree.CJUMP;
@@ -26,8 +30,9 @@ import com.chaosopher.tigerlang.compiler.tree.TEMP;
  * this is a quadruple set, which can be fed into data flow
  * analyses.
  */
-public class TreeAtomizer extends CloningTreeVisitor {
+public class TreeAtomizer extends CloningTreeVisitor implements FragmentVisitor {
 
+    public FragList fragList = null;
     private final Canonicalization canonicalization;
     private final Hashtable<Temp, Exp> temps = new Hashtable<>();
 
@@ -115,5 +120,19 @@ public class TreeAtomizer extends CloningTreeVisitor {
             cloneExpList = ExpList.append(cloneExpList, cloneArg);
         }
         this.exp = new CALL(funcClone, cloneExpList);
+    }
+
+    
+	@Override
+    public void visit(ProcFrag procFrag) {
+        procFrag.body.accept(this);
+        Stm atomized = this.getCanonicalisedAtoms();
+        ProcFrag lirProcFrag = new ProcFrag(atomized, procFrag.frame);
+        this.fragList = new FragList(lirProcFrag, this.fragList);
+    }
+
+    @Override
+    public void visit(DataFrag dataFrag) {
+        this.fragList = new FragList(dataFrag, this.fragList);
     }
 }

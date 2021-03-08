@@ -1,4 +1,4 @@
-package com.chaosopher.tigerlang.compiler.dataflow;
+package com.chaosopher.tigerlang.compiler.dataflow.cfg;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -22,7 +22,7 @@ public class CFGTest {
                 new TEMP(Temp.create())
             )
         );
-        CFG cfg = new CFG(test);
+        CFG cfg = CFG.build(test);
         assertNotNull(cfg);
     }
 
@@ -47,7 +47,7 @@ public class CFGTest {
                 )
             )
         );
-        CFG cfg = new CFG(test);
+        CFG cfg = CFG.build(test);
         cfg.show(System.out);
         // expect one block, with 3 statements.
     }
@@ -78,7 +78,7 @@ public class CFGTest {
                 )
             )
         );
-        CFG cfg = new CFG(test);
+        CFG cfg = CFG.build(test);
         cfg.show(System.out);
         // expect one block, with 3 statements.
     }

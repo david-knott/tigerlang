@@ -35,4 +35,9 @@ public class MEM extends Exp {
     public IR getNthChild(int index) {
         return this.exp;
     }
+
+    @Override
+    public String toString() {
+        return String.format("mem: { exp: %s}", this.exp);
+    }
 }

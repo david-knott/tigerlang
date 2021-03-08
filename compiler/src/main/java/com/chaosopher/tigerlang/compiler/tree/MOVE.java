@@ -48,4 +48,9 @@ public class MOVE extends Stm {
                 throw new Error("Index out of range");
         }
     }
+
+    @Override
+    public String toString() {
+        return String.format("move: { dst: %s, src: %s}", this.dst, this.src);
+    }
 }

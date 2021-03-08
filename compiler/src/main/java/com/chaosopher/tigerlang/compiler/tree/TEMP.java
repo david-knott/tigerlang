@@ -39,6 +39,6 @@ public class TEMP extends Exp {
     }
 
     public String toString() {
-        return temp.toString();
+        return String.format("temp : { temp : %s }", temp.toString());
     }
 }

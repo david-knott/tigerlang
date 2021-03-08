@@ -38,4 +38,9 @@ public class EXP extends Stm {
     public IR getNthChild(int index) {
         return this.exp;
     }
+
+    @Override
+    public String toString() {
+        return String.format("sxp: { exp : %s }", this.exp);
+    }
 }

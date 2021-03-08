@@ -1,19 +1,22 @@
-package com.chaosopher.tigerlang.compiler.dataflow;
+package com.chaosopher.tigerlang.compiler.dataflow.vis;
 
 import java.io.PrintStream;
 
+import com.chaosopher.tigerlang.compiler.dataflow.cfg.BasicBlock;
+import com.chaosopher.tigerlang.compiler.dataflow.cfg.CFG;
 import com.chaosopher.tigerlang.compiler.graph.Node;
 import com.chaosopher.tigerlang.compiler.graph.NodeList;
 import com.chaosopher.tigerlang.compiler.tree.QuadruplePrettyPrinter;
 import com.chaosopher.tigerlang.compiler.tree.StmList;
 
-class CFGGraphizRender extends CFGRenderer {
+public class CFGGraphizRender {
+
+    private final CFG cfg;
 
     public CFGGraphizRender(CFG cfg) {
-        super(cfg);
+        this.cfg = cfg;
     }
 
-    @Override
     public void write(PrintStream out) {
         out.println("digraph D{");
         for (NodeList p = this.cfg.nodes(); p != null; p = p.tail) {

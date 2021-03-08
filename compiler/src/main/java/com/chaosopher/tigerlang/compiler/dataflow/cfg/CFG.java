@@ -1,4 +1,4 @@
-package com.chaosopher.tigerlang.compiler.dataflow;
+package com.chaosopher.tigerlang.compiler.dataflow.cfg;
 
 import java.util.HashMap;
 
@@ -11,6 +11,7 @@ import com.chaosopher.tigerlang.compiler.tree.DefaultTreeVisitor;
 import com.chaosopher.tigerlang.compiler.tree.ESEQ;
 import com.chaosopher.tigerlang.compiler.tree.JUMP;
 import com.chaosopher.tigerlang.compiler.tree.LABEL;
+import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.StmList;
 import com.chaosopher.tigerlang.compiler.util.Assert;
 
@@ -43,6 +44,7 @@ public class CFG extends Graph {
 
         private void addEdge(BasicBlock basicBlock, LabelList labelList) {
             BasicBlock target = labelBlockMap.get(labelList.head);
+            Assert.assertNotNull(target, "Label not found");
             CFG.this.addEdge(basicBlock, target);
             if(labelList.tail != null) {
                 this.addEdge(basicBlock, labelList.tail);
@@ -57,7 +59,6 @@ public class CFG extends Graph {
             if(basicBlock.labelList != null) {
                 addEdge(basicBlock, basicBlock.labelList);
             }
-            
         }
     }
 
@@ -101,26 +102,36 @@ public class CFG extends Graph {
             stmList.head.accept(this);
             Assert.assertNotNull(this.basicBlock, "Basic block should not be null, perhaps there is no label ?");
             this.basicBlock.addStatement(stmList.head);
+            // add reference to stmt -> basicBlock
+            blockReference.put(stmList.head, this.basicBlock);
             if(stmList.tail != null) {
                 stmList.tail.accept(this);
             }
         }
     }
-    
+
+    public static CFG build(StmList stmList) {
+        CFG cfg = new CFG(stmList);
+        cfg.init();
+        return cfg;
+    }
+
     private final StmList stmList;
     private final BuildBasicBlocks buildBasicBlocks;
     private final HashMap<Label, BasicBlock> labelBlockMap = new HashMap<>();
     private final HashMap<BasicBlock, Node> map = new HashMap<>();
     private final HashMap<Node, BasicBlock> revMap = new HashMap<>();
+    private final HashMap<Stm, BasicBlock> blockReference = new HashMap<>();
 
-    public CFG(StmList stmList) {
+    private CFG(StmList stmList) {
         this.stmList = stmList;
         this.buildBasicBlocks = new BuildBasicBlocks();
-        this.init();
     }
 
     public BasicBlock get(Node node) {
-        return this.revMap.get(node);
+        BasicBlock bb = this.revMap.get(node);
+        Assert.assertNotNull(bb, "Basic block should not be null for node " + node);
+        return bb;
     }
 
     private void init() {
@@ -143,4 +154,8 @@ public class CFG extends Graph {
         Node nodeEnd = this.addNode(end);
         super.addEdge(nodeStart, nodeEnd);
     }
+
+	public BasicBlock getBlockReference(Stm stm) {
+        return this.blockReference.get(stm);
+	}
 }

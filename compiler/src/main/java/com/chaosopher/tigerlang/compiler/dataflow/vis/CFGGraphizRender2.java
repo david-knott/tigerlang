@@ -1,7 +1,9 @@
-package com.chaosopher.tigerlang.compiler.dataflow;
+package com.chaosopher.tigerlang.compiler.dataflow.vis;
 
 import java.io.PrintStream;
 
+import com.chaosopher.tigerlang.compiler.dataflow.cfg.BasicBlock;
+import com.chaosopher.tigerlang.compiler.dataflow.cfg.CFG;
 import com.chaosopher.tigerlang.compiler.graph.Node;
 import com.chaosopher.tigerlang.compiler.graph.NodeList;
 import com.chaosopher.tigerlang.compiler.translate.DataFrag;
@@ -26,7 +28,7 @@ class CFGGraphizRender2 implements FragmentVisitor {
 
     @Override
     public void visit(ProcFrag procFrag) {
-        CFG cfg = new CFG((StmList) procFrag.body);
+        CFG cfg = CFG.build((StmList) procFrag.body);
         for (NodeList p = cfg.nodes(); p != null; p = p.tail) {
             Node n = p.head;
             BasicBlock basicBlock = cfg.get(n);

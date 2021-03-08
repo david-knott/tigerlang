@@ -834,8 +834,8 @@ public class TranslatorVisitor extends DefaultVisitor {
         // the sub expressions.
         Label loopEnd = Label.create();
         this.loopExits.push(loopEnd);
-        var whileStart = new Label();
-        var loopStart = new Label();
+        var whileStart = Label.create();
+        var loopStart = Label.create();
         exp.test.accept(this);
         Exp testExp = this.visitedExp;
         exp.body.accept(this);

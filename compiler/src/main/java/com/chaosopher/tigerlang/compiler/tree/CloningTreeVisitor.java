@@ -4,7 +4,7 @@ public class CloningTreeVisitor extends DefaultTreeVisitor {
 
     protected Exp exp;
     public Stm stm;
-    private StmList stmList;
+    protected StmList stmList;
 
     public StmList getStmList() {
         return stmList;
@@ -112,9 +112,18 @@ public class CloningTreeVisitor extends DefaultTreeVisitor {
 
     @Override
     public void visit(StmList stmList) {
+        StmList cloned = null;
+        for(;stmList != null; stmList = stmList.tail) {
+            stmList.head.accept(this);
+            Stm clonedHead = this.stm;
+            cloned = StmList.append(cloned, clonedHead);
+        }
+        this.stmList = cloned;
+        
         stmList.head.accept(this);
         Stm clonedHead = this.stm;
         this.stmList = new StmList(clonedHead);
+
         if(stmList.tail != null) {
             stmList.tail.accept(this);
             this.stmList = new StmList(clonedHead, this.stmList);

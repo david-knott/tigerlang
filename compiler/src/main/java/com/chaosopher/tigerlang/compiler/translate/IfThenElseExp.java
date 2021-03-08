@@ -22,11 +22,11 @@ class IfThenElseExp extends Exp {
 
     Exp testExp, a, b;
     // begining of the the clause
-    Label trueLabel = new Label();
+    Label trueLabel = Label.create();
     // begining of the else clause
-    Label falseLabel = new Label();
+    Label falseLabel = Label.create();
     // both branches jump to this when they complete
-    Label joinLabel = new Label();
+    Label joinLabel = Label.create();
 
     /**
      * Constructor for creating a new instance.

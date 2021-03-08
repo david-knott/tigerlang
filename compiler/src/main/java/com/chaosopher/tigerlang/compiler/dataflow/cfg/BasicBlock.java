@@ -1,11 +1,11 @@
-package com.chaosopher.tigerlang.compiler.dataflow;
+package com.chaosopher.tigerlang.compiler.dataflow.cfg;
 
 import com.chaosopher.tigerlang.compiler.temp.Label;
 import com.chaosopher.tigerlang.compiler.temp.LabelList;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.StmList;
 
-class BasicBlock {
+public class BasicBlock {
 
     public StmList first;
     public final Label label;

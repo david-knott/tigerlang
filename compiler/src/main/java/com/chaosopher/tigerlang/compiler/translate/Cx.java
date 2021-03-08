@@ -31,7 +31,7 @@ abstract class Cx extends Exp {
 
     @Override
     com.chaosopher.tigerlang.compiler.tree.Stm unNx() {
-        Label a = new Label();
+        Label a = Label.create();
         return new com.chaosopher.tigerlang.compiler.tree.SEQ(unCx(a, a), new com.chaosopher.tigerlang.compiler.tree.LABEL(a));
     }
 }
