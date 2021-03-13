@@ -26,7 +26,6 @@ class ReachingDefinitions {
     private final GenKillSets genKillSets;
     private final HashMap<BasicBlock, DataFlowSet<Integer>> inMap = new HashMap<>();
     private final HashMap<BasicBlock, DataFlowSet<Integer>> outMap = new HashMap<>();
-    private final int maxIterations = 10;
     private int totalIterations;
 
     private ReachingDefinitions(CFG cfg, GenKillSets genKillSets) {
@@ -104,24 +103,24 @@ class ReachingDefinitions {
                 DataFlowSet<Integer> outPrev = (DataFlowSet<Integer>)outMap.get(b); 
                 DataFlowSet<Integer> inPrev = (DataFlowSet<Integer>)inMap.get(b);
                 // get IN set using nodes n predecessors using OR join
-                DataFlowSet<Integer> pout = new DataFlowSet<>();
+                DataFlowSet<Integer> in = new DataFlowSet<>();
                 for(NodeList preds = nodes.head.pred(); preds != null; preds = preds.tail) {
                     BasicBlock pb = this.cfg.get(preds.head);
-                    pout.or(outMap.get(pb));
+                    in.or(outMap.get(pb));
                 }
-                inMap.put(b, pout);
+                inMap.put(b, in);
                 // get OUT set, IN set 
                 DataFlowSet<Integer> gen = (DataFlowSet<Integer>)this.genKillSets.getGen(b); 
                 DataFlowSet<Integer> kill = (DataFlowSet<Integer>)this.genKillSets.getKill(b); 
                 // create new set for in.
-                DataFlowSet<Integer> in = new DataFlowSet<>();
+                DataFlowSet<Integer> out = new DataFlowSet<>();
                 // in(s)
-                in.or(inPrev);
+                out.or(in);
                 // in(s) MINUS kill(s)
-                in.andNot(kill);
+                out.andNot(kill);
                 // gen(s) OR ( in(s) MINUS kill(s) )
-                in.or(gen);
-                outMap.put(b, in);
+                out.or(gen);
+                outMap.put(b, out);
                 // check if sets have changed since last iteration.
                 var c1 = inMap.get(b).equals(inPrev);
                 var c2 = outMap.get(b).equals(outPrev);

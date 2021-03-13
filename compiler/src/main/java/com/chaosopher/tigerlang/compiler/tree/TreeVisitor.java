@@ -1,6 +1,5 @@
 package com.chaosopher.tigerlang.compiler.tree;
 
-
 public interface TreeVisitor {
 
     public void visit(BINOP op);

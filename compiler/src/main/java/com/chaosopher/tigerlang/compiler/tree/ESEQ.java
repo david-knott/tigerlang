@@ -40,4 +40,23 @@ public class ESEQ extends Exp {
     public IR getNthChild(int index) {
         throw new Error();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof ESEQ) {
+            return
+            ((ESEQ)obj).exp.equals(this.exp)
+            && ((ESEQ)obj).stm.equals(this.stm)
+            ;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 7;
+        result = 31 * result + this.exp.hashCode();
+        result = 31 * result + this.stm.hashCode();
+        return result;
+    }
 }

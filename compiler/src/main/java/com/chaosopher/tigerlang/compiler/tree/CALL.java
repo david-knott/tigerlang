@@ -1,5 +1,10 @@
 package com.chaosopher.tigerlang.compiler.tree;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import com.chaosopher.tigerlang.compiler.temp.Temp;
+
 public class CALL extends Exp {
     public Exp func;
     public ExpList args;
@@ -42,6 +47,26 @@ public class CALL extends Exp {
             expList = expList.tail;
         }
         return expList.head;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof CALL) {
+            return
+            ((CALL)obj).func == this.func
+            && ((CALL)obj).args.equals(this.args);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 7;
+        result = 31 * result + this.func.hashCode();
+        if(this.args != null) {
+            result = 31 * result + this.args.hashCode();
+        }
+        return result;
     }
 
     @Override

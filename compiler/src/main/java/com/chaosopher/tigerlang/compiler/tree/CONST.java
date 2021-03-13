@@ -40,6 +40,24 @@ public class CONST extends Exp {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof CONST) {
+            return
+            ((CONST)obj).value == this.value
+            ;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 7;
+        result = 31 * result + this.value;
+        return result;
+    }
+
+
+    @Override
     public String toString() {
         return String.format("const: { val: %d}", this.value);
     }

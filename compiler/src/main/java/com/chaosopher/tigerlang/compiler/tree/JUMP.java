@@ -40,4 +40,23 @@ public class JUMP extends Stm {
   public IR getNthChild(int index) {
     return this.exp;
   }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof JUMP) {
+            return
+            ((JUMP)obj).exp.equals(this.exp)
+            ;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 7;
+        result = 31 * result + this.exp.hashCode();
+        return result;
+    }
+
+
 }

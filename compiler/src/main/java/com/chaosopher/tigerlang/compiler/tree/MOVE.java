@@ -50,6 +50,25 @@ public class MOVE extends Stm {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof MOVE) {
+            return
+            ((MOVE)obj).src.equals(this.src)
+            && ((MOVE)obj).dst.equals(this.dst)
+            ;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 7;
+        result = 31 * result + this.src.hashCode();
+        result = 31 * result + this.dst.hashCode();
+        return result;
+    }
+
+    @Override
     public String toString() {
         return String.format("move: { dst: %s, src: %s}", this.dst, this.src);
     }

@@ -1,5 +1,10 @@
 package com.chaosopher.tigerlang.compiler.tree;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import com.chaosopher.tigerlang.compiler.temp.Temp;
+
 public class BINOP extends Exp {
     public int binop;
     public Exp left, right;
@@ -49,7 +54,29 @@ public class BINOP extends Exp {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof BINOP) {
+            return
+            ((BINOP)obj).binop == this.binop
+            && ((BINOP)obj).left.equals(this.left)
+            && ((BINOP)obj).right.equals(this.right);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 7;
+        result = 31 * result + this.binop;
+        result = 31 * result + this.left.hashCode();
+        result = 31 * result + this.right.hashCode();
+        return result;
+    }
+
+    @Override
     public String toString() {
         return String.format("binop: { op: %d,  left: %s, right %s}", this.binop, this.left, this.right);
     }
+
+
 }

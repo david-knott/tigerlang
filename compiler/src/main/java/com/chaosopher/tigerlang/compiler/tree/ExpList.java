@@ -1,5 +1,7 @@
 package com.chaosopher.tigerlang.compiler.tree;
 
+import com.chaosopher.tigerlang.compiler.errormsg.Error;
+
 public class ExpList {
 
     public static ExpList append(ExpList me, Exp t) {
@@ -63,5 +65,15 @@ public class ExpList {
             i++;
         }
         return i;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        throw new RuntimeException("Not implemented");
+    }
+
+    @Override
+    public int hashCode() {
+        throw new RuntimeException("Not implemented");
     }
 }

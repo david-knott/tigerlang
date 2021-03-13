@@ -103,4 +103,22 @@ public class SEQ extends Stm {
                 throw new Error("Index out of range");
         }
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof SEQ) {
+            return
+            ((SEQ)obj).left.equals(this.left)
+            && ((SEQ)obj).right.equals(this.right);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 7;
+        result = 31 * result + this.left.hashCode();
+        result = 31 * result + this.right.hashCode();
+        return result;
+    }
 }

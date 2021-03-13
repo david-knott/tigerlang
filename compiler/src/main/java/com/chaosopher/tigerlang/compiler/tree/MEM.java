@@ -37,6 +37,24 @@ public class MEM extends Exp {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof MEM) {
+            return
+            ((MEM)obj).exp.equals(this.exp)
+            ;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 7;
+        result = 31 * result + this.exp.hashCode();
+        return result;
+    }
+
+
+    @Override
     public String toString() {
         return String.format("mem: { exp: %s}", this.exp);
     }

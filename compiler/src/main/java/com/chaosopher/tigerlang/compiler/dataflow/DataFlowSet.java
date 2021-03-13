@@ -30,6 +30,10 @@ public class DataFlowSet<T> {
         this.hashSet.remove(item);
     }
 
+    public void addAll(DataFlowSet<T> dataFlowSet) {
+        this.hashSet.addAll(dataFlowSet.hashSet);
+    }
+
     @Override
     public String toString() {
         return this.hashSet.toString();

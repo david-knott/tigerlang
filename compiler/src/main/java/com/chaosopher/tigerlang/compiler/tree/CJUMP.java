@@ -1,6 +1,10 @@
 package com.chaosopher.tigerlang.compiler.tree;
 
 import com.chaosopher.tigerlang.compiler.temp.Temp;
+
+import java.util.HashSet;
+import java.util.Set;
+
 import com.chaosopher.tigerlang.compiler.temp.Label;
 
 public class CJUMP extends Stm {
@@ -66,6 +70,31 @@ public class CJUMP extends Stm {
     @Override
     public int getArity() {
         return 2;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof CJUMP) {
+            return
+            ((CJUMP)obj).relop == this.relop
+            && ((CJUMP)obj).left.equals(this.left)
+            && ((CJUMP)obj).right.equals(this.right)
+            && ((CJUMP)obj).iftrue.equals(this.iftrue)
+            && ((CJUMP)obj).iffalse.equals(this.iffalse)
+            ;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 7;
+        result = 31 * result + this.relop;
+        result = 31 * result + this.left.hashCode();
+        result = 31 * result + this.right.hashCode();
+        result = 31 * result + this.iftrue.hashCode();
+        result = 31 * result + this.iffalse.hashCode();
+        return result;
     }
 
     @Override

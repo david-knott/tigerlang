@@ -36,4 +36,20 @@ public class NAME extends Exp {
     public IR getNthChild(int index) {
         throw new Error("Not supported");
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof NAME) {
+            return
+            ((NAME)obj).label.equals(this.label);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 7;
+        result = 31 * result + this.label.hashCode();
+        return result;
+    }
 }
