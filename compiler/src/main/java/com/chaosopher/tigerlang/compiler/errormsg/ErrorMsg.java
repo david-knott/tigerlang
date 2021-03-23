@@ -1,6 +1,9 @@
 package com.chaosopher.tigerlang.compiler.errormsg;
 
+import java.io.FilenameFilter;
 import java.io.PrintStream;
+import java.util.Collections;
+import java.util.List;
 
 public class ErrorMsg {
     private LineList linePos = new LineList(-1, null);
@@ -8,6 +11,7 @@ public class ErrorMsg {
     private String filename;
     public boolean anyErrors;
     public PrintStream out;
+    private List<ErrorMessage> errors;
 
     public ErrorMsg(String f, PrintStream out) {
         filename = f;
@@ -19,8 +23,27 @@ public class ErrorMsg {
         linePos = new LineList(pos, linePos);
     }
 
-    public void add(CompilerError compilerError){
+    /**
+     * If there are errors, this returns a read-only list of errors.
+     * If there are no errors, this returns an empty list. 
+     * @return @see List
+     */
+    public List<ErrorMessage> getErrors() {
+        return Collections.unmodifiableList(this.errors);
+    }
+
+    public void errorNew(int pos, String message ) {
+        int n = lineNum;
+        LineList p = linePos;
         anyErrors = true;
+        while (p != null) {
+            if (p.head < pos) {
+                break;
+            }
+            p = p.tail;
+            n--;
+        }
+        this.errors.add(new ErrorMessage(this.filename, n, pos - p.head, message));
     }
 
     public void error(int pos, String msg) {

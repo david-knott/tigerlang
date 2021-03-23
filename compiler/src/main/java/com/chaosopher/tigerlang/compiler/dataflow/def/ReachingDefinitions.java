@@ -3,10 +3,11 @@ package com.chaosopher.tigerlang.compiler.dataflow.def;
 import java.io.PrintStream;
 import java.util.BitSet;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.chaosopher.tigerlang.compiler.dataflow.cfg.BasicBlock;
 import com.chaosopher.tigerlang.compiler.dataflow.cfg.CFG;
-import com.chaosopher.tigerlang.compiler.dataflow.DataFlowSet;
 import com.chaosopher.tigerlang.compiler.graph.NodeList;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
 import com.chaosopher.tigerlang.compiler.tree.QuadruplePrettyPrinter;
@@ -24,8 +25,8 @@ class ReachingDefinitions {
 
     private final CFG cfg;
     private final GenKillSets genKillSets;
-    private final HashMap<BasicBlock, DataFlowSet<Integer>> inMap = new HashMap<>();
-    private final HashMap<BasicBlock, DataFlowSet<Integer>> outMap = new HashMap<>();
+    private final HashMap<BasicBlock, Set<Integer>> inMap = new HashMap<>();
+    private final HashMap<BasicBlock, Set<Integer>> outMap = new HashMap<>();
     private int totalIterations;
 
     private ReachingDefinitions(CFG cfg, GenKillSets genKillSets) {
@@ -33,28 +34,20 @@ class ReachingDefinitions {
         this.genKillSets = genKillSets;
     }
 
-    public DataFlowSet<Integer> getIn(int defId) {
-        return this.getIn(this.genKillSets.getDefinition(defId));
-    }
-
-    public DataFlowSet<Integer> getOut(int defId) {
-        return this.getOut(this.genKillSets.getDefinition(defId));
-    }
-
-    public DataFlowSet<Integer> getIn(BasicBlock basicBlock) {
+    public Set<Integer> getIn(BasicBlock basicBlock) {
         return this.inMap.get(basicBlock);
     }
 
-    public DataFlowSet<Integer> getOut(BasicBlock basicBlock) {
+    public Set<Integer> getOut(BasicBlock basicBlock) {
         return this.outMap.get(basicBlock);
     }
 
-	public DataFlowSet<Integer> getIn(Stm stm) {
-        BasicBlock basicBlock = this.cfg.getBlockReference(stm);
+	public Set<Integer> getIn(BasicBlock basicBlock, Stm stm) {
+     ///   BasicBlock basicBlock = this.cfg.getBlockReference(stm);
         StmList stmList = basicBlock.first;
         // set of all definitions that reach the start of this block
-        DataFlowSet<Integer> blockIn =  new DataFlowSet<>();
-        blockIn.or(this.inMap.get(basicBlock));
+        Set<Integer> blockIn =  new HashSet<>();
+        blockIn.addAll(this.inMap.get(basicBlock));
         for (; stmList != null; stmList = stmList.tail) {
             // for each statement, we get the gen and kill
             Stm s = stmList.head;
@@ -62,26 +55,26 @@ class ReachingDefinitions {
                 return blockIn;
             }
             // reconstitute kill and gen from in.
-            DataFlowSet<Integer> gen = this.genKillSets.getGen(s);
-            DataFlowSet<Integer> kill = this.genKillSets.getKill(s);
+            Set<Integer> gen = this.genKillSets.getGen(s);
+            Set<Integer> kill = this.genKillSets.getKill(s);
             // remove items that were killed.
-            blockIn.andNot(kill);
+            blockIn.removeAll(kill);
             // add items that were generated.
-            blockIn.or(gen);
+            blockIn.addAll(gen);
         }
         Assert.unreachable("Statment was not contained in any block");
         return null;
 	}
 
-	public DataFlowSet<Integer> getOut(Stm stm) {
+	public Set<Integer> getOut(BasicBlock basicBlock, Stm stm) {
         // could probably get in set for stm and apply gen and kill
-        DataFlowSet<Integer> blockOut = new DataFlowSet<>();
-        blockOut.or(this.getIn(stm));
-        DataFlowSet<Integer> gen = this.genKillSets.getGen(stm);
+        Set<Integer> blockOut = new HashSet<>();
+        blockOut.addAll(this.getIn(basicBlock, stm));
+        Set<Integer> gen = this.genKillSets.getGen(stm);
         // current block generates these
-        DataFlowSet<Integer> kill = this.genKillSets.getKill(stm);
-        blockOut.andNot(kill);
-        blockOut.or(gen);
+        Set<Integer> kill = this.genKillSets.getKill(stm);
+        blockOut.removeAll(kill);
+        blockOut.addAll(gen);
         return blockOut;
 	}
 
@@ -89,8 +82,8 @@ class ReachingDefinitions {
         // initialise in[n] and out[n] to be empty sets. 
         for(NodeList nodes = this.cfg.nodes(); nodes != null; nodes = nodes.tail) {
             BasicBlock b = this.cfg.get(nodes.head);
-            this.inMap.put(b, new DataFlowSet<>());
-            this.outMap.put(b, new DataFlowSet<>());
+            this.inMap.put(b, new HashSet<>());
+            this.outMap.put(b, new HashSet<>());
         }
         // compute in[n] and out[n] for each block.
         boolean changed = true;
@@ -100,26 +93,26 @@ class ReachingDefinitions {
             for(NodeList nodes = this.cfg.nodes(); nodes != null; nodes = nodes.tail) {
                 BasicBlock b = this.cfg.get(nodes.head);
                 // get previous iteration
-                DataFlowSet<Integer> outPrev = (DataFlowSet<Integer>)outMap.get(b); 
-                DataFlowSet<Integer> inPrev = (DataFlowSet<Integer>)inMap.get(b);
+                Set<Integer> outPrev = (Set<Integer>)outMap.get(b); 
+                Set<Integer> inPrev = (Set<Integer>)inMap.get(b);
                 // get IN set using nodes n predecessors using OR join
-                DataFlowSet<Integer> in = new DataFlowSet<>();
+                Set<Integer> in = new HashSet<>();
                 for(NodeList preds = nodes.head.pred(); preds != null; preds = preds.tail) {
                     BasicBlock pb = this.cfg.get(preds.head);
-                    in.or(outMap.get(pb));
+                    in.addAll(outMap.get(pb));
                 }
                 inMap.put(b, in);
                 // get OUT set, IN set 
-                DataFlowSet<Integer> gen = (DataFlowSet<Integer>)this.genKillSets.getGen(b); 
-                DataFlowSet<Integer> kill = (DataFlowSet<Integer>)this.genKillSets.getKill(b); 
+                Set<Integer> gen = (Set<Integer>)this.genKillSets.getGen(b); 
+                Set<Integer> kill = (Set<Integer>)this.genKillSets.getKill(b); 
                 // create new set for in.
-                DataFlowSet<Integer> out = new DataFlowSet<>();
+                Set<Integer> out = new HashSet<>();
                 // in(s)
-                out.or(in);
+                out.addAll(in);
                 // in(s) MINUS kill(s)
-                out.andNot(kill);
+                out.removeAll(kill);
                 // gen(s) OR ( in(s) MINUS kill(s) )
-                out.or(gen);
+                out.addAll(gen);
                 outMap.put(b, out);
                 // check if sets have changed since last iteration.
                 var c1 = inMap.get(b).equals(inPrev);
@@ -151,10 +144,10 @@ class ReachingDefinitions {
                 Integer defId = this.getDefinitionId(stmList.head);
                 printStream.print(defId + ":");
                 stmList.head.accept(new QuadruplePrettyPrinter(printStream));
-                DataFlowSet<Integer> inSet = this.getIn(stmList.head);
+                Set<Integer> inSet = this.getIn(basicBlock, stmList.head);
                 printStream.print(" In:");
                 printStream.print(inSet);
-                DataFlowSet<Integer> outSet = this.getOut(stmList.head);
+                Set<Integer> outSet = this.getOut(basicBlock, stmList.head);
                 printStream.print(" out:");
                 printStream.print(outSet);
                 printStream.println();

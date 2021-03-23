@@ -1,7 +1,5 @@
 package com.chaosopher.tigerlang.compiler.tree;
 
-import com.chaosopher.tigerlang.compiler.errormsg.Error;
-
 public class ExpList {
 
     public static ExpList append(ExpList me, Exp t) {

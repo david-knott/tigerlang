@@ -2,10 +2,11 @@ package com.chaosopher.tigerlang.compiler.dataflow.def;
 
 import java.io.PrintStream;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.chaosopher.tigerlang.compiler.dataflow.cfg.BasicBlock;
 import com.chaosopher.tigerlang.compiler.dataflow.cfg.CFG;
-import com.chaosopher.tigerlang.compiler.dataflow.DataFlowSet;
 import com.chaosopher.tigerlang.compiler.graph.NodeList;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
 import com.chaosopher.tigerlang.compiler.tree.LABEL;
@@ -25,9 +26,9 @@ public class GenKillSets {
 
     private final HashMap<Stm, Integer> defs = new HashMap<>();
     private final HashMap<Integer, Stm> revDefs = new HashMap<>();
-    private final HashMap<Temp, DataFlowSet<Integer>> defTemps = new HashMap<>();
-    private final HashMap<BasicBlock, DataFlowSet<Integer>> genMap = new HashMap<>();
-    private final HashMap<BasicBlock, DataFlowSet<Integer>> killMap = new HashMap<>();
+    private final HashMap<Temp, Set<Integer>> defTemps = new HashMap<>();
+    private final HashMap<BasicBlock, Set<Integer>> genMap = new HashMap<>();
+    private final HashMap<BasicBlock, Set<Integer>> killMap = new HashMap<>();
     private final CFG cfg;
 
     private GenKillSets(CFG cfg) {
@@ -38,20 +39,20 @@ public class GenKillSets {
         return (stm instanceof MOVE && ((MOVE)stm).dst instanceof TEMP);
     }
 
-    DataFlowSet<Integer> getGen(Integer defId) {
+    Set<Integer> getGen(Integer defId) {
         return this.getGen(this.revDefs.get(defId));
     }
 
-    DataFlowSet<Integer> getGen(BasicBlock basicBlock) {
+    Set<Integer> getGen(BasicBlock basicBlock) {
         return this.genMap.get(basicBlock);
     }
 
-	DataFlowSet<Integer> getGen(Stm s) {
-        DataFlowSet<Integer> gen = new DataFlowSet<>();
+	Set<Integer> getGen(Stm s) {
+        Set<Integer> gen = new HashSet<>();
         return this.getGen(gen, s);
     }
 
-	private DataFlowSet<Integer> getGen(DataFlowSet<Integer> genBlock, Stm s) {
+	private Set<Integer> getGen(Set<Integer> genBlock, Stm s) {
         if(this.isDefinition(s)) {
             MOVE move = (MOVE)s;
             // get destination temp.
@@ -59,7 +60,7 @@ public class GenKillSets {
             // get the defintion id for the statement.
             int defId = this.defs.get(s);
             // remove any previous definition of gen from gen set
-            genBlock.andNot(defTemps.get(temp));
+            genBlock.removeAll(defTemps.get(temp));
             // add defId to gen set for this block.
             genBlock.add(defId);
             // add key temp -> [defId], used in kill phase.
@@ -69,27 +70,27 @@ public class GenKillSets {
         return genBlock;
 	}
 
-    DataFlowSet<Integer> getKill(Integer defId) {
+    Set<Integer> getKill(Integer defId) {
         return this.getKill(this.revDefs.get(defId));
     }
 
-    DataFlowSet<Integer> getKill(BasicBlock basicBlock) {
+    Set<Integer> getKill(BasicBlock basicBlock) {
         return this.killMap.get(basicBlock);
     }
 
-	DataFlowSet<Integer> getKill(Stm stm) {
-        DataFlowSet<Integer> kill = new DataFlowSet<>();
+	Set<Integer> getKill(Stm stm) {
+        Set<Integer> kill = new HashSet<>();
         return getKill(kill, stm);
     }
 
-	private DataFlowSet<Integer> getKill(DataFlowSet<Integer> kill, Stm stm) {
+	private Set<Integer> getKill(Set<Integer> kill, Stm stm) {
         if(this.isDefinition(stm)) {
             MOVE move = (MOVE) stm;// get destination temp.
             Temp temp = ((TEMP) move.dst).temp;
             int defId = this.defs.get(stm);
             // all other definitions except this are killed
-            DataFlowSet<Integer> redefinitions = (DataFlowSet<Integer>)this.defTemps.get(temp);
-            kill.or(redefinitions);
+            Set<Integer> redefinitions = (Set<Integer>)this.defTemps.get(temp);
+            kill.addAll(redefinitions);
             kill.remove(defId);
         }
         return kill; 
@@ -103,7 +104,7 @@ public class GenKillSets {
         return this.revDefs.get(defId);
     }
     
-    DataFlowSet<Integer> getDefinitions(Temp temp) {
+    Set<Integer> getDefinitions(Temp temp) {
         return this.defTemps.get(temp);
     }
 
@@ -117,14 +118,14 @@ public class GenKillSets {
                 // get destination temp.
                 Temp temp = ((TEMP)move.dst).temp;
                 // add reference for temp and def, used in kill phase.
-                defTemps.put(temp, new DataFlowSet<Integer>());
+                defTemps.put(temp, new HashSet<Integer>());
             }
         }
     }
 
     private void calculateGenSet(BasicBlock basicBlock) {
         StmList stmList = basicBlock.first;
-        DataFlowSet<Integer> genBlock = new DataFlowSet<>();
+        Set<Integer> genBlock = new HashSet<>();
         for (; stmList != null; stmList = stmList.tail) {
             Stm s = stmList.head;
             this.getGen(genBlock, s);
@@ -134,7 +135,7 @@ public class GenKillSets {
 
     private void calculateKillSet(BasicBlock basicBlock) {
         StmList stmList = basicBlock.first;
-        DataFlowSet<Integer> killBlock = new DataFlowSet<>();
+        Set<Integer> killBlock = new HashSet<>();
         for (; stmList != null; stmList = stmList.tail) {
             Stm s = stmList.head;
             this.getKill(killBlock, s);
@@ -180,10 +181,10 @@ public class GenKillSets {
             printStream.println("## Block ##");
             BasicBlock basicBlock = this.cfg.get(nodeList.head);
             printStream.print(basicBlock.hashCode() + "");
-            DataFlowSet<Integer> gen = this.getGen(basicBlock);
+            Set<Integer> gen = this.getGen(basicBlock);
             printStream.print(" gen:");
             printStream.print(gen);
-            DataFlowSet<Integer> kill = this.getKill(basicBlock);
+            Set<Integer> kill = this.getKill(basicBlock);
             printStream.print(" kill:");
             printStream.print(kill);
             printStream.println();
@@ -192,10 +193,10 @@ public class GenKillSets {
                 Integer defId = this.getDefinitionId(stmList.head);
                 printStream.print(defId + ":");
                 stmList.head.accept(new QuadruplePrettyPrinter(printStream));
-                DataFlowSet<Integer> genStatement = this.getGen(stmList.head);
+                Set<Integer> genStatement = this.getGen(stmList.head);
                 printStream.print(" gen:");
                 printStream.print(genStatement);
-                DataFlowSet<Integer> killStatement = this.getKill(stmList.head);
+                Set<Integer> killStatement = this.getKill(stmList.head);
                 printStream.print(" kill:");
                 printStream.print(killStatement);
                 printStream.println();

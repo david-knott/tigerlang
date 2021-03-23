@@ -35,26 +35,5 @@ public class ReachingDefinitionsTest {
         GenKillSets genKillSets = GenKillSets.analyse(cfg);
         ReachingDefinitions reachingDefinitions = ReachingDefinitions.analyze(cfg, genKillSets);
         reachingDefinitions.serialize(System.out);
-        
-        assertTrue(reachingDefinitions.getIn(1).size() == 0);
-        assertTrue(reachingDefinitions.getOut(1).size() == 1);
-        assertTrue(reachingDefinitions.getOut(1).contains(1));
-
-        assertTrue(reachingDefinitions.getIn(6).size() == 3);
-        assertTrue(reachingDefinitions.getIn(6).contains(1));
-        assertTrue(reachingDefinitions.getIn(6).contains(2));
-        assertTrue(reachingDefinitions.getIn(6).contains(4));
-        assertTrue(reachingDefinitions.getOut(6).size() == 3);
-        assertTrue(reachingDefinitions.getOut(6).contains(2));
-        assertTrue(reachingDefinitions.getOut(6).contains(4));
-        assertTrue(reachingDefinitions.getOut(6).contains(6));
-
-        assertTrue(reachingDefinitions.getIn(7).size() == 3);
-        assertTrue(reachingDefinitions.getIn(7).contains(2));
-        assertTrue(reachingDefinitions.getIn(7).contains(4));
-        assertTrue(reachingDefinitions.getIn(7).contains(6));
-        assertTrue(reachingDefinitions.getOut(7).size() == 2);
-        assertTrue(reachingDefinitions.getOut(7).contains(6));
-        assertTrue(reachingDefinitions.getOut(7).contains(7));
     }
 }

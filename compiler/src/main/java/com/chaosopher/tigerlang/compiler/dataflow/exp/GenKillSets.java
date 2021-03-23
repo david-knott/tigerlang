@@ -7,11 +7,14 @@ import java.util.Set;
 
 import com.chaosopher.tigerlang.compiler.dataflow.cfg.BasicBlock;
 import com.chaosopher.tigerlang.compiler.dataflow.cfg.CFG;
+import com.chaosopher.tigerlang.compiler.dataflow.utils.ExtractDefs;
+import com.chaosopher.tigerlang.compiler.dataflow.utils.ExtractExp;
+import com.chaosopher.tigerlang.compiler.dataflow.utils.ExtractMemExp;
+import com.chaosopher.tigerlang.compiler.dataflow.utils.ExtractUses;
 import com.chaosopher.tigerlang.compiler.graph.NodeList;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
 import com.chaosopher.tigerlang.compiler.tree.BINOP;
 import com.chaosopher.tigerlang.compiler.tree.CALL;
-import com.chaosopher.tigerlang.compiler.tree.DefaultTreeVisitor;
 import com.chaosopher.tigerlang.compiler.tree.EXP;
 import com.chaosopher.tigerlang.compiler.tree.Exp;
 import com.chaosopher.tigerlang.compiler.tree.LABEL;
@@ -22,129 +25,6 @@ import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.StmList;
 import com.chaosopher.tigerlang.compiler.tree.TEMP;
 import com.chaosopher.tigerlang.compiler.util.Assert;
-
-/**
- * Helper class to find mem expressions.
- */
-class ExtractMemExp extends DefaultTreeVisitor {
-
-    public static boolean isMemExp(Stm stm) {
-        ExtractMemExp extractExp = new ExtractMemExp();
-        stm.accept(extractExp);
-        return extractExp.exp != null;
-    }
-
-    private Exp exp;
-
-    @Override
-    public void visit(MOVE op) {
-        op.src.accept(this);
-    }
-
-    @Override
-    public void visit(BINOP op) {
-        // ignore binop.
-    }
-
-    @Override
-    public void visit(MEM op) {
-        if(this.exp == null) {
-            this.exp = op;
-        } else {
-            throw new Error("More than one MEM in this statement.");
-        }
-    }
-}
-
-/**
- * Helper class to find expressions.
- */
-class ExtractExp extends DefaultTreeVisitor {
-
-    public static Exp getExp(Stm stm) {
-        ExtractExp extractExp = new ExtractExp();
-        stm.accept(extractExp);
-        return extractExp.exp;
-    }
-
-    private Exp exp;
-
-    @Override
-    public void visit(MOVE op) {
-        op.src.accept(this);
-    }
-
-    @Override
-    public void visit(BINOP op) {
-        if(this.exp == null) {
-            this.exp = op;
-        } else {
-            throw new Error("More than one BINOP or MEM in this statement.");
-        }
-    }
-
-    @Override
-    public void visit(MEM op) {
-        if(this.exp == null) {
-            this.exp = op;
-        } else {
-            throw new Error("More than one BINOP or MEM in this statement.");
-        }
-    }
-}
-
-/**
- * Helper class to find temporaries that are uses.
- */
-class ExtracUses extends DefaultTreeVisitor {
-
-    private final Set<Temp> uses = new HashSet<>();
-
-    public static Set<Temp> getUses(Stm stm) {
-        ExtracUses extracUses = new ExtracUses();
-        stm.accept(extracUses);
-        return extracUses.uses;
-    }
-
-    @Override
-    public void visit(MOVE op) {
-        op.src.accept(this);
-    }
-
-    @Override
-    public void visit(TEMP op) {
-        this.uses.add(op.temp);
-    }
-}
-
-
-/**
- * Helper class to find definition temporaries.
- */
-class ExtractDefs extends DefaultTreeVisitor {
-
-    public static Set<Temp> getDefs(Stm stm) {
-        ExtractDefs extractDefs = new ExtractDefs();
-        stm.accept(extractDefs);
-        return extractDefs.defs;
-    }
-
-    private final Set<Temp> defs = new HashSet<>();
-
-    @Override
-    public void visit(MOVE op) {
-        op.dst.accept(this);
-    }
-
-    @Override
-    public void visit(TEMP op) {
-        this.defs.add(op.temp);
-    }
-
-    public Set<Temp> getDefs() {
-        return this.defs;
-    }
-}
 
 /**
  * t <- b * c,  gen : { b * c, } - kill(s), kill : expressions with t
@@ -172,16 +52,16 @@ class GenKillSets {
         this.cfg = cfg;
     }
  
-    private void initExpressions(Stm stm) {
-        Set<Temp> uses = ExtracUses.getUses(stm);
+    private void initialize(Stm stm) {
+        Set<Temp> uses = ExtractUses.getUses(stm);
         Set<Temp> defs = ExtractDefs.getDefs(stm);
-        // initialize hashmap with empty sets for all temps.
+        // initialize hashmap with empty sets for all temps we will encounter.
         Set<Temp> all = new HashSet<>();
         all.addAll(uses);
         all.addAll(defs);
         for(Temp temp : all) {
             if(!this.defTemps.containsKey(temp)) {
-                    this.defTemps.put(temp, new HashSet<>());
+                this.defTemps.put(temp, new HashSet<>());
             }
         }
         // if stm contains an expression, map use temp to expression.
@@ -200,12 +80,10 @@ class GenKillSets {
 
     private Set<Exp> getExpressionsUsingTemp(Temp exp) {
         Set<Exp> exps = this.defTemps.get(exp);
-        Assert.assertNotNull(exps);
         return exps;
     }
 
     private Set<Exp> getExpressionsUsingMem() {
-        Assert.assertNotNull(this.mems);
         return this.mems;
     }
 
@@ -317,7 +195,7 @@ class GenKillSets {
         for (NodeList nodes = this.cfg.nodes(); nodes != null; nodes = nodes.tail) {
             BasicBlock basicBlock = this.cfg.get(nodes.head);
             for (StmList stmList = basicBlock.first; stmList != null; stmList = stmList.tail) {
-                this.initExpressions(stmList.head);
+                this.initialize(stmList.head);
             }
         }
         // calculate kill set for each basic block.

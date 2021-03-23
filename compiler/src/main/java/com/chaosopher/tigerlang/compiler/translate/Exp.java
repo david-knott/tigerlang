@@ -1,6 +1,14 @@
 package com.chaosopher.tigerlang.compiler.translate;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.chaosopher.tigerlang.compiler.absyn.Absyn;
 import com.chaosopher.tigerlang.compiler.temp.Label;
+import com.chaosopher.tigerlang.compiler.tree.DefaultTreeVisitor;
+import com.chaosopher.tigerlang.compiler.tree.IR;
+import com.chaosopher.tigerlang.compiler.tree.Stm;
+import com.chaosopher.tigerlang.compiler.tree.TreeVisitor;
 
 /**
  * Translate.Exp is a base class that all translated
@@ -12,9 +20,45 @@ import com.chaosopher.tigerlang.compiler.temp.Label;
  * true and false labels.
  */
 abstract public class Exp {
+
+    /**
+     * This class walks the IR tree and inserts mappings from IR nodes
+     * to the Absyn node that generated them.
+     */
+    static class SourceMapHelper extends DefaultTreeVisitor {
+
+        private final Absyn absyn;
+
+        public SourceMapHelper(Absyn absyn) {
+            this.absyn = absyn;
+        }
+
+        public static SourceMapHelper apply(IR target, Absyn absyn) {
+            SourceMapHelper helper = new SourceMapHelper(absyn);
+            target.accept(helper);
+            return helper;
+        }
+
+        public Map<? extends IR, ? extends Absyn> getMappings() {
+            return new HashMap<>();
+        }
+    }
+
     abstract com.chaosopher.tigerlang.compiler.tree.Exp unEx();
 
     abstract com.chaosopher.tigerlang.compiler.tree.Stm unNx();
 
     abstract com.chaosopher.tigerlang.compiler.tree.Stm unCx(Label t, Label f);
+
+    protected static Stm visit(Stm ir, Absyn absyn, HashMap<IR, Absyn> sourceMap) {
+        SourceMapHelper helper = SourceMapHelper.apply(ir, absyn);
+        sourceMap.putAll(helper.getMappings());
+        return ir;
+    }
+
+    protected static com.chaosopher.tigerlang.compiler.tree.Exp visit(com.chaosopher.tigerlang.compiler.tree.Exp ir, Absyn absyn, HashMap<IR, Absyn> sourceMap) {
+        SourceMapHelper helper = SourceMapHelper.apply(ir, absyn);
+        sourceMap.putAll(helper.getMappings());
+        return ir;
+    }
 }

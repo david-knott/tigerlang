@@ -10,7 +10,6 @@ import com.chaosopher.tigerlang.compiler.tree.StmList;
 
 import org.junit.Test;
 
-
 public class GenKillSetsTest {
     
     @Test

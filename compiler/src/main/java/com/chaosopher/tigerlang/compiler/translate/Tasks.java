@@ -4,10 +4,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
-import com.chaosopher.tigerlang.compiler.intel.IntelFrame;
-import com.chaosopher.tigerlang.compiler.temp.Label;
-import com.chaosopher.tigerlang.compiler.tree.PrettyPrinter;
-import com.chaosopher.tigerlang.compiler.tree.TreeVisitor;
 import com.chaosopher.tigerlang.compiler.util.Assert;
 import com.chaosopher.tigerlang.compiler.util.SimpleTask;
 import com.chaosopher.tigerlang.compiler.util.SimpleTaskProvider;

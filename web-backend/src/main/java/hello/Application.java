@@ -1,31 +1,10 @@
 package hello;
 
-import java.io.InputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.chaosopher.tigerlang.compiler.sugar.Desugar;
-import com.chaosopher.tigerlang.compiler.absyn.Absyn;
-import com.chaosopher.tigerlang.compiler.absyn.PrettyPrinter;
-import com.chaosopher.tigerlang.compiler.bind.Binder;
-import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
-import com.chaosopher.tigerlang.compiler.parse.CupParser;
-import com.chaosopher.tigerlang.compiler.parse.Parser;
-import com.chaosopher.tigerlang.compiler.parse.ParserFactory;
-import com.chaosopher.tigerlang.compiler.parse.ParserService;
-import com.chaosopher.tigerlang.compiler.parse.Program;
 
 import com.chaosopher.tigerlang.compiler.canon.CanonicalizationImpl;
 import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
@@ -33,9 +12,15 @@ import com.chaosopher.tigerlang.compiler.parse.ParserFactory;
 import com.chaosopher.tigerlang.compiler.parse.ParserService;
 import com.chaosopher.tigerlang.compiler.regalloc.RegAllocFactory;
 import com.chaosopher.tigerlang.compiler.util.TaskRegister;
-import com.chaosopher.tigerlang.compiler.util.Timer;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -43,8 +28,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @RestController
 @CrossOrigin(origins = "*")
 public class Application {
-
-	private ParserService parserService;
 
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
@@ -55,10 +38,6 @@ public class Application {
 			//	registry.addMapping("/**");
 			}
 		};
-	}
-
-	public Application() {
-		parserService = new ParserService(new ParserFactory());
 	}
 
 	@PostMapping("/compile")

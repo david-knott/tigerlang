@@ -1,8 +1,10 @@
 package com.chaosopher.tigerlang.compiler.translate;
 
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Stack;
 
+import com.chaosopher.tigerlang.compiler.absyn.Absyn;
 import com.chaosopher.tigerlang.compiler.absyn.ArrayExp;
 import com.chaosopher.tigerlang.compiler.absyn.AssignExp;
 import com.chaosopher.tigerlang.compiler.absyn.BreakExp;
@@ -53,16 +55,70 @@ import com.chaosopher.tigerlang.compiler.util.BoolList;
 
 public class TranslatorVisitor extends DefaultVisitor {
 
-    private Hashtable<VarDec, Access> functionAccesses = new Hashtable<VarDec, Access>();
-    private Hashtable<com.chaosopher.tigerlang.compiler.absyn.Absyn, Label> functionLabels = new Hashtable<com.chaosopher.tigerlang.compiler.absyn.Absyn, Label>();
-    private Hashtable<FunctionDec, Level> functionLevels = new Hashtable<FunctionDec, Level>();
-    private Stack<Label> loopExits = new Stack<Label>();
+    private final Hashtable<VarDec, Access> functionAccesses = new Hashtable<VarDec, Access>();
+    private final Hashtable<com.chaosopher.tigerlang.compiler.absyn.Absyn, Label> functionLabels = new Hashtable<com.chaosopher.tigerlang.compiler.absyn.Absyn, Label>();
+    private final Hashtable<FunctionDec, Level> functionLevels = new Hashtable<FunctionDec, Level>();
+    private final Stack<Label> loopExits = new Stack<Label>();
+    
     private Exp visitedExp;
     private Level currentLevel;
     private FragList fragList;
 
+    private Exp getVisitedExp() {
+        return this.visitedExp;
+    }
+
+    private final HashMap<Exp, Absyn> expMap = new HashMap<>();
+
+    private void setVisitedExp(Exp visitedExp, Absyn absyn) {
+        // create map between exp and absyn
+        this.expMap.put(visitedExp, absyn);
+        // visitedExp is converted into its tree expression when added to the fraglist
+
+        // for a give Exp -> Absyn
+
+        // When used in pretty printer
+
+        // get Exp / Statement, find its original Exp
+
+        // find Absyn for Exp
+
+        this.visitedExp = visitedExp;
+    }
+
+
+
+    private void setVisitedExp(Exp visitedExp) {
+        Absyn absyn = null;
+
+        // visitedExp is converted into its tree expression when added to the fraglist
+
+        // for a give Exp -> Absyn
+
+        // When used in pretty printer
+
+        // get Exp / Statement, find its original Exp
+
+        // find Absyn for Exp
+
+        this.visitedExp = visitedExp;
+    }
+
+
     public FragList getFragList() {
         return this.fragList;
+    }
+
+    private void addFrag(Frag frag) {
+        if(this.fragList == null) {
+            this.fragList = new FragList(frag);
+        } else {
+            FragList end = this.fragList;
+            while(end.tail != null) {
+                end = end.tail;
+            }
+            end.tail = new FragList(frag);
+        }
     }
 
     /**
@@ -124,12 +180,12 @@ public class TranslatorVisitor extends DefaultVisitor {
     @Override
     public void visit(ArrayExp exp) {
         exp.size.accept(this);
-        Exp sizeExp = this.visitedExp;
+        Exp sizeExp = this.getVisitedExp();
         exp.init.accept(this);
-        Exp initExp = this.visitedExp;
+        Exp initExp = this.getVisitedExp();
         Temp arrayPointer = Temp.create();
         ExpList args = new ExpList(sizeExp.unEx(), new ExpList(initExp.unEx(), null));
-        this.visitedExp = 
+        this.setVisitedExp(
             new Ex(
                 new ESEQ(
                     new MOVE(
@@ -138,16 +194,17 @@ public class TranslatorVisitor extends DefaultVisitor {
                     ),
                     new TEMP(arrayPointer)
                 )
-            );
+            )
+        );
     }
 
     @Override
     public void visit(AssignExp exp) {
         exp.var.accept(this);
-        Exp varExp = this.visitedExp;
+        Exp varExp = this.getVisitedExp();
         exp.exp.accept(this);
-        Exp expExp = this.visitedExp;
-        this.visitedExp = new Nx(new MOVE(varExp.unEx(), expExp.unEx()));
+        Exp expExp = this.getVisitedExp();
+        this.setVisitedExp(new Nx(new MOVE(varExp.unEx(), expExp.unEx())));
     }
 
     @Override
@@ -156,7 +213,7 @@ public class TranslatorVisitor extends DefaultVisitor {
             Assert.unreachable();
         }
         Label loopEnd = this.loopExits.peek();
-        this.visitedExp = new Nx(new JUMP(loopEnd));
+        this.setVisitedExp(new Nx(new JUMP(loopEnd)));
     }
 
     private com.chaosopher.tigerlang.compiler.tree.Exp getFunctionStaticLink(Level usageLevel, Level definedLevel) {
@@ -207,7 +264,7 @@ public class TranslatorVisitor extends DefaultVisitor {
         // visit each actual parameter of the called function and add to expList.
         for (com.chaosopher.tigerlang.compiler.absyn.ExpList argList = exp.args; argList != null; argList = argList.tail) {
             argList.head.accept(this);
-            Exp translatedArg = this.visitedExp;
+            Exp translatedArg = this.getVisitedExp();
             expList = ExpList.append(expList, translatedArg.unEx());
         }
         //
@@ -215,33 +272,33 @@ public class TranslatorVisitor extends DefaultVisitor {
         Type returnType = exp.getType();
         Assert.assertNotNull(returnType);
         if (returnType.coerceTo(Constants.VOID)) {
-            this.visitedExp = new Nx(new EXP(new CALL(new NAME(functionLabel), expList)));
+            this.setVisitedExp(new Nx(new EXP(new CALL(new NAME(functionLabel), expList))));
         } else {
-            this.visitedExp = new Ex(new CALL(new NAME(functionLabel), expList));
+            this.setVisitedExp(new Ex(new CALL(new NAME(functionLabel), expList)));
         }
     }
 
     @Override
     public void visit(DecList exp) {
+        // only one item in the declist, just return it
         if(exp.tail == null) {
             exp.head.accept(this);
-            // currentExp has been set now, nothing further to do.
             return;
         }
         SEQ first = null, temp = null, last = null;
         for(; exp.tail != null; exp = exp.tail) {
             exp.head.accept(this);
             if(first == null) {
-                first = last = new SEQ(this.visitedExp.unNx(), null);
+                first = last = new SEQ(this.getVisitedExp().unNx(), null);
             } else {
-                temp.right = new SEQ(this.visitedExp.unNx(), null);
+                temp.right = new SEQ(this.getVisitedExp().unNx(), null);
                 last = (SEQ)temp.right;
             }
             temp = last;
         }
         exp.head.accept(this);
-        last.right = this.visitedExp.unNx();
-        this.visitedExp = new Nx(first);
+        last.right = this.getVisitedExp().unNx();
+        this.setVisitedExp(new Nx(first));
     }
 
     @Override
@@ -254,14 +311,14 @@ public class TranslatorVisitor extends DefaultVisitor {
         // two items in the expressioin list,
         if(exp.tail.tail == null) {
             exp.head.accept(this);
-            Exp firstItem = this.visitedExp;
+            Exp firstItem = this.getVisitedExp();
             exp.tail.head.accept(this);
-            Exp lastItem = this.visitedExp;
+            Exp lastItem = this.getVisitedExp();
             // ensure we return correct type
             if(exp.tail.head.getType().coerceTo(Constants.VOID)) {
-                this.visitedExp = new Nx(new SEQ(firstItem.unNx(), lastItem.unNx()));
+                this.setVisitedExp(new Nx(new SEQ(firstItem.unNx(), lastItem.unNx())));
             } else {
-                this.visitedExp = new Ex(new ESEQ(firstItem.unNx(), lastItem.unEx()));
+                this.setVisitedExp(new Ex(new ESEQ(firstItem.unNx(), lastItem.unEx())));
             }
             return;
         }
@@ -269,7 +326,7 @@ public class TranslatorVisitor extends DefaultVisitor {
         Exp sequenceItem = null;
         for(; exp.tail != null; exp = exp.tail) {
             exp.head.accept(this);
-            sequenceItem = this.visitedExp;
+            sequenceItem = this.getVisitedExp();
             if(first == null) {
                 first = last = new SEQ(sequenceItem.unNx(), null);
             } else {
@@ -286,11 +343,11 @@ public class TranslatorVisitor extends DefaultVisitor {
         // if the last item is an expression, return an ESEQ
         // if not, we return return a SEQ.
         exp.head.accept(this);
-        sequenceItem = this.visitedExp;
+        sequenceItem = this.getVisitedExp();
         if(exp.head.getType().actual() == Constants.VOID) {
-            this.visitedExp = new Nx(new SEQ(first, sequenceItem.unNx()));
+            this.setVisitedExp(new Nx(new SEQ(first, sequenceItem.unNx())));
         } else {
-            this.visitedExp = new Ex(new ESEQ(first, sequenceItem.unEx()));
+            this.setVisitedExp(new Ex(new ESEQ(first, sequenceItem.unEx())));
         }
    }
 
@@ -301,8 +358,6 @@ public class TranslatorVisitor extends DefaultVisitor {
 
     private int fieldIndex(FieldVar fieldVar) {
         RECORD recordType = (RECORD)fieldVar.var.getType().actual();
-
-        //RECORD recordType = (RECORD)fieldVar.getType();
         Assert.assertNotNull(recordType);
         int fieldIndex = 0;
         for(;recordType != null; recordType = recordType.tail) {
@@ -318,9 +373,9 @@ public class TranslatorVisitor extends DefaultVisitor {
     @Override
     public void visit(FieldVar exp) {
         exp.var.accept(this);
-        Exp transExp = this.visitedExp;
+        Exp transExp = this.getVisitedExp();
         int fieldIndex = this.fieldIndex(exp);
-        this.visitedExp = new Ex(
+        this.setVisitedExp(new Ex(
                 new MEM(
                     new BINOP(
                         BINOP.PLUS, 
@@ -330,7 +385,8 @@ public class TranslatorVisitor extends DefaultVisitor {
                         )
                     )           
                 )
-            );
+            )
+        );
     }
 
     @Override
@@ -353,14 +409,14 @@ public class TranslatorVisitor extends DefaultVisitor {
         this.loopExits.push(loopEnd);
         // visit sub expressions.
         exp.hi.accept(this);
-        Exp exphi = this.visitedExp;
+        Exp exphi = this.getVisitedExp();
         exp.var.init.accept(this);
-        Exp explo = this.visitedExp;
+        Exp explo = this.getVisitedExp();
         exp.body.accept(this);
-        Exp expbody = this.visitedExp;
+        Exp expbody = this.getVisitedExp();
         // TODO: is static link needed here ? lowVar will always be defined at same nesting level.
         com.chaosopher.tigerlang.compiler.tree.Exp lowVar = lowVarTranslateAccess.acc.exp(staticLinkOffset(lowVarTranslateAccess, this.getCurrentLevel()));
-		this.visitedExp = new Nx(
+		this.setVisitedExp(new Nx(
             new SEQ(
                 new MOVE(lowVar, explo.unEx()),
                 new SEQ(
@@ -392,8 +448,8 @@ public class TranslatorVisitor extends DefaultVisitor {
                     ) 
                 )
             )
-        );
-        // out ot loop, pop last exit label.
+        ));
+        // out of loop, pop last exit label.
         this.loopExits.pop();
     }
 
@@ -458,7 +514,7 @@ public class TranslatorVisitor extends DefaultVisitor {
                 // visit body of function using new saved level
                 current.body.accept(this);
                 // get translated fragment.
-                Exp translatedBody = this.visitedExp;
+                Exp translatedBody = this.getVisitedExp();
                 // if funcion returns, place result into RV register
                 FUNCTION functionType = (FUNCTION)current.getType();
                 Assert.assertNotNull(functionType);
@@ -474,19 +530,7 @@ public class TranslatorVisitor extends DefaultVisitor {
         // reset the visitedExp to nil
         // as we create a new Fragment for
         // the next function
-        this.visitedExp = new Ex(new CONST(0));
-    }
-
-    private void addFrag(Frag frag) {
-        if(this.fragList == null) {
-            this.fragList = new FragList(frag);
-        } else {
-            FragList end = this.fragList;
-            while(end.tail != null) {
-                end = end.tail;
-            }
-            end.tail = new FragList(frag);
-        }
+        this.setVisitedExp(new Ex(new CONST(0)));
     }
 
     /**
@@ -529,20 +573,20 @@ public class TranslatorVisitor extends DefaultVisitor {
     @Override
     public void visit(IfExp exp) {
         exp.test.accept(this);
-        Exp test = this.visitedExp;
+        Exp test = this.getVisitedExp();
         exp.thenclause.accept(this);
-        Exp then = this.visitedExp;
+        Exp then = this.getVisitedExp();
         Exp els = null;
         if(exp.elseclause != null) {
             exp.elseclause.accept(this);
-            els = this.visitedExp;
+            els = this.getVisitedExp();
         }
-        this.visitedExp = new IfThenElseExp(test, then, els);
+        this.setVisitedExp(new IfThenElseExp(test, then, els));
     }
 
     @Override
     public void visit(IntExp exp) {
-        this.visitedExp = new Ex(new CONST(exp.value));
+        this.setVisitedExp(new Ex(new CONST(exp.value)));
     }
 
     @Override
@@ -550,7 +594,7 @@ public class TranslatorVisitor extends DefaultVisitor {
         Exp decs = null;
         if(exp.decs != null) {
             exp.decs.accept(this);
-            decs = this.visitedExp;
+            decs = this.getVisitedExp();
         } else {
             decs = new Ex(new CONST(0));
         }
@@ -558,13 +602,13 @@ public class TranslatorVisitor extends DefaultVisitor {
         Type bodyType = null;
         if(exp.body != null) {
             exp.body.accept(this);
-            body = this.visitedExp;
+            body = this.getVisitedExp();
             bodyType = exp.body.getType();
         } else {
             body = new Ex(new CONST(0));
             bodyType = Constants.VOID;
         }
-        this.visitedExp = bodyType.coerceTo(Constants.VOID) 
+        this.setVisitedExp(bodyType.coerceTo(Constants.VOID) 
             ?
             new Nx(
                 new SEQ(
@@ -577,29 +621,30 @@ public class TranslatorVisitor extends DefaultVisitor {
                     decs.unNx(),
                     body.unEx()
                 )
-            );
+            )
+        );
     }
 
     @Override
     public void visit(NilExp exp) {
-        this.visitedExp = new Ex(new CONST(0));
+        this.setVisitedExp(new Ex(new CONST(0)));
     }
 
     @Override
     public void visit(OpExp exp) {
         exp.left.accept(this);
-        Exp leftTrans = this.visitedExp;
+        Exp leftTrans = this.getVisitedExp();
         exp.right.accept(this);
-        Exp rightTrans = this.visitedExp;
+        Exp rightTrans = this.getVisitedExp();
         switch(exp.oper) {
             case OpExp.DIV: case OpExp.MINUS: case OpExp.MUL: case OpExp.PLUS:
-                this.visitedExp = new Ex(
+                this.setVisitedExp(new Ex(
                     new BINOP(
                         exp.oper, 
                         leftTrans.unEx(), 
                         rightTrans.unEx()
                     )
-                );
+                ));
                 break;
             default:
                 int relop = 0;
@@ -635,7 +680,7 @@ public class TranslatorVisitor extends DefaultVisitor {
                 if(exp.left.getType().coerceTo(Constants.STRING) && exp.right.getType().coerceTo(Constants.STRING)) {
                     Assert.assertNotNull(strOp);
                     Temp result = Temp.create();
-                    this.visitedExp = new Ex(
+                    this.setVisitedExp(new Ex(
                         new ESEQ(
                             new MOVE(
                                 new TEMP(result),
@@ -651,9 +696,9 @@ public class TranslatorVisitor extends DefaultVisitor {
                             ), 
                             new TEMP(result)
                         )
-                    );
+                    ));
                 } else {
-                    this.visitedExp = new RelCx(leftTrans.unEx(), rightTrans.unEx(), relop);
+                    this.setVisitedExp(new RelCx(leftTrans.unEx(), rightTrans.unEx(), relop));
                 }
             break;
         }
@@ -700,7 +745,7 @@ public class TranslatorVisitor extends DefaultVisitor {
         }
         // visit field init and capture it in member var visitedExp
         exp.fields.init.accept(this);
-        Exp fieldTranslated = this.visitedExp;
+        Exp fieldTranslated = this.getVisitedExp();
         int fieldCounter = 0;
         Stm stm = this.fieldStatement(recordPointer, fieldCounter++, fieldTranslated);
         // more than one item in list, so create a SEQ.
@@ -719,7 +764,7 @@ public class TranslatorVisitor extends DefaultVisitor {
             for(; rest.tail != null; rest = rest.tail) {
                 // visit field init and capture it in member var visitedExp
                 rest.init.accept(this);
-                fieldTranslated = this.visitedExp;
+                fieldTranslated = this.getVisitedExp();
                 Stm middle = this.fieldStatement(recordPointer, fieldCounter++, fieldTranslated);
                 // create new last item
                 last = new SEQ(middle, null);
@@ -730,13 +775,13 @@ public class TranslatorVisitor extends DefaultVisitor {
             }
             // visit field init and capture it in member var visitedExp
             rest.init.accept(this);
-            fieldTranslated = this.visitedExp;
+            fieldTranslated = this.getVisitedExp();
             last.right = this.fieldStatement(recordPointer, fieldCounter++, fieldTranslated);
         }
         // build expression sequence, where left value is a statement
         // and right value is a expression result, which in this case is the 
         // record pointer. 
-        this.visitedExp = new Ex(
+        this.setVisitedExp(new Ex(
             new ESEQ(
                 new SEQ(
                     new MOVE(
@@ -753,7 +798,7 @@ public class TranslatorVisitor extends DefaultVisitor {
                 ),
                 new TEMP(recordPointer)
             )
-        );
+        ));
     }
 
     @Override
@@ -761,7 +806,7 @@ public class TranslatorVisitor extends DefaultVisitor {
         if(exp.list != null) {
             exp.list.accept(this);
         } else {
-            this.visitedExp = new Ex(new CONST(0));
+            this.setVisitedExp(new Ex(new CONST(0)));
         }
     }
 
@@ -774,7 +819,7 @@ public class TranslatorVisitor extends DefaultVisitor {
         // Compute static link to variable using definition and current level
         com.chaosopher.tigerlang.compiler.tree.Exp stateLinkExp =  staticLinkOffset(access, this.getCurrentLevel());
         // Set visited expression.
-        this.visitedExp = new Ex(access.acc.exp(stateLinkExp));
+        this.setVisitedExp(new Ex(access.acc.exp(stateLinkExp)));
     }
 
     @Override
@@ -782,16 +827,16 @@ public class TranslatorVisitor extends DefaultVisitor {
         Label label = Label.create();
         var stringFragment = getCurrentLevel().frame.string(label, exp.value);
         addFrag(new DataFrag(stringFragment));
-        this.visitedExp = new Ex(new NAME(label));
+        this.setVisitedExp(new Ex(new NAME(label)));
     }
 
     @Override
     public void visit(SubscriptVar exp) {
         exp.index.accept(this);
-        Exp indexExp = this.visitedExp;
+        Exp indexExp = this.getVisitedExp();
         exp.var.accept(this);
-        Exp baseExp = this.visitedExp;
-        this.visitedExp =  new Ex(new MEM(
+        Exp baseExp = this.getVisitedExp();
+        this.setVisitedExp( new Ex(new MEM(
             new BINOP(
                 BINOP.PLUS, 
                 baseExp.unEx(), 
@@ -801,25 +846,25 @@ public class TranslatorVisitor extends DefaultVisitor {
                     new CONST(getCurrentLevel().frame.wordSize())
                 )
             )                
-        ));
+        )));
     }
     
     @Override
     public void visit(VarDec exp) {
         exp.init.accept(this);
-        Exp initExp = this.visitedExp;
+        Exp initExp = this.getVisitedExp();
         // create a new access for this variable.
         Access translateAccess = this.getCurrentLevel().allocLocal(exp.escape);
         // store in hash table for future usage.
         functionAccesses.put(exp, translateAccess);
         // create tree expression along with static link calculation ( is this needed ?? )
         com.chaosopher.tigerlang.compiler.tree.Exp decExp = translateAccess.acc.exp(staticLinkOffset(translateAccess, this.getCurrentLevel()));
-        this.visitedExp = new Nx(
+        this.setVisitedExp(new Nx(
             new MOVE(
                 decExp,
                 initExp.unEx()
             )
-        );
+        ));
     }
 
     @Override
@@ -837,10 +882,10 @@ public class TranslatorVisitor extends DefaultVisitor {
         var whileStart = Label.create();
         var loopStart = Label.create();
         exp.test.accept(this);
-        Exp testExp = this.visitedExp;
+        Exp testExp = this.getVisitedExp();
         exp.body.accept(this);
-        Exp transBody = this.visitedExp;
-        this.visitedExp = new Nx(
+        Exp transBody = this.getVisitedExp();
+        this.setVisitedExp(new Nx(
             new SEQ(
                 new com.chaosopher.tigerlang.compiler.tree.LABEL(whileStart),
                 new SEQ(
@@ -857,7 +902,7 @@ public class TranslatorVisitor extends DefaultVisitor {
                     )
                 )
             )
-        );
+        ));
         this.loopExits.pop();
     }
 }

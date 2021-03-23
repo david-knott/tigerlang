@@ -2,6 +2,7 @@ package hello;
 
 public class TigerSource {
 
+    private String fileName;
     private String code;
     private String args;
     private boolean astDisplay;
@@ -27,6 +28,14 @@ public class TigerSource {
 
     public String getCode() {
         return this.code;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     public boolean isDeatomize() {

@@ -13,6 +13,7 @@ import com.chaosopher.tigerlang.compiler.tree.StmList;
 import com.chaosopher.tigerlang.compiler.util.Assert;
 import com.chaosopher.tigerlang.compiler.dataflow.cfg.BasicBlock;
 import com.chaosopher.tigerlang.compiler.dataflow.cfg.CFG;
+import com.chaosopher.tigerlang.compiler.dataflow.utils.ExtractExp;
 import com.chaosopher.tigerlang.compiler.graph.Node;
 
 class AvailableExpressions {
