@@ -1,7 +1,7 @@
 package com.chaosopher.tigerlang.compiler.translate;
 
-import com.chaosopher.tigerlang.compiler.absyn.Absyn;
 import com.chaosopher.tigerlang.compiler.temp.Label;
+import com.chaosopher.tigerlang.compiler.temp.LabelFactory;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
 import com.chaosopher.tigerlang.compiler.tree.CONST;
 import com.chaosopher.tigerlang.compiler.tree.ESEQ;
@@ -23,25 +23,25 @@ class IfThenElseContext extends TranslateContext {
 
     TranslateContext testExp, a, b;
     // begining of the the clause
-    Label trueLabel = Label.create();
+    Label trueLabel = this.labelFactory.create();
     // begining of the else clause
-    Label falseLabel = Label.create();
+    Label falseLabel = this.labelFactory.create();
     // both branches jump to this when they complete
-    Label joinLabel = Label.create();
+    Label joinLabel = this.labelFactory.create();
     
-
     /**
      * Constructor for creating a new instance.
      * @param tst
      * @param aa
      * @param bb
      */
-    IfThenElseContext(TranslateContext tst, TranslateContext aa, TranslateContext bb) {
+    IfThenElseContext(LabelFactory labelFactory, TranslateContext tst, TranslateContext aa, TranslateContext bb) {
+        super(labelFactory);
         testExp = tst;
         a = aa;
         b = bb;
         if(b == null)
-        b = new ExContext(new CONST(0));
+        b = new ExContext(this.labelFactory, new CONST(0));
     }
 
     /**

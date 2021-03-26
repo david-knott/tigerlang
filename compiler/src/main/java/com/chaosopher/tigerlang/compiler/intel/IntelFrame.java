@@ -1,6 +1,7 @@
 package com.chaosopher.tigerlang.compiler.intel;
 
 import com.chaosopher.tigerlang.compiler.temp.Label;
+import com.chaosopher.tigerlang.compiler.temp.LabelFactory;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
 import com.chaosopher.tigerlang.compiler.temp.TempList;
 import com.chaosopher.tigerlang.compiler.tree.BINOP;
@@ -167,6 +168,8 @@ public class IntelFrame extends Frame {
     // map to store callee registers and the temp created to store them.
     private Hashtable<Temp, Temp> calleeTempMap = new Hashtable<Temp, Temp>();
     private TempList tempMap = new TempList(rbp, new TempList(rsp, registers));
+    private LabelFactory labelFactory;
+
 
     private void addCallingConvention(Stm stm) {
         if (this.callingConventions == null) {
@@ -283,6 +286,7 @@ public class IntelFrame extends Frame {
      * @param frml the formal list, where true indicates the argument escapes
      */
     public IntelFrame(Label nm, BoolList frml) {
+        this.labelFactory = new LabelFactory();
         Assert.assertNotNull(nm);
         this.name = nm;
         int i = 0;
@@ -487,7 +491,7 @@ public class IntelFrame extends Frame {
      */
     @Override
     public Exp externalCall(String func, ExpList args) {
-        return new CALL(new NAME(Label.create(func)), args);
+        return new CALL(new NAME(this.labelFactory.create(func)), args);
     }
 
     /**

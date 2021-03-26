@@ -1,7 +1,5 @@
 package com.chaosopher.tigerlang.compiler.dataflow.def;
 
-import static org.junit.Assert.assertTrue;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 

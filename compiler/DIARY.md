@@ -1,5 +1,9 @@
 # Diary
 
+## Friday 26th March 2021
+
+Refactored Labels so they are created by a LabelFactory.
+
 ## Friday 5th March 2021
 
 Converting quadruples back into tree's requires data flow analysis, in particular

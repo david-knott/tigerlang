@@ -1,6 +1,7 @@
 package com.chaosopher.tigerlang.compiler.translate;
 
 import com.chaosopher.tigerlang.compiler.temp.Label;
+import com.chaosopher.tigerlang.compiler.temp.LabelFactory;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 
 /**
@@ -16,7 +17,8 @@ class RelCxContext extends CxContext {
     com.chaosopher.tigerlang.compiler.tree.Exp left;
     int operator;
 
-    RelCxContext(com.chaosopher.tigerlang.compiler.tree.Exp l, com.chaosopher.tigerlang.compiler.tree.Exp r, int op) {
+    RelCxContext(LabelFactory labelFactory, com.chaosopher.tigerlang.compiler.tree.Exp l, com.chaosopher.tigerlang.compiler.tree.Exp r, int op) {
+        super(labelFactory);
         right = r;
         left = l;
         operator = op;

@@ -3,6 +3,7 @@ package com.chaosopher.tigerlang.compiler.dataflow.cfg;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.chaosopher.tigerlang.compiler.temp.Label;
+import com.chaosopher.tigerlang.compiler.temp.LabelFactory;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
 import com.chaosopher.tigerlang.compiler.tree.JUMP;
 import com.chaosopher.tigerlang.compiler.tree.LABEL;
@@ -13,6 +14,8 @@ import com.chaosopher.tigerlang.compiler.tree.TEMP;
 import org.junit.Test;
 
 public class CFGTest {
+    
+    private LabelFactory labelFactory = new LabelFactory();
     
     @Test(expected = java.lang.Error.class)
     public void statementNoLabel() {
@@ -33,7 +36,7 @@ public class CFGTest {
         Temp c = Temp.create();
         StmList test = new StmList(
             new LABEL(
-                Label.create()
+                this.labelFactory.create()
             ),
             new StmList(
                 new MOVE(
@@ -57,7 +60,7 @@ public class CFGTest {
         Temp a = Temp.create();
         Temp b = Temp.create();
         Temp c = Temp.create();
-        Label label = Label.create();
+        Label label = this.labelFactory.create();
         StmList test = new StmList(
             new LABEL(
                 label

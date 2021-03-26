@@ -16,6 +16,7 @@ import javax.xml.stream.XMLStreamException;
 
 import com.chaosopher.tigerlang.compiler.canon.CanonicalizationImpl;
 import com.chaosopher.tigerlang.compiler.temp.Label;
+import com.chaosopher.tigerlang.compiler.temp.LabelFactory;
 import com.chaosopher.tigerlang.compiler.tree.BINOP;
 import com.chaosopher.tigerlang.compiler.tree.CJUMP;
 import com.chaosopher.tigerlang.compiler.tree.CONST;
@@ -34,6 +35,8 @@ import junit.framework.AssertionFailedError;
 
 public class TreeAtomizerTest {
 
+    private LabelFactory labelFactory = new LabelFactory();
+    
     private void assertContains(Stm translation, String string) {
         ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
         XmlPrinter xmlPrinter;
@@ -177,8 +180,8 @@ public class TreeAtomizerTest {
                 new CONST(1)
             ),
             new CONST(1),
-            Label.create(),
-            Label.create()
+            this.labelFactory.create(),
+            this.labelFactory.create()
         );
         cjump.accept(treeAtomizer);
         // we expect the cjump left expression to be moved into an eseq that

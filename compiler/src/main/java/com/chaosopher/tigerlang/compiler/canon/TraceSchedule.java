@@ -1,6 +1,7 @@
 package com.chaosopher.tigerlang.compiler.canon;
 
 import com.chaosopher.tigerlang.compiler.temp.Label;
+import com.chaosopher.tigerlang.compiler.temp.LabelFactory;
 import com.chaosopher.tigerlang.compiler.tree.CJUMP;
 import com.chaosopher.tigerlang.compiler.tree.JUMP;
 import com.chaosopher.tigerlang.compiler.tree.LABEL;
@@ -12,6 +13,11 @@ class TraceSchedule {
 
     public StmList stms;
     BasicBlocks theBlocks;
+    private LabelFactory labelFactory;
+
+    public TraceSchedule() {
+        this.labelFactory = new LabelFactory();
+    }
 
     public Stm getTraces() {
         SEQ seqs = null;
@@ -59,7 +65,7 @@ class TraceSchedule {
                     last.tail.tail = t;
                     l = t;
                 } else {
-                    com.chaosopher.tigerlang.compiler.temp.Label ff = com.chaosopher.tigerlang.compiler.temp.Label.create();
+                    com.chaosopher.tigerlang.compiler.temp.Label ff = this.labelFactory.create();
                     last.tail.head = new CJUMP(j.relop, j.left, j.right, j.iftrue, ff);
                     last.tail.tail = new StmList(new LABEL(ff),
                             new StmList(new JUMP(j.iffalse), getNext()));

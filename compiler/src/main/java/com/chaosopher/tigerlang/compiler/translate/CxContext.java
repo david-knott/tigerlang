@@ -1,6 +1,7 @@
 package com.chaosopher.tigerlang.compiler.translate;
 
 import com.chaosopher.tigerlang.compiler.temp.Label;
+import com.chaosopher.tigerlang.compiler.temp.LabelFactory;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
 
 /**
@@ -11,10 +12,14 @@ import com.chaosopher.tigerlang.compiler.temp.Temp;
  */
 abstract class CxContext extends TranslateContext {
 
+    public CxContext(LabelFactory labelFactory) {
+        super(labelFactory);
+    }
+
     @Override
     com.chaosopher.tigerlang.compiler.tree.Exp unEx() {
-        Label t = Label.create();
-        Label f = Label.create();
+        Label t = this.labelFactory.create();
+        Label f = this.labelFactory.create();
         Temp r = Temp.create();
         // move const 1 into temp r
         // call conditional statement with labels
@@ -31,7 +36,7 @@ abstract class CxContext extends TranslateContext {
 
     @Override
     com.chaosopher.tigerlang.compiler.tree.Stm unNx() {
-        Label a = Label.create();
+        Label a = this.labelFactory.create();
         return new com.chaosopher.tigerlang.compiler.tree.SEQ(unCx(a, a), new com.chaosopher.tigerlang.compiler.tree.LABEL(a));
     }
 }

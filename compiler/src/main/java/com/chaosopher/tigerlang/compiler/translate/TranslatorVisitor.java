@@ -31,6 +31,7 @@ import com.chaosopher.tigerlang.compiler.absyn.VarExp;
 import com.chaosopher.tigerlang.compiler.absyn.WhileExp;
 import com.chaosopher.tigerlang.compiler.intel.IntelFrame;
 import com.chaosopher.tigerlang.compiler.temp.Label;
+import com.chaosopher.tigerlang.compiler.temp.LabelFactory;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
 import com.chaosopher.tigerlang.compiler.tree.BINOP;
 import com.chaosopher.tigerlang.compiler.tree.CALL;
@@ -65,6 +66,7 @@ public class TranslatorVisitor extends DefaultVisitor {
     private TranslateContext visitedExp;
     private Level currentLevel;
     private FragList fragList;
+    private LabelFactory labelFactory;
 
     /**
      * This method creates a new TranslatorVisitor instance and applys it
@@ -79,7 +81,9 @@ public class TranslatorVisitor extends DefaultVisitor {
     }
 
     public TranslatorVisitor() {
-        this.transExpressionFactory = TransExpressionFactory.create(new HashMap<IR, Absyn>());
+        this.labelFactory = new LabelFactory();
+        this.transExpressionFactory = TransExpressionFactory.create(this.labelFactory, new HashMap<IR, Absyn>());
+
     }
 
     public Map<IR,Absyn> getSourceMap() {
@@ -438,11 +442,11 @@ public class TranslatorVisitor extends DefaultVisitor {
         functionAccesses.put(forExp.var, lowVarTranslateAccess);
         // create labels and temps
         Temp limit = Temp.create();
-        Label forStart = Label.create();
-        Label loopStart = Label.create();
-        Label loopExit1 = Label.create();
+        Label forStart = this.labelFactory.create();
+        Label loopStart = this.labelFactory.create();
+        Label loopExit1 = this.labelFactory.create();
         // Push loopend label onto stack.
-        Label loopEnd = Label.create();
+        Label loopEnd = this.labelFactory.create();
         this.loopExits.push(loopEnd);
         // visit sub expressions.
         forExp.hi.accept(this);
@@ -499,10 +503,10 @@ public class TranslatorVisitor extends DefaultVisitor {
         for(FunctionDec current = functionDec; current != null; current = current.next) {
             if(current.body == null) {
                 // No level for primitives.
-                Label label = Label.create(current.name);
+                Label label = this.labelFactory.create(current.name);
                 this.functionLabels.put(current, label);
             } else if(current.name.toString().equals("tigermain")) {
-                Label label = Label.create("tigermain");
+                Label label = this.labelFactory.create("tigermain");
                 // getBoolList is null here...
                 Level level = new Level(new IntelFrame(label, getBoolList(current.params)));
                 this.functionLevels.put(current, level);
@@ -513,7 +517,7 @@ public class TranslatorVisitor extends DefaultVisitor {
                 // these are supplied so the level & frame
                 // can create com.chaosopher.tigerlang.compiler.frame.Access ( Temp or Mem )
                 // for the function.
-                Label label = Label.create();
+                Label label = this.labelFactory.create();
                 // create level and access for function
                 Level level =
                     new Level(
@@ -559,7 +563,8 @@ public class TranslatorVisitor extends DefaultVisitor {
                 FUNCTION functionType = (FUNCTION)current.getType();
                 Assert.assertNotNull(functionType);
                 if(!functionType.result.coerceTo(Constants.VOID)) {
-                    translatedBody = new NxContext(new MOVE(new TEMP(this.currentLevel.frame.RV()), translatedBody.unEx()));
+                    //translatedBody = new NxContext(new MOVE(new TEMP(this.currentLevel.frame.RV()), translatedBody.unEx()));
+                    translatedBody = this.transExpressionFactory.createNx(current.body,  new MOVE(new TEMP(this.currentLevel.frame.RV()), translatedBody.unEx()));
                 }
                 // creates a new fragment for the function.
                 this.procEntryExit(this.getCurrentLevel(), translatedBody);
@@ -647,7 +652,7 @@ public class TranslatorVisitor extends DefaultVisitor {
             letExp.decs.accept(this);
             decs = this.getVisitedExp();
         } else {
-            decs = new ExContext(new CONST(0));
+            decs = this.transExpressionFactory.createEx(letExp, new CONST(0)); //new ExContext(new CONST(0));
         }
         TranslateContext body = null;
         Type bodyType = null;
@@ -656,7 +661,7 @@ public class TranslatorVisitor extends DefaultVisitor {
             body = this.getVisitedExp();
             bodyType = letExp.body.getType();
         } else {
-            body = new ExContext(new CONST(0));
+            body = this.transExpressionFactory.createEx(letExp, new CONST(0)); //new ExContext(new CONST(0));
             bodyType = Constants.VOID;
         }
         this.setVisitedExp(bodyType.coerceTo(Constants.VOID) 
@@ -762,7 +767,7 @@ public class TranslatorVisitor extends DefaultVisitor {
                     );
                 } else {
                     this.setVisitedExp(
-                        new RelCxContext(leftTrans.unEx(), rightTrans.unEx(), relop)
+                        this.transExpressionFactory.createRelCx(opExp, leftTrans.unEx(), rightTrans.unEx(), relop)
                     );
                 }
             break;
@@ -907,7 +912,7 @@ public class TranslatorVisitor extends DefaultVisitor {
      */
     @Override
     public void visit(StringExp stringExp) {
-        Label label = Label.create();
+        Label label = this.labelFactory.create();
         addFrag(new DataFrag(label, stringExp.value, this.getCurrentLevel().frame));
         this.setVisitedExp(
             this.transExpressionFactory.createEx(
@@ -972,10 +977,10 @@ public class TranslatorVisitor extends DefaultVisitor {
         // create labels and temps first
         // add to loop list. Then visit
         // the sub expressions.
-        Label loopEnd = Label.create();
+        Label loopEnd = this.labelFactory.create();
         this.loopExits.push(loopEnd);
-        var whileStart = Label.create();
-        var loopStart = Label.create();
+        var whileStart = this.labelFactory.create();
+        var loopStart = this.labelFactory.create();
         whileExp.test.accept(this);
         TranslateContext testExp = this.getVisitedExp();
         whileExp.body.accept(this);

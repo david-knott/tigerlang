@@ -1,11 +1,14 @@
 package com.chaosopher.tigerlang.compiler.canon;
 
+import com.chaosopher.tigerlang.compiler.temp.LabelFactory;
+
 class BasicBlocks {
   public StmListList blocks;
   public com.chaosopher.tigerlang.compiler.temp.Label done;
 
   private StmListList lastBlock;
   private com.chaosopher.tigerlang.compiler.tree.StmList lastStm;
+  private LabelFactory labelFactory;
 
   private void addStm(com.chaosopher.tigerlang.compiler.tree.Stm s) {
     lastStm = lastStm.tail = new com.chaosopher.tigerlang.compiler.tree.StmList(s, null);
@@ -36,11 +39,12 @@ class BasicBlocks {
         lastBlock = lastBlock.tail = new StmListList(lastStm, null);
       doStms(l.tail);
     } else
-      mkBlocks(new com.chaosopher.tigerlang.compiler.tree.StmList(new com.chaosopher.tigerlang.compiler.tree.LABEL(com.chaosopher.tigerlang.compiler.temp.Label.create()), l));
+      mkBlocks(new com.chaosopher.tigerlang.compiler.tree.StmList(new com.chaosopher.tigerlang.compiler.tree.LABEL(this.labelFactory.create()), l));
   }
 
   public BasicBlocks(com.chaosopher.tigerlang.compiler.tree.StmList stms) {
-    done = com.chaosopher.tigerlang.compiler.temp.Label.create();
+    this.labelFactory = new LabelFactory();
+    done = this.labelFactory.create();
     mkBlocks(stms);
   }
 }

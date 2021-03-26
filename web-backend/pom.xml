@@ -38,6 +38,12 @@
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
         </dependency>
+        <!-- MongoDB -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <!-- Compiler libraries -->
         <dependency>
             <groupId>com.chaosopher.tigerlang.compiler</groupId>
             <artifactId>compiler</artifactId>

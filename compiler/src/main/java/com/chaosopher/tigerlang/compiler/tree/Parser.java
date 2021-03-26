@@ -3,6 +3,7 @@ package com.chaosopher.tigerlang.compiler.tree;
 import java.io.IOException;
 
 import com.chaosopher.tigerlang.compiler.temp.Label;
+import com.chaosopher.tigerlang.compiler.temp.LabelFactory;
 import com.chaosopher.tigerlang.compiler.temp.LabelList;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
 
@@ -17,9 +18,12 @@ public class Parser {
     private final Lexer lexer;
     // lookahead token.
     private Token look;
+    // Label factory
+    private LabelFactory labelFactory;
 
     public Parser(Lexer lexer) {
         this.lexer = lexer;
+        this.labelFactory = new LabelFactory();
     }
 
     /**
@@ -92,7 +96,7 @@ public class Parser {
         this.match(TokenType.ID);
         this.match(TokenType.RIGHT_PAREN);
         this.match(TokenType.RIGHT_PAREN);
-        Label label = Label.create(id.getLexeme());
+        Label label = this.labelFactory.create(id.getLexeme());
         return new JUMP(new NAME(label), new LabelList(label, null));
     }
 
@@ -158,7 +162,7 @@ public class Parser {
         this.match(TokenType.ID);
         cjumpIdRight = tok2.getLexeme();
         this.match(TokenType.RIGHT_PAREN);
-        return new CJUMP(op, cjumpLeft, cjumpRight, Label.create(cjumpIdLeft), Label.create(cjumpIdRight));
+        return new CJUMP(op, cjumpLeft, cjumpRight, this.labelFactory.create(cjumpIdLeft), this.labelFactory.create(cjumpIdRight));
     }
 
     private Stm handleLabel() throws IOException {
@@ -167,7 +171,7 @@ public class Parser {
         Token tok = this.look;
         this.match(TokenType.ID);
         this.match(TokenType.RIGHT_PAREN);
-        return new LABEL(Label.create(tok.getLexeme()));
+        return new LABEL(this.labelFactory.create(tok.getLexeme()));
     }
 
     private Stm handleSeq() throws IOException {
@@ -311,7 +315,7 @@ public class Parser {
         Token nameToken = this.look;
         this.match(TokenType.ID);
         this.match(TokenType.RIGHT_PAREN);
-        return new NAME(Label.create(nameToken.getLexeme()));
+        return new NAME(this.labelFactory.create(nameToken.getLexeme()));
     }
 
     private Exp expression() throws IOException {

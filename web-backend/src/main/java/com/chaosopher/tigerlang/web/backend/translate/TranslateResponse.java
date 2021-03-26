@@ -30,6 +30,7 @@ import com.chaosopher.tigerlang.compiler.tree.IR;
 public class TranslateResponse implements FragmentVisitor {
 
     public class IRLine {
+
         private final String code;
         private final int position;
 

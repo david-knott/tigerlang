@@ -1,16 +1,14 @@
 package com.chaosopher.tigerlang.compiler.translate;
 
-import java.util.HashMap;
-
-import com.chaosopher.tigerlang.compiler.absyn.Absyn;
 import com.chaosopher.tigerlang.compiler.temp.Label;
-import com.chaosopher.tigerlang.compiler.tree.IR;
+import com.chaosopher.tigerlang.compiler.temp.LabelFactory;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 
 class ExContext extends TranslateContext {
     com.chaosopher.tigerlang.compiler.tree.Exp exp;
 
-    ExContext(com.chaosopher.tigerlang.compiler.tree.Exp e) {
+    ExContext(LabelFactory labelFactory, com.chaosopher.tigerlang.compiler.tree.Exp e) {
+        super(labelFactory);
         exp = e;
     }
 

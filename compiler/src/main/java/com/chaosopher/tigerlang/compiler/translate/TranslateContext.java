@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.chaosopher.tigerlang.compiler.absyn.Absyn;
 import com.chaosopher.tigerlang.compiler.temp.Label;
+import com.chaosopher.tigerlang.compiler.temp.LabelFactory;
 import com.chaosopher.tigerlang.compiler.tree.DefaultTreeVisitor;
 import com.chaosopher.tigerlang.compiler.tree.IR;
 import com.chaosopher.tigerlang.compiler.tree.TreeVisitor;
@@ -40,6 +41,12 @@ class SourceMapHelper extends DefaultTreeVisitor {
  * labels.
  */
 abstract public class TranslateContext {
+
+    protected final LabelFactory labelFactory;
+    
+    public TranslateContext(LabelFactory labelFactory) {
+        this.labelFactory = labelFactory;
+    }
 
     abstract com.chaosopher.tigerlang.compiler.tree.Exp unEx();
 

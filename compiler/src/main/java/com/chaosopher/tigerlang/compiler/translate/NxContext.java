@@ -1,6 +1,7 @@
 package com.chaosopher.tigerlang.compiler.translate;
 
 import com.chaosopher.tigerlang.compiler.temp.Label;
+import com.chaosopher.tigerlang.compiler.temp.LabelFactory;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 
 /**
@@ -9,7 +10,8 @@ import com.chaosopher.tigerlang.compiler.tree.Stm;
 class NxContext extends TranslateContext {
     com.chaosopher.tigerlang.compiler.tree.Stm stm;
 
-    NxContext(com.chaosopher.tigerlang.compiler.tree.Stm s) {
+    NxContext(LabelFactory labelFactory, com.chaosopher.tigerlang.compiler.tree.Stm s) {
+        super(labelFactory);
         stm = s;
     }
 
