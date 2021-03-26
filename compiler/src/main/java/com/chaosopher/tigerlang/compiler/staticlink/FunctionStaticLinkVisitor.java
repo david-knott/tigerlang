@@ -4,6 +4,7 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Stack;
 
+import com.chaosopher.tigerlang.compiler.absyn.Absyn;
 import com.chaosopher.tigerlang.compiler.absyn.DefaultVisitor;
 import com.chaosopher.tigerlang.compiler.absyn.FunctionDec;
 import com.chaosopher.tigerlang.compiler.absyn.SimpleVar;
@@ -15,6 +16,12 @@ import com.chaosopher.tigerlang.compiler.absyn.VarDec;
  * the Binding visitor. All static linkx are assume to escape.
  */
 public class FunctionStaticLinkVisitor extends DefaultVisitor {
+
+    public static FunctionStaticLinkVisitor apply(Absyn absyn) {
+        FunctionStaticLinkVisitor escapeVisitor = new FunctionStaticLinkVisitor();
+        absyn.accept(escapeVisitor);
+        return escapeVisitor;
+    }
 
     private Stack<FunctionDec> levels = new Stack<>();
    // private FunctionDec currentFunctionDec;

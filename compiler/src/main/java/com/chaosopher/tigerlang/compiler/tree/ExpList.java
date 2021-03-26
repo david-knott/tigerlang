@@ -65,6 +65,7 @@ public class ExpList {
         return i;
     }
 
+    /*
     @Override
     public boolean equals(Object obj) {
         throw new RuntimeException("Not implemented");
@@ -73,5 +74,5 @@ public class ExpList {
     @Override
     public int hashCode() {
         throw new RuntimeException("Not implemented");
-    }
+    }*/
 }

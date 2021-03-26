@@ -1,5 +1,6 @@
 package com.chaosopher.tigerlang.compiler.findescape;
 
+import com.chaosopher.tigerlang.compiler.absyn.Absyn;
 import com.chaosopher.tigerlang.compiler.absyn.DefaultVisitor;
 import com.chaosopher.tigerlang.compiler.absyn.FunctionDec;
 import com.chaosopher.tigerlang.compiler.absyn.LetExp;
@@ -15,6 +16,11 @@ import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
  */
 public class EscapeVisitor extends DefaultVisitor {
 
+    public static EscapeVisitor apply(ErrorMsg errorMsg, Absyn absyn) {
+        EscapeVisitor escapeVisitor = new EscapeVisitor(errorMsg);
+        absyn.accept(escapeVisitor);
+        return escapeVisitor;
+    }
     final ErrorMsg  errorMsg;
     final com.chaosopher.tigerlang.compiler.symbol.GenericTable<Escape> escEnv = new com.chaosopher.tigerlang.compiler.symbol.GenericTable<Escape>();
     int depth = 0;

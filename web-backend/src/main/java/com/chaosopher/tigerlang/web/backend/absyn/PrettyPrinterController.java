@@ -10,7 +10,6 @@ import com.chaosopher.tigerlang.compiler.absyn.PrettyPrinter;
 import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
 import com.chaosopher.tigerlang.compiler.parse.ParserFactory;
 import com.chaosopher.tigerlang.compiler.parse.ParserService;
-import com.chaosopher.tigerlang.compiler.types.TypeChecker;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,16 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import hello.TigerSource;
 
+/**
+ * Pretty prints the suppled source code if it is syntactically valid. If source
+ * is invalid a client error is returned.
+ * 
+ * @return
+ */
 @RestController
 @CrossOrigin(origins = "*")
 public class PrettyPrinterController {
 
-    /**
-     * Pretty prints the suppled source code if it is syntactically valid. If source
-     * is invalid a client error is returned.
-     * 
-     * @return
-     */
     @PostMapping("/prettyPrint")
     public ResponseEntity<String> prettyPrint(@RequestBody TigerSource tigerSource) {
         // instream for source code
@@ -40,13 +39,12 @@ public class PrettyPrinterController {
         // the file name.
         ErrorMsg errorMsg = new ErrorMsg(tigerSource.getFileName(), err);
         ParserService parserService = new ParserService(new ParserFactory());
+        parserService.configure(f -> f.setNoPrelude(true));
         // attempt to parse the file.
         DecList decList = parserService.parse(in, errorMsg);
         if (errorMsg.anyErrors) {
             return ResponseEntity.badRequest().build();
         }
-        // run type checker on the file.
-        decList.accept(new TypeChecker(errorMsg));
         if (errorMsg.anyErrors) {
             return ResponseEntity.badRequest().build();
         }

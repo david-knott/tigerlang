@@ -6,7 +6,7 @@ public class ExpTy {
 
     public static ExpTy ERROR = new ExpTy();
 
-    public Exp exp;
+    public TranslateContext exp;
     public Type ty;
 
     private ExpTy() {
@@ -14,7 +14,7 @@ public class ExpTy {
         this.ty = null;
     }
 
-    public ExpTy(Exp e, Type t) {
+    public ExpTy(TranslateContext e, Type t) {
         exp = e;
         ty = t;
     }

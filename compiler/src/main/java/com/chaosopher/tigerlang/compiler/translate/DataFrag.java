@@ -1,25 +1,38 @@
 package com.chaosopher.tigerlang.compiler.translate;
 
 import com.chaosopher.tigerlang.compiler.frame.Frame;
+import com.chaosopher.tigerlang.compiler.temp.Label;
 
 /**
- * Stores string literal data
+ * Stores string literal data for the HIR/LIR representation.
  **/
 public class DataFrag extends Frag {
 
-	final String data;
+	private final String data;
+	private final Frame frame;
+	private final Label label;
 
-	public DataFrag(String data) {
+	public DataFrag(Label label, String data, Frame frame) {
+		this.frame = frame;
+		this.label = label;
 		this.data = data;
 	}
 
 	public String toString() {
+		return this.frame.string(this.label, this.data);
+	}
+
+	public String getData() {
 		return this.data;
 	}
 
 	@Override
 	public Frame getFrame() {
-		throw new Error();
+		return this.frame;
+	}
+
+	public Label getLabel() {
+		return this.label;
 	}
 
 	@Override

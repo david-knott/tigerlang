@@ -2,15 +2,21 @@ package com.chaosopher.tigerlang.compiler.staticlink;
 
 import com.chaosopher.tigerlang.compiler.absyn.Absyn;
 import com.chaosopher.tigerlang.compiler.absyn.CallExp;
+import com.chaosopher.tigerlang.compiler.absyn.DecList;
 import com.chaosopher.tigerlang.compiler.absyn.DefaultVisitor;
 import com.chaosopher.tigerlang.compiler.absyn.FunctionDec;
 import com.chaosopher.tigerlang.compiler.callgraph.CallGraphVisitor;
 import com.chaosopher.tigerlang.compiler.callgraph.FunctionCallGraph;
 import com.chaosopher.tigerlang.compiler.graph.Node;
 import com.chaosopher.tigerlang.compiler.graph.NodeList;
-import com.chaosopher.tigerlang.compiler.translate.Level;
 
-class StaticLinkEscapeVisitor extends DefaultVisitor {
+public class StaticLinkEscapeVisitor extends DefaultVisitor {
+
+    public static StaticLinkEscapeVisitor apply(Absyn absyn) {
+        StaticLinkEscapeVisitor escapeVisitor = new StaticLinkEscapeVisitor(absyn);
+        absyn.accept(escapeVisitor);
+        return escapeVisitor;
+    }
 
     private FunctionCallGraph functionCallGraph;
 

@@ -1,7 +1,7 @@
 package com.chaosopher.tigerlang.compiler.errormsg;
 
-import java.io.FilenameFilter;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -15,6 +15,7 @@ public class ErrorMsg {
 
     public ErrorMsg(String f, PrintStream out) {
         filename = f;
+        this.errors = new ArrayList<ErrorMessage>();
         this.out = out;
     }
 
@@ -32,7 +33,7 @@ public class ErrorMsg {
         return Collections.unmodifiableList(this.errors);
     }
 
-    public void errorNew(int pos, String message ) {
+    public void error(int pos, String message ) {
         int n = lineNum;
         LineList p = linePos;
         anyErrors = true;
@@ -46,7 +47,7 @@ public class ErrorMsg {
         this.errors.add(new ErrorMessage(this.filename, n, pos - p.head, message));
     }
 
-    public void error(int pos, String msg) {
+    public void errorOld(int pos, String msg) {
         int n = lineNum;
         LineList p = linePos;
         String sayPos = "0.0";

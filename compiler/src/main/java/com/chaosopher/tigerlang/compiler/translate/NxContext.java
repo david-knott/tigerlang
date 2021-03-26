@@ -4,13 +4,12 @@ import com.chaosopher.tigerlang.compiler.temp.Label;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 
 /**
- * Represents an expression that does not yield a value, this is referred to as
- * a statement.
+ * Represents a statement which does not yield a value.
  */
-class Nx extends Exp {
+class NxContext extends TranslateContext {
     com.chaosopher.tigerlang.compiler.tree.Stm stm;
 
-    Nx(com.chaosopher.tigerlang.compiler.tree.Stm s) {
+    NxContext(com.chaosopher.tigerlang.compiler.tree.Stm s) {
         stm = s;
     }
 

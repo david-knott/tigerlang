@@ -1,18 +1,22 @@
 package com.chaosopher.tigerlang.compiler.translate;
 
+import java.util.HashMap;
+
+import com.chaosopher.tigerlang.compiler.absyn.Absyn;
 import com.chaosopher.tigerlang.compiler.temp.Label;
+import com.chaosopher.tigerlang.compiler.tree.IR;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 
-class Ex extends Exp {
+class ExContext extends TranslateContext {
     com.chaosopher.tigerlang.compiler.tree.Exp exp;
 
-    Ex(com.chaosopher.tigerlang.compiler.tree.Exp e) {
+    ExContext(com.chaosopher.tigerlang.compiler.tree.Exp e) {
         exp = e;
     }
 
     @Override
     com.chaosopher.tigerlang.compiler.tree.Exp unEx() {
-        return exp;
+        return this.exp;
     }
 
     @Override
@@ -25,7 +29,7 @@ class Ex extends Exp {
      * a result into a conditional that
      * jumps to true or false depending
      * on whether expresion evalues to 1 or
-     * not one.
+     * not.
      */
     @Override
     Stm unCx(Label t, Label f) {

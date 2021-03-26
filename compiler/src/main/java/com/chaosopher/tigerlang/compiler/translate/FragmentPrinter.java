@@ -29,7 +29,7 @@ public class FragmentPrinter implements FragmentVisitor {
     @Override
     public void visit(DataFrag dataFrag) {
         this.out.println("# Data:");
-        this.out.println(dataFrag.data);
+        this.out.println(dataFrag.getData());
     }
 
 }

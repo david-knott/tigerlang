@@ -9,7 +9,7 @@ import com.chaosopher.tigerlang.compiler.temp.Temp;
  * 
  * This class is subclassed by RelCx which is used for comparision operations
  */
-abstract class Cx extends Exp {
+abstract class CxContext extends TranslateContext {
 
     @Override
     com.chaosopher.tigerlang.compiler.tree.Exp unEx() {

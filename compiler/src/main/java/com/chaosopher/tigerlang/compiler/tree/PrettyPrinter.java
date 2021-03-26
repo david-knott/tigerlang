@@ -100,7 +100,6 @@ public class PrettyPrinter implements TreeVisitor {
         this.decLevel();
         this.write(")");
         // Targets
-
     }
 
     @Override

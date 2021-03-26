@@ -1,5 +1,6 @@
 package com.chaosopher.tigerlang.compiler.translate;
 
+import com.chaosopher.tigerlang.compiler.absyn.Absyn;
 import com.chaosopher.tigerlang.compiler.temp.Label;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
 import com.chaosopher.tigerlang.compiler.tree.CONST;
@@ -18,15 +19,16 @@ import com.chaosopher.tigerlang.compiler.tree.TEMP;
  * 
  * IR Code
  */
-class IfThenElseExp extends Exp {
+class IfThenElseContext extends TranslateContext {
 
-    Exp testExp, a, b;
+    TranslateContext testExp, a, b;
     // begining of the the clause
     Label trueLabel = Label.create();
     // begining of the else clause
     Label falseLabel = Label.create();
     // both branches jump to this when they complete
     Label joinLabel = Label.create();
+    
 
     /**
      * Constructor for creating a new instance.
@@ -34,12 +36,12 @@ class IfThenElseExp extends Exp {
      * @param aa
      * @param bb
      */
-    IfThenElseExp(Exp tst, Exp aa, Exp bb) {
+    IfThenElseContext(TranslateContext tst, TranslateContext aa, TranslateContext bb) {
         testExp = tst;
         a = aa;
         b = bb;
         if(b == null)
-        b = new Ex(new CONST(0));
+        b = new ExContext(new CONST(0));
     }
 
     /**

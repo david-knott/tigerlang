@@ -4,9 +4,11 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.Collections;
 import java.util.List;
 
 import com.chaosopher.tigerlang.compiler.absyn.DecList;
+import com.chaosopher.tigerlang.compiler.bind.Binder;
 import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
 import com.chaosopher.tigerlang.compiler.errormsg.ErrorMessage;
 import com.chaosopher.tigerlang.compiler.parse.ParserFactory;
@@ -45,12 +47,14 @@ public class ErrorCheckerController {
         if(errorMsg.anyErrors) {
             return ResponseEntity.ok(errorMsg.getErrors());
         }
+        // populate symbol tables.
+        decList.accept(new Binder(errorMsg));
         // run type checker on the file.
         decList.accept(new TypeChecker(errorMsg));
         if(errorMsg.anyErrors) {
             return ResponseEntity.ok(errorMsg.getErrors());
         }
         // all is well, return a no content ok message.
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(Collections.emptyList());
     }
 }

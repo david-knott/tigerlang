@@ -10,13 +10,13 @@ import com.chaosopher.tigerlang.compiler.tree.Stm;
  * 
  * IR Code is just a simple CJUMP to the supplied labels.
  */
-class RelCx extends Cx {
+class RelCxContext extends CxContext {
 
     com.chaosopher.tigerlang.compiler.tree.Exp right;
     com.chaosopher.tigerlang.compiler.tree.Exp left;
     int operator;
 
-    RelCx(com.chaosopher.tigerlang.compiler.tree.Exp l, com.chaosopher.tigerlang.compiler.tree.Exp r, int op) {
+    RelCxContext(com.chaosopher.tigerlang.compiler.tree.Exp l, com.chaosopher.tigerlang.compiler.tree.Exp r, int op) {
         right = r;
         left = l;
         operator = op;
