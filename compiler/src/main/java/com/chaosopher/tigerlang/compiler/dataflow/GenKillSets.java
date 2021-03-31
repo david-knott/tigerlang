@@ -64,6 +64,14 @@ public abstract class GenKillSets<T> {
         return this.statementDefinitionIds.get(stm);
     }
 
+    public boolean compareKill(Integer defId, Set<T> other) {
+        return this.getKill(this.definitionIdStatements.get(defId)).equals(other);
+    }
+
+    public boolean compareGen(Integer defId, Set<T> other) {
+        return this.getGen(this.definitionIdStatements.get(defId)).equals(other);
+    }
+
     public Set<T> getKill(final BasicBlock basicBlock) {
         return this.killMap.get(basicBlock);
     }

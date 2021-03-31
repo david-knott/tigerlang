@@ -4,6 +4,9 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.chaosopher.tigerlang.compiler.dataflow.GenKillSets;
 import com.chaosopher.tigerlang.compiler.dataflow.cfg.CFG;
@@ -16,6 +19,56 @@ import org.junit.Test;
 
 public class GenKillSetsTest {
     
+    @Test
+    public void singleGen() throws IOException {
+        String code = 
+            "label(start) " + 
+            "move(temp(a), const(5)) ";
+        ;
+        Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
+        StmList stmList = (StmList)parser.parse();
+        CFG cfg = CFG.build(stmList);
+        GenKillSets<Integer> genKillSets = DefGenKillSets.analyse(cfg);
+        assertTrue(genKillSets.compareGen(1, Stream.of(1).collect(Collectors.toCollection(HashSet::new))));
+        assertTrue(genKillSets.compareKill(1, new HashSet<>()));
+    }
+
+    @Test
+    public void twoGen() throws IOException {
+        String code = 
+            "label(start) " + 
+            "move(temp(a), const(5)) " +
+            "move(temp(c), const(5)) "
+        ;
+        Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
+        StmList stmList = (StmList)parser.parse();
+        CFG cfg = CFG.build(stmList);
+        GenKillSets<Integer> genKillSets = DefGenKillSets.analyse(cfg);
+        genKillSets.serialize(System.out);
+        assertTrue(genKillSets.compareGen(1, Stream.of(1).collect(Collectors.toCollection(HashSet::new))));
+        assertTrue(genKillSets.compareKill(1, new HashSet<>()));
+        assertTrue(genKillSets.compareGen(2, Stream.of(2).collect(Collectors.toCollection(HashSet::new))));
+        assertTrue(genKillSets.compareKill(2, new HashSet<>()));
+    }
+
+    @Test
+    public void oneGenOneKill() throws IOException {
+        String code = 
+            "label(start) " + 
+            "move(temp(a), const(5)) " +
+            "move(temp(a), const(9)) "
+        ;
+        Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
+        StmList stmList = (StmList)parser.parse();
+        CFG cfg = CFG.build(stmList);
+        GenKillSets<Integer> genKillSets = DefGenKillSets.analyse(cfg);
+        genKillSets.serialize(System.out);
+        assertTrue(genKillSets.compareGen(1, Stream.of(1).collect(Collectors.toCollection(HashSet::new))));
+        assertTrue(genKillSets.compareKill(1, Stream.of(2).collect(Collectors.toCollection(HashSet::new))));
+        assertTrue(genKillSets.compareGen(2, Stream.of(2).collect(Collectors.toCollection(HashSet::new))));
+        assertTrue(genKillSets.compareKill(2, Stream.of(1).collect(Collectors.toCollection(HashSet::new))));
+    }
+
     @Test
     public void createInstance() throws IOException {
         String code = 
@@ -35,24 +88,12 @@ public class GenKillSetsTest {
         StmList stmList = (StmList)parser.parse();
         CFG cfg = CFG.build(stmList);
         GenKillSets<Integer> genKillSets = DefGenKillSets.analyse(cfg);
-        //GenKillSets genKillSets = GenKillSets.analyse(cfg);
         genKillSets.serialize(System.out);
-        /*
-        assertTrue(genKillSets.getGen(1).size() == 1);
-        assertTrue(genKillSets.getGen(1).contains(1));
-        assertTrue(genKillSets.getKill(1).size() == 1);
-        assertTrue(genKillSets.getKill(1).contains(6));
-
-        assertTrue(genKillSets.getGen(2).size() == 1);
-        assertTrue(genKillSets.getGen(2).contains(2));
-        assertTrue(genKillSets.getKill(2).size() == 2);
-        assertTrue(genKillSets.getKill(2).contains(4));
-        assertTrue(genKillSets.getKill(2).contains(7));
-
-        assertTrue(genKillSets.getGen(7).size() == 1);
-        assertTrue(genKillSets.getGen(7).contains(7));
-        assertTrue(genKillSets.getKill(7).size() == 2);
-        assertTrue(genKillSets.getKill(7).contains(2));
-        assertTrue(genKillSets.getKill(7).contains(4));*/
+        assertTrue(genKillSets.compareGen(1, Stream.of(1).collect(Collectors.toCollection(HashSet::new))));
+        assertTrue(genKillSets.compareKill(1, Stream.of(6).collect(Collectors.toCollection(HashSet::new))));
+        assertTrue(genKillSets.compareGen(2, Stream.of(2).collect(Collectors.toCollection(HashSet::new))));
+        assertTrue(genKillSets.compareKill(2, Stream.of(4, 7).collect(Collectors.toCollection(HashSet::new))));
+        assertTrue(genKillSets.compareGen(7, Stream.of(7).collect(Collectors.toCollection(HashSet::new))));
+        assertTrue(genKillSets.compareKill(7, Stream.of(2, 4).collect(Collectors.toCollection(HashSet::new))));
     }
 }
