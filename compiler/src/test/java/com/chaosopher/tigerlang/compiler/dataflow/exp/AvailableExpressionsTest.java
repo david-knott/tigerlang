@@ -3,7 +3,9 @@ package com.chaosopher.tigerlang.compiler.dataflow.exp;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+import com.chaosopher.tigerlang.compiler.dataflow.GenKillSets;
 import com.chaosopher.tigerlang.compiler.dataflow.cfg.CFG;
+import com.chaosopher.tigerlang.compiler.tree.Exp;
 import com.chaosopher.tigerlang.compiler.tree.Lexer;
 import com.chaosopher.tigerlang.compiler.tree.Parser;
 import com.chaosopher.tigerlang.compiler.tree.StmList;
@@ -29,7 +31,7 @@ public class AvailableExpressionsTest {
         Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
         StmList stmList = (StmList)parser.parse();
         CFG cfg = CFG.build(stmList);
-        GenKillSets genKillSets = GenKillSets.analyse(cfg);
+        GenKillSets<Exp> genKillSets = AEGenKillSets.analyse(cfg);
         AvailableExpressions availableExpressions = AvailableExpressions.analyze(cfg, genKillSets);
         availableExpressions.serialize(System.out);
     }

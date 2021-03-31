@@ -25,7 +25,7 @@ public class DefGenKillSets extends GenKillSets<Integer> {
      */
     private final HashMap<Temp, Set<Integer>> defTemps = new HashMap<>();
 
-    public DefGenKillSets(CFG cfg) {
+    private DefGenKillSets(CFG cfg) {
         super(cfg);
     }
 

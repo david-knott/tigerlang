@@ -3,6 +3,7 @@ package com.chaosopher.tigerlang.compiler.dataflow.def;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+import com.chaosopher.tigerlang.compiler.dataflow.GenKillSets;
 import com.chaosopher.tigerlang.compiler.dataflow.cfg.CFG;
 import com.chaosopher.tigerlang.compiler.tree.Lexer;
 import com.chaosopher.tigerlang.compiler.tree.Parser;
@@ -30,7 +31,7 @@ public class ReachingDefinitionsTest {
         Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
         StmList stmList = (StmList)parser.parse();
         CFG cfg = CFG.build(stmList);
-        GenKillSets genKillSets = GenKillSets.analyse(cfg);
+        GenKillSets<Integer> genKillSets = DefGenKillSets.analyse(cfg);
         ReachingDefinitions reachingDefinitions = ReachingDefinitions.analyze(cfg, genKillSets);
         reachingDefinitions.serialize(System.out);
     }

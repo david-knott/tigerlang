@@ -9,44 +9,10 @@ import com.chaosopher.tigerlang.compiler.dataflow.cfg.BasicBlock;
 import com.chaosopher.tigerlang.compiler.dataflow.cfg.CFG;
 import com.chaosopher.tigerlang.compiler.graph.Node;
 import com.chaosopher.tigerlang.compiler.graph.NodeList;
-import com.chaosopher.tigerlang.compiler.tree.LABEL;
 import com.chaosopher.tigerlang.compiler.tree.QuadruplePrettyPrinter;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.StmList;
-import com.chaosopher.tigerlang.compiler.util.Assert;
 
-
-class DefinitionIds {
-
-    public static DefinitionIds analyze(final CFG cfg) {
-        DefinitionIds definitionIds = new DefinitionIds(cfg);
-        definitionIds.generate();;
-        return definitionIds;
-    }
-
-    private final CFG cfg;
-    private final HashMap<Integer, Stm> definitionIdStatements = new HashMap<>();
-    private final HashMap<Stm, Integer> statementDefinitionIds = new HashMap<>();
-
-    public DefinitionIds(final CFG cfg) {
-        this.cfg = cfg;
-    }
-
-    private void generate() {
-        int id = 1;
-        for(Node node : this.cfg.nodes()) {
-            BasicBlock b = this.cfg.get(node);
-            for(Stm s : b.first) {
-                if(!(s instanceof LABEL)) {
-                    this.definitionIdStatements.put(id, s);
-                    this.statementDefinitionIds.put(s, id++);
-                }
-            }
-        }
-    }
-
-
-}
 public abstract class GenKillSets<T> {
 
     private final CFG cfg;
@@ -59,16 +25,15 @@ public abstract class GenKillSets<T> {
         this.cfg = cfg;
     }
     
-    public Integer getDefinitionId(Stm stm) {
-        //Assert.assertIsTrue(this.statementDefinitionIds.containsKey(stm), String.format("No definitionId found for %s", stm));
+    public Integer getDefinitionId(final Stm stm) {
         return this.statementDefinitionIds.get(stm);
     }
 
-    public boolean compareKill(Integer defId, Set<T> other) {
+    public boolean compareKill(final Integer defId, Set<T> other) {
         return this.getKill(this.definitionIdStatements.get(defId)).equals(other);
     }
 
-    public boolean compareGen(Integer defId, Set<T> other) {
+    public boolean compareGen(final Integer defId, Set<T> other) {
         return this.getGen(this.definitionIdStatements.get(defId)).equals(other);
     }
 
@@ -102,7 +67,7 @@ public abstract class GenKillSets<T> {
 
     protected abstract void initGenSet(Set<T> genBlock, final Stm s);
 
-    private void calculateKillSet(BasicBlock basicBlock) {
+    private void calculateKillSet(final BasicBlock basicBlock) {
         Set<T> killBlock = new HashSet<>();
         for (Stm s : basicBlock.first){
             this.initKillSet(killBlock, s);
@@ -118,10 +83,8 @@ public abstract class GenKillSets<T> {
         for(Node node : this.cfg.nodes()) {
             BasicBlock b = this.cfg.get(node);
             for(Stm s : b.first) {
-                if(!(s instanceof LABEL)) {
-                    this.definitionIdStatements.put(id, s);
-                    this.statementDefinitionIds.put(s, id++);
-                }
+                this.definitionIdStatements.put(id, s);
+                this.statementDefinitionIds.put(s, id++);
             }
         }
         //

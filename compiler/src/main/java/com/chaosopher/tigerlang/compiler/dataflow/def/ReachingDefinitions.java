@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.chaosopher.tigerlang.compiler.dataflow.GenKillSets;
 import com.chaosopher.tigerlang.compiler.dataflow.cfg.BasicBlock;
 import com.chaosopher.tigerlang.compiler.dataflow.cfg.CFG;
 import com.chaosopher.tigerlang.compiler.graph.NodeList;
@@ -15,19 +16,19 @@ import com.chaosopher.tigerlang.compiler.util.Assert;
 
 public class ReachingDefinitions {
 
-    public static ReachingDefinitions analyze(CFG cfg, GenKillSets genKillSets) {
+    public static ReachingDefinitions analyze(CFG cfg, GenKillSets<Integer> genKillSets) {
         ReachingDefinitions reachingDefinitions = new ReachingDefinitions(cfg, genKillSets);
         reachingDefinitions.generate();
         return reachingDefinitions;
     }
 
     private final CFG cfg;
-    private final GenKillSets genKillSets;
+    private final GenKillSets<Integer> genKillSets;
     private final HashMap<BasicBlock, Set<Integer>> inMap = new HashMap<>();
     private final HashMap<BasicBlock, Set<Integer>> outMap = new HashMap<>();
     private int totalIterations;
 
-    private ReachingDefinitions(CFG cfg, GenKillSets genKillSets) {
+    private ReachingDefinitions(CFG cfg, GenKillSets<Integer> genKillSets) {
         this.cfg = cfg;
         this.genKillSets = genKillSets;
     }

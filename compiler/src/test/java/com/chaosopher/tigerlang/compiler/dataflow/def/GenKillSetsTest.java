@@ -29,8 +29,9 @@ public class GenKillSetsTest {
         StmList stmList = (StmList)parser.parse();
         CFG cfg = CFG.build(stmList);
         GenKillSets<Integer> genKillSets = DefGenKillSets.analyse(cfg);
-        assertTrue(genKillSets.compareGen(1, Stream.of(1).collect(Collectors.toCollection(HashSet::new))));
-        assertTrue(genKillSets.compareKill(1, new HashSet<>()));
+        genKillSets.serialize(System.out);
+        assertTrue(genKillSets.compareGen(2, Stream.of(2).collect(Collectors.toCollection(HashSet::new))));
+        assertTrue(genKillSets.compareKill(2, new HashSet<>()));
     }
 
     @Test
@@ -45,10 +46,10 @@ public class GenKillSetsTest {
         CFG cfg = CFG.build(stmList);
         GenKillSets<Integer> genKillSets = DefGenKillSets.analyse(cfg);
         genKillSets.serialize(System.out);
-        assertTrue(genKillSets.compareGen(1, Stream.of(1).collect(Collectors.toCollection(HashSet::new))));
-        assertTrue(genKillSets.compareKill(1, new HashSet<>()));
         assertTrue(genKillSets.compareGen(2, Stream.of(2).collect(Collectors.toCollection(HashSet::new))));
         assertTrue(genKillSets.compareKill(2, new HashSet<>()));
+        assertTrue(genKillSets.compareGen(3, Stream.of(3).collect(Collectors.toCollection(HashSet::new))));
+        assertTrue(genKillSets.compareKill(3, new HashSet<>()));
     }
 
     @Test
@@ -63,10 +64,10 @@ public class GenKillSetsTest {
         CFG cfg = CFG.build(stmList);
         GenKillSets<Integer> genKillSets = DefGenKillSets.analyse(cfg);
         genKillSets.serialize(System.out);
-        assertTrue(genKillSets.compareGen(1, Stream.of(1).collect(Collectors.toCollection(HashSet::new))));
-        assertTrue(genKillSets.compareKill(1, Stream.of(2).collect(Collectors.toCollection(HashSet::new))));
         assertTrue(genKillSets.compareGen(2, Stream.of(2).collect(Collectors.toCollection(HashSet::new))));
-        assertTrue(genKillSets.compareKill(2, Stream.of(1).collect(Collectors.toCollection(HashSet::new))));
+        assertTrue(genKillSets.compareKill(2, Stream.of(3).collect(Collectors.toCollection(HashSet::new))));
+        assertTrue(genKillSets.compareGen(3, Stream.of(3).collect(Collectors.toCollection(HashSet::new))));
+        assertTrue(genKillSets.compareKill(3, Stream.of(2).collect(Collectors.toCollection(HashSet::new))));
     }
 
     @Test
@@ -89,11 +90,11 @@ public class GenKillSetsTest {
         CFG cfg = CFG.build(stmList);
         GenKillSets<Integer> genKillSets = DefGenKillSets.analyse(cfg);
         genKillSets.serialize(System.out);
-        assertTrue(genKillSets.compareGen(1, Stream.of(1).collect(Collectors.toCollection(HashSet::new))));
-        assertTrue(genKillSets.compareKill(1, Stream.of(6).collect(Collectors.toCollection(HashSet::new))));
         assertTrue(genKillSets.compareGen(2, Stream.of(2).collect(Collectors.toCollection(HashSet::new))));
-        assertTrue(genKillSets.compareKill(2, Stream.of(4, 7).collect(Collectors.toCollection(HashSet::new))));
+        assertTrue(genKillSets.compareKill(2, Stream.of(10).collect(Collectors.toCollection(HashSet::new))));
+        assertTrue(genKillSets.compareGen(3, Stream.of(3).collect(Collectors.toCollection(HashSet::new))));
+        assertTrue(genKillSets.compareKill(3, Stream.of(7, 11).collect(Collectors.toCollection(HashSet::new))));
         assertTrue(genKillSets.compareGen(7, Stream.of(7).collect(Collectors.toCollection(HashSet::new))));
-        assertTrue(genKillSets.compareKill(7, Stream.of(2, 4).collect(Collectors.toCollection(HashSet::new))));
+        assertTrue(genKillSets.compareKill(7, Stream.of(3, 11).collect(Collectors.toCollection(HashSet::new))));
     }
 }
