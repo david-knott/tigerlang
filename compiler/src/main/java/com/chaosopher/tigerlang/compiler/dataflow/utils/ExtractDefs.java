@@ -11,7 +11,7 @@ import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.TEMP;
 
 /**
- * Helper class to find definition temporaries.
+ * Helper class to extract temporary definition, ie l-values.
  */
 public class ExtractDefs extends DefaultTreeVisitor {
 
@@ -30,7 +30,7 @@ public class ExtractDefs extends DefaultTreeVisitor {
 
     @Override
     public void visit(CJUMP cjump) {
-        // do nothing as this doesn't define.
+        // do nothing as this doesn't define temporaries
     }
 
     @Override

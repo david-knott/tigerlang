@@ -8,7 +8,7 @@ import com.chaosopher.tigerlang.compiler.tree.MOVE;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 
 /**
- * Helper class to find expressions.
+ * Helper class to extract expressions from statements.
  */
 public class ExtractExp extends DefaultTreeVisitor {
 

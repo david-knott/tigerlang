@@ -98,21 +98,18 @@ public class ReachingDefinitionsController {
             for(Stm stm : basicBlock.first) {
                 Set<Integer> sgen = this.dataFlowService.getGen(stm);
                 Set<Integer> skill = this.dataFlowService.getKill(stm);
-                rdResponse.addNodeLabel(node.hashCode(), QuadruplePrettyPrinter.apply(stm) + " " + sgen + " " + skill);
+                rdResponse.addNodeLabel(node.hashCode(), QuadruplePrettyPrinter.apply(stm) + " gen:" + sgen + " kill:" + skill);
 
              //   Set<Integer> sin = this.dataFlowService.getIn(basicBlock, stm);
              //   Set<Integer> sout = this.dataFlowService.getOut(basicBlock, stm);
             }
             Set<Integer> bgen = this.dataFlowService.getGen(basicBlock);
             Set<Integer> bkill = this.dataFlowService.getKill(basicBlock);
-            rdResponse.addNodeLabel(node.hashCode(), ""  + bgen + " " + bkill);
+            rdResponse.addNodeLabel(node.hashCode(), "gen:"  + bgen + " kill:" + bkill);
             //Set<Integer> bin = this.dataFlowService.getIn(basicBlock);
 
             Set<Integer> bout = this.dataFlowService.getOut(basicBlock);
-            for(Node sucessor : node.succ()) {
-                rdResponse.addEdgeLabel(node.hashCode(), sucessor.hashCode(), bout);
-
-            }
+            rdResponse.addNodeLabel(node.hashCode(), "out:"  + bout);
         }
         return ResponseEntity.ok(rdResponse);
     }

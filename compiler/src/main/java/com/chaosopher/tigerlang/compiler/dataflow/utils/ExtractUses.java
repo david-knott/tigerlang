@@ -10,7 +10,7 @@ import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.TEMP;
 
 /**
- * Helper class to find temporaries that are uses.
+ * Helper class to extract temporaries that are r-values.
  */
 public class ExtractUses extends DefaultTreeVisitor {
 

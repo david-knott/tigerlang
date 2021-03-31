@@ -8,7 +8,7 @@ import com.chaosopher.tigerlang.compiler.tree.MOVE;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 
 /**
- * Helper class to find mem expressions.
+ * Helper class to extract mem expressions from statements.
  */
 public class ExtractMemExp extends DefaultTreeVisitor {
 
