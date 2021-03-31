@@ -17,10 +17,16 @@ public class Assert {
             throw new Error("Value is true.");
 	}
 
+    public static void assertIsTrue(boolean b, String message) {
+        if (!b)
+            throw new Error(message);
+    }
+
     public static void assertIsFalse(boolean b, String message) {
         if (b)
             throw new Error(message);
     }
+
 
     public static void assertNotNull(Object o, String message) {
         if (o == null)

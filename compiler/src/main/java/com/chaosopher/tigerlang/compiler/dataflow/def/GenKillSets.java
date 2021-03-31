@@ -39,6 +39,11 @@ public class GenKillSets {
         return (stm instanceof MOVE && ((MOVE)stm).dst instanceof TEMP);
     }
 
+    /**
+     * Used for testing only.
+     * @param defId
+     * @return
+     */
     Set<Integer> getGen(Integer defId) {
         return this.getGen(this.revDefs.get(defId));
     }
@@ -189,14 +194,14 @@ public class GenKillSets {
             printStream.print(kill);
             printStream.println();
             printStream.println("### Statements ###");
-            for(StmList stmList = basicBlock.first; stmList != null; stmList = stmList.tail) {
-                Integer defId = this.getDefinitionId(stmList.head);
+            for(Stm stm : basicBlock.first) {
+                Integer defId = this.getDefinitionId(stm);
                 printStream.print(defId + ":");
-                stmList.head.accept(new QuadruplePrettyPrinter(printStream));
-                Set<Integer> genStatement = this.getGen(stmList.head);
+                stm.accept(new QuadruplePrettyPrinter(printStream));
+                Set<Integer> genStatement = this.getGen(stm);
                 printStream.print(" gen:");
                 printStream.print(genStatement);
-                Set<Integer> killStatement = this.getKill(stmList.head);
+                Set<Integer> killStatement = this.getKill(stm);
                 printStream.print(" kill:");
                 printStream.print(killStatement);
                 printStream.println();

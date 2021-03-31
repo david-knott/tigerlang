@@ -94,7 +94,7 @@ public class NodeList implements Iterable<Node> {
 
         @Override
         public boolean hasNext() {
-            return this.nodeList.tail != null;
+            return this.nodeList != null;
         }
 
         @Override

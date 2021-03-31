@@ -131,26 +131,26 @@ public class StmList extends Stm implements Iterable<Stm> {
         return new StmListIterator(this);
     }
 
-
     class StmListIterator implements Iterator<Stm> {
 
         private StmList stmList;
 
-        StmListIterator(StmList stmList) {
+        StmListIterator(final StmList stmList) {
             this.stmList = stmList;
         }
 
         @Override
         public boolean hasNext() {
-            return stmList.tail != null;
+            return this.stmList != null;
         }
 
         @Override
         public Stm next() {
-            Stm current = stmList.head;
-            stmList = stmList.tail;
+            // current item
+            Stm current = this.stmList.head;
+            // advance to next;
+            this.stmList = this.stmList.tail;
             return current;
         }
-
     }
 }

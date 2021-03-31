@@ -1,5 +1,10 @@
 # Diary
 
+## Wednesday 31 March 2020
+
+Refactoring GenKill so that there is a common base class.
+
+
 ## Friday 26th March 2021
 
 Refactored Labels so they are created by a LabelFactory.
