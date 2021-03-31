@@ -2,8 +2,6 @@ package com.chaosopher.tigerlang.compiler.temp;
 
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 public class Temp implements Comparable<Temp> {
 
@@ -43,12 +41,12 @@ public class Temp implements Comparable<Temp> {
     private int num;
     private String name;
 
-    private Temp() {
+    Temp() {
         this.num = count++;
         this.name = "t" + num;
     }
 
-    private Temp(String name) {
+    Temp(String name) {
         this.num = count++;
         this.name = name;
     }
@@ -61,6 +59,22 @@ public class Temp implements Comparable<Temp> {
     @Override
     public int hashCode() {
         return num;
+    }
+
+    /**
+     * Two temps are equal if either they are the same reference object
+     * or they have the same name. Where two objects are the same reference
+     * they will have the same hash.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof Temp)) {
+            return false;
+        }
+        Temp other = (Temp)obj;
+        return 
+            other.name == this.name ||
+            other == this;
     }
 
     @Override

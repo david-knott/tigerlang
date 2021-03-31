@@ -114,6 +114,5 @@ class AEGenKillSets extends GenKillSets<Exp> {
         if(isMemExp) {
             this.mems.add(exp);
         }
-        
     }
 }

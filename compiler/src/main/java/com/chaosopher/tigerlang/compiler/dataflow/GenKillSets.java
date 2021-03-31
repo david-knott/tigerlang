@@ -17,7 +17,7 @@ public abstract class GenKillSets<T> {
 
     private final CFG cfg;
     private final HashMap<Integer, Stm> definitionIdStatements = new HashMap<>();
-    private final HashMap<Stm, Integer> statementDefinitionIds = new HashMap<>();
+    private final HashMap<Integer, Integer> statementDefinitionIds = new HashMap<>();
     private final HashMap<BasicBlock, Set<T>> genMap = new HashMap<>();
     private final HashMap<BasicBlock, Set<T>> killMap = new HashMap<>();
 
@@ -26,7 +26,8 @@ public abstract class GenKillSets<T> {
     }
     
     public Integer getDefinitionId(final Stm stm) {
-        return this.statementDefinitionIds.get(stm);
+        int key = System.identityHashCode(stm);
+        return this.statementDefinitionIds.get(key);
     }
 
     public boolean compareKill(final Integer defId, Set<T> other) {
@@ -84,7 +85,7 @@ public abstract class GenKillSets<T> {
             BasicBlock b = this.cfg.get(node);
             for(Stm s : b.first) {
                 this.definitionIdStatements.put(id, s);
-                this.statementDefinitionIds.put(s, id++);
+                this.statementDefinitionIds.put(System.identityHashCode(s), id++);
             }
         }
         //
