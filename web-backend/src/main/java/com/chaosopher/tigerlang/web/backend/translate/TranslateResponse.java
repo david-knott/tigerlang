@@ -137,7 +137,6 @@ public class TranslateResponse implements FragmentVisitor {
             this.write(op, "jump(");
             op.exp.accept(this);
             this.write(op, ")");
-            // Targets
         }
 
         @Override

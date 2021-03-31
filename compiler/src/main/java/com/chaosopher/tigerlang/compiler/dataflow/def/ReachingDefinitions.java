@@ -1,7 +1,6 @@
 package com.chaosopher.tigerlang.compiler.dataflow.def;
 
 import java.io.PrintStream;
-import java.util.BitSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,13 +8,12 @@ import java.util.Set;
 import com.chaosopher.tigerlang.compiler.dataflow.cfg.BasicBlock;
 import com.chaosopher.tigerlang.compiler.dataflow.cfg.CFG;
 import com.chaosopher.tigerlang.compiler.graph.NodeList;
-import com.chaosopher.tigerlang.compiler.temp.Temp;
 import com.chaosopher.tigerlang.compiler.tree.QuadruplePrettyPrinter;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.StmList;
 import com.chaosopher.tigerlang.compiler.util.Assert;
 
-class ReachingDefinitions {
+public class ReachingDefinitions {
 
     public static ReachingDefinitions analyze(CFG cfg, GenKillSets genKillSets) {
         ReachingDefinitions reachingDefinitions = new ReachingDefinitions(cfg, genKillSets);
@@ -92,27 +90,30 @@ class ReachingDefinitions {
             changed = false;
             for(NodeList nodes = this.cfg.nodes(); nodes != null; nodes = nodes.tail) {
                 BasicBlock b = this.cfg.get(nodes.head);
-                // get previous iteration
+                // get previous iteration result
                 Set<Integer> outPrev = (Set<Integer>)outMap.get(b); 
                 Set<Integer> inPrev = (Set<Integer>)inMap.get(b);
                 // get IN set using nodes n predecessors using OR join
                 Set<Integer> in = new HashSet<>();
                 for(NodeList preds = nodes.head.pred(); preds != null; preds = preds.tail) {
                     BasicBlock pb = this.cfg.get(preds.head);
+                    // union meet
                     in.addAll(outMap.get(pb));
                 }
+                // update in(s) for this block
                 inMap.put(b, in);
-                // get OUT set, IN set 
+                // get gen and kill definition ids for this block.
                 Set<Integer> gen = (Set<Integer>)this.genKillSets.getGen(b); 
                 Set<Integer> kill = (Set<Integer>)this.genKillSets.getKill(b); 
                 // create new set for in.
                 Set<Integer> out = new HashSet<>();
-                // in(s)
+                // add in(s) to out(s).
                 out.addAll(in);
                 // in(s) MINUS kill(s)
                 out.removeAll(kill);
                 // gen(s) OR ( in(s) MINUS kill(s) )
                 out.addAll(gen);
+                // update out(s) for this block.
                 outMap.put(b, out);
                 // check if sets have changed since last iteration.
                 var c1 = inMap.get(b).equals(inPrev);

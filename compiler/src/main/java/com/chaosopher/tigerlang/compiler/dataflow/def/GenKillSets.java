@@ -43,11 +43,11 @@ public class GenKillSets {
         return this.getGen(this.revDefs.get(defId));
     }
 
-    Set<Integer> getGen(BasicBlock basicBlock) {
+    public Set<Integer> getGen(BasicBlock basicBlock) {
         return this.genMap.get(basicBlock);
     }
 
-	Set<Integer> getGen(Stm s) {
+	public Set<Integer> getGen(Stm s) {
         Set<Integer> gen = new HashSet<>();
         return this.getGen(gen, s);
     }
@@ -74,11 +74,11 @@ public class GenKillSets {
         return this.getKill(this.revDefs.get(defId));
     }
 
-    Set<Integer> getKill(BasicBlock basicBlock) {
+    public Set<Integer> getKill(BasicBlock basicBlock) {
         return this.killMap.get(basicBlock);
     }
 
-	Set<Integer> getKill(Stm stm) {
+	public Set<Integer> getKill(Stm stm) {
         Set<Integer> kill = new HashSet<>();
         return getKill(kill, stm);
     }

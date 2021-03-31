@@ -1,6 +1,8 @@
 package com.chaosopher.tigerlang.compiler.graph;
 
-public class NodeList {
+import java.util.Iterator;
+
+public class NodeList implements Iterable<Node> {
     public Node head;
     public NodeList tail;
 
@@ -77,4 +79,29 @@ public class NodeList {
         return nodeList;
     }
 
+    @Override
+    public Iterator<Node> iterator() {
+        return new NodeListIterator(this);
+    }
+
+    class NodeListIterator implements Iterator<Node> {
+        
+        private NodeList nodeList;
+
+        NodeListIterator(NodeList nodeList) {
+            this.nodeList = nodeList;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return this.nodeList.tail != null;
+        }
+
+        @Override
+        public Node next() {
+            Node current = nodeList.head;
+            nodeList = nodeList.tail;
+            return current;
+        }
+    }
 }

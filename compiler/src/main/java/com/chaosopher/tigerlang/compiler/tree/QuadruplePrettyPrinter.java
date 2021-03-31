@@ -1,20 +1,19 @@
 package com.chaosopher.tigerlang.compiler.tree;
 
+import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
 public class QuadruplePrettyPrinter implements TreeVisitor {
 
+    public static String apply(IR ir) {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        QuadruplePrettyPrinter prettyPrinter = new QuadruplePrettyPrinter(out);
+        ir.accept(prettyPrinter);
+        return out.toString();
+    }
+
     final PrintStream printStream;
-    int level = 0;
-
-    void incLevel() {
-        level++;
-    }
-
-    void decLevel() {
-        level--;
-    }
 
     public QuadruplePrettyPrinter(OutputStream out) {
         this.printStream = new PrintStream(out);
@@ -49,7 +48,6 @@ public class QuadruplePrettyPrinter implements TreeVisitor {
 
     @Override
     public void visit(CALL op) {
-        this.incLevel();
         this.write("call(");
         op.func.accept(this);
         this.write("(");
@@ -59,7 +57,6 @@ public class QuadruplePrettyPrinter implements TreeVisitor {
                 this.write(", ");
             }
         }
-        this.decLevel();
         this.write(")");
         this.write(")");
     }
@@ -72,19 +69,15 @@ public class QuadruplePrettyPrinter implements TreeVisitor {
     @Override
     public void visit(ESEQ op) {
         this.write("eseq(");
-        this.incLevel();
         op.stm.accept(this);
         op.exp.accept(this);
-        this.decLevel();
         this.write(")");
     }
 
     @Override
     public void visit(EXP op) {
         this.write("sxp(");
-        this.incLevel();
         op.exp.accept(this);
-        this.decLevel();
         this.write(")");
     }
 
@@ -102,9 +95,7 @@ public class QuadruplePrettyPrinter implements TreeVisitor {
     @Override
     public void visit(MEM op) {
         this.write("mem[");
-        this.incLevel();
         op.exp.accept(this);
-        this.decLevel();
         this.write("]");
     }
 
@@ -123,10 +114,8 @@ public class QuadruplePrettyPrinter implements TreeVisitor {
     @Override
     public void visit(SEQ op) {
         this.write("seq(");
-        this.incLevel();
         op.left.accept(this);
         op.right.accept(this);
-        this.decLevel();
         this.write(")");
     }
 

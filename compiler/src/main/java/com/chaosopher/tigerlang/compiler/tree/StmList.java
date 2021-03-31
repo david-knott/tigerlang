@@ -1,8 +1,10 @@
 package com.chaosopher.tigerlang.compiler.tree;
 
+import java.util.Iterator;
+
 import com.chaosopher.tigerlang.compiler.util.Assert;
 
-public class StmList extends Stm {
+public class StmList extends Stm implements Iterable<Stm> {
 
     public static StmList append(StmList me, Stm t) {
         if (me == null && t == null) {
@@ -122,5 +124,33 @@ public class StmList extends Stm {
     @Override
     public String toString() {
         return String.format("stmList: { head: %s, tail: %s}", this.head, this.tail);
+    }
+
+    @Override
+    public Iterator<Stm> iterator() {
+        return new StmListIterator(this);
+    }
+
+
+    class StmListIterator implements Iterator<Stm> {
+
+        private StmList stmList;
+
+        StmListIterator(StmList stmList) {
+            this.stmList = stmList;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return stmList.tail != null;
+        }
+
+        @Override
+        public Stm next() {
+            Stm current = stmList.head;
+            stmList = stmList.tail;
+            return current;
+        }
+
     }
 }
