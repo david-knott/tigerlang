@@ -23,67 +23,23 @@ public abstract class Dataflow<T> {
 
     protected final CFG cfg;
     private final DataflowMeet dataflowMeet;
-    private final DataflowDir dataflowDir;
     protected final GenKillSets<T> genKillSets;
     private HashMap<BasicBlock, Set<T>> minMap = new HashMap<>();
     private HashMap<BasicBlock, Set<T>> moutMap = new HashMap<>();
 
-    protected Dataflow(final CFG cfg, GenKillSets<T> genKillSets, final DataflowMeet dataflowMeet, final DataflowDir dataflowDir) {
+    protected Dataflow(final CFG cfg, GenKillSets<T> genKillSets, final DataflowMeet dataflowMeet) {
         this.cfg = cfg;
         this.dataflowMeet = dataflowMeet;
-        this.dataflowDir = dataflowDir;
         this.genKillSets = genKillSets;
     }
     
-    private NodeList getDirectedNodeList() {
-        return this.dataflowDir == DataflowDir.FORWARD ? 
-            this.cfg.nodes() :
-            this.cfg.nodes().reverse();
-    }
+    protected abstract void processNode(Node node, Set<T> in, Set<T> out, Map<BasicBlock, Set<T>> inMap, Map<BasicBlock, Set<T>> outMap);
 
-    protected NodeList getDirectedAdjacentNodeList(Node node) {
-        return this.dataflowDir == DataflowDir.REVERSE ?
-            node.succ() :
-            node.pred();
-    }
+    protected abstract void meetUnion(Node node, Set<T> in, Set<T> out, Map<BasicBlock, Set<T>> inMap, Map<BasicBlock, Set<T>> outMap);
 
-    protected void processNode(Node node, Set<T> in, Set<T> out, Map<BasicBlock, Set<T>> inMap, Map<BasicBlock, Set<T>> outMap) {
-        BasicBlock b = this.cfg.get(node);
-        out.addAll(in);
-        out.removeAll(this.genKillSets.getKill(b));
-        out.addAll(this.genKillSets.getGen(b));
-        outMap.put(b, out);
-    }
+    protected abstract void meetIntersection(Node node, Set<T> in, Set<T> out, Map<BasicBlock, Set<T>> inMap, Map<BasicBlock, Set<T>> outMap);
 
-    protected void meetUnion(Node node, Set<T> in, Set<T> out, Map<BasicBlock, Set<T>> inMap, Map<BasicBlock, Set<T>> outMap) {
-        BasicBlock b = this.cfg.get(node);
-        if(this.getDirectedAdjacentNodeList(node) != null) {
-            for (Node adj : this.getDirectedAdjacentNodeList(node)) {
-                BasicBlock ab = this.cfg.get(adj);
-                in.addAll(outMap.get(ab));
-            }
-        }
-        inMap.put(b, in);
-    }
-
-    protected void meetIntersection(Node node, Set<T> in, Set<T> out, Map<BasicBlock, Set<T>> inMap, Map<BasicBlock, Set<T>> outMap) {
-        BasicBlock b = this.cfg.get(node);
-        NodeList preds;
-        if( (preds = this.getDirectedAdjacentNodeList(node)) != null) {
-            Set<T> predOut = null;
-            for (Node pred : preds) {
-                BasicBlock predBlock = this.cfg.get(pred);
-                if(predOut == null) {
-                    predOut = outMap.get(predBlock);
-                    in.addAll(predOut);
-                }
-                predBlock = this.cfg.get(pred);
-                predOut = outMap.get(predBlock);
-                in.retainAll(predOut);
-            }
-        }
-        inMap.put(b, in);
-    }
+    protected abstract NodeList getDirectedNodeList();
 
     protected void generate() {
         boolean changed = true;
@@ -96,7 +52,8 @@ public abstract class Dataflow<T> {
                 Set<T> outPrev = this.moutMap.get(b);
                 Set<T> in = new HashSet<>();
                 Set<T> out = new HashSet<>();
-                this.doGenerate(node, in, out, this.minMap, this.moutMap);
+                this.meet(node, in, out, this.minMap, this.moutMap);
+                this.processNode(node, in, out, this.minMap, this.moutMap);
                 var c1 = in.equals(inPrev);
                 var c2 = out.equals(outPrev);
                 changed = changed || !c1 || !c2;
@@ -118,8 +75,6 @@ public abstract class Dataflow<T> {
                 throw new Error(String.format("Unsupported meet operator " + this.dataflowMeet));
         }
     }
-
-    protected abstract void doGenerate(Node node, Set<T> in, Set<T> out, Map<BasicBlock, Set<T>> inMap, Map<BasicBlock, Set<T>> outMap);
 
     protected abstract void initialise(CFG cfg, Map<BasicBlock, Set<T>> inMap, Map<BasicBlock, Set<T>> outMap);
 

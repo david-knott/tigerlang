@@ -6,8 +6,6 @@ import com.chaosopher.tigerlang.compiler.canon.CanonicalizationImpl;
 import com.chaosopher.tigerlang.compiler.dataflow.TreeAtomizer;
 import com.chaosopher.tigerlang.compiler.dataflow.cfg.BasicBlock;
 import com.chaosopher.tigerlang.compiler.dataflow.cfg.CFG;
-import com.chaosopher.tigerlang.compiler.dataflow.def.GenKillSets;
-import com.chaosopher.tigerlang.compiler.dataflow.def.ReachingDefinitions;
 import com.chaosopher.tigerlang.compiler.graph.Node;
 import com.chaosopher.tigerlang.compiler.translate.FragList;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
@@ -19,8 +17,6 @@ import org.springframework.stereotype.Service;
 class DataFlowServiceImpl implements DataFlowService {
 
     private CFG cfg;
-    private GenKillSets genKillSets;
-    private ReachingDefinitions reachingDefinitions;
 
     public CFG getCFG() {
         return this.cfg;
@@ -32,8 +28,6 @@ class DataFlowServiceImpl implements DataFlowService {
         fragList.accept(treeAtomizer);
         StmList stmList = treeAtomizer.getCanonicalisedAtoms();
         this.cfg = CFG.build(stmList);
-        this.genKillSets = GenKillSets.analyse(cfg);
-        this.reachingDefinitions = ReachingDefinitions.analyze(this.cfg, this.genKillSets);
     }
 
     @Override
@@ -43,44 +37,44 @@ class DataFlowServiceImpl implements DataFlowService {
 
     @Override
     public Set<Integer> getGen(Stm stm) {
-        return this.genKillSets.getGen(stm);
+        return null;
         
     }
 
     @Override
     public Set<Integer> getKill(Stm stm) {
-        return this.genKillSets.getKill(stm);
+        return null;
         
     }
 
     @Override
     public Set<Integer> getGen(BasicBlock basicBlock) {
-        return this.genKillSets.getGen(basicBlock);
+        return null;
     }
 
     @Override
     public Set<Integer> getKill(BasicBlock basicBlock) {
-        return this.genKillSets.getKill(basicBlock);
+        return null;
     }
 
     @Override
     public Set<Integer> getIn(BasicBlock basicBlock, Stm stm) {
-        return this.reachingDefinitions.getIn(basicBlock, stm);
+        return null;
     }
 
     @Override
     public Set<Integer> getOut(BasicBlock basicBlock, Stm stm) {
-        return this.reachingDefinitions.getOut(basicBlock, stm);
+        return null;
     }
 
     @Override
     public Set<Integer> getIn(BasicBlock basicBlock) {
-        return this.reachingDefinitions.getIn(basicBlock);
+        return null;
     }
 
     @Override
     public Set<Integer> getOut(BasicBlock basicBlock) {
-        return this.reachingDefinitions.getOut(basicBlock);
+        return null;
     }
 }
 

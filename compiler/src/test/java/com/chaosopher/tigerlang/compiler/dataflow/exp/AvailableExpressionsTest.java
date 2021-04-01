@@ -11,19 +11,12 @@ import java.util.stream.Stream;
 import com.chaosopher.tigerlang.compiler.dataflow.GenKillSets;
 import com.chaosopher.tigerlang.compiler.dataflow.cfg.CFG;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
-import com.chaosopher.tigerlang.compiler.tree.Exp;
-import com.chaosopher.tigerlang.compiler.tree.Lexer;
-import com.chaosopher.tigerlang.compiler.tree.Parser;
-import com.chaosopher.tigerlang.compiler.tree.StmList;
 import com.chaosopher.tigerlang.compiler.tree.BINOP;
-import com.chaosopher.tigerlang.compiler.tree.CONST;
 import com.chaosopher.tigerlang.compiler.tree.Exp;
 import com.chaosopher.tigerlang.compiler.tree.Lexer;
 import com.chaosopher.tigerlang.compiler.tree.Parser;
 import com.chaosopher.tigerlang.compiler.tree.StmList;
 import com.chaosopher.tigerlang.compiler.tree.TEMP;
-
-
 
 import org.junit.Test;
 
