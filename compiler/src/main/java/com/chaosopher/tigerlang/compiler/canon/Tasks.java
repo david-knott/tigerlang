@@ -2,7 +2,6 @@ package com.chaosopher.tigerlang.compiler.canon;
 
 import com.chaosopher.tigerlang.compiler.translate.FragList;
 import com.chaosopher.tigerlang.compiler.translate.FragmentPrinter;
-import com.chaosopher.tigerlang.compiler.util.Assert;
 import com.chaosopher.tigerlang.compiler.util.DisjunctiveTask;
 import com.chaosopher.tigerlang.compiler.util.SimpleTask;
 import com.chaosopher.tigerlang.compiler.util.SimpleTaskProvider;

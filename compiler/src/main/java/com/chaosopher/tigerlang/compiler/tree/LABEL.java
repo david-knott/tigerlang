@@ -1,6 +1,5 @@
 package com.chaosopher.tigerlang.compiler.tree;
 
-import com.chaosopher.tigerlang.compiler.temp.Temp;
 import com.chaosopher.tigerlang.compiler.temp.Label;
 
 public class LABEL extends Stm {

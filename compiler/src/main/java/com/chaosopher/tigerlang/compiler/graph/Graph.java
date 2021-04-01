@@ -1,10 +1,5 @@
 package com.chaosopher.tigerlang.compiler.graph;
 
-import java.util.Arrays;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Stack;
-
 import com.chaosopher.tigerlang.compiler.util.Assert;
 
 public class Graph  {

@@ -1,6 +1,5 @@
 package com.chaosopher.tigerlang.compiler.inlining;
 
-import com.chaosopher.tigerlang.compiler.absyn.Absyn;
 import com.chaosopher.tigerlang.compiler.bind.Binder;
 import com.chaosopher.tigerlang.compiler.findescape.EscapeVisitor;
 import com.chaosopher.tigerlang.compiler.util.SimpleTask;
@@ -17,8 +16,6 @@ public class Tasks implements TaskProvider {
             new SimpleTask(new SimpleTaskProvider() {
                 @Override
                 public void only(TaskContext taskContext) {
-                    // clone original ast tree to remove bindings.
-                    Absyn clone = null;
                     // Visit cloned tree
                     Inliner inliner = new Inliner(taskContext.decList);
                     taskContext.decList.accept(inliner);

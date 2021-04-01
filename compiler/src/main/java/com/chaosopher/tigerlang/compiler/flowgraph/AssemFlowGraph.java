@@ -13,7 +13,6 @@ public class AssemFlowGraph extends FlowGraph {
     private Hashtable<Node, com.chaosopher.tigerlang.compiler.assem.Instr> nodeMap = new Hashtable<Node, com.chaosopher.tigerlang.compiler.assem.Instr>();
     private Hashtable<com.chaosopher.tigerlang.compiler.assem.Instr, Node> invNodeMap = new Hashtable<com.chaosopher.tigerlang.compiler.assem.Instr, Node>();
     private Hashtable<Label, Instr> labelInstr = new Hashtable<Label, Instr>();
-    private Hashtable<Node, Boolean> visited = new Hashtable<Node, Boolean>();
 
     private Node getOrCreate(Instr instr) {
         if(invNodeMap.containsKey(instr)) {

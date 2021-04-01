@@ -8,7 +8,6 @@ import com.chaosopher.tigerlang.compiler.absyn.CallExp;
 import com.chaosopher.tigerlang.compiler.absyn.DecList;
 import com.chaosopher.tigerlang.compiler.absyn.Exp;
 import com.chaosopher.tigerlang.compiler.absyn.ExpList;
-import com.chaosopher.tigerlang.compiler.absyn.FieldList;
 import com.chaosopher.tigerlang.compiler.absyn.FunctionDec;
 import com.chaosopher.tigerlang.compiler.absyn.LetExp;
 import com.chaosopher.tigerlang.compiler.absyn.SeqExp;
@@ -19,7 +18,6 @@ import com.chaosopher.tigerlang.compiler.callgraph.CallGraphVisitor;
 import com.chaosopher.tigerlang.compiler.callgraph.FunctionCallGraph;
 import com.chaosopher.tigerlang.compiler.cloner.AbsynCloner;
 import com.chaosopher.tigerlang.compiler.symbol.Symbol;
-import com.chaosopher.tigerlang.compiler.types.Constants;
 
 /**
  * Identifies functions that are only called once and

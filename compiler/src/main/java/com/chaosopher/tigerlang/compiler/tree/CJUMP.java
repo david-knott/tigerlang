@@ -1,10 +1,5 @@
 package com.chaosopher.tigerlang.compiler.tree;
 
-import com.chaosopher.tigerlang.compiler.temp.Temp;
-
-import java.util.HashSet;
-import java.util.Set;
-
 import com.chaosopher.tigerlang.compiler.temp.Label;
 
 public class CJUMP extends Stm {

@@ -2,7 +2,6 @@ package com.chaosopher.tigerlang.compiler.staticlink;
 
 import com.chaosopher.tigerlang.compiler.absyn.Absyn;
 import com.chaosopher.tigerlang.compiler.absyn.CallExp;
-import com.chaosopher.tigerlang.compiler.absyn.DecList;
 import com.chaosopher.tigerlang.compiler.absyn.DefaultVisitor;
 import com.chaosopher.tigerlang.compiler.absyn.FunctionDec;
 import com.chaosopher.tigerlang.compiler.callgraph.CallGraphVisitor;
@@ -52,8 +51,6 @@ public class StaticLinkEscapeVisitor extends DefaultVisitor {
         for(NodeList succs = node.succ(); succs != null; succs = succs.tail) {
             FunctionDec succFunc = this.functionCallGraph.getFunctionDec(succs.head);
             System.out.println(functionDec.name + " calls " + succFunc.name);
-            int level =  functionDec.level;
-            int level2 =  this.functionCallGraph.getFunctionDec(succs.head).level;
             if(this.functionCallGraph.getFunctionDec(succs.head).level != functionDec.level) {
                 System.out.println(exp.func + " : calls function at different level - setting sl escapes to true");
                 callDifferentLevel = true;

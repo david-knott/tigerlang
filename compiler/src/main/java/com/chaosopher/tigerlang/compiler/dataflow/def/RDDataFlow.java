@@ -11,6 +11,9 @@ import com.chaosopher.tigerlang.compiler.dataflow.cfg.BasicBlock;
 import com.chaosopher.tigerlang.compiler.dataflow.cfg.CFG;
 import com.chaosopher.tigerlang.compiler.graph.Node;
 
+/**
+ * Computes reaching defintions from the supplied control flow graph.
+ */
 class RDDataFlow extends ForwardDataFlow<Integer> {
 
     public static RDDataFlow analyze(CFG cfg, GenKillSets<Integer> genKillSets) {
@@ -18,9 +21,11 @@ class RDDataFlow extends ForwardDataFlow<Integer> {
         reachingDefinitions.generate();
         return reachingDefinitions;
     }
+
     protected RDDataFlow(CFG cfg, GenKillSets<Integer> genKillSets) {
         super(cfg, genKillSets, DataflowMeet.UNION);
     }
+    
     @Override
     protected void initialise(CFG cfg, Map<BasicBlock, Set<Integer>> inMap, Map<BasicBlock, Set<Integer>> outMap) {
         for(Node node : cfg.nodes()) {

@@ -6,7 +6,6 @@ import com.chaosopher.tigerlang.compiler.assem.Instr;
 import com.chaosopher.tigerlang.compiler.assem.InstrList;
 import com.chaosopher.tigerlang.compiler.assem.MOVE;
 import com.chaosopher.tigerlang.compiler.util.Assert;
-import com.chaosopher.tigerlang.compiler.core.Component;
 import com.chaosopher.tigerlang.compiler.core.LL;
 import com.chaosopher.tigerlang.compiler.flowgraph.AssemFlowGraph;
 import com.chaosopher.tigerlang.compiler.flowgraph.FlowGraph;
@@ -17,12 +16,11 @@ import com.chaosopher.tigerlang.compiler.intel.IntelFrame;
 import com.chaosopher.tigerlang.compiler.liveness.Liveness;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
 import com.chaosopher.tigerlang.compiler.temp.TempList;
-import com.chaosopher.tigerlang.compiler.temp.TempMap;
 
 /**
  * RegAllocWithCoalescing class manages the spilling.
  */
-public class IterativeCoalescing extends Component implements RegAlloc {
+public class IterativeCoalescing implements RegAlloc {
     public InstrList instrList;
     public Frame frame;
     private int K;

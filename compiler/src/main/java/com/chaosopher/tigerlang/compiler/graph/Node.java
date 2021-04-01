@@ -4,9 +4,6 @@ public class Node {
 
     Graph mygraph;
 
-    private Node() {
-    }
-
     int mykey;
 
     public Node(Graph g) {

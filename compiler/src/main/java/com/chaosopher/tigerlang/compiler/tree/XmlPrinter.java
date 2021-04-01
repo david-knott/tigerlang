@@ -1,6 +1,5 @@
 package com.chaosopher.tigerlang.compiler.tree;
 
-import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 
 import javax.xml.stream.FactoryConfigurationError;

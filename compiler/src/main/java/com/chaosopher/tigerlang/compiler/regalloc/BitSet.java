@@ -1,7 +1,5 @@
 package com.chaosopher.tigerlang.compiler.regalloc;
 
-import com.chaosopher.tigerlang.compiler.temp.TempList;
-
 
 public class BitSet {
 

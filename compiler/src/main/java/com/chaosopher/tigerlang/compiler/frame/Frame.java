@@ -5,7 +5,6 @@ import com.chaosopher.tigerlang.compiler.temp.Label;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
 import com.chaosopher.tigerlang.compiler.temp.TempList;
 import com.chaosopher.tigerlang.compiler.temp.TempMap;
-import com.chaosopher.tigerlang.compiler.tree.Stm;
 
 public abstract class Frame implements TempMap {
     public Label name;

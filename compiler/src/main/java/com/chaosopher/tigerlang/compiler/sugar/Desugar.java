@@ -3,7 +3,6 @@ package com.chaosopher.tigerlang.compiler.sugar;
 import com.chaosopher.tigerlang.compiler.absyn.AssignExp;
 import com.chaosopher.tigerlang.compiler.absyn.BreakExp;
 import com.chaosopher.tigerlang.compiler.absyn.CallExp;
-import com.chaosopher.tigerlang.compiler.absyn.Dec;
 import com.chaosopher.tigerlang.compiler.absyn.DecList;
 import com.chaosopher.tigerlang.compiler.absyn.Exp;
 import com.chaosopher.tigerlang.compiler.absyn.ExpList;
@@ -19,7 +18,6 @@ import com.chaosopher.tigerlang.compiler.absyn.VarExp;
 import com.chaosopher.tigerlang.compiler.absyn.WhileExp;
 import com.chaosopher.tigerlang.compiler.cloner.AbsynCloner;
 import com.chaosopher.tigerlang.compiler.symbol.Symbol;
-import com.chaosopher.tigerlang.compiler.tree.CONST;
 import com.chaosopher.tigerlang.compiler.types.Constants;
 import com.chaosopher.tigerlang.compiler.types.STRING;
 

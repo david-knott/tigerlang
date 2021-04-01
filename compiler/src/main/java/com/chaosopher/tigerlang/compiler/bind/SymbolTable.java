@@ -3,10 +3,7 @@ package com.chaosopher.tigerlang.compiler.bind;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.chaosopher.tigerlang.compiler.absyn.Absyn;
-import com.chaosopher.tigerlang.compiler.errormsg.ErrorMsg;
 import com.chaosopher.tigerlang.compiler.symbol.Symbol;
-import com.chaosopher.tigerlang.compiler.types.Type;
 import com.chaosopher.tigerlang.compiler.util.Assert;
 
 class SymbolTable {
