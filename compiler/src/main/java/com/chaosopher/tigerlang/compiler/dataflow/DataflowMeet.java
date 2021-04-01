@@ -1,6 +1,6 @@
 package com.chaosopher.tigerlang.compiler.dataflow;
 
-enum DataflowMeet {
+public enum DataflowMeet {
     UNION,
     INTERSECTION
 }

@@ -1,6 +1,6 @@
 package com.chaosopher.tigerlang.compiler.dataflow;
 
-enum DataflowDir {
+public enum DataflowDir {
     FORWARD,
     REVERSE 
 }

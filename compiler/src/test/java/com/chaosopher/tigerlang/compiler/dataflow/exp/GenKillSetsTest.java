@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;

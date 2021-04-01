@@ -3,17 +3,40 @@ package com.chaosopher.tigerlang.compiler.dataflow.def;
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
+import com.chaosopher.tigerlang.compiler.dataflow.DataflowMeet;
+import com.chaosopher.tigerlang.compiler.dataflow.ForwardDataFlow;
 import com.chaosopher.tigerlang.compiler.dataflow.GenKillSets;
 import com.chaosopher.tigerlang.compiler.dataflow.cfg.BasicBlock;
 import com.chaosopher.tigerlang.compiler.dataflow.cfg.CFG;
+import com.chaosopher.tigerlang.compiler.graph.Node;
 import com.chaosopher.tigerlang.compiler.graph.NodeList;
 import com.chaosopher.tigerlang.compiler.tree.QuadruplePrettyPrinter;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.StmList;
 import com.chaosopher.tigerlang.compiler.util.Assert;
 
+class ReachingDefintionsDataFlow extends ForwardDataFlow<Integer> {
+
+    public static ReachingDefintionsDataFlow analyze(CFG cfg, GenKillSets<Integer> genKillSets) {
+        ReachingDefintionsDataFlow reachingDefinitions = new ReachingDefintionsDataFlow(cfg, genKillSets);
+        reachingDefinitions.generate();
+        return reachingDefinitions;
+    }
+    protected ReachingDefintionsDataFlow(CFG cfg, GenKillSets<Integer> genKillSets) {
+        super(cfg, genKillSets, DataflowMeet.UNION);
+    }
+    @Override
+    protected void initialise(CFG cfg, Map<BasicBlock, Set<Integer>> inMap, Map<BasicBlock, Set<Integer>> outMap) {
+        for(Node node : cfg.nodes()) {
+            BasicBlock b = this.cfg.get(node);
+            inMap.put(b, new HashSet<>());
+            outMap.put(b, new HashSet<>());
+        }
+    }
+}
 public class ReachingDefinitions {
 
     public static ReachingDefinitions analyze(CFG cfg, GenKillSets<Integer> genKillSets) {
