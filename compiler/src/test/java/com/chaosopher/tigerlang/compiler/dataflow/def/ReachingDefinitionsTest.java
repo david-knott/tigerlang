@@ -32,7 +32,7 @@ public class ReachingDefinitionsTest {
         StmList stmList = (StmList)parser.parse();
         CFG cfg = CFG.build(stmList);
         GenKillSets<Integer> genKillSets = DefGenKillSets.analyse(cfg);
-        ReachingDefintionsDataFlow defintionsDataFlow = ReachingDefintionsDataFlow.analyze(cfg, genKillSets);
+        RDDataFlow defintionsDataFlow = RDDataFlow.analyze(cfg, genKillSets);
         defintionsDataFlow.toStream(System.out);
     }
 }
