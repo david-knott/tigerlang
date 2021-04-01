@@ -13,6 +13,9 @@ import com.chaosopher.tigerlang.compiler.tree.QuadruplePrettyPrinter;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.StmList;
 
+/**
+ * Abstract class that provides generic gen kill set functionality.
+ */
 public abstract class GenKillSets<T> {
 
     private final CFG cfg;

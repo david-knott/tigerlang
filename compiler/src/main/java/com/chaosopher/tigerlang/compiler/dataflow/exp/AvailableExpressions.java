@@ -20,20 +20,20 @@ import com.chaosopher.tigerlang.compiler.graph.Node;
 
 class AvailableExpressions {
 
-    public static AvailableExpressions analyze(CFG cfg, GenKillSets genKillSets) {
+    public static AvailableExpressions analyze(CFG cfg, GenKillSets<Exp> genKillSets) {
         AvailableExpressions availableExpressions = new AvailableExpressions(cfg, genKillSets);
         availableExpressions.generate();
         return availableExpressions;
     }
 
     private final CFG cfg;
-    private final GenKillSets genKillSets;
+    private final GenKillSets<Exp> genKillSets;
     private final HashMap<BasicBlock, Set<Exp>> inMap = new HashMap<>();
     private final HashMap<BasicBlock, Set<Exp>> outMap = new HashMap<>();
     private final int maxIterations = 10;
     private int totalIterations;
 
-    private AvailableExpressions(CFG cfg, GenKillSets genKillSets) {
+    private AvailableExpressions(final CFG cfg, final GenKillSets<Exp> genKillSets) {
         this.cfg = cfg;
         this.genKillSets = genKillSets;
     }
