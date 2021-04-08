@@ -1,5 +1,9 @@
 # Diary
 
+## Thursday 8th April 2021
+
+Completed kill and gen for reaching expressions.
+
 ## Wednesday 7th April 2021
 
 https://www.cs.colostate.edu/~mstrout/CS553Fall06/slides/lecture11-dataflowopts.pdf
