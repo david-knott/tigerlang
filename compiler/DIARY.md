@@ -1,5 +1,12 @@
 # Diary
 
+## Wednesday 7th April 2021
+
+https://www.cs.colostate.edu/~mstrout/CS553Fall06/slides/lecture11-dataflowopts.pdf
+
+https://www.itu.dk/people/wasowski/teach/dsp-compiler-07/episode-6/episode06-handout.pdf
+
+
 ## Wednesday 31 March 2020
 
 Refactoring GenKill so that there is a common base class.

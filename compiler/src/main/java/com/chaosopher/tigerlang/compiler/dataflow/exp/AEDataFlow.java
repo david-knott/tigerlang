@@ -27,6 +27,7 @@ class AEDataFlow extends ForwardDataFlow<Exp> {
         reachingDefinitions.generate();
         return reachingDefinitions;
     }
+
     protected AEDataFlow(CFG cfg, GenKillSets<Exp> genKillSets) {
         super(cfg, genKillSets, DataflowMeet.INTERSECTION);
     }

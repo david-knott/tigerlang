@@ -1,5 +1,6 @@
 package com.chaosopher.tigerlang.compiler.dataflow.exp;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,47 +23,48 @@ import com.chaosopher.tigerlang.compiler.tree.MOVE;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.TEMP;
 
-class AEGenKillSets extends GenKillSets<Exp> {
+class REGenKillSets extends GenKillSets<Integer> {
 
-    public static GenKillSets<Exp> analyse(final CFG cfg) {
-        AEGenKillSets genKillSets = new AEGenKillSets(cfg);
+    public static GenKillSets<Integer> analyse(final CFG cfg) {
+        REGenKillSets genKillSets = new REGenKillSets(cfg);
         genKillSets.generate();
         return genKillSets;
     }
 
-    private final HashMap<Temp, Set<Exp>> expUseTemps = new HashMap<>();
-    private final Set<Exp> mems = new HashSet<>();
+    private final HashMap<Integer, Exp> defMap = new HashMap<>();
+    private final HashMap<Exp, Integer> revDefMap = new HashMap<>();
+    private final HashMap<Temp, Set<Integer>> defIdUseTemps = new HashMap<>();
+    private final Set<Integer> mems = new HashSet<>();
     
-    private AEGenKillSets(final CFG cfg) {
+    public REGenKillSets(CFG cfg) {
         super(cfg);
     }
 
-    private Set<Exp> getExpressionsUsingTemp(final Temp exp) {
-        Set<Exp> exps = this.expUseTemps.get(exp);
-        return exps;
-    }
-
-    private Set<Exp> getExpressionsUsingMem() {
-        return this.mems;
-    }
-
     @Override
-    protected void initGenSet(Set<Exp> gen, final Stm s) {
+    protected void initGenSet(Set<Integer> gen, Stm s) {
+        Integer defId = this.getDefinitionId(s);
+        // s1: t1 = a + c | gen: {s1} - kill(s1) | kill all defs that use t1 or recompute a + c
+
+        // s1: t1 = M(a)  | gen {s1} - kill(s1) | kill all defs that
         if(s instanceof MOVE) {
             MOVE move = (MOVE)s;
             if(move.dst instanceof TEMP && move.src instanceof BINOP) {
-                gen.add(move.src);
+                gen.add(defId);
                 gen.removeAll(this.getKill(s));
+                this.defMap.put(defId, move.src);
+                this.revDefMap.put(move.src, defId);
             }
             if(move.dst instanceof TEMP && move.src instanceof MEM) {
-                gen.add(move.src);
+                gen.add(defId);
                 gen.removeAll(this.getKill(s));
+                this.defMap.put(defId, move.src);
+                this.revDefMap.put(move.src, defId);
             }
         }
     }
 
     @Override
-    protected void initKillSet(Set<Exp> kill, final Stm s) {
+    protected void initKillSet(Set<Integer> kill, Stm s) {
         if(s instanceof MOVE) {
             MOVE move = (MOVE)s;
             if(move.dst instanceof TEMP && move.src instanceof CONST) {
@@ -94,31 +96,41 @@ class AEGenKillSets extends GenKillSets<Exp> {
         }
     }
 
+    private Collection<? extends Integer> getExpressionsUsingMem() {
+        return this.mems;
+    }
+
+    private Collection<? extends Integer> getExpressionsUsingTemp(Temp temp) {
+        return this.defIdUseTemps.get(temp);
+    }
+
     @Override
-    protected void initialize(final BasicBlock b, final Stm stm) {
+    protected void initialize(BasicBlock b, Stm stm) {
         // get all uses and definitions.
         Set<Temp> uses = ExtractUses.getUses(stm);
         Set<Temp> defs = ExtractDefs.getDefs(stm);
+        Integer defId = this.getDefinitionId(stm);
         // initialize expUseTemps hashmap with empty sets for all temps we will encounter.
         Set<Temp> all = new HashSet<>();
         all.addAll(uses);
         all.addAll(defs);
         for(Temp temp : all) {
-            if(!this.expUseTemps.containsKey(temp)) {
-                this.expUseTemps.put(temp, new HashSet<>());
+            if(!this.defIdUseTemps.containsKey(temp)) {
+                this.defIdUseTemps.put(temp, new HashSet<>());
             }
         }
-        // if statement contains an expression, map use temp to expression.
+        // if statement contains an expression, map temp to definition id.
         Exp exp = ExtractExp.getExp(stm);
         if(exp != null) {
             for(Temp temp : uses) {
-                this.expUseTemps.get(temp).add(exp);
+                this.defIdUseTemps.get(temp).add(defId);
             }
         }
-        // if statment contains a memory expression, save reference to it in mems collection.
+        // if statment contains a memory expression, save reference to defintion id.
         boolean isMemExp = ExtractMemExp.isMemExp(stm);
         if(isMemExp) {
-            this.mems.add(exp);
+            this.mems.add(defId);
         }
+        
     }
 }

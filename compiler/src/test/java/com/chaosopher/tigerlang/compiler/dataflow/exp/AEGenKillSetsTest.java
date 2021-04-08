@@ -22,7 +22,7 @@ import com.chaosopher.tigerlang.compiler.tree.TEMP;
 
 import org.junit.Test;
 
-public class GenKillSetsTest {
+public class AEGenKillSetsTest {
     
     @Test
     public void testLoop() throws IOException {

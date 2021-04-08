@@ -71,9 +71,12 @@ public abstract class GenKillSets<T> {
     }
 
     private void calculateGenSet(final BasicBlock basicBlock) {
+        // gen (np) = gen (n) + ( gen(p) - kill(n))
         Set<T> genBlock = new HashSet<>();
         for (Stm s : basicBlock.first){
+            genBlock.removeAll(this.getKill(s));
             this.initGenSet(genBlock, s);
+
         }
         genMap.put(basicBlock, genBlock);
     }
