@@ -54,6 +54,7 @@ public abstract class Dataflow<T> {
                 Set<T> out = new HashSet<>();
                 this.meet(node, in, out, this.minMap, this.moutMap);
                 this.processNode(node, in, out, this.minMap, this.moutMap);
+                this.loopComplete(node, in, out, this.minMap, this.moutMap);
                 var c1 = in.equals(inPrev);
                 var c2 = out.equals(outPrev);
                 changed = changed || !c1 || !c2;
@@ -61,6 +62,11 @@ public abstract class Dataflow<T> {
             if (!changed)
                 break;
         } while (true);
+    }
+
+    protected void loopComplete(Node node, Set<T> in, Set<T> out, HashMap<BasicBlock, Set<T>> minMap2,
+            HashMap<BasicBlock, Set<T>> moutMap2) {
+                // overiden in sub classes.
     }
 
     protected void meet(Node node, Set<T> in, Set<T> out, Map<BasicBlock, Set<T>> inMap, Map<BasicBlock, Set<T>> outMap) {

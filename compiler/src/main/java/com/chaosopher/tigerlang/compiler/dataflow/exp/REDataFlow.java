@@ -1,5 +1,6 @@
 package com.chaosopher.tigerlang.compiler.dataflow.exp;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -37,27 +38,34 @@ import com.chaosopher.tigerlang.compiler.tree.Exp;
  */
 class REDataFlow extends AEDataFlow {
 
-    public static REDataFlow analyze(CFG cfg, GenKillSets<Exp> genKillSets) {
-        REDataFlow reachingExpressions = new REDataFlow(cfg, genKillSets);
+    public static REDataFlow analyze(CFG cfg, GenKillSets<Exp> aeGenKillSets, GenKillSets<Integer> reGenKillSets) {
+        REDataFlow reachingExpressions = new REDataFlow(cfg, aeGenKillSets, reGenKillSets);
         reachingExpressions.generate();
         return reachingExpressions;
     }
 
-    protected REDataFlow(CFG cfg, GenKillSets<Exp> genKillSets) {
-        super(cfg, genKillSets);
+    private GenKillSets<Integer> reGenKillSets;
+
+    protected REDataFlow(CFG cfg, GenKillSets<Exp> aeGenKillSets, GenKillSets<Integer> reGenKillSets) {
+        super(cfg, aeGenKillSets);
+        this.reGenKillSets = reGenKillSets;
     }
 
     @Override
-    protected void processNode(Node node, Set<Exp> in, Set<Exp> out, Map<BasicBlock, Set<Exp>> inMap,
-            Map<BasicBlock, Set<Exp>> outMap) {
-	// in and out are empty at start of each node loop.
-        super.processNode(node, in, out, inMap, outMap);
-    }
+    protected void loopComplete(Node node, Set<Exp> in, Set<Exp> out, HashMap<BasicBlock, Set<Exp>> minMap2,
+            HashMap<BasicBlock, Set<Exp>> moutMap2) {
 
-    @Override
-    protected void meetIntersection(Node node, Set<Exp> in, Set<Exp> out, Map<BasicBlock, Set<Exp>> inMap,
-            Map<BasicBlock, Set<Exp>> outMap) {
-	// in and out are empty at start of each node loop.
-        super.meetIntersection(node, in, out, inMap, outMap);
+        BasicBlock basicBlock = this.cfg.get(node);
+        Set<Integer> genSet = reGenKillSets.getGen(basicBlock);
+        System.out.println(genSet);
+        Set<Integer> killSet = reGenKillSets.getKill(basicBlock);
+        System.out.println(killSet);
+        
+        // in contains updated in set for basic block
+
+        // out contains updated out set for basic block
+
+        //minMap2 and moutMap2 contain the hash of basic blocks and related in oand out sets respectively.
+
     }
 }

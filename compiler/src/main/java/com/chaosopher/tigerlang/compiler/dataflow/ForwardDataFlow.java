@@ -19,6 +19,9 @@ public abstract class ForwardDataFlow<T> extends Dataflow<T> {
         return this.cfg.nodes();
     }
 
+    /**
+     * Override fills the out set with (in - kill(b)) + gen(b) and updates the outMap.
+     */
     @Override
     protected void processNode(Node node, Set<T> in, Set<T> out, Map<BasicBlock, Set<T>> inMap, Map<BasicBlock, Set<T>> outMap) {
         BasicBlock b = this.cfg.get(node);
@@ -29,6 +32,9 @@ public abstract class ForwardDataFlow<T> extends Dataflow<T> {
         outMap.put(b, out);
     }
 
+    /**
+     * Override populates the in set and inMap hasmap with union of predecessor nodes out sets.
+     */
     @Override
     protected void meetUnion(Node node, Set<T> in, Set<T> out, Map<BasicBlock, Set<T>> inMap, Map<BasicBlock, Set<T>> outMap) {
         BasicBlock b = this.cfg.get(node);
@@ -41,6 +47,9 @@ public abstract class ForwardDataFlow<T> extends Dataflow<T> {
         inMap.put(b, in);
     }
 
+    /**
+     * Override populates the in set and inMap hasmap with intersection of predecessor nodes out sets.
+     */
     @Override
     protected void meetIntersection(Node node, Set<T> in, Set<T> out, Map<BasicBlock, Set<T>> inMap, Map<BasicBlock, Set<T>> outMap) {
         BasicBlock b = this.cfg.get(node);
