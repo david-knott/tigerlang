@@ -15,7 +15,6 @@ import javax.xml.stream.FactoryConfigurationError;
 import javax.xml.stream.XMLStreamException;
 
 import com.chaosopher.tigerlang.compiler.canon.CanonicalizationImpl;
-import com.chaosopher.tigerlang.compiler.temp.Label;
 import com.chaosopher.tigerlang.compiler.temp.LabelFactory;
 import com.chaosopher.tigerlang.compiler.tree.BINOP;
 import com.chaosopher.tigerlang.compiler.tree.CJUMP;
@@ -32,6 +31,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import junit.framework.AssertionFailedError;
+
 
 public class TreeAtomizerTest {
 

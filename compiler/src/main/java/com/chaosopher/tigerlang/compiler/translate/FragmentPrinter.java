@@ -7,6 +7,11 @@ import com.chaosopher.tigerlang.compiler.tree.PrettyPrinter;
 
 public class FragmentPrinter implements FragmentVisitor {
 
+    public static void apply(FragList fragList, PrintStream out) {
+        FragmentPrinter fragmentPrinter = new FragmentPrinter(out);
+        fragList.accept(fragmentPrinter);
+    }
+
     private PrintStream out;
 
     public FragmentPrinter(PrintStream out) {
@@ -19,7 +24,7 @@ public class FragmentPrinter implements FragmentVisitor {
 
 	@Override
     public void visit(ProcFrag procFrag) {
-        this.out.println("# Fragment " + procFrag.frame.name);
+        this.out.println("# Fragment " + (procFrag.frame == null ? "no frame" : procFrag.frame.name));
         procFrag.body.accept(new PrettyPrinter(this.out));
        // this.out.println("Frame:");
        // this.out.println("Wordsize:" + procFrag.frame.wordSize());

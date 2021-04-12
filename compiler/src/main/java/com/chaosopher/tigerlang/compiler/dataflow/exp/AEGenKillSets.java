@@ -22,7 +22,7 @@ import com.chaosopher.tigerlang.compiler.tree.MOVE;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.TEMP;
 
-class AEGenKillSets extends GenKillSets<Exp> {
+public class AEGenKillSets extends GenKillSets<Exp> {
 
     public static GenKillSets<Exp> analyse(final CFG cfg) {
         AEGenKillSets genKillSets = new AEGenKillSets(cfg);

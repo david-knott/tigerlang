@@ -1,5 +1,30 @@
 # Diary
 
+## Friday 9th April 2021
+
+I tried using the gen kill class for reaching expressions in a foward data flow implementation, similar to the other data flow
+implementations. This worked for all simple test cases except for recomputation of the expression. I initializes all the sets
+to all the definitions in the program.
+
+Question is, how to test for recomputation ?
+
+I created a hashset with exp -> set of definition ids at initialization. I used this to calculate statements that recompute the same expression.
+
+
+http://www.eecs.umich.edu/courses/eecs583/slides/Lecture6.pdf
+
+It appears the reaching applies to the union operator and available to the intersection operator.
+
+A definition d reaches a point p if there is a path from the
+point immediately following d to p such that d is not
+“killed” along that path 
+
+A definition d is available at a point p if along all paths
+from d to p, d is not killed 
+
+I think there is a bug in the initialize function in REDataFlow and AEDataFlow.
+
+
 ## Thursday 8th April 2021
 
 Completed kill and gen for reaching expressions.

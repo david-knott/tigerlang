@@ -14,6 +14,71 @@ import org.junit.Test;
 public class ReachingDefinitionsTest {
 
     @Test
+    public void def() throws IOException {
+        String code = 
+            "label(start) " + 
+            "move(temp(a), const(5)) " + 
+            "label(end) ";
+        ;
+        Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
+        StmList stmList = (StmList)parser.parse();
+        CFG cfg = CFG.build(stmList);
+        GenKillSets<Integer> genKillSets = DefGenKillSets.analyse(cfg);
+        RDDataFlow defintionsDataFlow = RDDataFlow.analyze(cfg, genKillSets);
+        defintionsDataFlow.toStream(System.out);
+    }
+
+    @Test
+    public void defdef() throws IOException {
+        String code = 
+            "label(start) " + 
+            "move(temp(a), const(5)) " + 
+            "move(temp(b), const(7)) " + 
+            "label(end) ";
+        ;
+        Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
+        StmList stmList = (StmList)parser.parse();
+        CFG cfg = CFG.build(stmList);
+        GenKillSets<Integer> genKillSets = DefGenKillSets.analyse(cfg);
+        RDDataFlow defintionsDataFlow = RDDataFlow.analyze(cfg, genKillSets);
+        defintionsDataFlow.toStream(System.out);
+    }
+
+    @Test
+    public void defkill() throws IOException {
+        String code = 
+            "label(start) " + 
+            "move(temp(a), const(5)) " + 
+            "move(temp(a), const(7)) " + 
+            "label(end) ";
+        ;
+        Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
+        StmList stmList = (StmList)parser.parse();
+        CFG cfg = CFG.build(stmList);
+        GenKillSets<Integer> genKillSets = DefGenKillSets.analyse(cfg);
+        RDDataFlow defintionsDataFlow = RDDataFlow.analyze(cfg, genKillSets);
+        defintionsDataFlow.toStream(System.out);
+    }
+
+    @Test
+    public void deatomizeTest() throws IOException {
+        String code = 
+            "label(start) " + 
+            "move(temp(t1), binop(PLUS, temp(a), temp(b))) " + 
+            "move(temp(t2), binop(PLUS, temp(c), temp(t1))) " + 
+            "label(end) ";
+        ;
+        Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
+        StmList stmList = (StmList)parser.parse();
+        CFG cfg = CFG.build(stmList);
+        GenKillSets<Integer> genKillSets = DefGenKillSets.analyse(cfg);
+        RDDataFlow defintionsDataFlow = RDDataFlow.analyze(cfg, genKillSets);
+        defintionsDataFlow.toStream(System.out);
+        // gen kill will tell us how many definitions there are of a particular temporary.
+    }
+
+
+    @Test
     public void createInstance() throws IOException {
         String code = 
             "label(start) " + 

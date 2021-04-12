@@ -14,7 +14,7 @@ import com.chaosopher.tigerlang.compiler.graph.Node;
 /**
  * Computes reaching defintions from the supplied control flow graph.
  */
-class RDDataFlow extends ForwardDataFlow<Integer> {
+public class RDDataFlow extends ForwardDataFlow<Integer> {
 
     public static RDDataFlow analyze(CFG cfg, GenKillSets<Integer> genKillSets) {
         RDDataFlow reachingDefinitions = new RDDataFlow(cfg, genKillSets);

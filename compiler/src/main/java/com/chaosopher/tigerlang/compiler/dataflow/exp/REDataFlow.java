@@ -1,14 +1,20 @@
 package com.chaosopher.tigerlang.compiler.dataflow.exp;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import com.chaosopher.tigerlang.compiler.dataflow.DataflowMeet;
+import com.chaosopher.tigerlang.compiler.dataflow.ForwardDataFlow;
 import com.chaosopher.tigerlang.compiler.dataflow.GenKillSets;
 import com.chaosopher.tigerlang.compiler.dataflow.cfg.BasicBlock;
 import com.chaosopher.tigerlang.compiler.dataflow.cfg.CFG;
+import com.chaosopher.tigerlang.compiler.dataflow.utils.ExtractExp;
 import com.chaosopher.tigerlang.compiler.graph.Node;
+import com.chaosopher.tigerlang.compiler.graph.NodeList;
 import com.chaosopher.tigerlang.compiler.tree.Exp;
+import com.chaosopher.tigerlang.compiler.tree.StmList;
 
 /**
  * Computes reachable expressions for the supplied control flow graph.
@@ -36,6 +42,8 @@ import com.chaosopher.tigerlang.compiler.tree.Exp;
  *
  * If statement s1 recomputes an expression e1, any old reference to e1 is removed and a new reference is added for s1
  */
+
+ /*
 class REDataFlow extends AEDataFlow {
 
     public static REDataFlow analyze(CFG cfg, GenKillSets<Exp> aeGenKillSets, GenKillSets<Integer> reGenKillSets) {
@@ -67,5 +75,54 @@ class REDataFlow extends AEDataFlow {
 
         //minMap2 and moutMap2 contain the hash of basic blocks and related in oand out sets respectively.
 
+    }
+}
+*/
+/**
+ * Computes available expressions for the supplied control flow graph.
+ */
+class REDataFlow extends ForwardDataFlow<Integer> {
+
+    private final Set<Integer> dataFlowSet = new HashSet<>();
+    
+    public static REDataFlow analyze(CFG cfg, GenKillSets<Integer> genKillSets) {
+        REDataFlow reachingDefinitions = new REDataFlow(cfg, genKillSets);
+        reachingDefinitions.generate();
+        return reachingDefinitions;
+    }
+
+    protected REDataFlow(CFG cfg, GenKillSets<Integer> genKillSets) {
+        super(cfg, genKillSets, DataflowMeet.UNION);
+    }
+
+    private Set<Integer> getAllAvailableExpressions() {
+        //return new HashSet<Integer>(this.dataFlowSet);
+        return new HashSet<>();
+
+    }
+
+    @Override
+    protected void initialise(CFG cfg, Map<BasicBlock, Set<Integer>> inMap, Map<BasicBlock, Set<Integer>> outMap) {
+        NodeList nodeList = cfg.nodes();
+        Node start = nodeList.head;
+        BasicBlock startBlock = this.cfg.get(start);
+        inMap.put(startBlock, new HashSet<>());
+        nodeList = nodeList.tail;
+        for (; nodeList != null; nodeList = nodeList.tail) {
+            BasicBlock b = this.cfg.get(nodeList.head);
+            for (StmList stmList = b.first; stmList != null; stmList = stmList.tail) {
+                Exp exp = ExtractExp.getExp(stmList.head);
+                if (exp != null) {
+                    this.dataFlowSet.add(this.genKillSets.getDefinitionId(stmList.head));
+                }
+            }
+            inMap.put(b, this.getAllAvailableExpressions());
+            Set<Integer> initOut = new HashSet<>();
+            initOut.addAll(getAllAvailableExpressions());
+            initOut.removeAll(this.genKillSets.getKill(b));
+            initOut.addAll(this.genKillSets.getGen(b));
+            outMap.put(b, initOut);
+        }
+        outMap.put(startBlock, this.getAllAvailableExpressions());
     }
 }

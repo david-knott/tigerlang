@@ -18,7 +18,7 @@ import com.chaosopher.tigerlang.compiler.tree.StmList;
 /**
  * Computes available expressions for the supplied control flow graph.
  */
-class AEDataFlow extends ForwardDataFlow<Exp> {
+public class AEDataFlow extends ForwardDataFlow<Exp> {
 
     private final Set<Exp> dataFlowSet = new HashSet<>();
     
@@ -33,7 +33,7 @@ class AEDataFlow extends ForwardDataFlow<Exp> {
     }
 
     private Set<Exp> getAllAvailableExpressions() {
-        return this.dataFlowSet;
+        return new HashSet<Exp>(this.dataFlowSet);
     }
 
     @Override
@@ -41,9 +41,8 @@ class AEDataFlow extends ForwardDataFlow<Exp> {
         NodeList nodeList = cfg.nodes();
         Node start = nodeList.head;
         BasicBlock startBlock = this.cfg.get(start);
+        // in for first node is empty
         inMap.put(startBlock, new HashSet<>());
-        //this.outMap.put(startBlock, this.genKillSets.getGen(startBlock));
-        outMap.put(startBlock, this.getAllAvailableExpressions());
         // all other sets ( IN & OUT ) have all available expressions.
         nodeList = nodeList.tail;
         for (; nodeList != null; nodeList = nodeList.tail) {
@@ -61,5 +60,7 @@ class AEDataFlow extends ForwardDataFlow<Exp> {
             initOut.addAll(this.genKillSets.getGen(b));
             outMap.put(b, initOut);
         }
+        // out for first node contains all expressions.
+        outMap.put(startBlock, this.getAllAvailableExpressions());
     }
 }

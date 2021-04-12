@@ -23,7 +23,6 @@ import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.StmList;
 import com.chaosopher.tigerlang.compiler.tree.TEMP;
 
-
 /**
  * Creates an atomized tree. This transforms the HIR into
  * a form where there are no nested expressions. After canonicalisation
@@ -122,8 +121,7 @@ public class TreeAtomizer extends CloningTreeVisitor implements FragmentVisitor 
         this.exp = new CALL(funcClone, cloneExpList);
     }
 
-    
-	@Override
+    @Override
     public void visit(ProcFrag procFrag) {
         procFrag.body.accept(this);
         Stm atomized = this.getCanonicalisedAtoms();

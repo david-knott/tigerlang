@@ -31,8 +31,7 @@ class REGenKillSets extends GenKillSets<Integer> {
         return genKillSets;
     }
 
-    private final HashMap<Integer, Exp> defMap = new HashMap<>();
-    private final HashMap<Exp, Integer> revDefMap = new HashMap<>();
+    private final HashMap<Exp, Set<Integer>> expDefMap = new HashMap<>();
     private final HashMap<Temp, Set<Integer>> defIdUseTemps = new HashMap<>();
     private final Set<Integer> mems = new HashSet<>();
     
@@ -43,41 +42,57 @@ class REGenKillSets extends GenKillSets<Integer> {
     @Override
     protected void initGenSet(Set<Integer> gen, Stm s) {
         Integer defId = this.getDefinitionId(s);
-        // s1: t1 = a + c | gen: {s1} - kill(s1) | kill all defs that use t1 or recompute a + c
+        // s1: t1 = a + c | gen: {s1} - kill(s1)
 
-        // s1: t1 = M(a)  | gen {s1} - kill(s1) | kill all defs that
+        // s1: t1 = M(a)  | gen {s1} - kill(s1) 
         if(s instanceof MOVE) {
             MOVE move = (MOVE)s;
             if(move.dst instanceof TEMP && move.src instanceof BINOP) {
                 gen.add(defId);
                 gen.removeAll(this.getKill(s));
-                this.defMap.put(defId, move.src);
-                this.revDefMap.put(move.src, defId);
+          //      this.defMap.put(defId, move.src);
+            //    this.revDefMap.put(move.src, defId);
             }
             if(move.dst instanceof TEMP && move.src instanceof MEM) {
                 gen.add(defId);
                 gen.removeAll(this.getKill(s));
-                this.defMap.put(defId, move.src);
-                this.revDefMap.put(move.src, defId);
+             ///   this.defMap.put(defId, move.src);
+                //this.revDefMap.put(move.src, defId);
             }
         }
     }
 
+    private void addRecomputationDefs(Exp src, Integer defId, Set<Integer> kill) {
+        Set<Integer> recompute = new HashSet<>();
+        recompute.addAll(this.expDefMap.get(src));
+        recompute.remove(defId);
+        kill.addAll(recompute);
+    }
+
     @Override
     protected void initKillSet(Set<Integer> kill, Stm s) {
+        // s1: t1 = a + c | kill all defs that use t1 or recompute a + c
+
+        // s1: t1 = M(a)  | kill all defs that
+
+        Integer defId = this.getDefinitionId(s);
+
         if(s instanceof MOVE) {
             MOVE move = (MOVE)s;
             if(move.dst instanceof TEMP && move.src instanceof CONST) {
                 Temp temp = ((TEMP)move.dst).temp;
                 kill.addAll(this.getExpressionsUsingTemp(temp));
+                this.addRecomputationDefs(move.src, defId, kill);
             }
             if(move.dst instanceof TEMP && move.src instanceof BINOP) {
                 Temp temp = ((TEMP)move.dst).temp;
                 kill.addAll(this.getExpressionsUsingTemp(temp));
+                this.addRecomputationDefs(move.src, defId, kill);
             }
             if(move.dst instanceof TEMP && move.src instanceof MEM) {
                 Temp temp = ((TEMP)move.dst).temp;
                 kill.addAll(this.getExpressionsUsingTemp(temp));
+                this.addRecomputationDefs(move.src, defId, kill);
             }
             if(move.dst instanceof MEM && move.src instanceof TEMP ){   
                 kill.addAll(this.getExpressionsUsingMem());
@@ -122,6 +137,12 @@ class REGenKillSets extends GenKillSets<Integer> {
         // if statement contains an expression, map temp to definition id.
         Exp exp = ExtractExp.getExp(stm);
         if(exp != null) {
+
+           if(!this.expDefMap.containsKey(exp)) {
+               this.expDefMap.put(exp, new HashSet<>());
+           }
+           this.expDefMap.get(exp).add(defId);
+
             for(Temp temp : uses) {
                 this.defIdUseTemps.get(temp).add(defId);
             }

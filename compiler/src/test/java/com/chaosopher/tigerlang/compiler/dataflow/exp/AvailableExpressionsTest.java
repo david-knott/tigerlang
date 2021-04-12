@@ -21,12 +21,10 @@ import com.chaosopher.tigerlang.compiler.tree.TEMP;
 
 import org.junit.Test;
 
-
 public class AvailableExpressionsTest {
     
     @Test
     public void createInstance() throws IOException {
-        //https://www.cs.umd.edu/class/spring2013/cmsc631/lectures/data-flow.pdf
         String code = 
             "label(start) " + 
             "move(temp(x), binop(PLUS, temp(a), temp(b))) " +  // gen( a + b, ) ;  kill ()
@@ -63,7 +61,6 @@ public class AvailableExpressionsTest {
 
     @Test
     public void basicBlockGen_TwoStatement() throws IOException {
-        //https://courses.cs.washington.edu/courses/csep501/18sp/lectures/T-dataflow.pdf
         String code = 
             "label(start) " +  // start of first block
             "move(temp(t1), binop(MUL, const(2), temp(a))) " + // gen 2 * a 
@@ -110,7 +107,6 @@ public class AvailableExpressionsTest {
 
     @Test
     public void basicBlockGen_FourStatement() throws IOException {
-        //https://courses.cs.washington.edu/courses/csep501/18sp/lectures/T-dataflow.pdf
         String code = 
             "label(start) " +  // start of first block
             "move(temp(t1), binop(MUL, temp(x), temp(b))) " + 
@@ -129,8 +125,6 @@ public class AvailableExpressionsTest {
         assertTrue(availableExpressions.compareIn(1, new HashSet<>()));
         assertTrue(availableExpressions.compareOut(1, new HashSet<>()));
     }
-
-
 
     @Test
     public void basicBlockGen_ThreeStatement() throws IOException {
@@ -151,7 +145,7 @@ public class AvailableExpressionsTest {
         assertTrue(availableExpressions.compareOut(1, new HashSet<>()));
 
         // test last statement in and out set
-        assertTrue(availableExpressions.compareIn(4, Stream.of(
+        assertTrue(availableExpressions.compareIn(5, Stream.of(
             new BINOP(
                 BINOP.MUL, 
                 new CONST(2), 
@@ -169,7 +163,7 @@ public class AvailableExpressionsTest {
             )
 
         ).collect(Collectors.toCollection(HashSet::new))));
-        assertTrue(availableExpressions.compareOut(4, Stream.of(
+        assertTrue(availableExpressions.compareOut(5, Stream.of(
             new BINOP(
                 BINOP.MUL, 
                 new CONST(2), 
@@ -221,10 +215,8 @@ public class AvailableExpressionsTest {
         assertTrue(availableExpressions.compareOut(4, new HashSet<>()));
     }
 
-
     @Test
     public void test2() throws IOException {
-        //https://courses.cs.washington.edu/courses/csep501/18sp/lectures/T-dataflow.pdf
         String code = 
             "label(start) " + 
             "move(temp(t1), binop(MUL, const(2), temp(a))) " + 

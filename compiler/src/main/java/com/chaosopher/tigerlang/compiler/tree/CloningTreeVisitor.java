@@ -113,6 +113,7 @@ public class CloningTreeVisitor extends DefaultTreeVisitor {
     @Override
     public void visit(StmList stmList) {
         StmList cloned = null;
+
         for(;stmList != null; stmList = stmList.tail) {
             stmList.head.accept(this);
             Stm clonedHead = this.stm;
@@ -120,6 +121,9 @@ public class CloningTreeVisitor extends DefaultTreeVisitor {
         }
         this.stmList = cloned;
         
+        /*
+        DK: Commented out as I dont think this should be present. Its basically
+        doing the same thing as the above code block.
         stmList.head.accept(this);
         Stm clonedHead = this.stm;
         this.stmList = new StmList(clonedHead);
@@ -127,6 +131,6 @@ public class CloningTreeVisitor extends DefaultTreeVisitor {
         if(stmList.tail != null) {
             stmList.tail.accept(this);
             this.stmList = new StmList(clonedHead, this.stmList);
-        }
+        }*/
     }
 }

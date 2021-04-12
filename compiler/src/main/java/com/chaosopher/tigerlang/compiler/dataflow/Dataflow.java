@@ -85,9 +85,10 @@ public abstract class Dataflow<T> {
     protected abstract void initialise(CFG cfg, Map<BasicBlock, Set<T>> inMap, Map<BasicBlock, Set<T>> outMap);
 
     public void toStream(PrintStream printStream) {
-        printStream.println("# Reaching Definitions #");
+        printStream.println("# DataFlow Info#");
         for(NodeList nodeList = this.cfg.nodes(); nodeList != null; nodeList = nodeList.tail) {
-            printStream.println("## Block ##");
+            printStream.println(String.format("## Block - preds: %d ##", nodeList.head.pred() != null ? nodeList.head.pred().size() : 0));
+
             BasicBlock basicBlock = this.cfg.get(nodeList.head);
             printStream.print(basicBlock.hashCode() + "");
             printStream.println();
@@ -112,7 +113,17 @@ public abstract class Dataflow<T> {
         printStream.println("--------");
     }
 
-    private Set<T> getOut(BasicBlock basicBlock, Stm stm) {
+    public T getDataFlowItem(Stm stm) {
+
+        return null;
+    }
+
+    public Set<T> getOut(Stm stm) {
+        BasicBlock basicBlock = this.genKillSets.getBasicBlock(stm);
+        return this.getOut(basicBlock, stm);
+    }
+
+    public Set<T> getOut(BasicBlock basicBlock, Stm stm) {
         // could probably get in set for stm and apply gen and kill
         Set<T> blockOut = new HashSet<>();
         blockOut.addAll(this.getIn(basicBlock, stm));
@@ -124,7 +135,12 @@ public abstract class Dataflow<T> {
         return blockOut;
     }
 
-    private Set<T> getIn(BasicBlock basicBlock, Stm stm) {
+    public Set<T> getIn(Stm stm) {
+        BasicBlock basicBlock = this.genKillSets.getBasicBlock(stm);
+        return this.getIn(basicBlock, stm);
+    }
+
+    public Set<T> getIn(BasicBlock basicBlock, Stm stm) {
         StmList stmList = basicBlock.first;
         // set of all definitions that reach the start of this block
         Set<T> blockIn =  new HashSet<>();
@@ -147,15 +163,15 @@ public abstract class Dataflow<T> {
         return null;
     }
 
-    private Integer getDefinitionId(Stm head) {
+    public Integer getDefinitionId(Stm head) {
         return this.genKillSets.getDefinitionId(head);
     }
 
-    private Set<T> getOut(BasicBlock basicBlock) {
+    public Set<T> getOut(BasicBlock basicBlock) {
         return this.moutMap.get(basicBlock);
     }
 
-    private Set<T> getIn(BasicBlock basicBlock) {
+    public Set<T> getIn(BasicBlock basicBlock) {
         return this.minMap.get(basicBlock);
     }
 
