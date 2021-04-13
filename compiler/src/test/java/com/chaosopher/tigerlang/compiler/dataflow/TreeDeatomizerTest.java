@@ -33,6 +33,71 @@ public class TreeDeatomizerTest {
         FragmentPrinter.apply(deatomizer.fragList, System.out);
     }
 
+    @Test
+    public void cjumpReplaceLeftNestedBinop() throws IOException {
+        String code = 
+            "label(start) " + 
+            "move(temp(t1), binop(PLUS, temp(a), temp(b))) " +  
+            "move(temp(t2), binop(PLUS, temp(c), temp(t1))) " +  
+            "cjump(LE, temp(t2), temp(a), l2, end) " + 
+            "label(l2) " + 
+            "label(end)";
+        ;
+        Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
+        StmList stmList = (StmList)parser.parse();
+        FragList fragList = new FragList(new ProcFrag(stmList, null));
+        TreeDeatomizer deatomizer = TreeDeatomizer.apply(fragList);
+        FragmentPrinter.apply(deatomizer.fragList, System.out);
+    }
+
+    @Test
+    public void cjumpReplaceLeft() throws IOException {
+        String code = 
+            "label(start) " + 
+            "move(temp(t1), binop(PLUS, temp(a), temp(b))) " +  
+            "cjump(LE, temp(t1), temp(a), l2, end) " + 
+            "label(l2) " + 
+            "label(end)";
+        ;
+        Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
+        StmList stmList = (StmList)parser.parse();
+        FragList fragList = new FragList(new ProcFrag(stmList, null));
+        TreeDeatomizer deatomizer = TreeDeatomizer.apply(fragList);
+        FragmentPrinter.apply(deatomizer.fragList, System.out);
+    }
+
+    @Test
+    public void cjumpReplaceRight() throws IOException {
+        String code = 
+            "label(start) " + 
+            "move(temp(t1), binop(PLUS, temp(a), temp(b))) " +  
+            "cjump(LE, temp(a), temp(t1), l2, end) " + 
+            "label(l2) " + 
+            "label(end)";
+        ;
+        Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
+        StmList stmList = (StmList)parser.parse();
+        FragList fragList = new FragList(new ProcFrag(stmList, null));
+        TreeDeatomizer deatomizer = TreeDeatomizer.apply(fragList);
+        FragmentPrinter.apply(deatomizer.fragList, System.out);
+    }
+
+    @Test
+    public void cjumpReplaceLeftAndRight() throws IOException {
+        String code = 
+            "label(start) " + 
+            "move(temp(t1), binop(PLUS, temp(a), temp(b))) " +  
+            "move(temp(t2), binop(PLUS, temp(c), temp(d))) " +  
+            "cjump(LE, temp(t1), temp(t2), l2, end) " + 
+            "label(l2) " + 
+            "label(end)";
+        ;
+        Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
+        StmList stmList = (StmList)parser.parse();
+        FragList fragList = new FragList(new ProcFrag(stmList, null));
+        TreeDeatomizer deatomizer = TreeDeatomizer.apply(fragList);
+        FragmentPrinter.apply(deatomizer.fragList, System.out);
+    }
 
     @Test
     public void threeNestedBinops() throws IOException {
@@ -50,7 +115,6 @@ public class TreeDeatomizerTest {
         FragmentPrinter.apply(deatomizer.fragList, System.out);
     }
 
-
     @Test
     public void cannotthreeNestedBinops() throws IOException {
         String code = 
@@ -67,7 +131,4 @@ public class TreeDeatomizerTest {
         TreeDeatomizer deatomizer = TreeDeatomizer.apply(fragList);
         FragmentPrinter.apply(deatomizer.fragList, System.out);
     }
-
-
-
 }

@@ -86,24 +86,24 @@ public class TreeDeatomizer implements FragmentVisitor {
         private final Map<Exp, ReplacementItem> replacements = new Hashtable<>();
         private final RDDataFlow rdDataFlow;
         private final AEDataFlow aeDataFlow;
-        private Stm stm;
+        private Stm currentStm;
 
         TACloningTreeVisitor(RDDataFlow dataFlow, AEDataFlow aeDataFlow) {
             this.rdDataFlow = dataFlow;
             this.aeDataFlow = aeDataFlow;
         }
 
-        private Stm getStm() {
-            return stm;
+        private Stm getCurrentStm() {
+            return currentStm;
         }
 
-        private void setStm(Stm stm) {
-            this.stm = stm;
+        private void setCurrentStm(Stm stm) {
+            this.currentStm = stm;
         }
 
         @Override
         public void visit(MOVE op) {
-            this.setStm(op);
+            this.setCurrentStm(op);
             if(op.dst instanceof TEMP) {
                 // get the definition id of this statement.
                 Integer defId = this.rdDataFlow.getDefinitionId(op);
@@ -111,12 +111,12 @@ public class TreeDeatomizer implements FragmentVisitor {
             }
             // call super class to clone the move.
             super.visit(op);
-            this.setStm(null);
+            this.setCurrentStm(null);
         }
 
         @Override
         public void visit(CJUMP op) {
-            this.setStm(op);
+            this.setCurrentStm(op);
             Exp left = op.left;
             left = this.replace(left);
             Exp right = op.right;
@@ -126,13 +126,13 @@ public class TreeDeatomizer implements FragmentVisitor {
             Exp clonedLeft = this.exp;
             right.accept(this);
             Exp cloneRight = this.exp;
-            this.setStm(new CJUMP(op.relop, clonedLeft, cloneRight, op.iffalse, op.iftrue));
-            this.setStm(null);
+            this.stm = new CJUMP(op.relop, clonedLeft, cloneRight, op.iffalse, op.iftrue);
+            this.setCurrentStm(null);
         }
 
         private Exp replace(Exp re) {
             // get statement this expression is part of
-            Stm stm = this.getStm();
+            Stm stm = this.getCurrentStm();
             // parameter exp which is a temp, 
             if(this.replacements.containsKey(re)) {
                 ReplacementItem replacementItem = this.replacements.get(re);

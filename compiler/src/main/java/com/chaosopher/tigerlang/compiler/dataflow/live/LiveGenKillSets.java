@@ -10,7 +10,7 @@ import com.chaosopher.tigerlang.compiler.dataflow.utils.ExtractUses;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 
-class LiveGenKillSets extends GenKillSets<Temp> {
+public class LiveGenKillSets extends GenKillSets<Temp> {
 
     public static GenKillSets<Temp> analyse(CFG cfg) {
         LiveGenKillSets genKillSets = new LiveGenKillSets(cfg);

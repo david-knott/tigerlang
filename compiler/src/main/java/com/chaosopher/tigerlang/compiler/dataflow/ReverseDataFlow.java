@@ -8,7 +8,7 @@ import com.chaosopher.tigerlang.compiler.dataflow.cfg.CFG;
 import com.chaosopher.tigerlang.compiler.graph.Node;
 import com.chaosopher.tigerlang.compiler.graph.NodeList;
 
-abstract class ReverseDataFlow<T> extends Dataflow<T> {
+public abstract class ReverseDataFlow<T> extends Dataflow<T> {
 
     protected ReverseDataFlow(CFG cfg, GenKillSets<T> genKillSets, DataflowMeet dataflowMeet) {
         super(cfg, genKillSets, dataflowMeet);
