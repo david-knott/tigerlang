@@ -2,7 +2,6 @@ package com.chaosopher.tigerlang.compiler.intel;
 
 import com.chaosopher.tigerlang.compiler.temp.Label;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
-import com.chaosopher.tigerlang.compiler.tree.IR;
 import com.chaosopher.tigerlang.compiler.tree.JUMP;
 
 /**

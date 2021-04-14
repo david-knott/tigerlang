@@ -13,7 +13,6 @@ import com.chaosopher.tigerlang.compiler.graph.NodeList;
 import com.chaosopher.tigerlang.compiler.tree.QuadruplePrettyPrinter;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.StmList;
-import com.chaosopher.tigerlang.compiler.util.Assert;
 
 /**
  * Abstract base class that provides dataflow support for the classical data flow operations.
@@ -24,8 +23,8 @@ public abstract class Dataflow<T> {
     protected final CFG cfg;
     private final DataflowMeet dataflowMeet;
     protected final GenKillSets<T> genKillSets;
-    private HashMap<BasicBlock, Set<T>> minMap = new HashMap<>();
-    private HashMap<BasicBlock, Set<T>> moutMap = new HashMap<>();
+    protected HashMap<BasicBlock, Set<T>> minMap = new HashMap<>();
+    protected HashMap<BasicBlock, Set<T>> moutMap = new HashMap<>();
 
     protected Dataflow(final CFG cfg, GenKillSets<T> genKillSets, final DataflowMeet dataflowMeet) {
         this.cfg = cfg;
@@ -40,6 +39,8 @@ public abstract class Dataflow<T> {
     protected abstract void meetIntersection(Node node, Set<T> in, Set<T> out, Map<BasicBlock, Set<T>> inMap, Map<BasicBlock, Set<T>> outMap);
 
     protected abstract NodeList getDirectedNodeList();
+    
+    protected abstract StmList getStatementList(BasicBlock basicBlock);
 
     protected void generate() {
         boolean changed = true;
@@ -113,55 +114,20 @@ public abstract class Dataflow<T> {
         printStream.println("--------");
     }
 
-    public T getDataFlowItem(Stm stm) {
-
-        return null;
-    }
-
     public Set<T> getOut(Stm stm) {
         BasicBlock basicBlock = this.genKillSets.getBasicBlock(stm);
         return this.getOut(basicBlock, stm);
     }
 
-    public Set<T> getOut(BasicBlock basicBlock, Stm stm) {
-        // could probably get in set for stm and apply gen and kill
-        Set<T> blockOut = new HashSet<>();
-        blockOut.addAll(this.getIn(basicBlock, stm));
-        Set<T> gen = this.genKillSets.getGen(stm);
-        // current block generates these
-        Set<T> kill = this.genKillSets.getKill(stm);
-        blockOut.removeAll(kill);
-        blockOut.addAll(gen);
-        return blockOut;
-    }
+
+    public abstract Set<T> getOut(BasicBlock basicBlock, Stm stm);
 
     public Set<T> getIn(Stm stm) {
         BasicBlock basicBlock = this.genKillSets.getBasicBlock(stm);
         return this.getIn(basicBlock, stm);
     }
 
-    public Set<T> getIn(BasicBlock basicBlock, Stm stm) {
-        StmList stmList = basicBlock.first;
-        // set of all definitions that reach the start of this block
-        Set<T> blockIn =  new HashSet<>();
-        blockIn.addAll(this.minMap.get(basicBlock));
-        for (; stmList != null; stmList = stmList.tail) {
-            // for each statement, we get the gen and kill
-            Stm s = stmList.head;
-            if(s == stm) {
-                return blockIn;
-            }
-            // reconstitute kill and gen from in.
-            Set<T> gen = this.genKillSets.getGen(s);
-            Set<T> kill = this.genKillSets.getKill(s);
-            // remove items that were killed.
-            blockIn.removeAll(kill);
-            // add items that were generated.
-            blockIn.addAll(gen);
-        }
-        Assert.unreachable("Statment was not contained in any block");
-        return null;
-    }
+    public abstract Set<T> getIn(BasicBlock basicBlock, Stm stm);
 
     public Integer getDefinitionId(Stm head) {
         return this.genKillSets.getDefinitionId(head);

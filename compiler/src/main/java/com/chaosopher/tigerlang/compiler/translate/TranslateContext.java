@@ -8,7 +8,6 @@ import com.chaosopher.tigerlang.compiler.temp.Label;
 import com.chaosopher.tigerlang.compiler.temp.LabelFactory;
 import com.chaosopher.tigerlang.compiler.tree.DefaultTreeVisitor;
 import com.chaosopher.tigerlang.compiler.tree.IR;
-import com.chaosopher.tigerlang.compiler.tree.TreeVisitor;
 
 /**
  * This class walks the IR tree and inserts mappings from IR nodes to the Absyn

@@ -16,6 +16,7 @@ import com.chaosopher.tigerlang.compiler.tree.ESEQ;
 import com.chaosopher.tigerlang.compiler.tree.EXP;
 import com.chaosopher.tigerlang.compiler.tree.Exp;
 import com.chaosopher.tigerlang.compiler.tree.ExpList;
+import com.chaosopher.tigerlang.compiler.tree.IR;
 import com.chaosopher.tigerlang.compiler.tree.JUMP;
 import com.chaosopher.tigerlang.compiler.tree.MEM;
 import com.chaosopher.tigerlang.compiler.tree.MOVE;
@@ -31,16 +32,32 @@ import com.chaosopher.tigerlang.compiler.tree.TEMP;
  */
 public class TreeAtomizer extends CloningTreeVisitor implements FragmentVisitor {
 
-    public FragList fragList = null;
+    public static TreeAtomizer apply(Canonicalization canonicalization, FragList fragList) {
+        TreeAtomizer atomizer = new TreeAtomizer(canonicalization);
+        fragList.accept(atomizer);
+        return atomizer;
+    }
+
+    public static TreeAtomizer apply(Canonicalization canonicalization, IR ir) {
+        TreeAtomizer atomizer = new TreeAtomizer(canonicalization);
+        ir.accept(atomizer);
+        return atomizer;
+    }
+
+    private FragList fragList = null;
     private final Canonicalization canonicalization;
     private final Hashtable<Temp, Exp> temps = new Hashtable<>();
 
-    public TreeAtomizer(Canonicalization canonicalization) {
+    public FragList getAtomizedFragList() {
+        return this.fragList;
+    }
+
+    private TreeAtomizer(Canonicalization canonicalization) {
         this.canonicalization = canonicalization;
     }
 
     public StmList getCanonicalisedAtoms() {
-        return this.canonicalization.canon(this.stm != null ? this.stm : new EXP(this.exp));
+        return this.canonicalization.canon(this.getStm() != null ? this.getStm() : new EXP(this.getExp() ));
     }
 
     public Hashtable<Temp, Exp> getTemps() {
@@ -48,7 +65,7 @@ public class TreeAtomizer extends CloningTreeVisitor implements FragmentVisitor 
     }
 
     public Stm getAtoms() {
-        return this.stm != null ? this.stm : new EXP(this.exp);
+        return this.getStm() != null ? this.getStm() : new EXP(this.getExp() );
     }
 
     private Temp createTemp(Exp exp) {
@@ -79,46 +96,46 @@ public class TreeAtomizer extends CloningTreeVisitor implements FragmentVisitor 
     @Override
     public void visit(BINOP op) {
         op.left.accept(this);
-        Exp leftClone = rewrite(this.exp);
+        Exp leftClone = rewrite(this.getExp() );
         op.right.accept(this);
-        Exp rightClone = rewrite(this.exp);
-        this.exp = new BINOP(op.binop, leftClone, rightClone);
+        Exp rightClone = rewrite(this.getExp() );
+        this.setExp(new BINOP(op.binop, leftClone, rightClone));
     }
 
     @Override
     public void visit(JUMP op) {
         op.exp.accept(this);
-        Exp eClone = rewrite(this.exp);
-        this.stm = new JUMP(eClone, op.targets);
+        Exp eClone = rewrite(this.getExp() );
+        this.setStm(new JUMP(eClone, op.targets));
     }
 
     @Override
     public void visit(MEM op) {
         op.exp.accept(this);
-        Exp expClone = rewrite(this.exp);
-        this.exp = new MEM(expClone);
+        Exp expClone = rewrite(this.getExp() );
+        this.setExp(new MEM(expClone));
     }
 
     @Override
     public void visit(CJUMP cjump) {
         cjump.left.accept(this);
-        Exp leftClone = rewrite(this.exp);
+        Exp leftClone = rewrite(this.getExp() );
         cjump.right.accept(this);
-        Exp rightClone = rewrite(this.exp);
-        this.stm = new CJUMP(cjump.relop, leftClone, rightClone, cjump.iftrue, cjump.iffalse);
+        Exp rightClone = rewrite(this.getExp() );
+        this.setStm(new CJUMP(cjump.relop, leftClone, rightClone, cjump.iftrue, cjump.iffalse));
     }
 
     @Override
     public void visit(CALL op) {
         op.func.accept(this);
-        Exp funcClone = this.exp;
+        Exp funcClone = this.getExp() ;
         ExpList cloneExpList = null;
         for (ExpList arg = op.args; arg != null; arg = arg.tail) {
             arg.head.accept(this);
-            Exp cloneArg = rewrite(this.exp);
+            Exp cloneArg = rewrite(this.getExp() );
             cloneExpList = ExpList.append(cloneExpList, cloneArg);
         }
-        this.exp = new CALL(funcClone, cloneExpList);
+        this.setExp(new CALL(funcClone, cloneExpList));
     }
 
     @Override

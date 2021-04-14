@@ -1,9 +1,5 @@
 package com.chaosopher.tigerlang.compiler.translate;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-
 import com.chaosopher.tigerlang.compiler.util.Assert;
 import com.chaosopher.tigerlang.compiler.util.SimpleTask;
 import com.chaosopher.tigerlang.compiler.util.SimpleTaskProvider;
@@ -35,63 +31,5 @@ public class Tasks implements TaskProvider {
                 }
             }, "hir-display", "Display the HIR", "hir-compute")
         );
-        taskRegister.register(
-            new SimpleTask(new SimpleTaskProvider() {
-                @Override
-                public void only(TaskContext taskContext) {
-                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                    ObjectOutputStream out = null;
-                    try {
-                        out = new ObjectOutputStream(bos);   
-                        out.writeObject(taskContext.hirFragList);
-                        out.flush();
-                        byte[] yourBytes = bos.toByteArray();
-                        //taskContext.out
-                    } catch(Exception ex) {
-
-                    } finally {
-                    try {
-                        bos.close();
-                    } catch (IOException ex) {
-                        // ignore close exception
-                    }
-                    }
-
-
-                    taskContext.hirFragList.accept(new FragmentPrinter(taskContext.out));
-                }
-            }, "serialize", "Serialize the HIR", "hir-compute")
-        );
-        /*
-        taskRegister.register(
-            new SimpleTask(new SimpleTaskProvider() {
-                @Override
-                public void only(TaskContext taskContext) {
-                    Semant.Semant semant = new Semant.Semant(taskContext.errorMsg, new Translator());
-                    taskContext.setFragList(semant.getTreeFragments(taskContext.decList));
-                }
-            }, "hir-compute", "Translate abstract syntax to HIR", "typed")
-        );
-        taskRegister.register(
-            new SimpleTask(new SimpleTaskProvider() {
-                @Override
-                public void only(TaskContext taskContext) {
-                    TreeVisitor prettyPrinter = new PrettyPrinter(taskContext.log);
-                    taskContext.hirFragList.accept(new FragmentVisitor(){
-
-                        @Override
-                        public void visit(ProcFrag procFrag) {
-                            procFrag.body.accept(prettyPrinter);
-                        }
-
-                        @Override
-                        public void visit(DataFrag dataFrag) {
-                        }
-                    });
-                }
-            }, "hir-display", "Display the HIR", "hir-compute")
-        );
-        */
-
     }
 }

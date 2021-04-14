@@ -24,10 +24,10 @@ public class LiveGenKillSets extends GenKillSets<Temp> {
 
     @Override
     protected void initGenSet(Set<Temp> gen, Stm s) {
-        // kill any previous items
-        gen.removeAll(this.getKill(s));
         // add new gens to to set.
         gen.addAll(ExtractUses.getUses(s));
+        // kill any previous items
+        gen.removeAll(this.getKill(s));
     }
 
     @Override

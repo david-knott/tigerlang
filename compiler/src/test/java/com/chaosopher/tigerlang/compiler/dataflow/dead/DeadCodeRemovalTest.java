@@ -6,12 +6,8 @@ import java.io.IOException;
 import com.chaosopher.tigerlang.compiler.dataflow.GenKillSets;
 import com.chaosopher.tigerlang.compiler.dataflow.cfg.CFG;
 import com.chaosopher.tigerlang.compiler.dataflow.live.LiveGenKillSets;
-import com.chaosopher.tigerlang.compiler.dataflow.live.LivenessDataFlow;
+import com.chaosopher.tigerlang.compiler.dataflow.live.Liveness;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
-import com.chaosopher.tigerlang.compiler.translate.FragList;
-import com.chaosopher.tigerlang.compiler.translate.FragmentPrinter;
-import com.chaosopher.tigerlang.compiler.translate.FragmentVisitor;
-import com.chaosopher.tigerlang.compiler.translate.ProcFrag;
 import com.chaosopher.tigerlang.compiler.tree.Lexer;
 import com.chaosopher.tigerlang.compiler.tree.Parser;
 import com.chaosopher.tigerlang.compiler.tree.PrettyPrinter;
@@ -28,16 +24,18 @@ public class DeadCodeRemovalTest {
             "label(start) " + 
             "move(temp(t1), binop(PLUS, temp(a), temp(b))) " +  //dead 
             "move(temp(t2), binop(MUL, temp(b), temp(c))) " +  
+            "move(temp(t3), binop(MUL, temp(t2), temp(t1))) " +  
+            "move(temp(t4), binop(MUL, temp(t3), temp(t1))) " +  
             "label(end)";
         ;
         Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
         StmList stmList = (StmList)parser.parse();
         CFG cfg = CFG.build(stmList);
         GenKillSets<Temp> genKillSets = LiveGenKillSets.analyse(cfg);
-        LivenessDataFlow livenessDataFlow = LivenessDataFlow.analyze(cfg, genKillSets);
+        Liveness livenessDataFlow = Liveness.analyze(cfg, genKillSets);
         DeadCodeRemoval deadCodeRemoval = new DeadCodeRemoval(livenessDataFlow);
         stmList.accept(deadCodeRemoval);
-        stmList.accept( new PrettyPrinter(System.out));
+        deadCodeRemoval.getStmList().accept(new PrettyPrinter(System.out));
         //FragmentPrinter.apply(stmList ,System.out);
     }
     

@@ -47,6 +47,7 @@ public class Liveness {
         return rhs.get(firstDifferent) ? 1 : -1;
     }
 
+    /*
     private void computeLivenessForward(FlowGraph flowGraph) {
         for (var nodes = flowGraph.nodes(); nodes != null; nodes = nodes.tail) {
             var node = nodes.head;
@@ -95,7 +96,7 @@ public class Liveness {
                 break;
 
         } while (true);
-    }
+    }*/
 
     private void computeLiveness(FlowGraph flowGraph) {
         for (var nodes = flowGraph.nodes(); nodes != null; nodes = nodes.tail) {

@@ -1,11 +1,9 @@
 package com.chaosopher.tigerlang.compiler.dataflow;
 
-import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Set;
 
-import com.chaosopher.tigerlang.compiler.canon.StmListList;
 import com.chaosopher.tigerlang.compiler.dataflow.cfg.CFG;
 import com.chaosopher.tigerlang.compiler.dataflow.def.DefGenKillSets;
 import com.chaosopher.tigerlang.compiler.dataflow.def.RDDataFlow;
@@ -123,10 +121,10 @@ public class TreeDeatomizer implements FragmentVisitor {
             right = this.replace(right);
 
             left.accept(this);
-            Exp clonedLeft = this.exp;
+            Exp clonedLeft = this.getExp();
             right.accept(this);
-            Exp cloneRight = this.exp;
-            this.stm = new CJUMP(op.relop, clonedLeft, cloneRight, op.iffalse, op.iftrue);
+            Exp cloneRight = this.getExp();
+            this.setStm(new CJUMP(op.relop, clonedLeft, cloneRight, op.iffalse, op.iftrue));
             this.setCurrentStm(null);
         }
 
@@ -156,10 +154,10 @@ public class TreeDeatomizer implements FragmentVisitor {
             right = this.replace(right);
 
             left.accept(this);
-            Exp clonedLeft = this.exp;
+            Exp clonedLeft = this.getExp();
             right.accept(this);
-            Exp cloneRight = this.exp;
-            this.exp = new BINOP(op.binop, clonedLeft, cloneRight);
+            Exp cloneRight = this.getExp();
+            this.setExp(new BINOP(op.binop, clonedLeft, cloneRight));
         }
     }
 }

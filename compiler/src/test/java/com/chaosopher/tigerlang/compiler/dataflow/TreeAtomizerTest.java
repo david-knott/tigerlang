@@ -101,14 +101,7 @@ public class TreeAtomizerTest {
     }
 
     @Test
-    public void createInstance() throws FileNotFoundException {
-        TreeAtomizer treeAtomizer = new TreeAtomizer(new CanonicalizationImpl());
-        assertNotNull(treeAtomizer);
-    }
-
-    @Test
     public void binopBinop() throws FileNotFoundException, XMLStreamException, FactoryConfigurationError {
-        TreeAtomizer treeAtomizer = new TreeAtomizer(new CanonicalizationImpl());
         BINOP binop = new BINOP(
             BINOP.PLUS,
             new CONST(1),
@@ -118,7 +111,7 @@ public class TreeAtomizerTest {
                 new CONST(3)
             )
         );
-        binop.accept(treeAtomizer);
+        TreeAtomizer treeAtomizer = TreeAtomizer.apply(new CanonicalizationImpl(), binop);
         XmlPrinter printer = new XmlPrinter(System.out);
         treeAtomizer.getAtoms().accept(printer);
         assertNotNull(treeAtomizer.getAtoms());
@@ -145,13 +138,12 @@ public class TreeAtomizerTest {
 
     @Test
     public void memMem() throws FileNotFoundException, XMLStreamException, FactoryConfigurationError {
-        TreeAtomizer treeAtomizer = new TreeAtomizer(new CanonicalizationImpl());
         MEM mem = new MEM(
             new MEM(
                 new CONST(1)
             )
         );
-        mem.accept(treeAtomizer);
+        TreeAtomizer treeAtomizer = TreeAtomizer.apply(new CanonicalizationImpl(), mem);
         // expect the inner mem to be moved into an eseq where it 
         // is moved into a temp, which is then returned to the outer
         // mem 
@@ -173,7 +165,6 @@ public class TreeAtomizerTest {
 
     @Test
     public void jumpMem() throws FileNotFoundException, XMLStreamException, FactoryConfigurationError {
-        TreeAtomizer treeAtomizer = new TreeAtomizer(new CanonicalizationImpl());
         CJUMP cjump = new CJUMP(
             CJUMP.EQ,
             new MEM(
@@ -183,7 +174,7 @@ public class TreeAtomizerTest {
             this.labelFactory.create(),
             this.labelFactory.create()
         );
-        cjump.accept(treeAtomizer);
+        TreeAtomizer treeAtomizer = TreeAtomizer.apply(new CanonicalizationImpl(), cjump);
         // we expect the cjump left expression to be moved into an eseq that
         // moves its result into a temp, which is returned to the cjump.
         assertContains(

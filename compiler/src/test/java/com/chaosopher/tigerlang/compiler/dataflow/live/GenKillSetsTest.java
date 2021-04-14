@@ -20,17 +20,10 @@ import org.junit.Test;
 public class GenKillSetsTest {
 
     @Test
-    public void testBinop() throws IOException {
-        // https://www.seas.harvard.edu/courses/cs252/2011sp/slides/Lec02-Dataflow.pdf
+    public void genKill() throws IOException {
         String code = 
             "label(start) " + 
-            "move(temp(x), binop(PLUS, temp(a), temp(b))) " +  // gen(a, b), kill()
-            "move(temp(y), binop(MUL, temp(a), temp(b))) " +  // get(a, b), kill()
-            "label(l1) " + 
-            "cjump(LE, temp(y), temp(a), l3, l2) " + // gen(y, a), kill()
-            "move(temp(a), binop(PLUS, temp(a), const(1))) " +  // gen(a), kill(a)
-            "move(temp(x), binop(PLUS, temp(a), temp(b))) " +  // gen(a, b), kill(x)
-            "jump(name(l1))" + 
+            "move(temp(t1), binop(PLUS, const(1), temp(a))) " +
             "label(end)";
         ;
         Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
@@ -39,10 +32,28 @@ public class GenKillSetsTest {
         GenKillSets<Temp> genKillSets = LiveGenKillSets.analyse(cfg);
         genKillSets.serialize(System.out);
         assertTrue(genKillSets.compareGen(2, Stream.of(
-            Temp.create("a"),
-            Temp.create("b")
+            Temp.create("a")
         ).collect(Collectors.toCollection(HashSet::new))));
-        //assertTrue(genKillSets.compareKill(2, new HashSet<>()));
+        assertTrue(genKillSets.compareKill(2, Stream.of(
+            Temp.create("t1")
+        ).collect(Collectors.toCollection(HashSet::new))));
+    }
 
+    @Test
+    public void genKillKill() throws IOException {
+        String code = 
+            "label(start) " + 
+            "move(temp(t1), binop(PLUS, const(1), temp(t1))) " +
+            "label(end)";
+        ;
+        Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
+        StmList stmList = (StmList)parser.parse();
+        CFG cfg = CFG.build(stmList);
+        GenKillSets<Temp> genKillSets = LiveGenKillSets.analyse(cfg);
+        genKillSets.serialize(System.out);
+        assertTrue(genKillSets.compareGen(2, new HashSet<>()));
+        assertTrue(genKillSets.compareKill(2, Stream.of(
+            Temp.create("t1")
+        ).collect(Collectors.toCollection(HashSet::new))));
     }
 }

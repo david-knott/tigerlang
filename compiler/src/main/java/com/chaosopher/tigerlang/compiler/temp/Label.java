@@ -1,7 +1,5 @@
 package com.chaosopher.tigerlang.compiler.temp;
 
-import java.util.Hashtable;
-
 import com.chaosopher.tigerlang.compiler.symbol.Symbol;
 
 

@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import com.chaosopher.tigerlang.compiler.dataflow.live.LivenessDataFlow;
+import com.chaosopher.tigerlang.compiler.dataflow.live.Liveness;
 import com.chaosopher.tigerlang.compiler.dataflow.utils.ExtractDefs;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
-import com.chaosopher.tigerlang.compiler.tree.DefaultTreeVisitor;
+import com.chaosopher.tigerlang.compiler.tree.CloningTreeVisitor;
 import com.chaosopher.tigerlang.compiler.tree.MOVE;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.StmList;
@@ -15,12 +15,12 @@ import com.chaosopher.tigerlang.compiler.tree.StmList;
 /**
  * Removes move statements where the definition temp is not used.
  */
-public class DeadCodeRemoval extends DefaultTreeVisitor {
+public class DeadCodeRemoval extends CloningTreeVisitor {
 
-    private final LivenessDataFlow livenessDataFlow;
+    private final Liveness livenessDataFlow;
     private final List<Stm> deadCode = new ArrayList<>();
 
-    public DeadCodeRemoval(final LivenessDataFlow livenessDataFlow) {
+    public DeadCodeRemoval(final Liveness livenessDataFlow) {
         this.livenessDataFlow = livenessDataFlow;
     }
 
@@ -33,9 +33,10 @@ public class DeadCodeRemoval extends DefaultTreeVisitor {
         Set<Temp> defs = ExtractDefs.getDefs(op);
         assert defs.size() == 1;
         // check if defs are live out at statement exit
-        if(this.livenessDataFlow.getOut(op).containsAll(defs)) {
+        if(!this.livenessDataFlow.getOut(op).containsAll(defs)) {
             this.deadCode.add(op);
         }
+        // clone it
         super.visit(op);
     }
 
@@ -44,17 +45,19 @@ public class DeadCodeRemoval extends DefaultTreeVisitor {
      */
     @Override
     public void visit(StmList stmList) {
-        // remove statements in deadCode
-
-        // need to call the visit methods.
-        StmList previous = stmList;
-        StmList next = stmList.tail;
-        for(; next != null; next = next.tail) {
+        StmList clone = null, temp = null;
+        for(StmList next = stmList; next != null; next = next.tail) {
+            next.head.accept(this);
             if(this.deadCode.contains(next.head)) {
-                previous.tail = next.tail;
+                continue;
+            }
+            Stm cloned = this.getStm();
+            if(clone == null) {
+                clone = temp = new StmList(cloned);
             } else {
-                previous = next;
+                temp.tail = (temp = new StmList(cloned));
             }
         }
+        this.setStmList(clone);
     }
 }

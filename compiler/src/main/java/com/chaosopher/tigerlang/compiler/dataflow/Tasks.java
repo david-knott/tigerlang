@@ -15,9 +15,10 @@ public class Tasks implements TaskProvider {
         taskRegister.register(new SimpleTask(new SimpleTaskProvider() {
             @Override
             public void only(TaskContext taskContext) {
-                TreeAtomizer treeAtomizer = new TreeAtomizer(new CanonicalizationImpl());
-                taskContext.hirFragList.accept(treeAtomizer);
-                taskContext.setLIR(treeAtomizer.fragList);
+                TreeAtomizer treeAtomizer = TreeAtomizer.apply(new CanonicalizationImpl(), taskContext.hirFragList);
+                taskContext.setLIR(treeAtomizer.getAtomizedFragList());
+
+                //TreeDeatomizer treeDeatomizer = TreeDeatomizer.apply(fragList);
 
                 /*
                 NopFragmentOptimizer fragmentOptimezer = new NopFragmentOptimizer(new CloningTreeVisitor());
@@ -39,15 +40,14 @@ public class Tasks implements TaskProvider {
             //    taskContext.lirFragList.accept(treedeatomizer);
               //  taskContext.setLIR(treedeatomizer.fragList);
             }
-            }, "deatomize", "Atomize hir tree", "hir-compute")
+            }, "deatomize", "Datomize hir tree", "hir-compute")
         );
         
         taskRegister.register(new SimpleTask(new SimpleTaskProvider() {
             @Override
             public void only(TaskContext taskContext) {
-                TreeAtomizer treeAtomizer = new TreeAtomizer(new CanonicalizationImpl());
-                taskContext.hirFragList.accept(treeAtomizer);
-                taskContext.setLIR(treeAtomizer.fragList);
+                TreeAtomizer treeAtomizer = TreeAtomizer.apply(new CanonicalizationImpl(), taskContext.hirFragList);
+                taskContext.setLIR(treeAtomizer.getAtomizedFragList());
                 }
             }, "atomize", "Atomize lir tree", "hir-compute")
         );

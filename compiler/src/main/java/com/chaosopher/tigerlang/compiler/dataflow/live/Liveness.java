@@ -12,15 +12,15 @@ import com.chaosopher.tigerlang.compiler.dataflow.cfg.CFG;
 import com.chaosopher.tigerlang.compiler.graph.Node;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
 
-public class LivenessDataFlow extends ReverseDataFlow<Temp> {
+public class Liveness extends ReverseDataFlow<Temp> {
 
-    public static LivenessDataFlow analyze(CFG cfg, GenKillSets<Temp> genKillSets) {
-        LivenessDataFlow liveness = new LivenessDataFlow(cfg, genKillSets);
+    public static Liveness analyze(CFG cfg, GenKillSets<Temp> genKillSets) {
+        Liveness liveness = new Liveness(cfg, genKillSets);
         liveness.generate();
         return liveness;
     }
 
-    protected LivenessDataFlow(CFG cfg, GenKillSets<Temp> genKillSets) {
+    protected Liveness(CFG cfg, GenKillSets<Temp> genKillSets) {
         super(cfg, genKillSets, DataflowMeet.UNION);
     }
 

@@ -1,10 +1,5 @@
 package com.chaosopher.tigerlang.compiler.tree;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import com.chaosopher.tigerlang.compiler.temp.Temp;
-
 public class BINOP extends Exp {
     public int binop;
     public Exp left, right;

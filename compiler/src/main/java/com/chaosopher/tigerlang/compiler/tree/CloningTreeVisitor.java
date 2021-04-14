@@ -2,12 +2,32 @@ package com.chaosopher.tigerlang.compiler.tree;
 
 public class CloningTreeVisitor extends DefaultTreeVisitor {
 
-    protected Exp exp;
-    public Stm stm;
-    protected StmList stmList;
+    private Exp exp;
+    private Stm stm;
+    private StmList stmList;
+
+    public Exp getExp() {
+        return this.exp;
+    }
+
+    public void setExp(Exp exp) {
+        this.exp = exp;
+    }
+
+    public Stm getStm() {
+        return this.stm;
+    }
+
+    public void setStm(Stm stm) {
+        this.stm = stm;
+    }
 
     public StmList getStmList() {
-        return stmList;
+        return this.stmList;
+    }
+
+    protected void setStmList(StmList stmList) {
+        this.stmList = stmList;
     }
 
     @Override
@@ -113,7 +133,6 @@ public class CloningTreeVisitor extends DefaultTreeVisitor {
     @Override
     public void visit(StmList stmList) {
         StmList cloned = null;
-
         for(;stmList != null; stmList = stmList.tail) {
             stmList.head.accept(this);
             Stm clonedHead = this.stm;
