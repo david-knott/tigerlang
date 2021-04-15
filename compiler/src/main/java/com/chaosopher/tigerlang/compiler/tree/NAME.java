@@ -52,4 +52,9 @@ public class NAME extends Exp {
         result = 31 * result + this.label.hashCode();
         return result;
     }
+
+    @Override
+    public String toString() {
+        return String.format("name: { label: %s }", this.label);
+    }
 }

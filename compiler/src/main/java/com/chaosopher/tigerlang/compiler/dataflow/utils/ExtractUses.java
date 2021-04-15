@@ -25,6 +25,9 @@ public class ExtractUses extends DefaultTreeVisitor {
     @Override
     public void visit(MOVE op) {
         op.src.accept(this);
+        if(!(op.dst instanceof TEMP)) {
+            op.dst.accept(this);
+        }
     }
 
     @Override

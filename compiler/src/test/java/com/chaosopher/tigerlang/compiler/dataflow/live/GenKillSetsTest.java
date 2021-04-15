@@ -56,4 +56,23 @@ public class GenKillSetsTest {
             Temp.create("t1")
         ).collect(Collectors.toCollection(HashSet::new))));
     }
+
+
+    @Test
+    public void call() throws IOException {
+        String code = 
+            "label(start) " + 
+            "sxp(call(name(printi), temp(t1))) " +
+            "label(end)";
+        ;
+        Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
+        StmList stmList = (StmList)parser.parse();
+        CFG cfg = CFG.build(stmList);
+        GenKillSets<Temp> genKillSets = LiveGenKillSets.analyse(cfg);
+        genKillSets.serialize(System.out);
+        assertTrue(genKillSets.compareGen(2, Stream.of(
+            Temp.create("t1")
+        ).collect(Collectors.toCollection(HashSet::new))));
+        assertTrue(genKillSets.compareKill(2, new HashSet<>()));
+    }
 }

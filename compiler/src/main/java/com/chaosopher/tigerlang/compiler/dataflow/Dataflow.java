@@ -13,6 +13,7 @@ import com.chaosopher.tigerlang.compiler.graph.NodeList;
 import com.chaosopher.tigerlang.compiler.tree.QuadruplePrettyPrinter;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.StmList;
+import com.chaosopher.tigerlang.compiler.util.Assert;
 
 /**
  * Abstract base class that provides dataflow support for the classical data flow operations.
@@ -124,6 +125,7 @@ public abstract class Dataflow<T> {
 
     public Set<T> getIn(Stm stm) {
         BasicBlock basicBlock = this.genKillSets.getBasicBlock(stm);
+        Assert.assertNotNull(basicBlock, "Basic block not found for stm " + stm);
         return this.getIn(basicBlock, stm);
     }
 

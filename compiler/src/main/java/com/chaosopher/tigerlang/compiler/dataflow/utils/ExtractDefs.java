@@ -4,8 +4,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.chaosopher.tigerlang.compiler.temp.Temp;
+import com.chaosopher.tigerlang.compiler.tree.CALL;
 import com.chaosopher.tigerlang.compiler.tree.CJUMP;
 import com.chaosopher.tigerlang.compiler.tree.DefaultTreeVisitor;
+import com.chaosopher.tigerlang.compiler.tree.MEM;
 import com.chaosopher.tigerlang.compiler.tree.MOVE;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.TEMP;
@@ -30,6 +32,16 @@ public class ExtractDefs extends DefaultTreeVisitor {
 
     @Override
     public void visit(CJUMP cjump) {
+        // do nothing as this doesn't define temporaries
+    }
+
+    @Override
+    public void visit(CALL op) {
+        // do nothing as this doesn't define temporaries
+    }
+
+    @Override
+    public void visit(MEM op) {
         // do nothing as this doesn't define temporaries
     }
 

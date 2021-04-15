@@ -1,6 +1,10 @@
 package com.chaosopher.tigerlang.compiler.dataflow;
 
 import com.chaosopher.tigerlang.compiler.canon.CanonicalizationImpl;
+import com.chaosopher.tigerlang.compiler.dataflow.cfg.CFG;
+import com.chaosopher.tigerlang.compiler.dataflow.dead.DeadCodeRemoval;
+import com.chaosopher.tigerlang.compiler.dataflow.live.LiveGenKillSets;
+import com.chaosopher.tigerlang.compiler.translate.FragList;
 import com.chaosopher.tigerlang.compiler.util.SimpleTask;
 import com.chaosopher.tigerlang.compiler.util.SimpleTaskProvider;
 import com.chaosopher.tigerlang.compiler.util.TaskContext;
@@ -16,9 +20,9 @@ public class Tasks implements TaskProvider {
             @Override
             public void only(TaskContext taskContext) {
                 TreeAtomizer treeAtomizer = TreeAtomizer.apply(new CanonicalizationImpl(), taskContext.hirFragList);
-                taskContext.setLIR(treeAtomizer.getAtomizedFragList());
-
-                //TreeDeatomizer treeDeatomizer = TreeDeatomizer.apply(fragList);
+                FragList atomizedFragList = treeAtomizer.getAtomizedFragList();
+                TreeDeatomizer treeDeatomizer = TreeDeatomizer.apply(atomizedFragList);
+                taskContext.setLIR(treeDeatomizer.getDeatomizedFragList());
 
                 /*
                 NopFragmentOptimizer fragmentOptimezer = new NopFragmentOptimizer(new CloningTreeVisitor());

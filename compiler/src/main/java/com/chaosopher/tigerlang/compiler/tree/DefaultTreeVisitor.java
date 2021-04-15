@@ -11,6 +11,10 @@ public class DefaultTreeVisitor implements TreeVisitor {
     @Override
     public void visit(CALL op) {
         op.func.accept(this);
+     //   op.args.head.accept(this);
+        for(ExpList expList = op.args; expList != null; expList = expList.tail) {
+            expList.head.accept(this);
+        }
        // op.args.head.accept(this);
     }
 

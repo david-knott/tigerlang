@@ -1,5 +1,24 @@
 # Diary
 
+## Thursday 15th April 2021
+
+I am working on quad deatomization. There is a problem with the final
+dead code elimination phase where is is removing statements like this
+
+```
+move(
+  temp(rax)
+  temp(t17)
+)
+```
+
+This is because the destination temp rax is not live after control leaves
+this statement. It is actually live as we need to put the result into rax
+its just the data flow doesn't recognize this. In the original liveness analysis the rax register is precoloured meaning its
+
+I also need to fix the fragment visitors so that the order of the fragments
+doesn't change.
+
 ## Friday 9th April 2021
 
 I tried using the gen kill class for reaching expressions in a foward data flow implementation, similar to the other data flow

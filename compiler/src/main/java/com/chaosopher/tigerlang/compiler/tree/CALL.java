@@ -66,6 +66,6 @@ public class CALL extends Exp {
 
     @Override
     public String toString() {
-        return String.format("call: { func: %d, args: tbd }", this.func);
+        return String.format("call: { func: %s, args: tbd }", this.func);
     }
 }
