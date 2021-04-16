@@ -1,5 +1,11 @@
 # Diary
 
+## Friday 16th April 2021
+Constant propagation. Note which definitions define a constant. If a definition which
+defines a constant reaches a use of that definition, that use can be replaced with the constant.
+
+
+
 ## Thursday 15th April 2021
 
 I am working on quad deatomization. There is a problem with the final
@@ -22,6 +28,13 @@ doesn't change.
 Add unit tests for liveness and dead code removal.
 
 Added RV and FP to in and outsets to the initizer for liveness.
+
+I was thinking about availability versus reachability An expression is definately available at node N
+if it is available on all predeccesor edges. This means no component of the expression has been recomupted. We are save the use the last computed value for that expression as we know if has not changed.  Reaching references to the definition ids, We can compute what expressions may reach a later
+definition id.  We need to refer to the availability data flow before we can safely use this information.
+
+
+
 ## Friday 9th April 2021
 
 I tried using the gen kill class for reaching expressions in a foward data flow implementation, similar to the other data flow
@@ -37,14 +50,15 @@ http://www.eecs.umich.edu/courses/eecs583/slides/Lecture6.pdf
 
 It appears the reaching applies to the union operator and available to the intersection operator.
 
-A definition d reaches a point p if there is a path from the
+A definition d *reaches* a point p if there is a path from the
 point immediately following d to p such that d is not
 “killed” along that path 
 
-A definition d is available at a point p if along all paths
+A definition d is *available* at a point p if along all paths
 from d to p, d is not killed 
 
 I think there is a bug in the initialize function in REDataFlow and AEDataFlow.
+
 
 
 ## Thursday 8th April 2021

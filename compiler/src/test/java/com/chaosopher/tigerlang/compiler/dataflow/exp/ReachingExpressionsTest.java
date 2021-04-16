@@ -87,7 +87,7 @@ public class ReachingExpressionsTest {
             "label(l2) " + 
             "move(temp(z1), binop(PLUS, temp(a), temp(b))) " +  // right branch, s2 should reach here, s7 out
             "label(join)" + //join
-           // "move(temp(z2), binop(PLUS, temp(a), temp(b))) " +  // main branch, in empty ?, out s10
+            "move(temp(z2), binop(PLUS, temp(a), temp(b))) " +  // main branch, in empty ?, out s10
             "label(end)"; //end
         Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
         StmList stmList = (StmList)parser.parse();
