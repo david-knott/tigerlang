@@ -18,6 +18,7 @@ import org.junit.Test;
 
 public class DeadCodeRemovalTest {
 
+    /*
     @Test
     public void first() throws IOException {
         String code = 
@@ -38,5 +39,6 @@ public class DeadCodeRemovalTest {
         deadCodeRemoval.getStmList().accept(new PrettyPrinter(System.out));
         //FragmentPrinter.apply(stmList ,System.out);
     }
+    */
     
 }

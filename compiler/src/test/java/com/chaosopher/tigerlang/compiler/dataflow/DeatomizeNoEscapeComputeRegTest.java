@@ -6,10 +6,10 @@ import org.junit.experimental.theories.Theories;
 import org.junit.runner.RunWith;
 
 @RunWith(Theories.class)
-public class DeatomizeRegTest extends RegressionTestBase{
+public class DeatomizeNoEscapeComputeRegTest extends RegressionTestBase{
 
     @Override
     public String[] getArgs() {
-       return new String[]{"--escapes-compute", "--optimize", "--deatomize",  "--reg-alloc"};
+        return new String[]{"--optimize", "--deatomize",  "--reg-alloc"};
     }
 }

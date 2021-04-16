@@ -1,4 +1,4 @@
-package com.chaosopher.tigerlang.web.backend.services;
+package com.chaosopher.tigerlang.web.backend.services.impl;
 
 import java.util.Set;
 
@@ -10,11 +10,12 @@ import com.chaosopher.tigerlang.compiler.graph.Node;
 import com.chaosopher.tigerlang.compiler.translate.FragList;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.compiler.tree.StmList;
+import com.chaosopher.tigerlang.web.backend.services.ReDefDataFlowService;
 
 import org.springframework.stereotype.Service;
 
 @Service
-class DataFlowServiceImpl implements DataFlowService {
+class ReDefDataFlowServiceImpl implements ReDefDataFlowService {
 
     private CFG cfg;
 
@@ -24,8 +25,7 @@ class DataFlowServiceImpl implements DataFlowService {
 
     @Override
     public void init(FragList fragList) {
-        TreeAtomizer treeAtomizer = new TreeAtomizer(new CanonicalizationImpl());
-        fragList.accept(treeAtomizer);
+        TreeAtomizer treeAtomizer = TreeAtomizer.apply(new CanonicalizationImpl(), fragList);
         StmList stmList = treeAtomizer.getCanonicalisedAtoms();
         this.cfg = CFG.build(stmList);
     }
@@ -38,13 +38,11 @@ class DataFlowServiceImpl implements DataFlowService {
     @Override
     public Set<Integer> getGen(Stm stm) {
         return null;
-        
     }
 
     @Override
     public Set<Integer> getKill(Stm stm) {
         return null;
-        
     }
 
     @Override
@@ -58,12 +56,12 @@ class DataFlowServiceImpl implements DataFlowService {
     }
 
     @Override
-    public Set<Integer> getIn(BasicBlock basicBlock, Stm stm) {
+    public Set<Integer> getIn(Stm stm) {
         return null;
     }
 
     @Override
-    public Set<Integer> getOut(BasicBlock basicBlock, Stm stm) {
+    public Set<Integer> getOut(Stm stm) {
         return null;
     }
 
@@ -76,29 +74,4 @@ class DataFlowServiceImpl implements DataFlowService {
     public Set<Integer> getOut(BasicBlock basicBlock) {
         return null;
     }
-}
-
-public interface DataFlowService {
-
-    void init(FragList fragList);
-
-    CFG getCFG();
-
-    BasicBlock getBasicBlock(Node node);
-
-    Set<Integer> getGen(Stm stm);
-
-    Set<Integer> getKill(Stm stm);
-
-    Set<Integer> getGen(BasicBlock basicBlock);
-
-    Set<Integer> getKill(BasicBlock basicBlock);
-
-    Set<Integer> getIn(BasicBlock basicBlock, Stm stm);
-
-    Set<Integer> getOut(BasicBlock basicBlock, Stm stm);
-
-    Set<Integer> getIn(BasicBlock basicBlock);
-
-    Set<Integer> getOut(BasicBlock basicBlock);
 }

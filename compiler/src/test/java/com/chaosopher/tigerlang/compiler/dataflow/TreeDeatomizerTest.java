@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import com.chaosopher.tigerlang.compiler.canon.CanonicalizationImpl;
 import com.chaosopher.tigerlang.compiler.translate.FragList;
-import com.chaosopher.tigerlang.compiler.translate.FragmentPrinter;
 import com.chaosopher.tigerlang.compiler.translate.ProcFrag;
 import com.chaosopher.tigerlang.compiler.tree.Lexer;
 import com.chaosopher.tigerlang.compiler.tree.Parser;
@@ -27,8 +26,8 @@ public class TreeDeatomizerTest {
         Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
         StmList stmList = (StmList)parser.parse();
         FragList fragList = new FragList(new ProcFrag(stmList, null));
-        TreeDeatomizer deatomizer = TreeDeatomizer.apply(fragList);
-        FragmentPrinter.apply(deatomizer.getDeatomizedFragList(), System.out);
+      //  TreeDeatomizer deatomizer = TreeDeatomizer.apply(fragList);
+      //  FragmentPrinter.apply(deatomizer.getDeatomizedFragList(), System.out);
     }
 
     @Test
@@ -44,8 +43,8 @@ public class TreeDeatomizerTest {
         Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
         StmList stmList = (StmList)parser.parse();
         FragList fragList = new FragList(new ProcFrag(stmList, null));
-        TreeDeatomizer deatomizer = TreeDeatomizer.apply(fragList);
-        FragmentPrinter.apply(deatomizer.getDeatomizedFragList(), System.out);
+//        TreeDeatomizer deatomizer = TreeDeatomizer.apply(fragList);
+  //      FragmentPrinter.apply(deatomizer.getDeatomizedFragList(), System.out);
     }
 
     @Test
@@ -60,8 +59,8 @@ public class TreeDeatomizerTest {
         Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
         StmList stmList = (StmList)parser.parse();
         FragList fragList = new FragList(new ProcFrag(stmList, null));
-        TreeDeatomizer deatomizer = TreeDeatomizer.apply(fragList);
-        FragmentPrinter.apply(deatomizer.getDeatomizedFragList(), System.out);
+//        TreeDeatomizer deatomizer = TreeDeatomizer.apply(fragList);
+  //      FragmentPrinter.apply(deatomizer.getDeatomizedFragList(), System.out);
     }
 
     @Test
@@ -76,8 +75,8 @@ public class TreeDeatomizerTest {
         Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
         StmList stmList = (StmList)parser.parse();
         FragList fragList = new FragList(new ProcFrag(stmList, null));
-        TreeDeatomizer deatomizer = TreeDeatomizer.apply(fragList);
-        FragmentPrinter.apply(deatomizer.getDeatomizedFragList(), System.out);
+//        TreeDeatomizer deatomizer = TreeDeatomizer.apply(fragList);
+  //      FragmentPrinter.apply(deatomizer.getDeatomizedFragList(), System.out);
     }
 
     @Test
@@ -93,8 +92,8 @@ public class TreeDeatomizerTest {
         Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
         StmList stmList = (StmList)parser.parse();
         FragList fragList = new FragList(new ProcFrag(stmList, null));
-        TreeDeatomizer deatomizer = TreeDeatomizer.apply(fragList);
-        FragmentPrinter.apply(deatomizer.getDeatomizedFragList(), System.out);
+//        TreeDeatomizer deatomizer = TreeDeatomizer.apply(fragList);
+  //      FragmentPrinter.apply(deatomizer.getDeatomizedFragList(), System.out);
     }
 
     @Test
@@ -109,8 +108,8 @@ public class TreeDeatomizerTest {
         Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
         StmList stmList = (StmList)parser.parse();
         FragList fragList = new FragList(new ProcFrag(stmList, null));
-        TreeDeatomizer deatomizer = TreeDeatomizer.apply(fragList);
-        FragmentPrinter.apply(deatomizer.getDeatomizedFragList(), System.out);
+//        TreeDeatomizer deatomizer = TreeDeatomizer.apply(fragList);
+  //      FragmentPrinter.apply(deatomizer.getDeatomizedFragList(), System.out);
     }
 
     @Test
@@ -127,8 +126,8 @@ public class TreeDeatomizerTest {
         Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
         StmList stmList = (StmList)parser.parse();
         FragList fragList = new FragList(new ProcFrag(stmList, null));
-        TreeDeatomizer deatomizer = TreeDeatomizer.apply(fragList);
-        FragmentPrinter.apply(deatomizer.getDeatomizedFragList(), System.out);
+//        TreeDeatomizer deatomizer = TreeDeatomizer.apply(fragList);
+  //      FragmentPrinter.apply(deatomizer.getDeatomizedFragList(), System.out);
     }
 
     @Test
@@ -143,8 +142,8 @@ public class TreeDeatomizerTest {
         Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
         StmList stmList = (StmList)parser.parse();
         FragList fragList = new FragList(new ProcFrag(stmList, null));
-        TreeDeatomizer deatomizer = TreeDeatomizer.apply(fragList);
-        FragmentPrinter.apply(deatomizer.getDeatomizedFragList(), System.out);
+//        TreeDeatomizer deatomizer = TreeDeatomizer.apply(fragList);
+  //      FragmentPrinter.apply(deatomizer.getDeatomizedFragList(), System.out);
     }
 
     @Test
@@ -159,8 +158,8 @@ public class TreeDeatomizerTest {
         Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
         StmList stmList = (StmList)parser.parse();
         FragList fragList = new FragList(new ProcFrag(stmList, null));
-        TreeDeatomizer deatomizer = TreeDeatomizer.apply(fragList);
-        FragmentPrinter.apply(deatomizer.getDeatomizedFragList(), System.out);
+//        TreeDeatomizer deatomizer = TreeDeatomizer.apply(fragList);
+//        FragmentPrinter.apply(deatomizer.getDeatomizedFragList(), System.out);
     }
 
 
@@ -233,7 +232,7 @@ public class TreeDeatomizerTest {
         Parser parser = new Parser(new Lexer(new ByteArrayInputStream(code.getBytes())));
         StmList stmList = (StmList)parser.parse();
         FragList fragList = new FragList(new ProcFrag(stmList, null));
-        TreeDeatomizer deatomizer = TreeDeatomizer.apply(fragList);
-        FragmentPrinter.apply(deatomizer.getDeatomizedFragList(), System.out);
+//        TreeDeatomizer deatomizer = TreeDeatomizer.apply(fragList);
+  //      FragmentPrinter.apply(deatomizer.getDeatomizedFragList(), System.out);
     }
 }

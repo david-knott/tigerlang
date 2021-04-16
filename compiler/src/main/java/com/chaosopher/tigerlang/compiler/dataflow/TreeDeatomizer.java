@@ -11,9 +11,6 @@ import com.chaosopher.tigerlang.compiler.dataflow.def.DefGenKillSets;
 import com.chaosopher.tigerlang.compiler.dataflow.def.RDDataFlow;
 import com.chaosopher.tigerlang.compiler.dataflow.exp.AEDataFlow;
 import com.chaosopher.tigerlang.compiler.dataflow.exp.AEGenKillSets;
-import com.chaosopher.tigerlang.compiler.dataflow.live.LiveGenKillSets;
-import com.chaosopher.tigerlang.compiler.dataflow.live.Liveness;
-import com.chaosopher.tigerlang.compiler.dataflow.utils.ExtractDefs;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
 import com.chaosopher.tigerlang.compiler.translate.DataFrag;
 import com.chaosopher.tigerlang.compiler.translate.FragList;
@@ -38,29 +35,12 @@ import com.chaosopher.tigerlang.compiler.util.Assert;
  */
 public class TreeDeatomizer implements FragmentVisitor {
 
-    private class DeadCodeRemoval extends CloningTreeVisitor {
-
-        private final Liveness livenessDataFlow;
-        private final List<Stm> deadCode = new ArrayList<>();
-
-        public DeadCodeRemoval(final Liveness livenessDataFlow) {
-            this.livenessDataFlow = livenessDataFlow;
-        }
-
-        /**
-         * Examines move statements to see if they are dead. If a
-         * move temp is never used, it can be removed.
-         */
-        @Override
-        public void visit(MOVE op) {
-            Set<Temp> defs = ExtractDefs.getDefs(op);
-            if(!this.livenessDataFlow.getOut(op).containsAll(defs)) {
-                this.deadCode.add(op);
-            }
-            // clone it
-            super.visit(op);
-        }
-
+    /**
+     * This class removes redudant moves that remain after @see TACloningTreeVisitor
+     * has recombined atomised statements. This class checks each statement against the removals
+     * list to see if the statement should be removed during the statement list clone operation.
+     */
+    private class RemoveRedundantMoves extends CloningTreeVisitor {
         /**
          * Removes stm that are dead.
          */
@@ -69,7 +49,7 @@ public class TreeDeatomizer implements FragmentVisitor {
             StmList clone = null, temp = null;
             for(StmList next = stmList; next != null; next = next.tail) {
                 next.head.accept(this);
-                if(this.deadCode.contains(next.head)) {
+                if(removals.contains(next.head)) {
                    continue;
                 }
                 Stm cloned = this.getStm();
@@ -89,10 +69,12 @@ public class TreeDeatomizer implements FragmentVisitor {
 
             private final Exp exp;
             private final Integer defId;
+            private final Stm stm;
 
-            ReplacementItem(Exp exp, Integer defId) {
+            ReplacementItem(Exp exp, Integer defId, Stm stm) {
                 this.exp = exp;
                 this.defId = defId;
+                this.stm = stm;
             }
 
             boolean defIdReachesStatement(Stm stm) {
@@ -106,16 +88,22 @@ public class TreeDeatomizer implements FragmentVisitor {
                 Set<Exp> available = aeDataFlow.getIn(stm);
                 return available.contains(exp);
             }
+
+            Stm getOriginalStm() {
+                return this.stm;
+            }
         }
 
         private final Map<Exp, ReplacementItem> replacements = new Hashtable<>();
         private final RDDataFlow rdDataFlow;
         private final AEDataFlow aeDataFlow;
+        private final Set<Temp> newTemps;
         private Stm currentStm;
 
-        TACloningTreeVisitor(RDDataFlow dataFlow, AEDataFlow aeDataFlow) {
+        TACloningTreeVisitor(Set<Temp> newTemps, RDDataFlow dataFlow, AEDataFlow aeDataFlow) {
             this.rdDataFlow = dataFlow;
             this.aeDataFlow = aeDataFlow;
+            this.newTemps = newTemps;
         }
 
         private Stm getCurrentStm() {
@@ -126,16 +114,26 @@ public class TreeDeatomizer implements FragmentVisitor {
             this.currentStm = stm;
         }
 
+        /**
+         * Visit move node and see if contained statement has an expression that is a potential
+         * replacement for later expressions. This uses the list of new temporaries created by 
+         * the atomizer.
+         */
         @Override
         public void visit(MOVE op) {
             this.setCurrentStm(op);
-            if(op.dst instanceof TEMP) {
-                // get the definition id of this statement.
-                Integer defId = this.rdDataFlow.getDefinitionId(op);
-                replacements.put(op.dst, new ReplacementItem(op.src, defId));
-            }
             // call super class to clone the move.
             super.visit(op);
+            if(op.dst instanceof TEMP) {
+                TEMP temp = (TEMP)op.dst;
+                if(this.newTemps.contains(temp.temp)) {
+                    // get the definition id of this statement.
+                    Integer defId = this.rdDataFlow.getDefinitionId(op);
+                    // add potential replacement into list. for t1 <- a * b : t1 => [a * b ]
+                    // note the third argument is cloned statement.
+                    replacements.put(op.dst, new ReplacementItem(op.src, defId, this.getStm()));
+                }
+            }
             this.setCurrentStm(null);
         }
 
@@ -167,16 +165,19 @@ public class TreeDeatomizer implements FragmentVisitor {
             // get statement this expression is part of
             Stm stm = this.getCurrentStm();
             Assert.assertNotNull(stm, "Statement cannot be null");
-            // parameter exp which is a temp, 
+            // check if re ( temp ) has a potential replacement.
             if(this.replacements.containsKey(re)) {
+                // get replacements
                 ReplacementItem replacementItem = this.replacements.get(re);
                 // check if that temps definition id has reached the current statement,
                 // check if the expression is available at this point.
                 // if both of these criteria are met, we can rewrite
                 if(replacementItem.defIdReachesStatement(stm) 
                  && replacementItem.expressionIsAvailable(stm)) {
-                   // replacementItem.exp.accept(this);
+                    // replace re
                     re = replacementItem.exp;
+                    // add original statemnt to list of removals
+                    removals.add(replacementItem.getOriginalStm());
                  }
             }
             return re;
@@ -225,16 +226,18 @@ public class TreeDeatomizer implements FragmentVisitor {
         }
     }
 
-    public static final TreeDeatomizer apply(final FragList fragList) {
-        TreeDeatomizer treeDeatomizer = new TreeDeatomizer();
+    public static final TreeDeatomizer apply(Set<Temp> set, final FragList fragList) {
+        TreeDeatomizer treeDeatomizer = new TreeDeatomizer(set);
         fragList.accept(treeDeatomizer);
         return treeDeatomizer;
     } 
 
     private FragList fragList = null;
+    private List<Stm> removals = new ArrayList<>();
+    private final Set<Temp> newTemps;
 
-    private TreeDeatomizer() {
-        super();
+    private TreeDeatomizer(Set<Temp> temps) {
+        this.newTemps = temps;
     }
 
     public FragList getDeatomizedFragList() {
@@ -243,29 +246,25 @@ public class TreeDeatomizer implements FragmentVisitor {
 
     @Override
     public void visit(ProcFrag procFrag) {
-        // use data flow analysis to recombine tree.
+        // use data flow analysis to assist in tree recombination
         CFG cfg = CFG.build((StmList)procFrag.body);
         GenKillSets<Integer> rdGenKillSets = DefGenKillSets.analyse(cfg);
         RDDataFlow rdDataFlow = RDDataFlow.analyze(cfg, rdGenKillSets);
         GenKillSets<Exp> aeGenKillSets = AEGenKillSets.analyse(cfg);
         AEDataFlow aeDataFlow = AEDataFlow.analyze(cfg, aeGenKillSets);
-        TACloningTreeVisitor cloningTreeVisitor = new TACloningTreeVisitor(rdDataFlow, aeDataFlow);
+        TACloningTreeVisitor cloningTreeVisitor = new TACloningTreeVisitor(this.newTemps, rdDataFlow, aeDataFlow);
         procFrag.body.accept(cloningTreeVisitor);
         StmList deatomized = cloningTreeVisitor.getStmList();
+
         // remove old statements.
-        cfg = CFG.build(deatomized);
-        GenKillSets<Temp> liveGenKillSets = LiveGenKillSets.analyse(cfg);
-        Liveness liveness = Liveness.analyze(cfg, liveGenKillSets);
-        DeadCodeRemoval deadCodeRemoval = new DeadCodeRemoval(liveness);
+        RemoveRedundantMoves deadCodeRemoval = new RemoveRedundantMoves();
         deatomized.accept(deadCodeRemoval);
-        StmList cleaned = deadCodeRemoval.getStmList();
-        ProcFrag lirProcFrag = new ProcFrag(cleaned, procFrag.frame);
-        this.fragList = new FragList(lirProcFrag, this.fragList);
+        ProcFrag lirProcFrag = new ProcFrag(deadCodeRemoval.getStmList(), procFrag.frame);
+        this.fragList = FragList.append(this.fragList, lirProcFrag);
     }
 
     @Override
     public void visit(DataFrag dataFrag) {
         this.fragList = new FragList(dataFrag, this.fragList);
     }
-
 }

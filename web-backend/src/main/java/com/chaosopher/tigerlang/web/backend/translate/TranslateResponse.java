@@ -31,12 +31,18 @@ public class TranslateResponse implements FragmentVisitor {
 
     public class IRLine {
 
+        private final int rank;
         private final String code;
         private final int position;
 
-        public IRLine(int position, String code) {
+        public IRLine(final int rank, final int position, final String code) {
+            this.rank = rank;
             this.code = code;
             this.position = position;
+        }
+
+        public int getRank() {
+            return this.rank;
         }
 
         public int getPosition() {
@@ -69,12 +75,13 @@ public class TranslateResponse implements FragmentVisitor {
 
     class TreeVisistorImpl extends DefaultTreeVisitor {
 
+        private int pos = -1;
+
         private void write(IR ir, String s) {
-            int pos = -1;
             if(sourceMap.containsKey(ir)) {
-                pos = sourceMap.get(ir).pos;
+                this.pos = sourceMap.get(ir).pos;
             }
-            lines.add(new IRLine(pos, s));
+            lines.add(new IRLine(lines.size(), this.pos, s));
         }
 
         @Override
@@ -220,7 +227,6 @@ public class TranslateResponse implements FragmentVisitor {
             this.write(cjump, cjump.iffalse.toString());
             this.write(cjump, ")");
         }
-    
     }
 
     private List<IRLine> lines = new ArrayList<>();

@@ -1,6 +1,8 @@
 package com.chaosopher.tigerlang.compiler.dataflow;
 
+import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Set;
 
 import com.chaosopher.tigerlang.compiler.canon.Canonicalization;
 import com.chaosopher.tigerlang.compiler.temp.Temp;
@@ -78,6 +80,12 @@ public class TreeAtomizer extends CloningTreeVisitor implements FragmentVisitor 
         return this.temps.containsKey(temp);
     }
 
+    private final Set<Temp> newTemps = new HashSet<>();
+
+    public Set<Temp> getNewTemps() {
+        return this.newTemps;
+    }
+
     /**
      * This method takes expression exp and converts it into a new expression
      * that evaluetes it and places its result into a new temp, which is returned
@@ -88,6 +96,7 @@ public class TreeAtomizer extends CloningTreeVisitor implements FragmentVisitor 
     private Exp rewrite(Exp exp) {
         if(exp instanceof MEM || exp instanceof BINOP) {
             Temp temp = this.createTemp(exp);
+            newTemps.add(temp);
             return new ESEQ(new MOVE(new TEMP(temp), exp), new TEMP(temp));
         }
         return exp; 

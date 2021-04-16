@@ -21,7 +21,8 @@ public class Tasks implements TaskProvider {
             public void only(TaskContext taskContext) {
                 TreeAtomizer treeAtomizer = TreeAtomizer.apply(new CanonicalizationImpl(), taskContext.hirFragList);
                 FragList atomizedFragList = treeAtomizer.getAtomizedFragList();
-                TreeDeatomizer treeDeatomizer = TreeDeatomizer.apply(atomizedFragList);
+
+                TreeDeatomizer treeDeatomizer = TreeDeatomizer.apply(treeAtomizer.getNewTemps(), atomizedFragList);
                 taskContext.setLIR(treeDeatomizer.getDeatomizedFragList());
 
                 /*

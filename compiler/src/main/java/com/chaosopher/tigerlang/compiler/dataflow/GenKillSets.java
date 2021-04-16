@@ -20,8 +20,8 @@ public abstract class GenKillSets<T> {
 
     private final CFG cfg;
     private final HashMap<Integer, Stm> definitionIdStatements = new HashMap<>();
-    private final HashMap<Integer, BasicBlock> definitionIdBlocks = new HashMap<>();
     private final HashMap<Integer, Integer> statementDefinitionIds = new HashMap<>();
+    private final HashMap<Integer, BasicBlock> definitionIdBlocks = new HashMap<>();
     private final HashMap<BasicBlock, Set<T>> genMap = new HashMap<>();
     private final HashMap<BasicBlock, Set<T>> killMap = new HashMap<>();
     private final HashMap<Integer, BasicBlock> stmBasicBlockMap = new HashMap<>();
@@ -110,7 +110,7 @@ public abstract class GenKillSets<T> {
                 this.stmBasicBlockMap.put(System.identityHashCode(s), b);
             }
         }
-        // 
+        // initialize kill gen sets.
         for(Node node : this.cfg.nodes()) {
             BasicBlock b = this.cfg.get(node);
             for(Stm s : b.first) {

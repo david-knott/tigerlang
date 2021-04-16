@@ -1,5 +1,8 @@
 package com.chaosopher.tigerlang.web.backend.source;
 
+import com.chaosopher.tigerlang.web.backend.services.SourceService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin(origins = "*")
 public class SourceController {
+
+    @Autowired
+    private SourceService sourceService;
     
     @GetMapping("/source/{fileName}")
     public ResponseEntity<String> load(@PathVariable String fileName) {

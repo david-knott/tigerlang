@@ -19,6 +19,9 @@ its just the data flow doesn't recognize this. In the original liveness analysis
 I also need to fix the fragment visitors so that the order of the fragments
 doesn't change.
 
+Add unit tests for liveness and dead code removal.
+
+Added RV and FP to in and outsets to the initizer for liveness.
 ## Friday 9th April 2021
 
 I tried using the gen kill class for reaching expressions in a foward data flow implementation, similar to the other data flow

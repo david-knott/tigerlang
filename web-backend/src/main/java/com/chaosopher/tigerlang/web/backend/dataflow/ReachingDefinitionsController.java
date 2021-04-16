@@ -13,7 +13,7 @@ import com.chaosopher.tigerlang.compiler.tree.QuadruplePrettyPrinter;
 import com.chaosopher.tigerlang.compiler.tree.Stm;
 import com.chaosopher.tigerlang.web.backend.CompilerRequest;
 import com.chaosopher.tigerlang.web.backend.services.CompilerService;
-import com.chaosopher.tigerlang.web.backend.services.DataFlowService;
+import com.chaosopher.tigerlang.web.backend.services.ReDefDataFlowService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
-class RDResponse {
+class ReDefResponse {
 
     private Map<Integer, List<Integer>> succs = new HashMap<>();
     private Map<Integer, List<String>> nodeLabels = new HashMap<>();
@@ -65,10 +65,10 @@ public class ReachingDefinitionsController {
     @Autowired
     CompilerService compilerService;
     @Autowired
-    DataFlowService dataFlowService;
+    ReDefDataFlowService dataFlowService;
 
     @PostMapping("/reachingDefs")
-    public ResponseEntity<RDResponse> reachingDefs(@RequestBody CompilerRequest compilerRequest) {
+    public ResponseEntity<ReDefResponse> reachingDefs(@RequestBody CompilerRequest compilerRequest) {
         this.compilerService.parse(compilerRequest);
         if(this.compilerService.hasErrors()) {
             return ResponseEntity.badRequest().build();
@@ -82,7 +82,7 @@ public class ReachingDefinitionsController {
         this.dataFlowService.init(this.compilerService.getFragList());
         // get the control flow graph.
         CFG cfg = this.dataFlowService.getCFG();
-        RDResponse rdResponse = new RDResponse();
+        ReDefResponse rdResponse = new ReDefResponse();
         // loop through all nodes in cfg.
         for(Node node : cfg.nodes()) {
             rdResponse.addNode(node.hashCode());
