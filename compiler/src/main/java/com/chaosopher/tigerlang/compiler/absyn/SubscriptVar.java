@@ -1,5 +1,10 @@
 package com.chaosopher.tigerlang.compiler.absyn;
 
+/**
+ * A subcript variable, of the form a[i], where a is the
+ * base variable and i is the index. This has the type of
+ * the array element.
+ */
 public class SubscriptVar extends Var {
    public Var var;
    public Exp index;

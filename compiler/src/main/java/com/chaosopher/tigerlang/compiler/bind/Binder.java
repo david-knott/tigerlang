@@ -11,7 +11,9 @@ import com.chaosopher.tigerlang.compiler.absyn.BreakExp;
 import com.chaosopher.tigerlang.compiler.absyn.CallExp;
 import com.chaosopher.tigerlang.compiler.absyn.DecList;
 import com.chaosopher.tigerlang.compiler.absyn.DefaultVisitor;
+import com.chaosopher.tigerlang.compiler.absyn.FieldExpList;
 import com.chaosopher.tigerlang.compiler.absyn.FieldList;
+import com.chaosopher.tigerlang.compiler.absyn.FieldVar;
 import com.chaosopher.tigerlang.compiler.absyn.ForExp;
 import com.chaosopher.tigerlang.compiler.absyn.FunctionDec;
 import com.chaosopher.tigerlang.compiler.absyn.IntTypeDec;
@@ -21,6 +23,7 @@ import com.chaosopher.tigerlang.compiler.absyn.RecordExp;
 import com.chaosopher.tigerlang.compiler.absyn.RecordTy;
 import com.chaosopher.tigerlang.compiler.absyn.SimpleVar;
 import com.chaosopher.tigerlang.compiler.absyn.StringTypeDec;
+import com.chaosopher.tigerlang.compiler.absyn.SubscriptVar;
 import com.chaosopher.tigerlang.compiler.absyn.TypeDec;
 import com.chaosopher.tigerlang.compiler.absyn.VarDec;
 import com.chaosopher.tigerlang.compiler.absyn.WhileExp;
@@ -45,9 +48,6 @@ public class Binder extends DefaultVisitor {
 
     public Binder(ErrorMsg errorMsg) {
         this.errorMsg = errorMsg;
-        // base system types
-        // install int and string as built in types, these are defined
-        // by the language itself.
         HashMap<Symbol, SymbolTableElement> tinit = new HashMap<>();
         tinit.put(Symbol.symbol("int"), new SymbolTableElement(IntTypeDec.instance)); 
         tinit.put(Symbol.symbol("string"), new SymbolTableElement(StringTypeDec.instance)); 
@@ -89,6 +89,10 @@ public class Binder extends DefaultVisitor {
         }
     }
 
+    /*
+
+    */
+
     /**
      * Visit a call expression and bind it to the function declaration.
      */
@@ -113,11 +117,13 @@ public class Binder extends DefaultVisitor {
      */
     @Override
     public void visit(VarDec exp) {
+        // if explicit type is set
         if (exp.typ != null) {
             exp.typ.accept(this);
         }
+        // visit the initializer
         exp.init.accept(this);
-        // set the type of the var dec to its initializer.
+        // add var name to the var symbol tablle
         if (!this.varSymbolTable.contains(exp.name, false)) {
             this.varSymbolTable.put(exp.name, new SymbolTableElement(exp));
         } else {
@@ -133,14 +139,6 @@ public class Binder extends DefaultVisitor {
         exp.typ.accept(this);
         exp.init.accept(this);
         exp.size.accept(this);
-        /*
-        super.visit(exp);
-        if (this.typeSymbolTable.contains(exp.typ.name)) {
-            SymbolTableElement def = this.typeSymbolTable.lookup(exp.typ.name);
-            exp.setDef(def.exp);
-        } else {
-            this.errorMsg.error(exp.pos, "undefined type:" + exp.typ);
-        }*/
     }
 
     /**
@@ -155,7 +153,7 @@ public class Binder extends DefaultVisitor {
     }
 
     /**
-     * Visit break expression and assign it to member lastBreak.
+     * Visit break expression and assign it to last visited loop.
      */
     @Override
     public void visit(BreakExp exp) {

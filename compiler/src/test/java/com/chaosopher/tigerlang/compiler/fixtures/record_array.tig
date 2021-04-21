@@ -1,0 +1,9 @@
+let
+ type intArray = array of int
+ type Array = {elts:intArray, size:int}
+ var size:int := 10
+ var x:=Array{elts=intArray[size] of 11, size=size}
+
+in 
+printi(x.elts[0])
+end

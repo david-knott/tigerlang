@@ -153,22 +153,6 @@ public class TypeChecker extends DefaultVisitor {
     }
 
     /**
-     * Set the type of the field var expression to the type of the field being accessed.
-     */
-    @Override
-    public void visit(FieldVar exp) {
-        exp.var.accept(this);
-        RECORD record = (RECORD)exp.var.getType().actual();
-        for(; record != null; record = record.tail) {
-            if(record.fieldName == exp.field) {
-                exp.setType(record.fieldType);
-                return;
-            }
-        }
-        this.errorMsg.error(exp.pos, "Unknown record type:" + exp.field);
-    }
-
-    /**
      * Visits a call node. The implementation checks that the actual arguments match
      * the formal arguments in the function definition. It sets the current visited
      * type to the return type of the function.
@@ -212,18 +196,6 @@ public class TypeChecker extends DefaultVisitor {
             this.checkTypes(exp.elseclause, "then", thenType, "else", elseType);
         }
         exp.setType(exp.elseclause != null ? thenType : Constants.VOID);
-    }
-
-    /**
-     * Type check implementation for simple var. Sets the simple var type to 
-     * its defining variable declarations initializer type.
-     */
-    @Override
-    public void visit(SimpleVar simpleVar) {
-        VarDec def = (VarDec)simpleVar.def;
-     //   def.typ.getType();
-     //   exp.setType(def.init.getType());
-        simpleVar.setType(def.getType());
     }
 
     /**
@@ -311,15 +283,50 @@ public class TypeChecker extends DefaultVisitor {
         }
     }
 
+    /**
+     * Type check implementation for simple var. Sets the simple var type to 
+     * its defining variable declarations initializer type.
+     */
+    @Override
+    public void visit(SimpleVar simpleVar) {
+        VarDec def = (VarDec)simpleVar.def;
+     //   def.typ.getType();
+     //   exp.setType(def.init.getType());
+        simpleVar.setType(def.getType());
+    }
+
+    /**
+     * Set the type of the field var expression to the type of the field being accessed.
+     */
+    @Override
+    public void visit(FieldVar exp) {
+        // visit the base variable to set its type
+        exp.var.accept(this);
+        RECORD record = (RECORD)exp.var.getType().actual();
+        for(; record != null; record = record.tail) {
+            if(record.fieldName == exp.field) {
+                exp.setType(record.fieldType);
+                return;
+            }
+        }
+        this.errorMsg.error(exp.pos, "Unknown record type:" + exp.field);
+    }
+
     @Override
     public void visit(SubscriptVar subscriptVar) {
+        // check index is int type
         subscriptVar.index.accept(this);
         this.checkTypes(subscriptVar, "subscript index type", subscriptVar.index.getType(), "expected type", Constants.INT);
-        VarDec def = (VarDec)subscriptVar.var.def;
-        Assert.assertIsTrue(def.getType().actual() instanceof ARRAY);
-        ARRAY arrayType = (ARRAY)def.getType().actual();
+        // visit base variable to set its type.
         subscriptVar.var.accept(this);
-        subscriptVar.setType(arrayType.element);
+        ARRAY array = (ARRAY)subscriptVar.var.getType().actual();
+        subscriptVar.setType(array.element);
+
+        // set the type of this expression to be the same as the related array element.
+        //VarDec def = (VarDec)subscriptVar.var.def;
+     ///   Assert.assertIsTrue(def != null && def.getType().actual() instanceof ARRAY, subscriptVar.var.toString());
+       // ARRAY arrayType = (ARRAY)def.getType().actual();
+       // subscriptVar.setType(arrayType.element);
     }
 
     /**
@@ -335,7 +342,6 @@ public class TypeChecker extends DefaultVisitor {
         this.checkTypes(exp.body, "while body type", bodyType, "expected type", Constants.VOID);
         exp.setType(Constants.VOID);
     }
-
 
     /**
      * Represents the declaration of a variable which may include the type for

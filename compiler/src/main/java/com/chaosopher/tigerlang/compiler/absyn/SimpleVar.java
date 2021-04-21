@@ -3,6 +3,10 @@ package com.chaosopher.tigerlang.compiler.absyn;
 import com.chaosopher.tigerlang.compiler.symbol.Symbol;
 import com.chaosopher.tigerlang.compiler.util.Assert;
 
+/**
+ * Represents a variable in a program, which is either a pointer
+ * to memory or an integer literal.
+ */
 public class SimpleVar extends Var  {
    public Symbol name;
 

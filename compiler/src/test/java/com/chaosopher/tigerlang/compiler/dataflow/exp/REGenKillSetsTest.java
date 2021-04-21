@@ -102,10 +102,6 @@ public class REGenKillSetsTest {
         ).collect(Collectors.toCollection(HashSet::new))));
     }
 
-
-
-
-
     @Test
     public void testExpDefKill() throws IOException {
         String code = 

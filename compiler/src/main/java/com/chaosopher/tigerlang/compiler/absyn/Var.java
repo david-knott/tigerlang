@@ -6,6 +6,7 @@ import com.chaosopher.tigerlang.compiler.util.Assert;
 abstract public class Var extends Absyn implements Typable {
 
     Type type;
+    
     /**
      * Pointer to the definition of this variable.
      */

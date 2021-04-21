@@ -89,20 +89,6 @@ public class AEGenKillSetsTest {
                 new CONST(1)
             )
         ).collect(Collectors.toCollection(HashSet::new))));
-        
-
-
-
-
-
-
-
-
-        
-        //genKillSets.getDefId(1).getKill().size() == 2
-        //genKillSets.getDefId(1).getKill().contains(new RQuad('a', '+', 'b'))
-        //genKillSets.getDefId(1).getKill().contains(new RQuad('a', '*', 'b'))
-        // b + c available at end of block start
     }
 
     @Test
@@ -152,7 +138,4 @@ public class AEGenKillSetsTest {
         GenKillSets<Exp> genKillSets = AEGenKillSets.analyse(cfg);
         genKillSets.serialize(System.out);
     }
-
-
-
 }
