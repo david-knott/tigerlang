@@ -1,4 +1,4 @@
-package hello;
+package com.chaosopher.tigerlang.web.backend.test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -13,31 +13,15 @@ import com.chaosopher.tigerlang.compiler.parse.ParserService;
 import com.chaosopher.tigerlang.compiler.regalloc.RegAllocFactory;
 import com.chaosopher.tigerlang.compiler.util.TaskRegister;
 
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@SpringBootApplication
 @RestController
 @CrossOrigin(origins = "*")
-public class Application {
-
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-			//	registry.addMapping("/compile").allowedOrigins("http://localhost:4200");
-			//	registry.addMapping("/**");
-			}
-		};
-	}
+public class TestController {
 
 	@PostMapping("/compile")
 	public CompilerResponse compile(@RequestBody TigerSource tigerSource) {
@@ -93,17 +77,21 @@ public class Application {
 		if(tigerSource.isHirDisplay()) {
 			argList.add("--hir-display");
 		}
-		if(tigerSource.isDeatomize()) {
-			argList.add("--optimize");
-			argList.add("--deatomize");
-		} else {
+//		if(tigerSource.isDeatomize()) {
+	//		argList.add("--optimize");
+			//argList.add("--deatomize");
+//		} else {
+		//	argList.add("--optimize");
+//			argList.add("--lir-compute");
+		//}
+		if(tigerSource.isLirDisplay()) {
 			argList.add("--optimize");
 			argList.add("--lir-compute");
-		}
-		if(tigerSource.isLirDisplay()) {
 			argList.add("--lir-display");
 		}
 		if(tigerSource.isRegAlloc()) {
+			argList.add("--optimize");
+			argList.add("--lir-compute");
 			argList.add("--reg-alloc");
 		}
 		if(tigerSource.isDemove()) {

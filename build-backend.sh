@@ -1,5 +1,5 @@
 mvn install
-cd ../web-backend
+cd ./web-backend
 mvn clean package
 docker container rm -f tiger-web-backend-container
 docker build -t tiger-web-backend .
