@@ -14,6 +14,8 @@ import { HeaderComponent } from './header/header.component';
 import { FormsModule } from '@angular/forms';
 import { environment } from '@env/environment';
 import { APP_BASE_HREF } from "@angular/common";
+import { SourceEditorComponent } from './source-editor/source-editor.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { APP_BASE_HREF } from "@angular/common";
     CompilerConsoleComponent,
     FooterComponent,
     HeaderComponent,
+    SourceEditorComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,8 @@ import { APP_BASE_HREF } from "@angular/common";
     NgbModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
+    AppRoutingModule
   ],
   entryComponents: [],
   providers: [{provide: APP_BASE_HREF, useValue: environment.baseUrl }],

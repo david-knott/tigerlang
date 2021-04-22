@@ -1,5 +1,4 @@
 import { Component, Inject, OnInit, ViewChild } from "@angular/core";
-import { throwMatDialogContentAlreadyAttachedError } from "@angular/material/dialog";
 import { CompilerService } from "../services/compiler.service";
 import { OptionsService } from "../services/options.service";
 import { graphviz }  from 'd3-graphviz';

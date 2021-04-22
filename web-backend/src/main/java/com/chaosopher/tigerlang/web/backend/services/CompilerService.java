@@ -7,7 +7,6 @@ import com.chaosopher.tigerlang.compiler.translate.FragList;
 import com.chaosopher.tigerlang.compiler.tree.IR;
 import com.chaosopher.tigerlang.web.backend.CompilerRequest;
 
-
 public interface CompilerService {
 
     void parse(CompilerRequest translateRequest);
