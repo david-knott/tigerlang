@@ -29,7 +29,7 @@ public class BugTest {
         ParserService parserService = new ParserService(new ParserFactory());
         Absyn program = parserService.parse("while 1 do if 102 then break else ()", errorMsg);
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         TranslatorVisitor translator = new TranslatorVisitor();
         program.accept(translator);
         CanonVisitor canonVisitor = new CanonVisitor(new CanonicalizationImpl());
@@ -46,7 +46,7 @@ public class BugTest {
         ParserService parserService = new ParserService(new ParserFactory());
         Absyn program = parserService.parse("while 101 do (if 102 then break)", errorMsg);
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         TranslatorVisitor translator = new TranslatorVisitor();
         program.accept(translator);
         CanonVisitor canonVisitor = new CanonVisitor(new CanonicalizationImpl());
@@ -71,7 +71,7 @@ public class BugTest {
         ParserService parserService = new ParserService(new ParserFactory());
         Absyn program = parserService.parse("let function a(a:int, b:int, c:int) = () in a(1,2) end", errorMsg);
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         assertNotNull(program);
     }
 
@@ -81,7 +81,7 @@ public class BugTest {
         ParserService parserService = new ParserService(new ParserFactory());
         Absyn program = parserService.parse(" let var a:int := 10 in while a > 0 do if a = 5 then break else a := a - 1; a end", errorMsg);
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         assertNotNull(program);
     }
 
@@ -91,7 +91,7 @@ public class BugTest {
         ParserService parserService = new ParserService(new ParserFactory());
         Absyn program = parserService.parse(" let var a:string := \"david\" var b:string := \"david\" in printi(a = b) end", errorMsg);
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         assertNotNull(program);
     }
 
@@ -101,7 +101,7 @@ public class BugTest {
         ParserService parserService = new ParserService(new ParserFactory());
         Absyn program = parserService.parse(" let type list = {first: int, second:int, rest: list} var myList:list := list{first = 10, second = 20, rest=nil} in myList.first := 20; myList.second := 21; printi(myList.first); printi(myList.second) end ", errorMsg);
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         assertNotNull(program);
     }
 
@@ -114,7 +114,7 @@ public class BugTest {
         program.accept(new EscapeVisitor(errorMsg));
         TranslatorVisitor translator = new TranslatorVisitor();
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         assertNotNull(fragList);

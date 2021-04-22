@@ -16,7 +16,7 @@ public class Tasks implements TaskProvider {
             new SimpleTask(new SimpleTaskProvider() {
                 @Override
                 public void only(TaskContext taskContext) {
-                    taskContext.decList.accept(new TypeChecker(taskContext.errorMsg));
+                    TypeChecker.create(taskContext.decList, taskContext.errorMsg);
                 }
             }, "types-compute", "Type checks the abstract syntax tree.", "bindings-compute")
         );
@@ -24,7 +24,7 @@ public class Tasks implements TaskProvider {
             new SimpleTask(new SimpleTaskProvider() {
                 @Override
                 public void only(TaskContext taskContext) {
-                    taskContext.decList.accept(new TypeChecker(taskContext.errorMsg));
+                    TypeChecker.create(taskContext.decList, taskContext.errorMsg);
                 }
             }, "typed", "Default type checking.", "types-compute")
         );

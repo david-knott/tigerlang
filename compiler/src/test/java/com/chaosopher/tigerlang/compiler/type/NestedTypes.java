@@ -25,7 +25,7 @@ public class NestedTypes {
         ErrorMsg errorMsg = new ErrorMsg("", outputStream);
         Binder binder = new Binder(errorMsg);
         program.accept(binder);
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         PrettyPrinter prettyPrinter = new PrettyPrinter(System.out, false, true);
         program.accept(prettyPrinter);
         assertFalse(errorMsg.anyErrors);

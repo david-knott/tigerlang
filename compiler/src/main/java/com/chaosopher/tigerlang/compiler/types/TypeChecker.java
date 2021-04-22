@@ -51,7 +51,13 @@ public class TypeChecker extends DefaultVisitor {
     final ErrorMsg errorMsg;
     Collection<Absyn> readonlyVarDecs = null;
 
-    public TypeChecker(ErrorMsg errorMsg) {
+    public static TypeChecker create(final Absyn absyn, final ErrorMsg errorMsg) {
+        TypeChecker typeChecker = new TypeChecker(errorMsg);
+        absyn.accept(typeChecker);
+        return typeChecker;
+    }
+
+    private TypeChecker(ErrorMsg errorMsg) {
         this.errorMsg = errorMsg;
         this.readonlyVarDecs = new LinkedList<>();
     }
@@ -62,9 +68,6 @@ public class TypeChecker extends DefaultVisitor {
                     String.format("type mismatch%n%s:%s%n%s:%s", synCat1, first.actual(), synCat2, second.actual()));
         }
     }
-
-
-    /** ============== AST Expressions ============================== **/
 
     /**
      * Sets current visited type to Int.
@@ -270,6 +273,9 @@ public class TypeChecker extends DefaultVisitor {
         exp.setType(Constants.VOID);
     }
 
+    /**
+     * Visits a let expression and sets its type based on the return type of the body.
+     */
     @Override
     public void visit(LetExp letExp) {
         if(letExp.decs != null) {
@@ -290,8 +296,6 @@ public class TypeChecker extends DefaultVisitor {
     @Override
     public void visit(SimpleVar simpleVar) {
         VarDec def = (VarDec)simpleVar.def;
-     //   def.typ.getType();
-     //   exp.setType(def.init.getType());
         simpleVar.setType(def.getType());
     }
 
@@ -321,12 +325,6 @@ public class TypeChecker extends DefaultVisitor {
         subscriptVar.var.accept(this);
         ARRAY array = (ARRAY)subscriptVar.var.getType().actual();
         subscriptVar.setType(array.element);
-
-        // set the type of this expression to be the same as the related array element.
-        //VarDec def = (VarDec)subscriptVar.var.def;
-     ///   Assert.assertIsTrue(def != null && def.getType().actual() instanceof ARRAY, subscriptVar.var.toString());
-       // ARRAY arrayType = (ARRAY)def.getType().actual();
-       // subscriptVar.setType(arrayType.element);
     }
 
     /**

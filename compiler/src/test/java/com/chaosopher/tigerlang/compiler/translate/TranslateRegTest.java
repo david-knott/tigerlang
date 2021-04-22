@@ -48,6 +48,7 @@ public class TranslateRegTest {
             Absyn program = parserService.parse(fin, errorMsg);
             program.accept(new EscapeVisitor(errorMsg));
             program.accept(new Binder(errorMsg));
+            TypeChecker.create(program, errorMsg);
             program.accept(new TypeChecker(errorMsg));
             TranslatorVisitor translator = new TranslatorVisitor();
             program.accept(translator);
@@ -71,6 +72,7 @@ public class TranslateRegTest {
             program.accept(new EscapeVisitor(errorMsg));
             TranslatorVisitor translator = new TranslatorVisitor();
             program.accept(new Binder(errorMsg));
+            TypeChecker.create(program, errorMsg);
             program.accept(new TypeChecker(errorMsg));
             program.accept(translator);
             FragList fragList = translator.getFragList();

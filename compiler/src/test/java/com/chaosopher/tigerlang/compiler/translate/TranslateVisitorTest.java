@@ -131,7 +131,7 @@ public class TranslateVisitorTest {
         ErrorMsg errorMsg = new ErrorMsg("", System.out);
         Absyn program = parserService.parse("3", errorMsg);
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         assertNotNull(fragList);
@@ -145,7 +145,7 @@ public class TranslateVisitorTest {
         Absyn program = parserService.parse("3 + 5", new ErrorMsg("", System.out));
         // need binder to bind types to expressions.
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         assertNotNull(fragList);
@@ -165,7 +165,7 @@ public class TranslateVisitorTest {
         ErrorMsg errorMsg = new ErrorMsg("", System.out);
         Absyn program = parserService.parse("var a:int := 3", errorMsg);
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         assertNotNull(fragList);
@@ -192,7 +192,7 @@ public class TranslateVisitorTest {
         Absyn program = parserService.parse("var a:int := 3", errorMsg);
         program.accept(new EscapeVisitor(errorMsg));
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         assertNotNull(fragList);
@@ -215,7 +215,7 @@ public class TranslateVisitorTest {
     //    Absyn program = parserService.parse("var a:int := 3", errorMsg);
         program.accept(new EscapeVisitor(errorMsg));
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         assertNotNull(fragList);
@@ -241,7 +241,7 @@ public class TranslateVisitorTest {
         Absyn program = parserService.parse("printi(3)", errorMsg);
         program.accept(new EscapeVisitor(errorMsg));
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         ProcFrag procFrag = (ProcFrag)fragList.head;
@@ -262,7 +262,7 @@ public class TranslateVisitorTest {
         Absyn program = parserService.parse("let type intArray = array of int var a := intArray[3] of 5  in end", errorMsg);
         program.accept(new EscapeVisitor(errorMsg));
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         fragList.accept(new FragmentPrinter(System.out));
@@ -291,7 +291,7 @@ public class TranslateVisitorTest {
         Absyn program = parserService.parse("let type intArray = array of int var a := intArray[13] of 5  in a[7] end", errorMsg);
         program.accept(new EscapeVisitor(errorMsg));
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         fragList.accept(new FragmentPrinter(System.out));
@@ -319,7 +319,7 @@ public class TranslateVisitorTest {
         Absyn program = parserService.parse("let type rec = { } var v := rec {  } in end", errorMsg);
         program.accept(new EscapeVisitor(errorMsg));
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         fragList.accept(new FragmentPrinter(System.out));
@@ -348,7 +348,7 @@ public class TranslateVisitorTest {
         Absyn program = parserService.parse("let type rec = { a : int } var v := rec { a = 3 } in end", errorMsg);
         program.accept(new EscapeVisitor(errorMsg));
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         fragList.accept(new FragmentPrinter(System.out));
@@ -384,7 +384,7 @@ public class TranslateVisitorTest {
         Absyn program = parserService.parse("let type rec = { a : int, b : int } var v := rec { a = 3, b = 5} in end", errorMsg);
         program.accept(new EscapeVisitor(errorMsg));
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         ProcFrag procFrag = (ProcFrag)fragList.head;
@@ -435,7 +435,7 @@ public class TranslateVisitorTest {
         Absyn program = parserService.parse("let type rec = { a : int, b : int, c: int } var v := rec { a = 3, b = 5, c = 7} in end", errorMsg);
         program.accept(new EscapeVisitor(errorMsg));
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         fragList.accept(new FragmentPrinter(System.out));
@@ -496,7 +496,7 @@ public class TranslateVisitorTest {
         Absyn program = parserService.parse("let in 3 end", errorMsg);
         program.accept(new EscapeVisitor(errorMsg));
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         fragList.accept(new FragmentPrinter(System.out));
@@ -518,7 +518,7 @@ public class TranslateVisitorTest {
         Absyn program = parserService.parse("let in 3; 5 end", errorMsg);
         program.accept(new EscapeVisitor(errorMsg));
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         fragList.accept(new FragmentPrinter(System.out));
@@ -540,7 +540,7 @@ public class TranslateVisitorTest {
         Absyn program = parserService.parse("let in 3; 5; 7 end", errorMsg);
         program.accept(new EscapeVisitor(errorMsg));
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         fragList.accept(new FragmentPrinter(System.out));
@@ -567,7 +567,7 @@ public class TranslateVisitorTest {
         Absyn program = parserService.parse("let in printi(3)end", errorMsg);
         program.accept(new EscapeVisitor(errorMsg));
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         fragList.accept(new FragmentPrinter(System.out));
@@ -590,7 +590,7 @@ public class TranslateVisitorTest {
         Absyn program = parserService.parse("let in printi(3); printi(5) end", errorMsg);
         program.accept(new EscapeVisitor(errorMsg));
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         fragList.accept(new FragmentPrinter(System.out));
@@ -621,7 +621,7 @@ public class TranslateVisitorTest {
         Absyn program = parserService.parse("let in printi(3); printi(5); printi(7) end", errorMsg);
         program.accept(new EscapeVisitor(errorMsg));
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         fragList.accept(new FragmentPrinter(System.out));
@@ -661,7 +661,7 @@ public class TranslateVisitorTest {
         Absyn program = parserService.parse("let in (3; 7) end", errorMsg);
         program.accept(new EscapeVisitor(errorMsg));
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         fragList.accept(new FragmentPrinter(System.out));
@@ -675,7 +675,7 @@ public class TranslateVisitorTest {
         Absyn program = parserService.parse("let in (3; 7; 11) end", errorMsg);
         program.accept(new EscapeVisitor(errorMsg));
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         fragList.accept(new FragmentPrinter(System.out));
@@ -689,7 +689,7 @@ public class TranslateVisitorTest {
         Absyn program = parserService.parse("let in (3; 7; 11; 13) end", errorMsg);
         program.accept(new EscapeVisitor(errorMsg));
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         fragList.accept(new FragmentPrinter(System.out));
@@ -705,7 +705,7 @@ public class TranslateVisitorTest {
         Absyn program = parserService.parse("let type rec = { a : int, b : int, c: int } var v := rec { a = 3, b = 5, c = 7} in v.a end", errorMsg);
         program.accept(new EscapeVisitor(errorMsg));
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         fragList.accept(new FragmentPrinter(System.out));
@@ -718,7 +718,7 @@ public class TranslateVisitorTest {
         ErrorMsg errorMsg = new ErrorMsg("", System.out);
         Absyn program = parserService.parse("let in end", errorMsg);
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         fragList.accept(new FragmentPrinter(System.out));
@@ -744,7 +744,7 @@ public class TranslateVisitorTest {
         ErrorMsg errorMsg = new ErrorMsg("", System.out);
         Absyn program = parserService.parse("let in 3 end", errorMsg);
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         fragList.accept(new FragmentPrinter(System.out));
@@ -769,7 +769,7 @@ public class TranslateVisitorTest {
         Absyn program = parserService.parse("let var a:int := 3 in () end", errorMsg);
         program.accept(new EscapeVisitor(errorMsg));
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         fragList.accept(new FragmentPrinter(System.out));
@@ -797,7 +797,7 @@ public class TranslateVisitorTest {
         Absyn program = parserService.parse("if 3 = 3 then 5", errorMsg);
         program.accept(new EscapeVisitor(errorMsg));
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         fragList.accept(new FragmentPrinter(System.out));
@@ -819,7 +819,7 @@ public class TranslateVisitorTest {
         Absyn program = parserService.parse("if 3 = 3 then 5 else 7", errorMsg);
         program.accept(new EscapeVisitor(errorMsg));
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         ProcFrag procFrag = (ProcFrag)fragList.head;
@@ -840,7 +840,7 @@ public class TranslateVisitorTest {
         Absyn program = parserService.parse("let function fa(a: int): int = 5 + a in printi(fa(7)) end", errorMsg);
         program.accept(new EscapeVisitor(errorMsg));
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         fragList.accept(new FragmentPrinter(System.out));
@@ -856,7 +856,7 @@ public class TranslateVisitorTest {
         Absyn program = parserService.parse("for a := 3 to 13 do ()", errorMsg);
         program.accept(new EscapeVisitor(errorMsg));
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         fragList.accept(new FragmentPrinter(System.out));
@@ -869,7 +869,7 @@ public class TranslateVisitorTest {
         Absyn program = parserService.parse("while -2 > 3  do ()", errorMsg);
         program.accept(new EscapeVisitor(errorMsg));
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         fragList.accept(new FragmentPrinter(System.out));
@@ -882,7 +882,7 @@ public class TranslateVisitorTest {
         Absyn program = parserService.parse("let var i:int := 1 function printb() = ( while 1 do ( i := i + 5 ) ) in ( printb() ) end", errorMsg);
         program.accept(new EscapeVisitor(errorMsg));
         program.accept(new Binder(errorMsg));
-        program.accept(new TypeChecker(errorMsg));
+        TypeChecker.create(program, errorMsg);
         program.accept(translator);
         FragList fragList = translator.getFragList();
         fragList.accept(new FragmentPrinter(System.out));
