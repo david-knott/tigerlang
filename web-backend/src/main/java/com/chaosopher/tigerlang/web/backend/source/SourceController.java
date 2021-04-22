@@ -1,5 +1,6 @@
 package com.chaosopher.tigerlang.web.backend.source;
 
+import java.net.URI;
 import java.util.List;
 
 import com.chaosopher.tigerlang.web.backend.services.SourceService;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,13 +36,26 @@ public class SourceController {
                 : ResponseEntity.notFound().build();
     }
 
+    @PostMapping("/source")
+    public ResponseEntity<Source> create(@RequestBody Source source) {
+        this.sourceRepository.insert(source);
+        return ResponseEntity.ok(source);
+    }
+
     @PutMapping("/source/{fileName}")
-    public ResponseEntity<String> save(@PathVariable String fileName, @RequestBody String source) {
+    public ResponseEntity<?> save(@PathVariable String fileName, @RequestBody Source source) {
+        this.sourceRepository.save(source);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/source/{fileName}")
-    public ResponseEntity<String> remove(@PathVariable String fileName) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> remove(@PathVariable String fileName) {
+        Source source = this.sourceRepository.findByName(fileName);
+        if(source != null) {
+            this.sourceRepository.delete(source);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

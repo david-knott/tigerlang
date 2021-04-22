@@ -4,13 +4,14 @@ public class DefaultVisitor implements AbsynVisitor{
 
     @Override
     public void visit(ArrayExp exp) {
+        exp.typ.accept(this);
         exp.init.accept(this);
         exp.size.accept(this);
     }
 
     @Override
     public void visit(ArrayTy exp) {
-        // do nothing
+        exp.typ.accept(this);
     }
 
     @Override
@@ -55,7 +56,10 @@ public class DefaultVisitor implements AbsynVisitor{
 
     @Override
     public void visit(FieldList exp) {
-        // do nothing
+        exp.typ.accept(this);
+        if(exp.tail != null) {
+            this.visit(exp.tail);
+        }
     }
 
     @Override
@@ -128,6 +132,7 @@ public class DefaultVisitor implements AbsynVisitor{
 
     @Override
     public void visit(RecordExp exp) {
+        exp.typ.accept(this);
         if(exp.fields != null) {
             exp.fields.accept(this);
         }

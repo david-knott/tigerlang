@@ -1,8 +1,8 @@
 package com.chaosopher.tigerlang.compiler.absyn;
 
 public class ForExp extends Exp {
-   public VarDec var;
-   public Exp hi, body;
+   public final VarDec var;
+   public final Exp hi, body;
 
    public ForExp(int p, VarDec v, Exp h, Exp b) {
       pos = p;

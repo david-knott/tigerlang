@@ -5,25 +5,17 @@ import java.util.Deque;
 import java.util.HashMap;
 
 import com.chaosopher.tigerlang.compiler.absyn.Absyn;
-import com.chaosopher.tigerlang.compiler.absyn.ArrayExp;
-import com.chaosopher.tigerlang.compiler.absyn.ArrayTy;
 import com.chaosopher.tigerlang.compiler.absyn.BreakExp;
 import com.chaosopher.tigerlang.compiler.absyn.CallExp;
 import com.chaosopher.tigerlang.compiler.absyn.DecList;
 import com.chaosopher.tigerlang.compiler.absyn.DefaultVisitor;
-import com.chaosopher.tigerlang.compiler.absyn.FieldExpList;
-import com.chaosopher.tigerlang.compiler.absyn.FieldList;
-import com.chaosopher.tigerlang.compiler.absyn.FieldVar;
 import com.chaosopher.tigerlang.compiler.absyn.ForExp;
 import com.chaosopher.tigerlang.compiler.absyn.FunctionDec;
 import com.chaosopher.tigerlang.compiler.absyn.IntTypeDec;
 import com.chaosopher.tigerlang.compiler.absyn.LetExp;
 import com.chaosopher.tigerlang.compiler.absyn.NameTy;
-import com.chaosopher.tigerlang.compiler.absyn.RecordExp;
-import com.chaosopher.tigerlang.compiler.absyn.RecordTy;
 import com.chaosopher.tigerlang.compiler.absyn.SimpleVar;
 import com.chaosopher.tigerlang.compiler.absyn.StringTypeDec;
-import com.chaosopher.tigerlang.compiler.absyn.SubscriptVar;
 import com.chaosopher.tigerlang.compiler.absyn.TypeDec;
 import com.chaosopher.tigerlang.compiler.absyn.VarDec;
 import com.chaosopher.tigerlang.compiler.absyn.WhileExp;
@@ -52,9 +44,7 @@ public class Binder extends DefaultVisitor {
         tinit.put(Symbol.symbol("int"), new SymbolTableElement(IntTypeDec.instance)); 
         tinit.put(Symbol.symbol("string"), new SymbolTableElement(StringTypeDec.instance)); 
         this.typeSymbolTable = new SymbolTable(tinit);
-        // base functions
         this.functionSymbolTable = new SymbolTable();
-        // var table
         this.varSymbolTable = new SymbolTable();
     }
 
@@ -89,9 +79,6 @@ public class Binder extends DefaultVisitor {
         }
     }
 
-    /*
-
-    */
 
     /**
      * Visit a call expression and bind it to the function declaration.
@@ -128,27 +115,6 @@ public class Binder extends DefaultVisitor {
             this.varSymbolTable.put(exp.name, new SymbolTableElement(exp));
         } else {
             this.errorMsg.error(exp.pos, "redefinition:" + exp.name);
-        }
-    }
-
-    /**
-     * Visit an array expression. This is where an array is used in a rvalue expression.
-     */
-    @Override
-    public void visit(ArrayExp exp) {
-        exp.typ.accept(this);
-        exp.init.accept(this);
-        exp.size.accept(this);
-    }
-
-    /**
-     * Visit a record initilizer expression.
-     */
-    @Override
-    public void visit(RecordExp exp) {
-        exp.typ.accept(this);
-        if(exp.fields != null) {
-            exp.fields.accept(this);
         }
     }
 
@@ -273,37 +239,6 @@ public class Binder extends DefaultVisitor {
             exp.setDef(def.exp);
         } else {
             this.errorMsg.error(exp.pos, "undefined type:" + exp.name);
-        }
-    }
-
-    /**
-     * Visits an array type and checks and sets its definition.
-     */
-    @Override
-    public void visit(ArrayTy exp) {
-        // visit the NameTy to bind
-        exp.typ.accept(this);
-    }
-
-    /**
-     * Visits a record type definition.
-     */
-    @Override
-    public void visit(RecordTy exp) {
-        if(exp.fields != null) {
-            exp.fields.accept(this);
-        }
-    }
-
-    /**
-     * Visit fields in a record type definition.
-     */
-    @Override
-    public void visit(FieldList exp) {
-        // check that types are defined.
-        exp.typ.accept(this);
-        if(exp.tail != null) {
-            this.visit(exp.tail);
         }
     }
 }
