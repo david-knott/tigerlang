@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit, ViewChild } from "@angular/core";
 import { CompilerService } from "../services/compiler.service";
 import { OptionsService } from "../services/options.service";
-import { graphviz }  from 'd3-graphviz';
+import { graphviz } from "d3-graphviz";
 import { wasmFolder } from "@hpcc-js/wasm";
-import { APP_BASE_HREF } from "@angular/common";
+import { ENV_CONFIG, EnvironmentConfig } from "../core/env-config.interface";
 
 @Component({
   selector: "app-compiler-output",
@@ -25,24 +25,20 @@ export class CompilerOutputComponent implements OnInit {
   constructor(
     private compilerService: CompilerService,
     private optionsService: OptionsService,
-    @Inject(APP_BASE_HREF) public baseHref: string
+    @Inject(ENV_CONFIG) private config: EnvironmentConfig,
   ) {
     this.compilerService.compilerRequest.subscribe((s) => {
-        s.rename = this.optionsService.getOption("rename");
-        s.inline = this.optionsService.getOption("inline");
-        s.prune = this.optionsService.getOption("prune");
-        s.bindingsDisplay = this.optionsService.getOption("bindingsDisplay");
-        s.desugarForLoop = this.optionsService.getOption("desugarFor");
-        s.desugarStringComp = this.optionsService.getOption(
-          "desugarStringComp"
-        );
-        s.escapesCompute = this.optionsService.getOption("escapesCompute");
-        s.escapesDisplay = this.optionsService.getOption("escapesDisplay");
-        s.staticLinks = this.optionsService.getOption("staticLinks");
-        s.staticLinkEscapes = this.optionsService.getOption(
-          "staticLinkEscapes"
-        );
-        s.deatomize = this.optionsService.getOption("deatomize");
+      s.rename = this.optionsService.getOption("rename");
+      s.inline = this.optionsService.getOption("inline");
+      s.prune = this.optionsService.getOption("prune");
+      s.bindingsDisplay = this.optionsService.getOption("bindingsDisplay");
+      s.desugarForLoop = this.optionsService.getOption("desugarFor");
+      s.desugarStringComp = this.optionsService.getOption("desugarStringComp");
+      s.escapesCompute = this.optionsService.getOption("escapesCompute");
+      s.escapesDisplay = this.optionsService.getOption("escapesDisplay");
+      s.staticLinks = this.optionsService.getOption("staticLinks");
+      s.staticLinkEscapes = this.optionsService.getOption("staticLinkEscapes");
+      s.deatomize = this.optionsService.getOption("deatomize");
       if (this.activeTab == "ast") {
         s.astDisplay = true;
         s.hirDisplay = false;
@@ -50,7 +46,6 @@ export class CompilerOutputComponent implements OnInit {
         s.regAlloc = false;
         s.cfg = false;
         s.callGraphDisplay = false;
-        
       }
       if (this.activeTab == "hir") {
         s.astDisplay = false;
@@ -84,7 +79,7 @@ export class CompilerOutputComponent implements OnInit {
         s.cfg = true;
         s.callGraphDisplay = false;
       }
-    if (this.activeTab == "fcg") {
+      if (this.activeTab == "fcg") {
         s.astDisplay = false;
         s.hirDisplay = false;
         s.lirDisplay = false;
@@ -107,10 +102,10 @@ export class CompilerOutputComponent implements OnInit {
           this.asm = c.assembly;
         }
         if (this.activeTab == "cfg") {
-          graphviz('div.cfg').renderDot(c.assembly);
+          graphviz("div.cfg").renderDot(c.assembly);
         }
         if (this.activeTab == "fcg") {
-          graphviz('div.fcg').renderDot(c.assembly);
+          graphviz("div.fcg").renderDot(c.assembly);
         }
       });
     });
@@ -122,7 +117,6 @@ export class CompilerOutputComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.compilerSubscription.unsubsribe();
   }
 
   ngOnInit() {

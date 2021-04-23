@@ -3,8 +3,8 @@ import { HttpClient } from "@angular/common/http";
 import { Assembly } from "../assembly";
 import { BaseService } from "../core/base.service";
 import { Observable, Subject } from "rxjs";
-import { mergeMap, map } from 'rxjs/operators';
-import { environment } from '@env/environment';
+import { mergeMap, map } from "rxjs/operators";
+import { ENV_CONFIG, EnvironmentConfig } from "../core/env-config.interface";
 
 @Injectable({
   providedIn: "root",
@@ -15,10 +15,12 @@ export class CompilerService extends BaseService {
   code: string;
   public apiUrl: string;
 
-  constructor(protected http: HttpClient) {
+  constructor(
+    @Inject(ENV_CONFIG) private config: EnvironmentConfig,
+    protected http: HttpClient
+  ) {
     super();
-    this.apiUrl = `${environment.baseUrl}`;
-    //there is a compiler request.
+    this.apiUrl = `${config.environment.baseUrl}`;
   }
 
   setCode(code: string): void {
@@ -35,9 +37,11 @@ export class CompilerService extends BaseService {
 
   compile(body: any): Observable<Assembly> {
     const url = `${this.apiUrl}/compile`;
-    return this.http.post<Assembly>(url, body).pipe(map(data => {
-      this.compilerEvent.next(data);
-      return data;
-    }));
+    return this.http.post<Assembly>(url, body).pipe(
+      map((data) => {
+        this.compilerEvent.next(data);
+        return data;
+      })
+    );
   }
 }

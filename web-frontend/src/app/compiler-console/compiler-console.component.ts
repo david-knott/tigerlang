@@ -19,6 +19,6 @@ export class CompilerConsoleComponent {
   }
 
   ngOnDestroy() {
-    this.compilerSubscription.unsubsribe();
+//    this.compilerSubscription.unsubsribe();
   }
 }
