@@ -1,2 +1,34 @@
-<p>source-editor works!</p>
-or does it ?
+<div class="input-group">
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Untitled"
+    aria-label="File Name"
+    aria-describedby="basic-addon1"
+    [(ngModel)]="source.name"
+  />
+</div>
+<!--
+<div class="input-group">
+  <textarea class="form-control" aria-label="With textarea" [(ngModel)]="source.description"></textarea
+  >
+</div>
+-->
+
+<!-- https://medium.com/its-tinkoff/controlvalueaccessor-and-contenteditable-in-angular-6ebf50b7475e -->
+
+<button (click)="clean()" type="button" class="btn btn-secondary">Clean</button>
+<button (click)="new()" type="button" class="btn btn-secondary">New</button>
+<button (click)="save()" type="button" class="btn btn-primary">Save</button>
+<button (click)="deleteConfirm()" type="button" class="btn btn-danger">Delete</button>
+
+<div contenteditable="true">
+  {{formattedCode}}
+</div>
+
+<div>
+  <button type="button" class="btn btn-danger">
+    Errors <span class="badge rounded-pill bg-secondary">{{error.count}}</span>
+    <span class="visually-hidden">Compiler Errors</span>
+  </button>
+</div>

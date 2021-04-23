@@ -13,7 +13,6 @@ import { FooterComponent } from "./footer/footer.component";
 import { HeaderComponent } from "./header/header.component";
 import { FormsModule } from "@angular/forms";
 import { environment } from "@env/environment";
-import { APP_BASE_HREF } from "@angular/common";
 import { SourceEditorComponent } from "./source-editor/source-editor.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { CoreModule } from './core/core.modules';
@@ -41,7 +40,6 @@ import { CoreModule } from './core/core.modules';
   ],
   entryComponents: [],
   providers: [
-  //  { provide: APP_BASE_HREF, useValue: environment.baseUrl },
   ],
   bootstrap: [AppComponent],
 })
