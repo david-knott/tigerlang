@@ -33,8 +33,7 @@
   (paste)="onPaste($event)"
   (input)="onInput($event.target)"
 >
-  <div *ngFor="let line of lines" class="line">
-    {{ line | syntaxHighlight:error }} <!-- process each line with a pipe to decorate errors and keywords -->
+  <div [innerHTML]="line | syntaxHighlight: error" *ngFor="let line of lines" class="line">
   </div>
 </div>
 

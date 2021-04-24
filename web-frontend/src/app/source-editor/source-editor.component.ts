@@ -41,8 +41,7 @@ export class SourceEditorComponent implements OnInit {
   }
 
   setLines(formatted: string) {
-    console.log(formatted);
-    this.lines = formatted.split('\n');
+    this.lines = formatted.split('\n').map( m => m.length > 0 ? m : '&#8203');
   }
 
   clean() {
@@ -65,13 +64,14 @@ export class SourceEditorComponent implements OnInit {
 
   delete() {}
 
-  private getSource() : String {
+  private getSource() : string {
     let arg = this.sourceEditorCode.nativeElement;
     let code = '';
     for(const node of arg.children) {
-      const s = node.innerText;
-      code += '\n';
-      code += s;
+      if(node.className && node.className === 'line') {
+        const s = node.innerText + '\n';
+        code += s;
+      }
     }
     return code;
   }
@@ -98,9 +98,9 @@ export class SourceEditorComponent implements OnInit {
           break;
         } else {
           startPos += node.innerText.length;
-      //    if(node.className && node.className === 'line') {
+          if(node.className && node.className === 'line') {
             startPos++;
-        //  }
+          }
         }
       }
       endPos = startPos;
@@ -109,7 +109,7 @@ export class SourceEditorComponent implements OnInit {
     }
     let source = this.getSource();
     let head = source.substring(0, startPos);
-    let tail = source.substring(endPos, source.length);
+    let tail = source.substring(endPos, source.length - 1);
     let clipboardData = event.clipboardData;
     let newText = clipboardData.getData('text');
     let merged = head + newText + tail;

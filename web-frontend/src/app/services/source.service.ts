@@ -3,7 +3,7 @@ import { Source } from "./source";
 import { Observable, of } from "rxjs";
 
 export const SOURCES: Source[] = [
-  { id: 11, name: "Hello World", description: "", code: "let\n\tvar: hello := \"world\"\nin\n\tprint(hello)\nend" },
+  { id: 11, name: "Hello World", description: "", code: "let\n    var: hello := \"world\"\nin\n    print(hello)\nend" },
 ];
 
 @Injectable({
