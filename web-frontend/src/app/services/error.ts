@@ -1,4 +1,9 @@
-export interface TigerError {
+export interface ErrorCheckResponse {
+    items: ErrorDetails[]
+}
+
+export interface ErrorDetails {
     name: string,
-    count: number
+    line: number,
+    col: number
 }

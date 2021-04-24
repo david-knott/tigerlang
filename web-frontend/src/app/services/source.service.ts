@@ -3,7 +3,7 @@ import { Source } from "./source";
 import { Observable, of } from "rxjs";
 
 export const SOURCES: Source[] = [
-  { id: 11, name: "Empty", description: "", code: "/* empty file */" },
+  { id: 11, name: "Hello World", description: "", code: "let\n\tvar: hello := \"world\"\nin\n\tprint(hello)\nend" },
 ];
 
 @Injectable({
@@ -22,7 +22,15 @@ export class SourceService {
     return sources;
   }
 
-  createSource(source: Source) {}
+  createSource(source: Source) {
+    console.log('create');
+  }
 
-  updateSource(source: Source) {}
+  updateSource(source: Source) {
+    console.log('save');
+  }
+
+  deleteSource(source: Source) {
+    console.log('delete');
+  }
 }

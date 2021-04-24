@@ -1,0 +1,22 @@
+.source-editor-code {
+  min-height: 400px;
+  margin-left: 20px;
+  outline: none;
+  overflow-y: auto;
+  padding-left: 48px;
+  counter-reset: line;
+}
+
+.line {
+  display: block;
+  position: relative;
+  white-space: pre-wrap;
+}
+
+.line:before {
+  content: counter(line);
+  counter-increment: line;
+  position: absolute;
+  right: calc(100% + 16px);
+  opacity: 0.5;
+}

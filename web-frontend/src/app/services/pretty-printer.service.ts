@@ -10,6 +10,6 @@ export class PrettyPrinterService {
   constructor() { }
 
   prettyPrint(source: string) {
-    return of('[' + source + ']');
+    return of( source );
   }
 }

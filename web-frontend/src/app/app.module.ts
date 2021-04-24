@@ -16,6 +16,7 @@ import { environment } from "@env/environment";
 import { SourceEditorComponent } from "./source-editor/source-editor.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { CoreModule } from './core/core.modules';
+import { SyntaxHighlightPipe } from './source-editor/syntax-highlight.pipe';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { CoreModule } from './core/core.modules';
     FooterComponent,
     HeaderComponent,
     SourceEditorComponent,
+    SyntaxHighlightPipe,
   ],
   imports: [
     BrowserModule,
@@ -40,6 +42,8 @@ import { CoreModule } from './core/core.modules';
   ],
   entryComponents: [],
   providers: [
+    { provide: Window, useValue: window },
+    { provide: Document, useValue: document},
   ],
   bootstrap: [AppComponent],
 })
