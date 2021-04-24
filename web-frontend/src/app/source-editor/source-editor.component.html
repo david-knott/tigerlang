@@ -32,6 +32,7 @@
   contenteditable="true"
   (paste)="onPaste($event)"
   (input)="onInput($event.target)"
+  (keydown)="onKeyDown($event)"
 >
   <div [innerHTML]="line | syntaxHighlight: error" *ngFor="let line of lines" class="line">
   </div>

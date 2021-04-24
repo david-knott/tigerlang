@@ -1,4 +1,9 @@
-import { Component, ComponentFactoryResolver, OnInit, ViewChild } from "@angular/core";
+import {
+  Component,
+  ComponentFactoryResolver,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
 import { Source } from "@app/services/source";
 import { SourceService } from "../services/source.service";
 import { ErrorCheckService } from "../services/error-check.service";
@@ -8,7 +13,7 @@ import { ErrorCheckResponse } from "@app/services/error";
 import { switchMap } from "rxjs/operators";
 import { Router, ActivatedRoute, ParamMap } from "@angular/router";
 import { PrettyPrinterService } from "@app/services/pretty-printer.service";
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 
 @Component({
   selector: "app-source-editor",
@@ -19,7 +24,7 @@ export class SourceEditorComponent implements OnInit {
   private source: Source;
   protected error: ErrorCheckResponse;
   protected lines: string[];
-  @ViewChild('sourceEditorCode', { static : true} ) sourceEditorCode; 
+  @ViewChild("sourceEditorCode", { static: true }) sourceEditorCode;
 
   constructor(
     private route: ActivatedRoute,
@@ -41,13 +46,15 @@ export class SourceEditorComponent implements OnInit {
   }
 
   setLines(formatted: string) {
-    this.lines = formatted.split('\n').map( m => m.length > 0 ? m : '&#8203');
+    this.lines = formatted
+      .split("\n")
+      .map((m) => (m.length > 0 ? m : "&#8203"));
   }
 
   clean() {
-   // this.prettyPrintService
-     // .prettyPrint(this.formattedCode)
-  //    .subscribe((s) => this.setFormattedSource(s));
+    // this.prettyPrintService
+    // .prettyPrint(this.formattedCode)
+    //    .subscribe((s) => this.setFormattedSource(s));
   }
 
   new() {
@@ -64,22 +71,33 @@ export class SourceEditorComponent implements OnInit {
 
   delete() {}
 
-  private getSource() : string {
+  private getSource(): string {
     let arg = this.sourceEditorCode.nativeElement;
-    let code = '';
-    for(const node of arg.children) {
-      if(node.className && node.className === 'line') {
-        const s = node.innerText + '\n';
+    let code = "";
+    for (const node of arg.children) {
+      if (node.className && node.className === "line") {
+        const s = node.innerText + "\n";
         code += s;
       }
     }
     return code;
   }
 
-  onInput(arg) {
+  onInput(arg) {}
 
+  onKeyDown(event: KeyboardEvent) {
+    if (event.keyCode == 9) {
+      event.preventDefault();
+      let sel = document.getSelection();
+      let range = sel.getRangeAt(0);
+      var tabNode = document.createTextNode("\u00a0\u00a0\u00a0\u00a0");
+      range.insertNode(tabNode);
+      range.setStartAfter(tabNode);
+      range.setEndAfter(tabNode);
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
   }
-
 
   //https://stackoverflow.com/questions/34091730/get-and-set-cursor-position-with-contenteditable-div/34214130
 
@@ -89,29 +107,29 @@ export class SourceEditorComponent implements OnInit {
     event.stopPropagation();
     let selected = this.window.getSelection();
     let selectedRange = selected.getRangeAt(0);
-    let startPos = 0, endPos = 0;
-    if(selectedRange.collapsed) {
+    let startPos = 0,
+      endPos = 0;
+    if (selectedRange.collapsed) {
       // need to handle new lines in the source.
-      for(const node of this.sourceEditorCode.nativeElement.children) {
-        if(node === selected.anchorNode.parentNode) {
+      for (const node of this.sourceEditorCode.nativeElement.children) {
+        if (node === selected.anchorNode.parentNode) {
           startPos += selected.anchorOffset;
           break;
         } else {
           startPos += node.innerText.length;
-          if(node.className && node.className === 'line') {
+          if (node.className && node.className === "line") {
             startPos++;
           }
         }
       }
       endPos = startPos;
     } else {
-
     }
     let source = this.getSource();
     let head = source.substring(0, startPos);
     let tail = source.substring(endPos, source.length - 1);
     let clipboardData = event.clipboardData;
-    let newText = clipboardData.getData('text');
+    let newText = clipboardData.getData("text");
     let merged = head + newText + tail;
     this.setLines(merged);
   }
@@ -119,11 +137,13 @@ export class SourceEditorComponent implements OnInit {
   onChange(event: Event) {
     let code = this.getSource();
     let errorCheckRequest = {};
-    this.errorCheckService.check(errorCheckRequest).subscribe((error) => this.setErrors(error));
+    this.errorCheckService
+      .check(errorCheckRequest)
+      .subscribe((error) => this.setErrors(error));
   }
 
   onClick(event: Event) {
-   // this.lines = [];
+    // this.lines = [];
   }
 
   ngOnInit() {
@@ -135,6 +155,6 @@ export class SourceEditorComponent implements OnInit {
         map((source) => this.setSource(source)),
         mergeMap(() => this.errorCheckService.check(errorCheckRequest))
       )
-      .subscribe((error) => (this.setErrors(error)));
+      .subscribe((error) => this.setErrors(error));
   }
 }
