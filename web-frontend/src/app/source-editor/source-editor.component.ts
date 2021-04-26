@@ -63,6 +63,7 @@ export class SourceEditorComponent implements OnInit {
 
   save() {
     this.sourceService.updateSource(this.source);
+    console.log(this.getSource());
   }
 
   deleteConfirm() {
@@ -109,25 +110,35 @@ export class SourceEditorComponent implements OnInit {
     let selectedRange = selected.getRangeAt(0);
     let startPos = 0,
       endPos = 0;
+    for (const node of this.sourceEditorCode.nativeElement.children) {
+      if (node === selected.anchorNode.parentNode) {
+        startPos += selected.anchorOffset;
+        break;
+      } else {
+        startPos += node.innerText.length;
+        if (node.className && node.className === "line") {
+          startPos++;
+        }
+      }
+    }
     if (selectedRange.collapsed) {
-      // need to handle new lines in the source.
+      endPos = startPos;
+    } else {
       for (const node of this.sourceEditorCode.nativeElement.children) {
-        if (node === selected.anchorNode.parentNode) {
-          startPos += selected.anchorOffset;
+        if (node === selected.focusNode.parentNode) {
+          endPos += selected.focusOffset;
           break;
         } else {
-          startPos += node.innerText.length;
+          endPos += node.innerText.length;
           if (node.className && node.className === "line") {
-            startPos++;
+            endPos++;
           }
         }
       }
-      endPos = startPos;
-    } else {
     }
     let source = this.getSource();
-    let head = source.substring(0, startPos);
-    let tail = source.substring(endPos, source.length - 1);
+    let head = source.substring(0, Math.min(startPos, endPos));
+    let tail = source.substring(Math.max(startPos, endPos), source.length - 1);
     let clipboardData = event.clipboardData;
     let newText = clipboardData.getData("text");
     let merged = head + newText + tail;
