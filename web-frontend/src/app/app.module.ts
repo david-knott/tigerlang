@@ -17,6 +17,8 @@ import { SourceEditorComponent } from "./source-editor/source-editor.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { CoreModule } from './core/core.modules';
 import { SyntaxHighlightPipe } from './source-editor/syntax-highlight.pipe';
+import { Version1Component } from './versions/version1/version1.component';
+import { ContenteditableValueAccessor } from './shared/contenteditable-value-accessor.directive';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import { SyntaxHighlightPipe } from './source-editor/syntax-highlight.pipe';
     HeaderComponent,
     SourceEditorComponent,
     SyntaxHighlightPipe,
+    Version1Component,
+    ContenteditableValueAccessor,
   ],
   imports: [
     BrowserModule,

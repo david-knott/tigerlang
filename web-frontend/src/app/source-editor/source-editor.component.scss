@@ -5,15 +5,21 @@
   overflow-y: auto;
   padding-left: 48px;
   counter-reset: line;
+
+  display: block;
+  font-family: monospace;
+  white-space: pre;
+  margin: 1em 0;
 }
 
-.line {
+.source-editor-code div {
+  background-color: red;;
   display: block;
   position: relative;
   white-space: pre-wrap;
 }
 
-.line:before {
+.source-editor-code  div:before {
   content: counter(line);
   counter-increment: line;
   position: absolute;

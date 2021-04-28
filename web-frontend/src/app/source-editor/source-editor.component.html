@@ -24,28 +24,40 @@
   Delete
 </button>
 
+<div [(ngModel)]="model"  class="source-editor-code" contenteditable>
+</div>
+<!--
+
 <div
   #sourceEditorCode
   class="source-editor-code"
   (keypress)="onChange($event)"
-  (click)="onClick($event)"
   contenteditable="true"
   (paste)="onPaste($event)"
-  (input)="onInput($event.target)"
   (keydown)="onKeyDown($event)"
+  (keyup)="onKeyUp($event)"
 >
-  <div [innerHTML]="line | syntaxHighlight: error" *ngFor="let line of lines" class="line">
+  <div
+    [innerHTML]="line | syntaxHighlight: error"
+    *ngFor="let line of lines; index as i; "
+    class="line"
+  >
   </div>
 </div>
-
+-->
+pos: {{caretPos}}
 <div>
   <button *ngIf="error.items?.length > 0" type="button" class="btn btn-danger">
     Errors
-    <span class="badge rounded-pill bg-secondary">{{ (error.items)?.length }}</span>
+    <span class="badge rounded-pill bg-secondary">{{
+      error.items?.length
+    }}</span>
     <span class="visually-hidden">Compiler Errors</span>
   </button>
 </div>
 <!-- click to reveal -->
 <div>
-  <div *ngFor="let error of error.items" class="error">{{ error.name }} {{ error.line }}</div>
+  <div *ngFor="let error of error.items" class="error">
+    {{ error.name }} {{ error.line }}
+  </div>
 </div>
