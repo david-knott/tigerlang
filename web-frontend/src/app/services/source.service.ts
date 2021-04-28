@@ -14,6 +14,7 @@ export class SourceService {
 
   getSource(id: String): Observable<Source> {
     const source = of(SOURCES[0]);
+    console.log('loading ' + id);
     return source;
   }
 

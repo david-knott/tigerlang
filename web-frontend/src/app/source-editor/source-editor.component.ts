@@ -10,7 +10,7 @@ import { Source } from "@app/services/source";
 import { SourceService } from "../services/source.service";
 import { ErrorCheckService } from "../services/error-check.service";
 import { map, mergeMap, catchError } from "rxjs/operators";
-import { of } from "rxjs";
+import { Observable, of } from "rxjs";
 import { ErrorCheckResponse } from "@app/services/error";
 import { switchMap } from "rxjs/operators";
 import { Router, ActivatedRoute, ParamMap } from "@angular/router";
@@ -54,6 +54,11 @@ export class SourceEditorComponent implements OnInit {
   }
 
   highlight() {
+    console.log(this.error);
+    // we have a line number and a column number / or a position
+
+    // find what is under the caret at that position and apply the syntax error style.
+
     const parent = this.sourceEditorCode.nativeElement;
     for (const node of parent.children) {
       const replacements = node.innerText
@@ -160,8 +165,10 @@ export class SourceEditorComponent implements OnInit {
   }
 
   onChange(event: Event) {
-    let code = [...this.sourceEditorCode.nativeElement.children].map( m => m.innerText).join('\n');
-    let errorCheckRequest = {tiger: code};
+    let code = [...this.sourceEditorCode.nativeElement.children]
+      .map((m) => m.innerText)
+      .join("\n");
+    let errorCheckRequest = { tiger: code };
     this.errorCheckService
       .check(errorCheckRequest)
       .subscribe((error) => this.setErrors(error));
@@ -191,12 +198,17 @@ export class SourceEditorComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.sourceService
-      .getSource("someid")
-      .pipe(
-        map((source) => this.setSource(source)),
-        mergeMap(() => this.errorCheckService.check({tiger: this.source.code}))
-      )
-      .subscribe((error) => this.setErrors(error));
+    this.route.params.subscribe((params) => {
+      console.log(params["id"]);
+      this.sourceService
+        .getSource(params["id"])
+        .pipe(
+          map((source) => this.setSource(source)),
+          mergeMap(() =>
+            this.errorCheckService.check({ tiger: this.source.code })
+          )
+        )
+        .subscribe((error) => this.setErrors(error));
+    });
   }
 }
