@@ -19,6 +19,7 @@ import { CoreModule } from './core/core.modules';
 import { SyntaxHighlightPipe } from './source-editor/syntax-highlight.pipe';
 import { Version1Component } from './versions/version1/version1.component';
 import { ContenteditableValueAccessor } from './shared/contenteditable-value-accessor.directive';
+import { SafeHtmlPipe } from './shared/safe-html-pipe';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { ContenteditableValueAccessor } from './shared/contenteditable-value-acc
     SyntaxHighlightPipe,
     Version1Component,
     ContenteditableValueAccessor,
+    SafeHtmlPipe,
   ],
   imports: [
     BrowserModule,

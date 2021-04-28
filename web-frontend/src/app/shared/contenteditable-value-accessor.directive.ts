@@ -5,10 +5,13 @@ import {
   HostListener,
   Renderer2,
 } from "@angular/core";
+import { DomSanitizer } from '@angular/platform-browser'
+
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 
 // https://medium.com/its-tinkoff/controlvalueaccessor-and-contenteditable-in-angular-6ebf50b7475e
 
+// https://stackoverflow.com/questions/36265026/angular-2-innerhtml-styling
 interface ControlValueAccessor {
   writeValue(value: any): void;
   registerOnChange(fn: (value: any) => void): void;
@@ -33,6 +36,7 @@ export class ContenteditableValueAccessor implements ControlValueAccessor {
   // ...
 
   constructor(
+    private sanitizer:DomSanitizer,
     private readonly elementRef: ElementRef,
     private readonly renderer: Renderer2
   ) {}

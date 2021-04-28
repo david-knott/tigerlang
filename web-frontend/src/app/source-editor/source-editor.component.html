@@ -24,8 +24,17 @@
   Delete
 </button>
 
-<div [(ngModel)]="model"  class="source-editor-code" contenteditable>
-</div>
+<!-- div #sourceEditorCode [(ngModel)]="codeToHtml"  class="source-editor-code" contenteditable -->
+<div
+  #sourceEditorCode
+  (paste)="onPaste($event)"
+  (keypress)="onChange($event)"
+  (keydown)="onKeyDown($event)"
+  (keyup)="onKeyUp($event)"
+  class="source-editor-code"
+  contenteditable
+></div>
+
 <!--
 
 <div
@@ -45,7 +54,7 @@
   </div>
 </div>
 -->
-pos: {{caretPos}}
+pos: {{ caretPos }}
 <div>
   <button *ngIf="error.items?.length > 0" type="button" class="btn btn-danger">
     Errors

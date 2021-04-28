@@ -5,15 +5,9 @@
   overflow-y: auto;
   padding-left: 48px;
   counter-reset: line;
-
-  display: block;
-  font-family: monospace;
-  white-space: pre;
-  margin: 1em 0;
 }
 
 .source-editor-code div {
-  background-color: red;;
   display: block;
   position: relative;
   white-space: pre-wrap;
@@ -25,4 +19,27 @@
   position: absolute;
   right: calc(100% + 16px);
   opacity: 0.5;
+}
+
+span.paren {
+    color: blue;
+    font-style: italic;
+    font-weight: bold;
+}
+ 
+span.brace {
+    color: blue;
+    font-style: italic;
+    font-weight: bold;
+}
+ 
+span.special {
+    color: blue;
+    font-style: italic;
+    font-weight: bolder;
+}
+ 
+span.keyword {
+    font-style: italic;
+    font-weight: bold;
 }

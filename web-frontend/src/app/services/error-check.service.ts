@@ -18,7 +18,7 @@ export class ErrorCheckService {
   constructor() {}
 
   check(request: ErrorCheckRequest) {
-    console.log("calling error checker");
+    console.log("calling error checker ", request);
     return of(ERRORS[0]);
   }
 }
