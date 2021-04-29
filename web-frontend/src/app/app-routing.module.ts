@@ -5,8 +5,8 @@ import { SourceEditorComponent } from "./source-editor/source-editor.component";
 
 const routes: Routes = [
   { path: "old", component: LayoutComponent },
-  { path: "source/:id", component: SourceEditorComponent },
   { path: "source", component: SourceEditorComponent },
+  { path: "source/:id", component: SourceEditorComponent },
   { path: "", redirectTo: "/old", pathMatch: "full" },
 ];
 

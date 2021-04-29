@@ -26,7 +26,7 @@ import { ThrowStmt } from "@angular/compiler";
 })
 export class SourceEditorComponent implements OnInit {
   private source: Source;
-  protected error: ErrorCheckResponse;
+  protected error: ErrorCheckResponse = { items: [] };
   protected lines: string[];
   protected caretPos: number;
 
@@ -54,20 +54,27 @@ export class SourceEditorComponent implements OnInit {
   }
 
   highlight() {
-    console.log(this.error);
-    // we have a line number and a column number / or a position
 
-    // find what is under the caret at that position and apply the syntax error style.
-
+    let offset = 0;
     const parent = this.sourceEditorCode.nativeElement;
     for (const node of parent.children) {
-      const replacements = node.innerText
+      let replacements = node.innerText;
+      /*
+      if (this.error && this.error.items.length > 0) {
+        this.error.items.forEach((e) => {
+          if (offset <= e.col && e.col < offset + node.innerText.length) {
+            //   replacements = [replacements.slice(0, e.col), '<span class="error">' + replacements[e.col] + '</div>', replacements.slice(e.col + 1)].join('');
+          }
+        });
+      }*/
+      replacements = replacements
         .replace(
           /\b(let|in|end|function|var|for|while|if|then|do|array|type)\b/g,
           '<span class="keyword">$1</span>'
         )
         .replace(/(:\=)/g, '<span class="special">$1</span>')
         .replace(/(\(|\))/g, '<span class="brace">$1</span>');
+      offset += node.innerText.length;
       node.innerHTML = replacements.split("\n").join("<br/>");
     }
   }
@@ -199,16 +206,19 @@ export class SourceEditorComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
-      console.log(params["id"]);
-      this.sourceService
-        .getSource(params["id"])
-        .pipe(
-          map((source) => this.setSource(source)),
-          mergeMap(() =>
-            this.errorCheckService.check({ tiger: this.source.code })
+      if (params["id"]) {
+        this.sourceService
+          .getSource(params["id"])
+          .pipe(
+            map((source) => this.setSource(source)),
+            mergeMap(() =>
+              this.errorCheckService.check({ tiger: this.source.code })
+            )
           )
-        )
-        .subscribe((error) => this.setErrors(error));
+          .subscribe((error) => this.setErrors(error));
+      } else {
+        this.setSource({name: "Untitled", description: "", code: "/* */"});
+      }
     });
   }
 }
