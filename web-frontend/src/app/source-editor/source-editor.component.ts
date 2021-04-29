@@ -1,6 +1,5 @@
 import {
   Component,
-  ComponentFactoryResolver,
   ElementRef,
   OnInit,
   ViewChild,
@@ -10,13 +9,9 @@ import { Source } from "@app/services/source";
 import { SourceService } from "../services/source.service";
 import { ErrorCheckService } from "../services/error-check.service";
 import { map, mergeMap, catchError } from "rxjs/operators";
-import { Observable, of } from "rxjs";
 import { ErrorCheckResponse } from "@app/services/error";
-import { switchMap } from "rxjs/operators";
 import { Router, ActivatedRoute, ParamMap } from "@angular/router";
 import { PrettyPrinterService } from "@app/services/pretty-printer.service";
-import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
-import { ThrowStmt } from "@angular/compiler";
 
 @Component({
   selector: "app-source-editor",
@@ -29,6 +24,8 @@ export class SourceEditorComponent implements OnInit {
   protected error: ErrorCheckResponse = { items: [] };
   protected lines: string[];
   protected caretPos: number;
+  showMenu = false;
+  showDescription = false;
 
   protected codeToHtml = "";
 
@@ -175,9 +172,8 @@ export class SourceEditorComponent implements OnInit {
     let code = [...this.sourceEditorCode.nativeElement.children]
       .map((m) => m.innerText)
       .join("\n");
-    let errorCheckRequest = { tiger: code };
     this.errorCheckService
-      .check(errorCheckRequest)
+      .check({ tiger: code })
       .subscribe((error) => this.setErrors(error));
   }
 
@@ -196,9 +192,9 @@ export class SourceEditorComponent implements OnInit {
     // get the new text, split it and reset div content.
     const text = el.innerText;
     el.innerHTML = "";
-    text.split("\n").forEach((f) => {
+    text.split("\n").forEach((line) => {
       //direct dom manipulation, bad...
-      el.innerHTML += '<div class="line">' + f + "</div>";
+      el.innerHTML += '<div class="line">' + line + "</div>";
     });
     this.highlight();
     this.setCaret(pos, el);

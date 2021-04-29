@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { of } from "rxjs";
+import { min } from "rxjs/operators";
 import { ErrorCheckResponse } from "./error";
 import { ErrorCheckRequest } from "./error-check-request";
 
@@ -19,6 +20,6 @@ export class ErrorCheckService {
 
   check(request: ErrorCheckRequest) {
     console.log("calling error checker ", request);
-    return of(ERRORS[0]);
+    return of( request.tiger.length > 10 ? ERRORS[0] : {items: []});
   }
 }

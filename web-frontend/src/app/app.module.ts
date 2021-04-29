@@ -16,7 +16,6 @@ import { environment } from "@env/environment";
 import { SourceEditorComponent } from "./source-editor/source-editor.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { CoreModule } from './core/core.modules';
-import { SyntaxHighlightPipe } from './source-editor/syntax-highlight.pipe';
 import { Version1Component } from './versions/version1/version1.component';
 import { ContenteditableValueAccessor } from './shared/contenteditable-value-accessor.directive';
 import { SafeHtmlPipe } from './shared/safe-html-pipe';
@@ -31,7 +30,6 @@ import { SafeHtmlPipe } from './shared/safe-html-pipe';
     FooterComponent,
     HeaderComponent,
     SourceEditorComponent,
-    SyntaxHighlightPipe,
     Version1Component,
     ContenteditableValueAccessor,
     SafeHtmlPipe,
