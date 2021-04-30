@@ -12,6 +12,8 @@ import { map, mergeMap, catchError } from "rxjs/operators";
 import { ErrorCheckResponse } from "@app/services/error";
 import { Router, ActivatedRoute, ParamMap } from "@angular/router";
 import { PrettyPrinterService } from "@app/services/pretty-printer.service";
+import { ModalService } from "@app/services/modal.service";
+import { DeleteComponent } from "./delete/delete.component";
 
 @Component({
   selector: "app-source-editor",
@@ -38,7 +40,8 @@ export class SourceEditorComponent implements OnInit {
     private errorCheckService: ErrorCheckService,
     private prettyPrintService: PrettyPrinterService,
     private window: Window,
-    private document: Document
+    private document: Document,
+    private modalService: ModalService
   ) {}
 
   setSource(source: Source) {
@@ -137,7 +140,10 @@ export class SourceEditorComponent implements OnInit {
   }
 
   deleteConfirm() {
-    this.sourceService.deleteSource(this.source);
+    let inputs = {
+      source: this.source
+    }
+    this.modalService.init(DeleteComponent, inputs, {});
   }
 
   delete() {
@@ -200,6 +206,24 @@ export class SourceEditorComponent implements OnInit {
     this.setCaret(pos, el);
   }
 
+  elementMouseIsOver: Element;
+
+  onMouseOver(event: MouseEvent) {
+    var x = event.clientX, y = event.clientY;
+    this.elementMouseIsOver = document.elementFromPoint(x, y);
+    this.elementMouseIsOver = this.elementMouseIsOver.closest('.line');
+    if(!!this.elementMouseIsOver) {
+      this.elementMouseIsOver.classList.add("over");
+    }
+  }
+
+  onMouseOut(event: MouseEvent) {
+    if(!!this.elementMouseIsOver) {
+      this.elementMouseIsOver.classList.remove("over");
+      this.elementMouseIsOver = null;
+    }
+  }
+
   ngOnInit() {
     this.route.params.subscribe((params) => {
       if (params["id"]) {
@@ -213,7 +237,7 @@ export class SourceEditorComponent implements OnInit {
           )
           .subscribe((error) => this.setErrors(error));
       } else {
-        this.setSource({name: "Untitled", description: "", code: "/* */"});
+        this.setSource({name: "Untitled", description: "", code: "/* new program */"});
       }
     });
   }

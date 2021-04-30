@@ -1,1 +1,10 @@
-<p>version1 works!</p>
+<div class="container-fluid">
+  <div class="col-sm-6">
+    <app-editor [highlightedLines]="srcHighlightedLines" (newItemEvent)="test()" [source]="source"></app-editor>
+  </div>
+  <div class="col-sm-6">
+    <app-editor [highlightedLines]="dstHighlightedLines"></app-editor>
+  </div>
+
+
+</div>

@@ -19,6 +19,9 @@ import { CoreModule } from './core/core.modules';
 import { Version1Component } from './versions/version1/version1.component';
 import { ContenteditableValueAccessor } from './shared/contenteditable-value-accessor.directive';
 import { SafeHtmlPipe } from './shared/safe-html-pipe';
+import { DeleteComponent } from './source-editor/delete/delete.component';
+import { DataFlowViewerComponent } from './tests/data-flow-viewer/data-flow-viewer.component';
+import { EditorComponent } from './shared/editor/editor.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +36,9 @@ import { SafeHtmlPipe } from './shared/safe-html-pipe';
     Version1Component,
     ContenteditableValueAccessor,
     SafeHtmlPipe,
+    DeleteComponent,
+    DataFlowViewerComponent,
+    EditorComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,7 +50,9 @@ import { SafeHtmlPipe } from './shared/safe-html-pipe';
     AppRoutingModule,
     CoreModule.forRoot({ environment })
   ],
-  entryComponents: [],
+  entryComponents: [
+    DeleteComponent
+  ],
   providers: [
     { provide: Window, useValue: window },
     { provide: Document, useValue: document},

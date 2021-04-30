@@ -3,7 +3,12 @@ import { Source } from "./source";
 import { Observable, of } from "rxjs";
 
 export const SOURCES: Source[] = [
-  { id: 11, name: "Hello World", description: "", code: "let\n    var: hello := \"world\"\nin\n    print(hello)\nend" },
+  {
+    id: "xxx",
+    name: "Hello World",
+    description: "",
+    code: 'let\n    var: hello := "world"\nin\n    print(hello)\nend',
+  },
 ];
 
 @Injectable({
@@ -14,7 +19,7 @@ export class SourceService {
 
   getSource(id: String): Observable<Source> {
     const source = of(SOURCES[0]);
-    console.log('loading ' + id);
+    console.log("loading " + id);
     return source;
   }
 
@@ -23,15 +28,18 @@ export class SourceService {
     return sources;
   }
 
-  createSource(source: Source) {
-    console.log('create');
+  createSource(source: Source): Observable<Source> {
+    console.log("create");
+    return of(source);
   }
 
-  updateSource(source: Source) {
-    console.log('save');
+  updateSource(source: Source): Observable<Source> {
+    console.log("save");
+    return of(source);
   }
 
-  deleteSource(source: Source) {
-    console.log('delete');
+  deleteSource(source: Source): Observable<Source> {
+    console.log("delete");
+    return of(source);
   }
 }

@@ -1,0 +1,11 @@
+<div
+  #editor
+  (paste)="onPaste($event)"
+  (keypress)="onChange($event)"
+  (keydown)="onKeyDown($event)"
+  (keyup)="onKeyUp($event)"
+  class="editor"
+  (mouseover)="onMouseOver($event)"
+  (mouseout)="onMouseOut($event)"
+  contenteditable
+></div>
