@@ -1,10 +1,22 @@
 <div class="container-fluid">
-  <div class="col-sm-6">
-    <app-editor [highlightedLines]="srcHighlightedLines" (newItemEvent)="test()" [source]="source"></app-editor>
+  <div class="row">
+    <div class="col-sm-6">[FileName]</div>
   </div>
-  <div class="col-sm-6">
-    <app-editor [highlightedLines]="dstHighlightedLines"></app-editor>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="editor-pane-left">
+        <app-editor
+          [highlightedLines]="srcHighlightedLines"
+          (newItemEvent)="test()"
+          [content]="source.code"
+        ></app-editor>
+      </div>
+    </div>
+    <div class="col-sm-6 editor-pane-right">
+      <app-editor
+        [highlightedLines]="dstHighlightedLines"
+        [content]="dst"
+      ></app-editor>
+    </div>
   </div>
-
-
 </div>

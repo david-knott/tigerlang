@@ -10,8 +10,6 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from "@angular/core";
-import { Source } from "@app/services/source";
-import { map, mergeMap, catchError } from "rxjs/operators";
 
 @Component({
   selector: "app-editor",
@@ -20,7 +18,7 @@ import { map, mergeMap, catchError } from "rxjs/operators";
   encapsulation: ViewEncapsulation.None,
 })
 export class EditorComponent implements OnInit, OnChanges {
-  @Input() source: Source;
+  @Input() content: String;
   @Input() editable!: boolean;
   @Input() highlightedLines!: Array<number>;
   @Output() newItemEvent = new EventEmitter<string>();
@@ -31,9 +29,8 @@ export class EditorComponent implements OnInit, OnChanges {
 
   buildHtml() {
     const parent = this.editor.nativeElement;
-    this.source = this.source || { name: '', description: '', code: '' };
-    this.source.code.split("\n").forEach((value, index) => {
-      parent.innerHTML += '<div class="line">"' + value + "</div>";
+    this.content.split("\n").forEach((value, index) => {
+      parent.innerHTML += '<div class="line">' + value + '</div>';
     });
     this.highlightKeywords();
   }
