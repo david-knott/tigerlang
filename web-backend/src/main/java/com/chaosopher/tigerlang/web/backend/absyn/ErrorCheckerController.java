@@ -49,7 +49,10 @@ public class ErrorCheckerController {
         // populate symbol tables.
         decList.accept(new Binder(errorMsg));
         // run type checker on the file.
-        decList.accept(new TypeChecker(errorMsg));
+    
+        TypeChecker.create(decList, errorMsg);
+
+        //decList.accept(new TypeChecker(errorMsg));
         if(errorMsg.anyErrors) {
             return ResponseEntity.ok(errorMsg.getErrors());
         }

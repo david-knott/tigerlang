@@ -49,7 +49,6 @@ public class TranslateRegTest {
             program.accept(new EscapeVisitor(errorMsg));
             program.accept(new Binder(errorMsg));
             TypeChecker.create(program, errorMsg);
-            program.accept(new TypeChecker(errorMsg));
             TranslatorVisitor translator = new TranslatorVisitor();
             program.accept(translator);
             FragList fragList = translator.getFragList();
@@ -73,7 +72,6 @@ public class TranslateRegTest {
             TranslatorVisitor translator = new TranslatorVisitor();
             program.accept(new Binder(errorMsg));
             TypeChecker.create(program, errorMsg);
-            program.accept(new TypeChecker(errorMsg));
             program.accept(translator);
             FragList fragList = translator.getFragList();
             assertNotNull(fragList);

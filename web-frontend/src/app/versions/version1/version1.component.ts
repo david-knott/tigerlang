@@ -35,7 +35,7 @@ export class Version1Component implements OnInit {
     private modalService: ModalService
   ) {}
 
-  dst: String = 'xx';
+  dst: String;
   source: Source;
   srcHighlightedLines: Array<number>;
   dstHighlightedLines: Array<number>;

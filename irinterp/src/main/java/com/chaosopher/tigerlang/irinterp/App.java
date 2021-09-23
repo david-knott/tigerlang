@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 import com.chaosopher.tigerlang.compiler.translate.FragList;
-import com.chaosopher.tigerlang.compiler.tree.IR;
 
 /**
  * Hello world!

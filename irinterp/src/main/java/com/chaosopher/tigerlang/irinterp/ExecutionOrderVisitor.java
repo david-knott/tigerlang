@@ -35,8 +35,6 @@ public class ExecutionOrderVisitor implements FragmentVisitor {
 
 	@Override
 	public void visit(DataFrag arg0) {
-		// TODO: extract the label and the string and install
-		// into hash table.
 		this.stringMap.put(arg0.toString(), arg0.toString());
 	}
 }

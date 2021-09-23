@@ -98,7 +98,8 @@ class CompilerServiceImpl implements CompilerService {
         // populate symbol tables.
         decList.accept(new Binder(this.errorMsg));
         // run type checker on the file.
-        decList.accept(new TypeChecker(this.errorMsg));
+        TypeChecker.create(decList, this.errorMsg);
+       // decList.accept(new TypeChecker(this.errorMsg));
     }
 
     public void hirTranslate() {

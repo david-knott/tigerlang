@@ -3,6 +3,7 @@ package com.chaosopher.tigerlang.irinterp;
 import com.chaosopher.tigerlang.compiler.tree.IR;
 
 class ExecutionNode {
+	
 	private final IR ir;
 	private ExecutionNode next;
 

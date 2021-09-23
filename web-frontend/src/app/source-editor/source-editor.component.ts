@@ -22,7 +22,8 @@ import { DeleteComponent } from "./delete/delete.component";
   encapsulation: ViewEncapsulation.None,
 })
 export class SourceEditorComponent implements OnInit {
-  private source: Source;
+  protected source: Source;
+  protected showErrors: boolean;
   protected error: ErrorCheckResponse = { items: [] };
   protected lines: string[];
   protected caretPos: number;
@@ -54,19 +55,10 @@ export class SourceEditorComponent implements OnInit {
   }
 
   highlight() {
-
     let offset = 0;
     const parent = this.sourceEditorCode.nativeElement;
     for (const node of parent.children) {
       let replacements = node.innerText;
-      /*
-      if (this.error && this.error.items.length > 0) {
-        this.error.items.forEach((e) => {
-          if (offset <= e.col && e.col < offset + node.innerText.length) {
-            //   replacements = [replacements.slice(0, e.col), '<span class="error">' + replacements[e.col] + '</div>', replacements.slice(e.col + 1)].join('');
-          }
-        });
-      }*/
       replacements = replacements
         .replace(
           /\b(let|in|end|function|var|for|while|if|then|do|array|type)\b/g,
@@ -224,6 +216,10 @@ export class SourceEditorComponent implements OnInit {
     }
   }
 
+  removeModal() {
+
+  }
+
   ngOnInit() {
     this.route.params.subscribe((params) => {
       if (params["id"]) {
@@ -237,7 +233,7 @@ export class SourceEditorComponent implements OnInit {
           )
           .subscribe((error) => this.setErrors(error));
       } else {
-        this.setSource({name: "Untitled", description: "", code: "/* new program */"});
+        this.setSource({name: "Untitled", description: "", code: "/* new program */\n\t\n\t\n"});
       }
     });
   }
