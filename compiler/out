@@ -1,0 +1,4697 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -------------< com.chaosopher.tigerlang.compiler:compiler >-------------
+[INFO] Building compiler 1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.2.0:resources (default-resources) @ compiler ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] Copying 0 resource
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- compiler:3.8.1:compile (default-compile) @ compiler ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- resources:3.2.0:testResources (default-testResources) @ compiler ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] skip non existing resourceDirectory /usr/src/app/compiler/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.8.1:testCompile (default-testCompile) @ compiler ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.0.0-M5:test (default-test) @ compiler ---
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[ERROR] OpenJDK 64-Bit Server VM warning: Ignoring option --illegal-access=permit; support was removed in 17.0
+[INFO] Running com.chaosopher.tigerlang.compiler.tree.LexerTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.013 s - in com.chaosopher.tigerlang.compiler.tree.LexerTest
+[INFO] Running com.chaosopher.tigerlang.compiler.tree.ParserTest
+[INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s - in com.chaosopher.tigerlang.compiler.tree.ParserTest
+[INFO] Running com.chaosopher.tigerlang.compiler.graph.GraphCycleTest
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s - in com.chaosopher.tigerlang.compiler.graph.GraphCycleTest
+[INFO] Running com.chaosopher.tigerlang.compiler.AppTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in com.chaosopher.tigerlang.compiler.AppTest
+[INFO] Running com.chaosopher.tigerlang.compiler.translate.TranslateRegTest
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/ifCondition.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/function_three_arg.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/string_substr.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/array_assign.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/relop_gt_false.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/function_four_arg.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/pminus.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/while_break.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/for.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/tbi-desguar.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/array_dec.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/function_eight_arg.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/prime.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/function_two_arg.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/string_concat.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/relop_eq_false.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/nested_function_two.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/string_not_equals.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/relop_le.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/string_equals.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/for_function_in_loop.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/minus.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/escape_subscript.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/functionAdd.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/0staticlinkescapes.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/nested_function_one.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/pdiv.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/record_dec.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/sl_test.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/if_or_false.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/function_seven_arg.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/mplus.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/pmult.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/plus_3_ops.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/forLoop.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/hanoi.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/while_function_in_loop.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/pplus.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/static_link_one.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/if_then.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/imperative_bubble_sort.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/function_one_arg.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/sl_fun_call_parent_2.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/record_assign_nested.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/string_size.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/flush.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/while.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/function_five_arg.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/arraySet.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/relop_le_false.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/tbi-desguar-terminate.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/if_and.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/while_break_break.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/plus.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/relop_gt.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/string_char.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/record_assign.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/merge_simple.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/sl_two_level.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/string_ord.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/fib.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/int_not.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/record_nil.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/relop_ge.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/tbi.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/ifCondition.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/record_array.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/mult.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/relop_lt.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/escape_field.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/arrayDec.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/int_dec.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/binsearch.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/div.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/function.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/escape_simplevar.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/whileLoop.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/linked_list_size.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/sl_fun_call_parent.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/sl_three_level.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/print.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/function_six_arg.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/if_or.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/if_nested.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/relop_ge_false.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/if_and_false.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/func_order.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/relop_lt_false.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/record_nil_false.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/whileBreakLoop.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/queens.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/if_else.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/factorial.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/relop_eq.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/sl_one_level.tig
+Testing Translator./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/assign.tig
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.102 s - in com.chaosopher.tigerlang.compiler.translate.TranslateRegTest
+[INFO] Running com.chaosopher.tigerlang.compiler.translate.TranslateVisitorTest
+# Fragment tigermain
+seq(
+  seq(
+    sxp(
+      const(0)
+    )
+    sxp(
+      const(0)
+    )
+  )
+  sxp(
+    const(0)
+  )
+)
+<?xml version="1.0" ?><seq><seq><sxp><const value="0"></const></sxp><sxp><const value="0"></const></sxp></seq><sxp><const value="0"></const></sxp></seq>
+>> Potential Match:seq
+>> Potential Match:sxp
+>> Potential Match:const
+>> Potential Match:sxp
+>> Potential Match:const
+Subtree is true, finished.
+<?xml version="1.0" ?><seq><seq><seq><cjump value="0"><const value="3"></const><const value="3"></const><label value="L355"></label><label value="L356"></label></cjump><seq><label value="L355"></label><seq><sxp><const value="5"></const></sxp><seq><jump><name value="L357"></name></jump><seq><label value="L356"></label><seq><sxp><const value="7"></const></sxp><jump><name value="L357"></name></jump></seq></seq></seq></seq></seq></seq><label value="L357"></label></seq><sxp><const value="0"></const></sxp></seq>
+No match, next node:seq
+No match, next node:seq
+>> Potential Match:cjump
+>> Potential Match:const
+>> Potential Match:const
+>> Potential Match:label
+>> Potential Match:label
+Subtree is true, finished.
+# Fragment tigermain
+seq(
+  seq(
+    label(L359)
+    seq(
+      cjump(
+        GT
+        binop(
+          MINUS
+          const(0)
+          const(2)
+        )
+        const(3)
+        L360
+        L358
+      )
+      seq(
+        label(L360)
+        seq(
+          sxp(
+            const(0)
+          )
+          seq(
+            jump(
+              name(L359)
+            )
+            label(L358)
+          )
+        )
+      )
+    )
+  )
+  sxp(
+    const(0)
+  )
+)
+<?xml version="1.0" ?><seq><sxp><call><name value="printi"></name><const value="3"></const></call></sxp><sxp><const value="0"></const></sxp></seq>
+>> Potential Match:sxp
+>> Potential Match:call
+>> Potential Match:name
+>> Potential Match:const
+Subtree is true, finished.
+<?xml version="1.0" ?><seq><seq><move><temp value="temp : { temp : t276 }"></temp><const value="3"></const></move><move><temp value="temp : { temp : t277 }"></temp><temp value="temp : { temp : t276 }"></temp></move></seq><sxp><const value="0"></const></sxp></seq>
+>> Potential Match:seq
+>> Potential Match:move
+>> Potential Match:temp
+>> Potential Match:const
+>> Potential Match:move
+>> Potential Match:temp
+>> Potential Match:temp
+Subtree is true, finished.
+# Fragment tigermain
+seq(
+  sxp(
+    eseq(
+      sxp(
+        const(0)
+      )
+      eseq(
+        seq(
+          sxp(
+            const(3)
+          )
+          seq(
+            sxp(
+              const(7)
+            )
+            sxp(
+              const(11)
+            )
+          )
+        )
+        const(13)
+      )
+    )
+  )
+  sxp(
+    const(0)
+  )
+)
+# Fragment tigermain
+seq(
+  sxp(
+    eseq(
+      sxp(
+        const(0)
+      )
+      const(3)
+    )
+  )
+  sxp(
+    const(0)
+  )
+)
+<?xml version="1.0" ?><seq><sxp><eseq><sxp><const value="0"></const></sxp><const value="3"></const></eseq></sxp><sxp><const value="0"></const></sxp></seq>
+No match, next node:sxp
+>> Potential Match:eseq
+>> Potential Match:sxp
+>> Potential Match:const
+>> Potential Match:const
+Subtree is true, finished.
+<?xml version="1.0" ?><seq><sxp><binop op="0"><const value="3"></const><const value="5"></const></binop></sxp><sxp><const value="0"></const></sxp></seq>
+No match, next node:sxp
+>> Potential Match:binop
+>> Potential Match:const
+>> Potential Match:const
+Subtree is true, finished.
+# Fragment tigermain
+seq(
+  seq(
+    seq(
+      sxp(
+        const(0)
+      )
+      move(
+        temp(t279)
+        eseq(
+          seq(
+            move(
+              temp(t278)
+              call(
+                name(initRecord)
+                const(8)
+              )
+            )
+            move(
+              mem(
+                binop(
+                  PLUS
+                  temp(t278)
+                  const(0)
+                )
+              )
+              const(3)
+            )
+          )
+          temp(t278)
+        )
+      )
+    )
+    sxp(
+      const(0)
+    )
+  )
+  sxp(
+    const(0)
+  )
+)
+<?xml version="1.0" ?><seq><seq><seq><sxp><const value="0"></const></sxp><move><temp value="temp : { temp : t279 }"></temp><eseq><seq><move><temp value="temp : { temp : t278 }"></temp><call><name value="initRecord"></name><const value="8"></const></call></move><move><mem><binop op="0"><temp value="temp : { temp : t278 }"></temp><const value="0"></const></binop></mem><const value="3"></const></move></seq><temp value="temp : { temp : t278 }"></temp></eseq></move></seq><sxp><const value="0"></const></sxp></seq><sxp><const value="0"></const></sxp></seq>
+No match, next node:seq
+No match, next node:seq
+No match, next node:sxp
+No match, next node:const
+>> Potential Match:move
+>> Potential Match:temp
+Subtree is true, finished.
+<?xml version="1.0" ?><seq><seq><seq><sxp><const value="0"></const></sxp><move><temp value="temp : { temp : t279 }"></temp><eseq><seq><move><temp value="temp : { temp : t278 }"></temp><call><name value="initRecord"></name><const value="8"></const></call></move><move><mem><binop op="0"><temp value="temp : { temp : t278 }"></temp><const value="0"></const></binop></mem><const value="3"></const></move></seq><temp value="temp : { temp : t278 }"></temp></eseq></move></seq><sxp><const value="0"></const></sxp></seq><sxp><const value="0"></const></sxp></seq>
+No match, next node:seq
+No match, next node:seq
+No match, next node:sxp
+No match, next node:const
+>> Potential Match:move
+Subtree is true, finished.
+# Fragment L361
+move(
+  temp(rax)
+  binop(
+    PLUS
+    const(5)
+    temp(t280)
+  )
+)
+# Fragment tigermain
+seq(
+  seq(
+    sxp(
+      const(0)
+    )
+    sxp(
+      call(
+        name(printi)
+        call(
+          name(L361)
+          temp(rbp)
+          const(7)
+        )
+      )
+    )
+  )
+  sxp(
+    const(0)
+  )
+)
+# Fragment tigermain
+seq(
+  seq(
+    sxp(
+      const(0)
+    )
+    seq(
+      sxp(
+        call(
+          name(printi)
+          const(3)
+        )
+      )
+      sxp(
+        call(
+          name(printi)
+          const(5)
+        )
+      )
+    )
+  )
+  sxp(
+    const(0)
+  )
+)
+<?xml version="1.0" ?><seq><seq><sxp><const value="0"></const></sxp><seq><sxp><call><name value="printi"></name><const value="3"></const></call></sxp><sxp><call><name value="printi"></name><const value="5"></const></call></sxp></seq></seq><sxp><const value="0"></const></sxp></seq>
+>> Potential Match:seq
+>> Potential Match:sxp
+Subtree is true, finished.
+# Fragment tigermain
+seq(
+  seq(
+    seq(
+      sxp(
+        const(0)
+      )
+      move(
+        temp(t282)
+        eseq(
+          seq(
+            move(
+              temp(t281)
+              call(
+                name(initRecord)
+                const(24)
+              )
+            )
+            seq(
+              move(
+                mem(
+                  binop(
+                    PLUS
+                    temp(t281)
+                    const(0)
+                  )
+                )
+                const(3)
+              )
+              seq(
+                move(
+                  mem(
+                    binop(
+                      PLUS
+                      temp(t281)
+                      const(8)
+                    )
+                  )
+                  const(5)
+                )
+                move(
+                  mem(
+                    binop(
+                      PLUS
+                      temp(t281)
+                      const(16)
+                    )
+                  )
+                  const(7)
+                )
+              )
+            )
+          )
+          temp(t281)
+        )
+      )
+    )
+    sxp(
+      const(0)
+    )
+  )
+  sxp(
+    const(0)
+  )
+)
+<?xml version="1.0" ?><seq><seq><seq><sxp><const value="0"></const></sxp><move><temp value="temp : { temp : t282 }"></temp><eseq><seq><move><temp value="temp : { temp : t281 }"></temp><call><name value="initRecord"></name><const value="24"></const></call></move><seq><move><mem><binop op="0"><temp value="temp : { temp : t281 }"></temp><const value="0"></const></binop></mem><const value="3"></const></move><seq><move><mem><binop op="0"><temp value="temp : { temp : t281 }"></temp><const value="8"></const></binop></mem><const value="5"></const></move><move><mem><binop op="0"><temp value="temp : { temp : t281 }"></temp><const value="16"></const></binop></mem><const value="7"></const></move></seq></seq></seq><temp value="temp : { temp : t281 }"></temp></eseq></move></seq><sxp><const value="0"></const></sxp></seq><sxp><const value="0"></const></sxp></seq>
+No match, next node:seq
+No match, next node:seq
+No match, next node:sxp
+No match, next node:const
+>> Potential Match:move
+>> Potential Match:temp
+Subtree is true, finished.
+<?xml version="1.0" ?><seq><seq><seq><sxp><const value="0"></const></sxp><move><temp value="temp : { temp : t282 }"></temp><eseq><seq><move><temp value="temp : { temp : t281 }"></temp><call><name value="initRecord"></name><const value="24"></const></call></move><seq><move><mem><binop op="0"><temp value="temp : { temp : t281 }"></temp><const value="0"></const></binop></mem><const value="3"></const></move><seq><move><mem><binop op="0"><temp value="temp : { temp : t281 }"></temp><const value="8"></const></binop></mem><const value="5"></const></move><move><mem><binop op="0"><temp value="temp : { temp : t281 }"></temp><const value="16"></const></binop></mem><const value="7"></const></move></seq></seq></seq><temp value="temp : { temp : t281 }"></temp></eseq></move></seq><sxp><const value="0"></const></sxp></seq><sxp><const value="0"></const></sxp></seq>
+>> Potential Match:seq
+Subtree is true, finished.
+# Fragment tigermain
+seq(
+  seq(
+    sxp(
+      const(0)
+    )
+    sxp(
+      call(
+        name(printi)
+        const(3)
+      )
+    )
+  )
+  sxp(
+    const(0)
+  )
+)
+<?xml version="1.0" ?><seq><seq><sxp><const value="0"></const></sxp><sxp><call><name value="printi"></name><const value="3"></const></call></sxp></seq><sxp><const value="0"></const></sxp></seq>
+No match, next node:seq
+>> Potential Match:sxp
+Subtree is true, finished.
+# Fragment tigermain
+seq(
+  sxp(
+    eseq(
+      sxp(
+        const(0)
+      )
+      eseq(
+        sxp(
+          const(3)
+        )
+        const(5)
+      )
+    )
+  )
+  sxp(
+    const(0)
+  )
+)
+<?xml version="1.0" ?><seq><sxp><eseq><sxp><const value="0"></const></sxp><eseq><sxp><const value="3"></const></sxp><const value="5"></const></eseq></eseq></sxp><sxp><const value="0"></const></sxp></seq>
+No match, next node:sxp
+>> Potential Match:eseq
+>> Potential Match:sxp
+>> Potential Match:const
+Subtree is true, finished.
+# Fragment tigermain
+seq(
+  sxp(
+    eseq(
+      sxp(
+        const(0)
+      )
+      eseq(
+        sxp(
+          const(3)
+        )
+        const(7)
+      )
+    )
+  )
+  sxp(
+    const(0)
+  )
+)
+# Fragment tigermain
+seq(
+  seq(
+    move(
+      temp(t283)
+      const(3)
+    )
+    seq(
+      move(
+        temp(t284)
+        const(13)
+      )
+      seq(
+        label(L362)
+        seq(
+          cjump(
+            LE
+            temp(t283)
+            temp(t284)
+            L363
+            L365
+          )
+          seq(
+            label(L363)
+            seq(
+              sxp(
+                const(0)
+              )
+              seq(
+                cjump(
+                  EQ
+                  temp(t283)
+                  temp(t284)
+                  L365
+                  L364
+                )
+                seq(
+                  label(L364)
+                  seq(
+                    move(
+                      temp(t283)
+                      binop(
+                        PLUS
+                        temp(t283)
+                        const(1)
+                      )
+                    )
+                    seq(
+                      jump(
+                        name(L362)
+                      )
+                      label(L365)
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+  sxp(
+    const(0)
+  )
+)
+# Fragment tigermain
+seq(
+  move(
+    temp(t285)
+    const(3)
+  )
+  sxp(
+    const(0)
+  )
+)
+<?xml version="1.0" ?><seq><move><temp value="temp : { temp : t285 }"></temp><const value="3"></const></move><sxp><const value="0"></const></sxp></seq>
+>> Potential Match:move
+>> Potential Match:temp
+>> Potential Match:const
+Subtree is true, finished.
+# Fragment tigermain
+seq(
+  move(
+    mem(
+      binop(
+        PLUS
+        temp(rbp)
+        const(-8)
+      )
+    )
+    const(3)
+  )
+  sxp(
+    const(0)
+  )
+)
+<?xml version="1.0" ?><seq><move><mem><binop op="0"><temp value="temp : { temp : rbp }"></temp><const value="-8"></const></binop></mem><const value="3"></const></move><sxp><const value="0"></const></sxp></seq>
+>> Potential Match:move
+>> Potential Match:mem
+>> Potential Match:binop
+>> Potential Match:temp
+>> Potential Match:const
+>> Potential Match:const
+Subtree is true, finished.
+# Fragment tigermain
+seq(
+  sxp(
+    eseq(
+      sxp(
+        const(0)
+      )
+      eseq(
+        seq(
+          sxp(
+            const(3)
+          )
+          sxp(
+            const(5)
+          )
+        )
+        const(7)
+      )
+    )
+  )
+  sxp(
+    const(0)
+  )
+)
+<?xml version="1.0" ?><seq><sxp><eseq><sxp><const value="0"></const></sxp><eseq><seq><sxp><const value="3"></const></sxp><sxp><const value="5"></const></sxp></seq><const value="7"></const></eseq></eseq></sxp><sxp><const value="0"></const></sxp></seq>
+No match, next node:sxp
+>> Potential Match:eseq
+Subtree is true, finished.
+# Fragment tigermain
+seq(
+  seq(
+    seq(
+      cjump(
+        EQ
+        const(3)
+        const(3)
+        L366
+        L367
+      )
+      seq(
+        label(L366)
+        seq(
+          sxp(
+            const(5)
+          )
+          seq(
+            jump(
+              name(L368)
+            )
+            seq(
+              label(L367)
+              seq(
+                sxp(
+                  const(0)
+                )
+                jump(
+                  name(L368)
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+    label(L368)
+  )
+  sxp(
+    const(0)
+  )
+)
+<?xml version="1.0" ?><seq><seq><seq><cjump value="0"><const value="3"></const><const value="3"></const><label value="L366"></label><label value="L367"></label></cjump><seq><label value="L366"></label><seq><sxp><const value="5"></const></sxp><seq><jump><name value="L368"></name></jump><seq><label value="L367"></label><seq><sxp><const value="0"></const></sxp><jump><name value="L368"></name></jump></seq></seq></seq></seq></seq></seq><label value="L368"></label></seq><sxp><const value="0"></const></sxp></seq>
+No match, next node:seq
+No match, next node:seq
+>> Potential Match:cjump
+>> Potential Match:const
+>> Potential Match:const
+>> Potential Match:label
+>> Potential Match:label
+Subtree is true, finished.
+# Fragment tigermain
+seq(
+  seq(
+    seq(
+      sxp(
+        const(0)
+      )
+      move(
+        temp(t287)
+        eseq(
+          move(
+            temp(t286)
+            call(
+              name(initArray)
+              const(3)
+              const(5)
+            )
+          )
+          temp(t286)
+        )
+      )
+    )
+    sxp(
+      const(0)
+    )
+  )
+  sxp(
+    const(0)
+  )
+)
+<?xml version="1.0" ?><seq><seq><seq><sxp><const value="0"></const></sxp><move><temp value="temp : { temp : t287 }"></temp><eseq><move><temp value="temp : { temp : t286 }"></temp><call><name value="initArray"></name><const value="3"></const><const value="5"></const></call></move><temp value="temp : { temp : t286 }"></temp></eseq></move></seq><sxp><const value="0"></const></sxp></seq><sxp><const value="0"></const></sxp></seq>
+No match, next node:seq
+No match, next node:seq
+No match, next node:sxp
+No match, next node:const
+No match, next node:move
+No match, next node:temp
+>> Potential Match:eseq
+>> Potential Match:move
+>> Potential Match:temp
+>> Potential Match:call
+>> Potential Match:name
+>> Potential Match:const
+>> Potential Match:const
+>> Potential Match:temp
+Subtree is true, finished.
+# Fragment tigermain
+seq(
+  seq(
+    move(
+      temp(t288)
+      const(3)
+    )
+    sxp(
+      const(0)
+    )
+  )
+  sxp(
+    const(0)
+  )
+)
+<?xml version="1.0" ?><seq><seq><move><temp value="temp : { temp : t288 }"></temp><const value="3"></const></move><sxp><const value="0"></const></sxp></seq><sxp><const value="0"></const></sxp></seq>
+>> Potential Match:seq
+>> Potential Match:move
+>> Potential Match:temp
+>> Potential Match:const
+>> Potential Match:sxp
+>> Potential Match:const
+Subtree is true, finished.
+# Fragment tigermain
+seq(
+  sxp(
+    eseq(
+      seq(
+        sxp(
+          const(0)
+        )
+        move(
+          temp(t290)
+          eseq(
+            seq(
+              move(
+                temp(t289)
+                call(
+                  name(initRecord)
+                  const(24)
+                )
+              )
+              seq(
+                move(
+                  mem(
+                    binop(
+                      PLUS
+                      temp(t289)
+                      const(0)
+                    )
+                  )
+                  const(3)
+                )
+                seq(
+                  move(
+                    mem(
+                      binop(
+                        PLUS
+                        temp(t289)
+                        const(8)
+                      )
+                    )
+                    const(5)
+                  )
+                  move(
+                    mem(
+                      binop(
+                        PLUS
+                        temp(t289)
+                        const(16)
+                      )
+                    )
+                    const(7)
+                  )
+                )
+              )
+            )
+            temp(t289)
+          )
+        )
+      )
+      mem(
+        binop(
+          PLUS
+          temp(t290)
+          const(0)
+        )
+      )
+    )
+  )
+  sxp(
+    const(0)
+  )
+)
+# Fragment tigermain
+seq(
+  seq(
+    sxp(
+      const(0)
+    )
+    seq(
+      seq(
+        sxp(
+          call(
+            name(printi)
+            const(3)
+          )
+        )
+        sxp(
+          call(
+            name(printi)
+            const(5)
+          )
+        )
+      )
+      sxp(
+        call(
+          name(printi)
+          const(7)
+        )
+      )
+    )
+  )
+  sxp(
+    const(0)
+  )
+)
+<?xml version="1.0" ?><seq><seq><sxp><const value="0"></const></sxp><seq><seq><sxp><call><name value="printi"></name><const value="3"></const></call></sxp><sxp><call><name value="printi"></name><const value="5"></const></call></sxp></seq><sxp><call><name value="printi"></name><const value="7"></const></call></sxp></seq></seq><sxp><const value="0"></const></sxp></seq>
+>> Potential Match:seq
+Subtree is true, finished.
+# Fragment L369
+seq(
+  label(L371)
+  seq(
+    jump(
+      name(L372)
+    )
+    seq(
+      label(L372)
+      seq(
+        move(
+          mem(
+            binop(
+              PLUS
+              mem(
+                binop(
+                  PLUS
+                  temp(rbp)
+                  const(-8)
+                )
+              )
+              const(-8)
+            )
+          )
+          binop(
+            PLUS
+            mem(
+              binop(
+                PLUS
+                mem(
+                  binop(
+                    PLUS
+                    temp(rbp)
+                    const(-8)
+                  )
+                )
+                const(-8)
+              )
+            )
+            const(5)
+          )
+        )
+        seq(
+          jump(
+            name(L371)
+          )
+          label(L370)
+        )
+      )
+    )
+  )
+)
+# Fragment tigermain
+seq(
+  seq(
+    seq(
+      move(
+        mem(
+          binop(
+            PLUS
+            temp(rbp)
+            const(-8)
+          )
+        )
+        const(1)
+      )
+      sxp(
+        const(0)
+      )
+    )
+    sxp(
+      call(
+        name(L369)
+        temp(rbp)
+      )
+    )
+  )
+  sxp(
+    const(0)
+  )
+)
+# Fragment tigermain
+seq(
+  seq(
+    seq(
+      sxp(
+        const(0)
+      )
+      move(
+        temp(t291)
+        const(0)
+      )
+    )
+    sxp(
+      const(0)
+    )
+  )
+  sxp(
+    const(0)
+  )
+)
+<?xml version="1.0" ?><seq><seq><seq><sxp><const value="0"></const></sxp><move><temp value="temp : { temp : t291 }"></temp><const value="0"></const></move></seq><sxp><const value="0"></const></sxp></seq><sxp><const value="0"></const></sxp></seq>
+>> Potential Match:seq
+Subtree is true, finished.
+# Fragment tigermain
+seq(
+  sxp(
+    eseq(
+      seq(
+        sxp(
+          const(0)
+        )
+        move(
+          temp(t293)
+          eseq(
+            move(
+              temp(t292)
+              call(
+                name(initArray)
+                const(13)
+                const(5)
+              )
+            )
+            temp(t292)
+          )
+        )
+      )
+      mem(
+        binop(
+          PLUS
+          temp(t293)
+          binop(
+            MUL
+            const(7)
+            const(8)
+          )
+        )
+      )
+    )
+  )
+  sxp(
+    const(0)
+  )
+)
+<?xml version="1.0" ?><seq><sxp><eseq><seq><sxp><const value="0"></const></sxp><move><temp value="temp : { temp : t293 }"></temp><eseq><move><temp value="temp : { temp : t292 }"></temp><call><name value="initArray"></name><const value="13"></const><const value="5"></const></call></move><temp value="temp : { temp : t292 }"></temp></eseq></move></seq><mem><binop op="0"><temp value="temp : { temp : t293 }"></temp><binop op="2"><const value="7"></const><const value="8"></const></binop></binop></mem></eseq></sxp><sxp><const value="0"></const></sxp></seq>
+No match, next node:sxp
+No match, next node:eseq
+No match, next node:seq
+No match, next node:sxp
+No match, next node:const
+No match, next node:move
+No match, next node:temp
+No match, next node:eseq
+No match, next node:move
+No match, next node:temp
+No match, next node:call
+No match, next node:name
+No match, next node:const
+No match, next node:const
+No match, next node:temp
+>> Potential Match:mem
+>> Potential Match:binop
+>> Potential Match:temp
+>> Potential Match:binop
+>> Potential Match:const
+>> Potential Match:const
+Subtree is true, finished.
+# Fragment tigermain
+seq(
+  sxp(
+    eseq(
+      sxp(
+        const(0)
+      )
+      eseq(
+        seq(
+          sxp(
+            const(3)
+          )
+          sxp(
+            const(7)
+          )
+        )
+        const(11)
+      )
+    )
+  )
+  sxp(
+    const(0)
+  )
+)
+# Fragment tigermain
+seq(
+  sxp(
+    eseq(
+      sxp(
+        const(0)
+      )
+      const(3)
+    )
+  )
+  sxp(
+    const(0)
+  )
+)
+<?xml version="1.0" ?><seq><sxp><eseq><sxp><const value="0"></const></sxp><const value="3"></const></eseq></sxp><sxp><const value="0"></const></sxp></seq>
+No match, next node:sxp
+>> Potential Match:eseq
+>> Potential Match:sxp
+>> Potential Match:const
+>> Potential Match:const
+Subtree is true, finished.
+<?xml version="1.0" ?><seq><seq><seq><sxp><const value="0"></const></sxp><move><temp value="temp : { temp : t295 }"></temp><eseq><seq><move><temp value="temp : { temp : t294 }"></temp><call><name value="initRecord"></name><const value="16"></const></call></move><seq><move><mem><binop op="0"><temp value="temp : { temp : t294 }"></temp><const value="0"></const></binop></mem><const value="3"></const></move><move><mem><binop op="0"><temp value="temp : { temp : t294 }"></temp><const value="8"></const></binop></mem><const value="5"></const></move></seq></seq><temp value="temp : { temp : t294 }"></temp></eseq></move></seq><sxp><const value="0"></const></sxp></seq><sxp><const value="0"></const></sxp></seq>
+>> Potential Match:seq
+Subtree is true, finished.
+[INFO] Tests run: 33, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.082 s - in com.chaosopher.tigerlang.compiler.translate.TranslateVisitorTest
+[INFO] Running com.chaosopher.tigerlang.compiler.findescape.EscapeVisitorTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in com.chaosopher.tigerlang.compiler.findescape.EscapeVisitorTest
+[INFO] Running com.chaosopher.tigerlang.compiler.sugar.DesugarRegTest
+Testing program:function_three_arg.tig
+.global tigermain
+.text
+L373:
+pushq %rbp
+movq %rsp, %rbp
+subq $8, %rsp
+# start main
+# start 
+movq %rdi, -8(%rbp) # store to offset 1
+L375:
+add %rdx, %rsi
+movq %rsi, %rax # add lexp -> r
+add %rcx, %rax
+jmp L374
+L374:
+# sink 
+# end main
+movq %rbp, %rsp
+popq %rbp
+retq
+.text
+tigermain:
+pushq %rbp
+movq %rsp, %rbp
+subq $0, %rsp
+# start main
+# start 
+movq $0, %rax # integerExpression
+L377:
+movq $2, %rsi # integerExpression
+movq $3, %rdx # integerExpression
+movq $4, %rcx # integerExpression
+movq %rbp, %rdi # move reg arg 0 to temp
+call L373
+movq %rax, %rdi # rax to temp 
+call printi
+jmp L376
+L376:
+# sink 
+# end main
+movq %rbp, %rsp
+popq %rbp
+retq
+
+Total execution times ( seconds )
+          parse | 0.001000 | 3.846154 %
+         rename | 0.002000 | 7.692308 %
+        desugar | 0.001000 | 3.846154 %
+    lir-compute | 0.001000 | 3.846154 %
+  instr-compute | 0.004000 | 15.384615 %
+      reg-alloc | 0.013000 | 50.000000 %
+
+Total ( seconds ) : 0.026
+
+Finished  --> function_three_arg.tig:1
+Testing program:string_substr.tig
+.global tigermain
+.data
+L378:
+	.long  0x7
+	.ascii "brillig\0"
+.text
+tigermain:
+pushq %rbp
+movq %rsp, %rbp
+subq $0, %rsp
+# start main
+# start 
+movq $0, %rax # integerExpression
+L380:
+movq $L378, %rdi # default name
+movq $2, %rsi # integerExpression
+movq $5, %rdx # integerExpression
+call substring
+movq %rax, %rdi # move reg arg 0 to temp
+call print
+jmp L379
+L379:
+# sink 
+# end main
+movq %rbp, %rsp
+popq %rbp
+retq
+
+Total execution times ( seconds )
+          parse | 0.001000 | 2.631579 %
+  instr-compute | 0.003000 | 7.894737 %
+      reg-alloc | 0.007000 | 18.421053 %
+
+Total ( seconds ) : 0.012
+
+Finished  --> string_substr.tig:5
+Testing program:array_assign.tig
+.global tigermain
+.text
+tigermain:
+pushq %rbp
+movq %rsp, %rbp
+subq $8, %rsp
+# start main
+# start 
+movq $0, %rax # integerExpression
+movq %r15, -8(%rbp) # spill store
+L382:
+movq $10, %rdi # integerExpression
+movq $0, %rsi # integerExpression
+call initArray
+movq %rax, %r15 # rax to temp 
+movq $0, %rax # integerExpression
+movq $10, %rcx # integerExpression
+movq %rcx, (%r15, %rax, 8) # store array
+movq $9, %rax # integerExpression
+movq $9, %rcx # integerExpression
+movq %rcx, (%r15, %rax, 8) # store array
+movq $5, %rax # integerExpression
+movq $5, %rcx # integerExpression
+movq %rcx, (%r15, %rax, 8) # store array
+movq $5, %rax # bin(i,i)
+movq $8, %rcx # bin(i,i)
+imul %rcx # imul rax * r 
+movq %r15, %rcx # add lexp -> r
+add %rax, %rcx
+movq (%rcx), %rdi # mem(temp)
+call printi
+movq $0, %rax # bin(i,i)
+movq $8, %rcx # bin(i,i)
+imul %rcx # imul rax * r 
+movq %r15, %rcx # add lexp -> r
+add %rax, %rcx
+movq (%rcx), %rdi # mem(temp)
+call printi
+movq $9, %rax # bin(i,i)
+movq $8, %rcx # bin(i,i)
+imul %rcx # imul rax * r 
+add %rax, %r15
+movq (%r15), %rdi # mem(temp)
+call printi
+jmp L381
+L381:
+movq -8(%rbp), %r15 # spill load
+# sink 
+# end main
+movq %rbp, %rsp
+popq %rbp
+retq
+
+Total execution times ( seconds )
+          parse | 0.001000 | 1.282051 %
+  instr-compute | 0.001000 | 1.282051 %
+      reg-alloc | 0.038000 | 48.717949 %
+
+Total ( seconds ) : 0.04
+
+Finished  --> array_assign.tig:139
+[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.149 s <<< FAILURE! - in com.chaosopher.tigerlang.compiler.sugar.DesugarRegTest
+[ERROR] com.chaosopher.tigerlang.compiler.sugar.DesugarRegTest.good(String)  Time elapsed: 0.147 s  <<< FAILURE!
+org.junit.experimental.theories.internal.ParameterizedAssertionError: good("./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/array_assign.tig" <from paths[2]>)
+Caused by: org.opentest4j.AssertionFailedError: expected: <5109> but was: <>
+
+[INFO] Running com.chaosopher.tigerlang.compiler.sugar.DesugarTest
+
+/* == Abstract Syntax Tree. == */
+primitive print /* 989126847 */ (string  /* 609887969 */  /* escapes */: string /* 494894055 */ )
+primitive print_err /* 1298380324 */ (string  /* 1181545730 */  /* escapes */: string /* 494894055 */ )
+primitive printi /* 1535116392 */ (int  /* 773348567 */  /* escapes */: int /* 1482748887 */ )
+primitive flush /* 2115640742 */ ()
+primitive getchar /* 1602167682 */ () : string /* 494894055 */ 
+primitive ord /* 67620673 */ (string  /* 1746257394 */  /* escapes */: string /* 494894055 */ ) : int /* 1482748887 */ 
+primitive chr /* 1187779195 */ (code  /* 1611221523 */  /* escapes */: int /* 1482748887 */ ) : string /* 494894055 */ 
+primitive size /* 1523510420 */ (string  /* 473073770 */  /* escapes */: string /* 494894055 */ ) : int /* 1482748887 */ 
+primitive streq /* 977997405 */ (s1  /* 280531669 */  /* escapes */: string /* 494894055 */ ,s2  /* 1027569178 */  /* escapes */: string /* 494894055 */ ) : int /* 1482748887 */ 
+primitive strcmp /* 893835279 */ (s1  /* 1469907228 */  /* escapes */: string /* 494894055 */ ,s2  /* 57085696 */  /* escapes */: string /* 494894055 */ ) : int /* 1482748887 */ 
+primitive substring /* 1160652496 */ (string  /* 1185618138 */  /* escapes */: string /* 494894055 */ ,start  /* 2030138610 */  /* escapes */: int /* 1482748887 */ ,length  /* 1109752797 */  /* escapes */: int /* 1482748887 */ ) : string /* 494894055 */ 
+primitive concat /* 1988746735 */ (fst  /* 1752856108 */  /* escapes */: string /* 494894055 */ ,snd  /* 439232821 */  /* escapes */: string /* 494894055 */ ) : string /* 494894055 */ 
+primitive not /* 1933328958 */ (boolean  /* 1264754451 */  /* escapes */: int /* 1482748887 */ ) : int /* 1482748887 */ 
+primitive exit /* 1888639813 */ (status  /* 463381475 */  /* escapes */: int /* 1482748887 */ )
+function tigermain /* 178401052 */  /* escaping static link */ () = 
+    (
+        ("foo" < "bar");
+        
+        (
+            
+        )
+    )
+/* == Abstract Syntax Tree. == */
+primitive print /* 1441243996 */ (string  /* 936219350 */  /* escapes */: string /* 494894055 */ )
+primitive print_err /* 1495445111 */ (string  /* 1113829504 */  /* escapes */: string /* 494894055 */ )
+primitive printi /* 720770771 */ (int  /* 1911978617 */  /* escapes */: int /* 1482748887 */ )
+primitive flush /* 1038820134 */ ()
+primitive getchar /* 1658020779 */ () : string /* 494894055 */ 
+primitive ord /* 2022285740 */ (string  /* 988690806 */  /* escapes */: string /* 494894055 */ ) : int /* 1482748887 */ 
+primitive chr /* 1593368350 */ (code  /* 667890001 */  /* escapes */: int /* 1482748887 */ ) : string /* 494894055 */ 
+primitive size /* 310276293 */ (string  /* 1494277749 */  /* escapes */: string /* 494894055 */ ) : int /* 1482748887 */ 
+primitive streq /* 1091107430 */ (s1  /* 521342639 */  /* escapes */: string /* 494894055 */ ,s2  /* 2114629072 */  /* escapes */: string /* 494894055 */ ) : int /* 1482748887 */ 
+primitive strcmp /* 557197074 */ (s1  /* 669725336 */  /* escapes */: string /* 494894055 */ ,s2  /* 537536188 */  /* escapes */: string /* 494894055 */ ) : int /* 1482748887 */ 
+primitive substring /* 197491520 */ (string  /* 458998685 */  /* escapes */: string /* 494894055 */ ,start  /* 1700421020 */  /* escapes */: int /* 1482748887 */ ,length  /* 345290829 */  /* escapes */: int /* 1482748887 */ ) : string /* 494894055 */ 
+primitive concat /* 883678948 */ (fst  /* 1906947271 */  /* escapes */: string /* 494894055 */ ,snd  /* 1177072083 */  /* escapes */: string /* 494894055 */ ) : string /* 494894055 */ 
+primitive not /* 2010070923 */ (boolean  /* 502891368 */  /* escapes */: int /* 1482748887 */ ) : int /* 1482748887 */ 
+primitive exit /* 566891420 */ (status  /* 577734751 */  /* escapes */: int /* 1482748887 */ )
+function tigermain /* 752011518 */  /* escaping static link */ () = 
+    (
+        
+        let
+            var N /* 2103569615 */  := 8 /* escapes */ 
+            function printb /* 214320652 */  /* escaping static link */ () = 
+                (
+                    for /* 1379207867 */  i /* 1746578747 */  := 0 to (N /* 2103569615 */  - 1) do
+                    
+                    (
+                        for /* 443491171 */  j /* 606593028 */  := 0 to (N /* 2103569615 */  - 1) do
+                        print(
+                        if (i /* 1746578747 */  > j /* 606593028 */ ) 
+                        then "x"
+                        else "y") /* 1441243996 */ ;
+                        print("\\n") /* 1441243996 */ 
+                    );
+                    print("\\n") /* 1441243996 */ 
+                )
+        in
+            (
+                printb() /* 214320652 */ 
+            )
+        end;
+        
+        (
+            
+        )
+    )
+/* == Abstract Syntax Tree. == */
+primitive print /* 1589466857 */ (string  /* 1676888944 */  /* escapes */: string /* 494894055 */ )
+primitive print_err /* 6559830 */ (string  /* 458817438 */  /* escapes */: string /* 494894055 */ )
+primitive printi /* 795273218 */ (int  /* 1454870101 */  /* escapes */: int /* 1482748887 */ )
+primitive flush /* 1982958205 */ ()
+primitive getchar /* 709439274 */ () : string /* 494894055 */ 
+primitive ord /* 846718105 */ (string  /* 1482166692 */  /* escapes */: string /* 494894055 */ ) : int /* 1482748887 */ 
+primitive chr /* 583015088 */ (code  /* 1091781053 */  /* escapes */: int /* 1482748887 */ ) : string /* 494894055 */ 
+primitive size /* 1280128554 */ (string  /* 1409342262 */  /* escapes */: string /* 494894055 */ ) : int /* 1482748887 */ 
+primitive streq /* 1991724700 */ (s1  /* 762509150 */  /* escapes */: string /* 494894055 */ ,s2  /* 145455292 */  /* escapes */: string /* 494894055 */ ) : int /* 1482748887 */ 
+primitive strcmp /* 1520491508 */ (s1  /* 380616082 */  /* escapes */: string /* 494894055 */ ,s2  /* 744316958 */  /* escapes */: string /* 494894055 */ ) : int /* 1482748887 */ 
+primitive substring /* 2145420209 */ (string  /* 600017090 */  /* escapes */: string /* 494894055 */ ,start  /* 1215029765 */  /* escapes */: int /* 1482748887 */ ,length  /* 259077766 */  /* escapes */: int /* 1482748887 */ ) : string /* 494894055 */ 
+primitive concat /* 1962398162 */ (fst  /* 1263391254 */  /* escapes */: string /* 494894055 */ ,snd  /* 1554086576 */  /* escapes */: string /* 494894055 */ ) : string /* 494894055 */ 
+primitive not /* 1516417700 */ (boolean  /* 273777019 */  /* escapes */: int /* 1482748887 */ ) : int /* 1482748887 */ 
+primitive exit /* 891894789 */ (status  /* 1644864746 */  /* escapes */: int /* 1482748887 */ )
+function tigermain /* 766696861 */  /* escaping static link */ () = 
+    (
+        ("foo" = "bar");
+        
+        (
+            
+        )
+    )
+/* == Abstract Syntax Tree. == */
+primitive print /* 829737737 */ (string  /* 1296109622 */  /* escapes */: string /* 494894055 */ )
+primitive print_err /* 2061226112 */ (string  /* 1103017075 */  /* escapes */: string /* 494894055 */ )
+primitive printi /* 1443173326 */ (int  /* 318794136 */  /* escapes */: int /* 1482748887 */ )
+primitive flush /* 939254952 */ ()
+primitive getchar /* 55755528 */ () : string /* 494894055 */ 
+primitive ord /* 2100771791 */ (string  /* 1835778392 */  /* escapes */: string /* 494894055 */ ) : int /* 1482748887 */ 
+primitive chr /* 98412281 */ (code  /* 268599241 */  /* escapes */: int /* 1482748887 */ ) : string /* 494894055 */ 
+primitive size /* 1420810053 */ (string  /* 1736293769 */  /* escapes */: string /* 494894055 */ ) : int /* 1482748887 */ 
+primitive streq /* 268379633 */ (s1  /* 201392112 */  /* escapes */: string /* 494894055 */ ,s2  /* 641664202 */  /* escapes */: string /* 494894055 */ ) : int /* 1482748887 */ 
+primitive strcmp /* 748975217 */ (s1  /* 1510087865 */  /* escapes */: string /* 494894055 */ ,s2  /* 1366722422 */  /* escapes */: string /* 494894055 */ ) : int /* 1482748887 */ 
+primitive substring /* 254918854 */ (string  /* 12139181 */  /* escapes */: string /* 494894055 */ ,start  /* 1251219927 */  /* escapes */: int /* 1482748887 */ ,length  /* 792488644 */  /* escapes */: int /* 1482748887 */ ) : string /* 494894055 */ 
+primitive concat /* 780843029 */ (fst  /* 1739555643 */  /* escapes */: string /* 494894055 */ ,snd  /* 220165304 */  /* escapes */: string /* 494894055 */ ) : string /* 494894055 */ 
+primitive not /* 1094272405 */ (boolean  /* 973604791 */  /* escapes */: int /* 1482748887 */ ) : int /* 1482748887 */ 
+primitive exit /* 564526486 */ (status  /* 1466558382 */  /* escapes */: int /* 1482748887 */ )
+function tigermain /* 1551303995 */  /* escaping static link */ () = 
+    (
+        ("foo" > "bar");
+        
+        (
+            
+        )
+    )
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            var %lo := 0
+            var %hi := 10
+            var i := %lo
+        in
+            (
+                
+                if (i <= %hi) 
+                then 
+                while 1 do
+                
+                (
+                    print_int(i);
+                    
+                    if (i = %hi) 
+                    then  break
+                    else i := (i + 1)
+                ) 
+            )
+        end;
+        
+        (
+            
+        )
+    )[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.011 s - in com.chaosopher.tigerlang.compiler.sugar.DesugarTest
+[INFO] Running com.chaosopher.tigerlang.compiler.type.TypeTest
+
+/* == Abstract Syntax Tree. == */
+let
+in
+    (
+        
+        while 
+        (
+            1
+        ) do
+        
+        (
+            
+        ) 
+    )
+end
+/* == Abstract Syntax Tree. == */
+let
+    function a(a : int,b : int) = 
+        (
+            
+        )
+in
+    (
+        a(1,"string")
+    )
+end
+/* == Abstract Syntax Tree. == */
+let
+    type iat /* 913746983 */  = array of string /* 494894055 */ 
+    var a /* 1660451908 */  : iat /* 913746983 */  := iat /* 913746983 */ [0] of 1
+in
+    (
+        
+    )
+end
+/* == Abstract Syntax Tree. == */
+let
+    var void1 /* 1886567481 */  := 
+    (
+        
+    )
+    var void2 /* 361571676 */  := 
+    (
+        
+    )
+    var void3 /* 749100260 */  := 
+    (
+        
+    )
+in
+    (
+        void1 /* 1886567481 */  := void2 /* 361571676 */  := void3 /* 749100260 */  := 
+        (
+            
+        )
+    )
+end
+/* == Abstract Syntax Tree. == */
+let
+    var a : string := ("one" + "two")
+in
+    (
+        
+    )
+end
+/* == Abstract Syntax Tree. == */
+let
+    var r : int := 0
+in
+    (
+        r := 
+        (
+            1;
+            2;
+            3;
+            4;
+            "string"
+        )
+    )
+end
+/* == Abstract Syntax Tree. == */
+let
+    var a : string := (1 + 2)
+in
+    (
+        
+    )
+end
+/* == Abstract Syntax Tree. == */
+let
+    type a = int
+    var a : a := 1
+in
+    (
+        
+    )
+end
+/* == Abstract Syntax Tree. == */for i := 10 to 1 do
+i := (i - 1)
+/* == Abstract Syntax Tree. == */
+let
+    var r : int := 0
+in
+    (
+        r := 
+        (
+            
+            if 
+            (
+                "string"
+            ) 
+            then 2
+            else 3
+        )
+    )
+end
+/* == Abstract Syntax Tree. == */for i := 10 to 1100 do
+i := 10
+/* == Abstract Syntax Tree. == */
+let
+    var r : int := 0
+in
+    (
+        r := 
+        (
+            1;
+            2;
+            3;
+            4;
+            r := (r + 1)
+        )
+    )
+end
+/* == Abstract Syntax Tree. == */
+let
+    var a : string := 1
+in
+    (
+        
+    )
+end
+/* == Abstract Syntax Tree. == */
+let
+    type iat /* 1460126155 */  = array of int /* 1482748887 */ 
+    var a /* 727497138 */  : iat /* 1460126155 */  := iat /* 1460126155 */ [10] of 0
+in
+    (
+        
+    )
+end
+/* == Abstract Syntax Tree. == */
+let
+    var a : int := (1 + 2)
+in
+    (
+        
+    )
+end
+/* == Abstract Syntax Tree. == */
+let
+    type iat /* 248483913 */  = array of int /* 1482748887 */ 
+    var a /* 1731137986 */  : iat /* 248483913 */  := iat /* 248483913 */ [10] of 0
+in
+    (
+        a /* 1731137986 */  := 1
+    )
+end
+/* == Abstract Syntax Tree. == */
+let
+    var r : int := 0
+in
+    (
+        
+        while 
+        (
+            1
+        ) do
+        r 
+    )
+end
+/* == Abstract Syntax Tree. == */("foo" = "bar")
+/* == Abstract Syntax Tree. == */
+let
+    var r : int := 0
+in
+    (
+        r := 
+        (
+            
+            if 
+            (
+                1
+            ) 
+            then 2
+            else 3
+        )
+    )
+end
+/* == Abstract Syntax Tree. == */
+let
+    type iat /* 695248316 */  = array of int /* 1482748887 */ 
+    var a /* 5255258 */  : iat /* 695248316 */  := iat /* 695248316 */ [""] of 0
+in
+    (
+        
+    )
+end
+/* == Abstract Syntax Tree. == */
+let
+    type iat /* 1928312257 */  = array of int /* 1482748887 */ 
+    var a /* 1834031967 */  : iat /* 1928312257 */  := iat /* 1928312257 */ [0] of "string"
+in
+    (
+        
+    )
+end
+/* == Abstract Syntax Tree. == */
+let
+    var r : string := ""
+in
+    (
+        r := 
+        (
+            
+            if 
+            (
+                1
+            ) 
+            then 2
+            else 3
+        )
+    )
+end
+/* == Abstract Syntax Tree. == */
+let
+    var r : int := 0
+in
+    (
+        r := 
+        (
+            
+            if 
+            (
+                1
+            ) 
+            then 2
+            else "string"
+        )
+    )
+end
+/* == Abstract Syntax Tree. == */
+let
+    var r : int := 0
+in
+    (
+        
+        while 
+        (
+            1
+        ) do
+        r := (r + 1) 
+    )
+end
+/* == Abstract Syntax Tree. == */
+let
+    function a(a : int,b : int) = 
+        (
+            
+        )
+in
+    (
+        a(1,2,3)
+    )
+end
+/* == Abstract Syntax Tree. == */
+let
+    var r : int := 0
+in
+    (
+        
+        while 
+        (
+            "string"
+        ) do
+        r := (r + 1) 
+    )
+end
+/* == Abstract Syntax Tree. == */("foo" < "bar")
+/* == Abstract Syntax Tree. == */
+let
+    var r : int := 0
+in
+    (
+        r := 
+        (
+            1;
+            2;
+            3;
+            4;
+            5
+        )
+    )
+end
+/* == Abstract Syntax Tree. == */
+let
+    type rec /* 1089680530 */  = {a  /* 1337835760 */ : string /* 0 */ }
+    var r /* 718512571 */  := rec /* 1089680530 */  /* 0 */  { a = 42 }
+in
+    (
+        r /* 718512571 */  :=  nil
+    )
+end
+/* == Abstract Syntax Tree. == */
+let
+    type rec /* 843867341 */  = {a  /* 324507700 */ : int /* 0 */ }
+    var r /* 616443292 */  := rec /* 843867341 */  /* 0 */  { a = 42 }
+in
+    (
+        r /* 616443292 */  := 1
+    )
+end
+/* == Abstract Syntax Tree. == */
+let
+    type rec /* 1540832538 */  = {a  /* 183259297 */ : int /* 0 */ }
+    var r /* 626393072 */  := rec /* 1540832538 */  /* 0 */  { a = 42 }
+in
+    (
+        r /* 626393072 */  :=  nil
+    )
+end
+/* == Abstract Syntax Tree. == */
+let
+    function a(a : int,b : int) = 
+        (
+            
+        )
+in
+    (
+        a(1)
+    )
+end
+/* == Abstract Syntax Tree. == */(1 + "2")
+/* == Abstract Syntax Tree. == */("1" + 2)
+/* == Abstract Syntax Tree. == */for /* 1892869131 */  i /* 302987494 */  := 0 to 10 do
+i /* 302987494 */ 
+/* == Abstract Syntax Tree. == */
+let
+    var a : int := ("one" + "two")
+in
+    (
+        
+    )
+end[INFO] Tests run: 36, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.022 s - in com.chaosopher.tigerlang.compiler.type.TypeTest
+[INFO] Running com.chaosopher.tigerlang.compiler.type.PrettyPrinterTest
+stringtname=(int)array=(record=(sfield=string,ifield=int))inttname=(record=(sfield=string,ifield=int))array=(string)record=(sfield=string,ifield=int)record=(sfield=array=(string),ifield=int)[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s - in com.chaosopher.tigerlang.compiler.type.PrettyPrinterTest
+[INFO] Running com.chaosopher.tigerlang.compiler.staticlink.FunctionStaticLinkVisitorTest
+
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            var a : int := 1
+            function a() : int = 
+                let
+                    function b() : int = (a + a)
+                in
+                    (
+                        
+                    )
+                end
+        in
+            (
+                a()
+            )
+        end;
+        
+        (
+            
+        )
+    )
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            var a : int := 1
+            function a() : int = 
+                let
+                    function b() : int = (a + a)
+                in
+                    (
+                        
+                    )
+                end
+        in
+            (
+                a()
+            )
+        end;
+        
+        (
+            
+        )
+    )
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            function fact(n : int) : int = 
+                if 
+                (
+                    (n = 0)
+                ) 
+                then 1
+                else (n * fact(
+                (
+                    (n - 1)
+                )))
+        in
+            (
+                fact(10)
+            )
+        end;
+        
+        (
+            
+        )
+    )fact : function is recursive - setting sl escapes to false
+fact : function is recursive - setting sl escapes to false
+
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            function fact(n : int) : int = 
+                if 
+                (
+                    (n = 0)
+                ) 
+                then 1
+                else (n * fact(
+                (
+                    (n - 1)
+                )))
+        in
+            (
+                fact(10)
+            )
+        end;
+        
+        (
+            
+        )
+    )
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            var v := 1
+            function outer() : int = 
+                let
+                    function inner() : int = v
+                in
+                    (
+                        inner()
+                    )
+                end
+            function sister() : int = outer()
+        in
+            (
+                sister()
+            )
+        end;
+        
+        (
+            
+        )
+    )inner : has no successors - setting sl escapes to false
+outer calls inner
+outer : calls function at different level - setting sl escapes to true
+sister calls outer
+sister : only calls function at same level - setting sl escapes to false
+
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            var v := 1 /* escapes */ 
+            function outer /* escaping static link */ () : int = 
+                let
+                    function inner /* static link */ () : int = v
+                in
+                    (
+                        inner()
+                    )
+                end
+            function sister /* static link */ () : int = outer()
+        in
+            (
+                sister()
+            )
+        end;
+        
+        (
+            
+        )
+    )
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            var v := 1
+            function outer() : int = 
+                let
+                    function inner() : int = v
+                in
+                    (
+                        inner()
+                    )
+                end
+            function sister() : int = outer()
+        in
+            (
+                sister()
+            )
+        end;
+        
+        (
+            
+        )
+    )inner : has no successors - setting sl escapes to false
+outer calls inner
+outer : calls function at different level - setting sl escapes to true
+sister calls outer
+sister : only calls function at same level - setting sl escapes to false
+
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            var v := 1 /* escapes */ 
+            function outer /* escaping static link */ () : int = 
+                let
+                    function inner /* static link */ () : int = v
+                in
+                    (
+                        inner()
+                    )
+                end
+            function sister /* static link */ () : int = outer()
+        in
+            (
+                sister()
+            )
+        end;
+        
+        (
+            
+        )
+    )
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            var a : int := 1
+            function a() : int = (a + a)
+        in
+            (
+                a()
+            )
+        end;
+        
+        (
+            
+        )
+    )a : has no successors - setting sl escapes to false
+
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            var a : int := 1
+            function a() : int = (a + a)
+        in
+            (
+                a()
+            )
+        end;
+        
+        (
+            
+        )
+    )
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            var foo := 1
+            function foo() : int = foo
+        in
+            (
+                foo()
+            )
+        end;
+        
+        (
+            
+        )
+    )foo : has no successors - setting sl escapes to false
+
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            var foo := 1
+            function foo() : int = foo
+        in
+            (
+                foo()
+            )
+        end;
+        
+        (
+            
+        )
+    )
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            function a() : int = 
+                let
+                    var a : int := 1
+                    function b() : int = (a + a)
+                in
+                    (
+                        
+                    )
+                end
+        in
+            (
+                a()
+            )
+        end;
+        
+        (
+            
+        )
+    )
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            function a() : int = 
+                let
+                    var a : int := 1
+                    function b() : int = (a + a)
+                in
+                    (
+                        
+                    )
+                end
+        in
+            (
+                a()
+            )
+        end;
+        
+        (
+            
+        )
+    )
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            var c : int := 0
+            function a() : int = 
+                let
+                    var a : int := 1
+                    function b() : int = ((b() + c) + a)
+                in
+                    (
+                        b()
+                    )
+                end
+        in
+            (
+                a()
+            )
+        end;
+        
+        (
+            
+        )
+    )
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            var c : int := 0
+            function a() : int = 
+                let
+                    var a : int := 1
+                    function b() : int = ((b() + c) + a)
+                in
+                    (
+                        b()
+                    )
+                end
+        in
+            (
+                a()
+            )
+        end;
+        
+        (
+            
+        )
+    )
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+        in
+            (
+                
+            )
+        end;
+        
+        (
+            
+        )
+    )
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+        in
+            (
+                
+            )
+        end;
+        
+        (
+            
+        )
+    )
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            var toto := 1
+            function outer() : int = 
+                let
+                    function inner() : int = toto
+                in
+                    (
+                        inner()
+                    )
+                end
+        in
+            (
+                outer()
+            )
+        end;
+        
+        (
+            
+        )
+    )inner : has no successors - setting sl escapes to false
+outer calls inner
+outer : calls function at different level - setting sl escapes to true
+
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            var toto := 1 /* escapes */ 
+            function outer /* escaping static link */ () : int = 
+                let
+                    function inner /* static link */ () : int = toto
+                in
+                    (
+                        inner()
+                    )
+                end
+        in
+            (
+                outer()
+            )
+        end;
+        
+        (
+            
+        )
+    )[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.027 s - in com.chaosopher.tigerlang.compiler.staticlink.FunctionStaticLinkVisitorTest
+[INFO] Running com.chaosopher.tigerlang.compiler.staticlink.StaticLinkEscapesOptimiseRegTest
+Testing program:function_three_arg.tig
+fa : has no successors - setting sl escapes to false
+printi : has no successors - setting sl escapes to false
+.global tigermain
+.text
+L383:
+pushq %rbp
+movq %rsp, %rbp
+subq $0, %rsp
+# start main
+# start 
+L385:
+add %rsi, %rdi
+movq %rdi, %rax # add lexp -> r
+add %rdx, %rax
+jmp L384
+L384:
+# sink 
+# end main
+movq %rbp, %rsp
+popq %rbp
+retq
+.text
+tigermain:
+pushq %rbp
+movq %rsp, %rbp
+subq $0, %rsp
+# start main
+# start 
+movq $0, %rax # integerExpression
+L387:
+movq $2, %rdi # integerExpression
+movq $3, %rsi # integerExpression
+movq $4, %rdx # integerExpression
+call L383
+movq %rax, %rdi # rax to temp 
+call printi
+jmp L386
+L386:
+# sink 
+# end main
+movq %rbp, %rsp
+popq %rbp
+retq
+
+Total execution times ( seconds )
+    hir-compute | 0.001000 | 1.190476 %
+  instr-compute | 0.001000 | 1.190476 %
+      reg-alloc | 0.003000 | 3.571429 %
+
+Total ( seconds ) : 0.006
+
+Finished  --> function_three_arg.tig:1
+Testing program:string_substr.tig
+substring : has no successors - setting sl escapes to false
+print : has no successors - setting sl escapes to false
+.global tigermain
+.data
+L388:
+	.long  0x7
+	.ascii "brillig\0"
+.text
+tigermain:
+pushq %rbp
+movq %rsp, %rbp
+subq $0, %rsp
+# start main
+# start 
+movq $0, %rax # integerExpression
+L390:
+movq $L388, %rdi # default name
+movq $2, %rsi # integerExpression
+movq $5, %rdx # integerExpression
+call substring
+movq %rax, %rdi # move reg arg 0 to temp
+call print
+jmp L389
+L389:
+# sink 
+# end main
+movq %rbp, %rsp
+popq %rbp
+retq
+
+Total execution times ( seconds )
+          parse | 0.001000 | 1.149425 %
+      reg-alloc | 0.002000 | 2.298851 %
+
+Total ( seconds ) : 0.003
+
+Finished  --> string_substr.tig:5
+Testing program:array_assign.tig
+printi : has no successors - setting sl escapes to false
+printi : has no successors - setting sl escapes to false
+printi : has no successors - setting sl escapes to false
+.global tigermain
+.text
+tigermain:
+pushq %rbp
+movq %rsp, %rbp
+subq $8, %rsp
+# start main
+# start 
+movq $0, %rax # integerExpression
+movq %r15, -8(%rbp) # spill store
+L392:
+movq $10, %rdi # integerExpression
+movq $0, %rsi # integerExpression
+call initArray
+movq %rax, %r15 # rax to temp 
+movq $0, %rax # integerExpression
+movq $10, %rcx # integerExpression
+movq %rcx, (%r15, %rax, 8) # store array
+movq $9, %rax # integerExpression
+movq $9, %rcx # integerExpression
+movq %rcx, (%r15, %rax, 8) # store array
+movq $5, %rax # integerExpression
+movq $5, %rcx # integerExpression
+movq %rcx, (%r15, %rax, 8) # store array
+movq $5, %rax # bin(i,i)
+movq $8, %rcx # bin(i,i)
+imul %rcx # imul rax * r 
+movq %r15, %rcx # add lexp -> r
+add %rax, %rcx
+movq (%rcx), %rdi # mem(temp)
+call printi
+movq $0, %rax # bin(i,i)
+movq $8, %rcx # bin(i,i)
+imul %rcx # imul rax * r 
+movq %r15, %rcx # add lexp -> r
+add %rax, %rcx
+movq (%rcx), %rdi # mem(temp)
+call printi
+movq $9, %rax # bin(i,i)
+movq $8, %rcx # bin(i,i)
+imul %rcx # imul rax * r 
+add %rax, %r15
+movq (%r15), %rdi # mem(temp)
+call printi
+jmp L391
+L391:
+movq -8(%rbp), %r15 # spill load
+# sink 
+# end main
+movq %rbp, %rsp
+popq %rbp
+retq
+
+Total execution times ( seconds )
+    hir-compute | 0.001000 | 0.763359 %
+  instr-compute | 0.001000 | 0.763359 %
+      reg-alloc | 0.042000 | 32.061069 %
+
+Total ( seconds ) : 0.044
+
+Finished  --> array_assign.tig:139
+[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.108 s <<< FAILURE! - in com.chaosopher.tigerlang.compiler.staticlink.StaticLinkEscapesOptimiseRegTest
+[ERROR] com.chaosopher.tigerlang.compiler.staticlink.StaticLinkEscapesOptimiseRegTest.good(String)  Time elapsed: 0.107 s  <<< FAILURE!
+org.junit.experimental.theories.internal.ParameterizedAssertionError: good("./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/array_assign.tig" <from paths[2]>)
+Caused by: org.opentest4j.AssertionFailedError: expected: <5109> but was: <>
+
+[INFO] Running com.chaosopher.tigerlang.compiler.staticlink.StaticLinkOptimiseRegTest
+Testing program:function_three_arg.tig
+.global tigermain
+.text
+L393:
+pushq %rbp
+movq %rsp, %rbp
+subq $32, %rsp
+# start main
+# start 
+movq %rdi, -8(%rbp) # store to offset 1
+movq %rsi, -16(%rbp) # store to offset 1
+movq %rdx, -24(%rbp) # store to offset 1
+movq %rcx, -32(%rbp) # store to offset 1
+L395:
+movq -16(%rbp), %rax # mem(boe)
+movq -24(%rbp), %rcx # mem(boe)
+add %rcx, %rax
+movq -32(%rbp), %rcx # mem(boe)
+add %rcx, %rax
+jmp L394
+L394:
+# sink 
+# end main
+movq %rbp, %rsp
+popq %rbp
+retq
+.text
+tigermain:
+pushq %rbp
+movq %rsp, %rbp
+subq $0, %rsp
+# start main
+# start 
+movq $0, %rax # integerExpression
+L397:
+movq $2, %rsi # integerExpression
+movq $3, %rdx # integerExpression
+movq $4, %rcx # integerExpression
+movq %rbp, %rdi # move reg arg 0 to temp
+call L393
+movq %rax, %rdi # move reg arg 0 to temp
+call printi
+jmp L396
+L396:
+# sink 
+# end main
+movq %rbp, %rsp
+popq %rbp
+retq
+
+Total execution times ( seconds )
+          parse | 0.001000 | 0.740741 %
+  instr-compute | 0.001000 | 0.740741 %
+      reg-alloc | 0.002000 | 1.481481 %
+
+Total ( seconds ) : 0.004
+
+Finished  --> function_three_arg.tig:1
+Testing program:string_substr.tig
+.global tigermain
+.data
+L398:
+	.long  0x7
+	.ascii "brillig\0"
+.text
+tigermain:
+pushq %rbp
+movq %rsp, %rbp
+subq $8, %rsp
+# start main
+# start 
+movq $0, %rax # integerExpression
+L400:
+movq $L398, %rax # default name
+movq %rax, -8(%rbp) # store to offset 1
+movq -8(%rbp), %rdi # mem(boe)
+movq $2, %rsi # integerExpression
+movq $5, %rdx # integerExpression
+call substring
+movq %rax, %rdi # move reg arg 0 to temp
+call print
+jmp L399
+L399:
+# sink 
+# end main
+movq %rbp, %rsp
+popq %rbp
+retq
+
+Total execution times ( seconds )
+      reg-alloc | 0.002000 | 1.449275 %
+
+Total ( seconds ) : 0.003
+
+Finished  --> string_substr.tig:139
+[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.04 s <<< FAILURE! - in com.chaosopher.tigerlang.compiler.staticlink.StaticLinkOptimiseRegTest
+[ERROR] com.chaosopher.tigerlang.compiler.staticlink.StaticLinkOptimiseRegTest.good(String)  Time elapsed: 0.04 s  <<< FAILURE!
+org.junit.experimental.theories.internal.ParameterizedAssertionError: good("./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/string_substr.tig" <from paths[1]>)
+Caused by: org.opentest4j.AssertionFailedError: expected: <illig> but was: <>
+
+[INFO] Running com.chaosopher.tigerlang.compiler.inlining.InlinerTest
+
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            function sub_0(i_1 : int,j_2 : int) : int = (i_1 + j_2)
+        in
+            (
+                sub_0(1,2)
+            )
+        end;
+        
+        (
+            
+        )
+    )inlining function sub_0
+
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            function sub_0(i_1 : int,j_2 : int) : int = (i_1 + j_2)
+        in
+            (
+                
+                let
+                    var i_1 : int := 1
+                    var j_2 : int := 2
+                    var res : int := (i_1 + j_2)
+                in
+                    (
+                        res
+                    )
+                end
+            )
+        end;
+        
+        (
+            
+        )
+    )
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            function aa_0(a_2 : int) : int = a_2
+            function bb_1() : int = 
+                (
+                    aa_0(3);
+                    aa_0(2)
+                )
+        in
+            (
+                bb_1()
+            )
+        end;
+        
+        (
+            
+        )
+    )inlining function aa_0
+inlining function aa_0
+inlining function bb_1
+inlining function aa_0
+inlining function aa_0
+
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            function aa_0(a_2 : int) : int = a_2
+            function bb_1() : int = 
+                (
+                    
+                    let
+                        var a_2 : int := 3
+                        var res : int := a_2
+                    in
+                        (
+                            res
+                        )
+                    end;
+                    
+                    let
+                        var a_2 : int := 2
+                        var res : int := a_2
+                    in
+                        (
+                            res
+                        )
+                    end
+                )
+        in
+            (
+                
+                let
+                    var res : int := 
+                    (
+                        
+                        let
+                            var a_2 : int := 3
+                            var res : int := a_2
+                        in
+                            (
+                                res
+                            )
+                        end;
+                        
+                        let
+                            var a_2 : int := 2
+                            var res : int := a_2
+                        in
+                            (
+                                res
+                            )
+                        end
+                    )
+                in
+                    (
+                        res
+                    )
+                end
+            )
+        end;
+        
+        (
+            
+        )
+    )
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            function sub_0(i_1 : int,j_2 : int) : int = (i_1 + j_2)
+        in
+            (
+                printi(sub_0(1,2))
+            )
+        end;
+        
+        (
+            
+        )
+    )inlining function sub_0
+
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            function sub_0(i_1 : int,j_2 : int) : int = (i_1 + j_2)
+        in
+            (
+                printi(
+                let
+                    var i_1 : int := 1
+                    var j_2 : int := 2
+                    var res : int := (i_1 + j_2)
+                in
+                    (
+                        res
+                    )
+                end)
+            )
+        end;
+        
+        (
+            
+        )
+    )inlining function a_0
+
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            function a_0() = 
+                (
+                    for i_1 := 0 to 10 do
+                    printi(i_1)
+                )
+        in
+            (
+                
+                let
+                in
+                    (
+                        for i_1 := 0 to 10 do
+                        printi(i_1)
+                    )
+                end
+            )
+        end;
+        
+        (
+            
+        )
+    )removing a_0
+
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+        in
+            (
+                
+                let
+                in
+                    (
+                        for i_1 := 0 to 10 do
+                        printi(i_1)
+                    )
+                end
+            )
+        end;
+        
+        (
+            
+        )
+    )
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            function a_0() : int = 1
+            function b_1() : int = 1
+        in
+            (
+                a_0()
+            )
+        end;
+        
+        (
+            
+        )
+    )inlining function a_0
+
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            function a_0() : int = 1
+            function b_1() : int = 1
+        in
+            (
+                
+                let
+                    var res : int := 1
+                in
+                    (
+                        res
+                    )
+                end
+            )
+        end;
+        
+        (
+            
+        )
+    )removing a_0
+removing b_1
+
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+        in
+            (
+                
+                let
+                    var res : int := 1
+                in
+                    (
+                        res
+                    )
+                end
+            )
+        end;
+        
+        (
+            
+        )
+    )
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            function sub_0(i_1 : int,j_2 : int) : int = sub_0(i_1,j_2)
+        in
+            (
+                sub_0(1,2)
+            )
+        end;
+        
+        (
+            
+        )
+    )
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            function sub_0(i_1 : int,j_2 : int) : int = sub_0(i_1,j_2)
+        in
+            (
+                sub_0(1,2)
+            )
+        end;
+        
+        (
+            
+        )
+    )
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            var a_0 : int := 2
+            var b_1 : int := 1
+        in
+            (
+                printi((a_0 > b_1))
+            )
+        end;
+        
+        (
+            
+        )
+    )
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            var a_0 : int := 2
+            var b_1 : int := 1
+        in
+            (
+                printi((a_0 > b_1))
+            )
+        end;
+        
+        (
+            
+        )
+    )
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            function sub_0(i_1 : int,j_2 : int) : int = sub_0(i_1,j_2)
+        in
+            (
+                printi(sub_0(1,2))
+            )
+        end;
+        
+        (
+            
+        )
+    )
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            function sub_0(i_1 : int,j_2 : int) : int = sub_0(i_1,j_2)
+        in
+            (
+                printi(sub_0(1,2))
+            )
+        end;
+        
+        (
+            
+        )
+    )[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.02 s - in com.chaosopher.tigerlang.compiler.inlining.InlinerTest
+[INFO] Running com.chaosopher.tigerlang.compiler.inlining.PrunerTest
+removing prune2_1
+
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            function prune_0() : int = 1
+        in
+            (
+                prune_0()
+            )
+        end;
+        
+        (
+            
+        )
+    )removing prune_0
+
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+        in
+            (
+                1
+            )
+        end;
+        
+        (
+            
+        )
+    )
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            var a_0 : int := 99
+        in
+            (
+                
+            )
+        end;
+        
+        (
+            
+        )
+    )
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        
+        let
+            function prune_0() : int = 1
+        in
+            (
+                prune_0()
+            )
+        end;
+        
+        (
+            
+        )
+    )[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s - in com.chaosopher.tigerlang.compiler.inlining.PrunerTest
+[INFO] Running com.chaosopher.tigerlang.compiler.inlining.InlinePruneRegTest
+Testing program:function_three_arg.tig
+inlining function fa_0
+removing fa_0
+.global tigermain
+.text
+tigermain:
+pushq %rbp
+movq %rsp, %rbp
+subq $0, %rsp
+# start main
+# start 
+movq $0, %rax # integerExpression
+L402:
+movq $2, %rdi # move(t, i)
+movq $3, %rax # move(t, i)
+movq $4, %rcx # move(t, i)
+add %rax, %rdi
+add %rcx, %rdi
+call printi
+jmp L401
+L401:
+# sink 
+# end main
+movq %rbp, %rsp
+popq %rbp
+retq
+
+Total execution times ( seconds )
+    lir-compute | 0.001000 | 0.699301 %
+      reg-alloc | 0.002000 | 1.398601 %
+
+Total ( seconds ) : 0.005
+
+Finished  --> function_three_arg.tig:1
+Testing program:string_substr.tig
+.global tigermain
+.data
+L403:
+	.long  0x7
+	.ascii "brillig\0"
+.text
+tigermain:
+pushq %rbp
+movq %rsp, %rbp
+subq $0, %rsp
+# start main
+# start 
+movq $0, %rax # integerExpression
+L405:
+movq $L403, %rdi # default name
+movq $2, %rsi # integerExpression
+movq $5, %rdx # integerExpression
+call substring
+movq %rax, %rdi # move reg arg 0 to temp
+call print
+jmp L404
+L404:
+# sink 
+# end main
+movq %rbp, %rsp
+popq %rbp
+retq
+
+Total execution times ( seconds )
+      reg-alloc | 0.002000 | 1.369863 %
+
+Total ( seconds ) : 0.003
+
+Finished  --> string_substr.tig:5
+Testing program:array_assign.tig
+.global tigermain
+.text
+tigermain:
+pushq %rbp
+movq %rsp, %rbp
+subq $8, %rsp
+# start main
+# start 
+movq $0, %rax # integerExpression
+movq %r15, -8(%rbp) # spill store
+L407:
+movq $10, %rdi # integerExpression
+movq $0, %rsi # integerExpression
+call initArray
+movq %rax, %r15 # rax to temp 
+movq $0, %rax # integerExpression
+movq $10, %rcx # integerExpression
+movq %rcx, (%r15, %rax, 8) # store array
+movq $9, %rax # integerExpression
+movq $9, %rcx # integerExpression
+movq %rcx, (%r15, %rax, 8) # store array
+movq $5, %rax # integerExpression
+movq $5, %rcx # integerExpression
+movq %rcx, (%r15, %rax, 8) # store array
+movq $5, %rax # bin(i,i)
+movq $8, %rcx # bin(i,i)
+imul %rcx # imul rax * r 
+movq %r15, %rcx # add lexp -> r
+add %rax, %rcx
+movq (%rcx), %rdi # mem(temp)
+call printi
+movq $0, %rax # bin(i,i)
+movq $8, %rcx # bin(i,i)
+imul %rcx # imul rax * r 
+movq %r15, %rcx # add lexp -> r
+add %rax, %rcx
+movq (%rcx), %rdi # mem(temp)
+call printi
+movq $9, %rax # bin(i,i)
+movq $8, %rcx # bin(i,i)
+imul %rcx # imul rax * r 
+add %rax, %r15
+movq (%r15), %rdi # mem(temp)
+call printi
+jmp L406
+L406:
+movq -8(%rbp), %r15 # spill load
+# sink 
+# end main
+movq %rbp, %rsp
+popq %rbp
+retq
+
+Total execution times ( seconds )
+      reg-alloc | 0.035000 | 19.337017 %
+
+Total ( seconds ) : 0.035
+
+Finished  --> array_assign.tig:139
+[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.093 s <<< FAILURE! - in com.chaosopher.tigerlang.compiler.inlining.InlinePruneRegTest
+[ERROR] com.chaosopher.tigerlang.compiler.inlining.InlinePruneRegTest.good(String)  Time elapsed: 0.093 s  <<< FAILURE!
+org.junit.experimental.theories.internal.ParameterizedAssertionError: good("./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/array_assign.tig" <from paths[2]>)
+Caused by: org.opentest4j.AssertionFailedError: expected: <5109> but was: <>
+
+[INFO] Running com.chaosopher.tigerlang.compiler.dataflow.def.ReachingDefinitionsTest
+# DataFlow Info#
+## Block - preds: 0 ##
+176097974
+In:[]
+Out:[2, 3]
+### Statements ###
+1:label:start In:[] out:[]
+2:a ← 5 In:[] out:[2]
+3:b ← 7 In:[2] out:[2, 3]
+## Block - preds: 1 ##
+1120072844
+In:[2, 3]
+Out:[2, 3]
+### Statements ###
+4:label:end In:[2, 3] out:[2, 3]
+--------
+# DataFlow Info#
+## Block - preds: 0 ##
+2079278380
+In:[]
+Out:[2]
+### Statements ###
+1:label:start In:[] out:[]
+2:a ← 5 In:[] out:[2]
+## Block - preds: 1 ##
+1476061571
+In:[2]
+Out:[2]
+### Statements ###
+3:label:end In:[2] out:[2]
+--------
+# DataFlow Info#
+## Block - preds: 0 ##
+1843594609
+In:[]
+Out:[2, 3]
+### Statements ###
+1:label:start In:[] out:[]
+2:a ← 5 In:[] out:[2]
+3:c ← 1 In:[2] out:[2, 3]
+## Block - preds: 2 ##
+1015659282
+In:[2, 3, 7]
+Out:[2, 3, 7]
+### Statements ###
+4:label:l1 In:[2, 3, 7] out:[2, 3, 7]
+5:cjump:c > a ? l3 : l2 In:[2, 3, 7] out:[2, 3, 7]
+## Block - preds: 1 ##
+1039759545
+In:[2, 3, 7]
+Out:[2, 3, 7]
+### Statements ###
+6:label:l2 In:[2, 3, 7] out:[2, 3, 7]
+7:c ← c + c In:[2, 3, 7] out:[2, 7]
+8:jump:l1 In:[2, 7] out:[2, 7]
+## Block - preds: 1 ##
+145105559
+In:[2, 3, 7]
+Out:[2, 3, 7, 10, 11]
+### Statements ###
+9:label:l3 In:[2, 3, 7] out:[2, 3, 7]
+10:a ← c - a In:[2, 3, 7] out:[3, 7, 10]
+11:c ← 0 In:[3, 7, 10] out:[10, 11]
+--------
+# DataFlow Info#
+## Block - preds: 0 ##
+1114525788
+In:[]
+Out:[3]
+### Statements ###
+1:label:start In:[] out:[]
+2:a ← 5 In:[] out:[2]
+3:a ← 7 In:[2] out:[3]
+## Block - preds: 1 ##
+1871580398
+In:[3]
+Out:[3]
+### Statements ###
+4:label:end In:[3] out:[3]
+--------
+# DataFlow Info#
+## Block - preds: 0 ##
+1455064947
+In:[]
+Out:[2, 3]
+### Statements ###
+1:label:start In:[] out:[]
+2:t1 ← a + b In:[] out:[2]
+3:t2 ← c + t1 In:[2] out:[2, 3]
+## Block - preds: 1 ##
+2110785285
+In:[2, 3]
+Out:[2, 3]
+### Statements ###
+4:label:end In:[2, 3] out:[2, 3]
+--------
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s - in com.chaosopher.tigerlang.compiler.dataflow.def.ReachingDefinitionsTest
+[INFO] Running com.chaosopher.tigerlang.compiler.dataflow.def.GenKillSetsTest
+## Block ##
+1872047468 gen:[2] kill:[]
+### Statements ###
+1:label:start gen:[] kill:[]
+2:a ← 5 gen:[2] kill:[]
+--------
+## Block ##
+959055079 gen:[2, 3] kill:[]
+### Statements ###
+1:label:start gen:[] kill:[]
+2:a ← 5 gen:[2] kill:[]
+3:c ← 5 gen:[3] kill:[]
+--------
+## Block ##
+465233746 gen:[2, 3] kill:[]
+### Statements ###
+1:label:start gen:[] kill:[]
+2:a ← 5 gen:[2] kill:[10]
+3:c ← 1 gen:[3] kill:[7, 11]
+--------
+## Block ##
+1559788797 gen:[] kill:[]
+### Statements ###
+4:label:l1 gen:[] kill:[]
+5:cjump:c > a ? l3 : l2 gen:[] kill:[]
+--------
+## Block ##
+978035840 gen:[7] kill:[]
+### Statements ###
+6:label:l2 gen:[] kill:[]
+7:c ← c + c gen:[7] kill:[3, 11]
+8:jump:l1 gen:[] kill:[]
+--------
+## Block ##
+943165647 gen:[10, 11] kill:[]
+### Statements ###
+9:label:l3 gen:[] kill:[]
+10:a ← c - a gen:[10] kill:[2]
+11:c ← 0 gen:[11] kill:[3, 7]
+--------
+## Block ##
+1251247808 gen:[3] kill:[]
+### Statements ###
+1:label:start gen:[] kill:[]
+2:a ← 5 gen:[2] kill:[3]
+3:a ← 9 gen:[3] kill:[2]
+--------
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s - in com.chaosopher.tigerlang.compiler.dataflow.def.GenKillSetsTest
+[INFO] Running com.chaosopher.tigerlang.compiler.dataflow.DeatomizeNoEscapeComputeRegTest
+Testing program:function_three_arg.tig
+.global tigermain
+.text
+L408:
+pushq %rbp
+movq %rsp, %rbp
+subq $32, %rsp
+# start main
+# start 
+movq %rdi, -8(%rbp) # store to offset 1
+movq %rsi, -16(%rbp) # store to offset 1
+movq %rdx, -24(%rbp) # store to offset 1
+movq %rcx, -32(%rbp) # store to offset 1
+L410:
+movq -16(%rbp), %rax # mem(boe)
+movq -24(%rbp), %rcx # mem(boe)
+add %rcx, %rax
+movq -32(%rbp), %rcx # mem(boe)
+add %rcx, %rax
+jmp L409
+L409:
+# sink 
+# end main
+movq %rbp, %rsp
+popq %rbp
+retq
+.text
+tigermain:
+pushq %rbp
+movq %rsp, %rbp
+subq $0, %rsp
+# start main
+# start 
+movq $0, %rax # integerExpression
+L412:
+movq $2, %rsi # integerExpression
+movq $3, %rdx # integerExpression
+movq $4, %rcx # integerExpression
+movq %rbp, %rdi # move reg arg 0 to temp
+call L408
+movq %rax, %rdi # move reg arg 0 to temp
+call printi
+jmp L411
+L411:
+# sink 
+# end main
+movq %rbp, %rsp
+popq %rbp
+retq
+
+Total execution times ( seconds )
+  instr-compute | 0.001000 | 0.529101 %
+      reg-alloc | 0.004000 | 2.116402 %
+      deatomize | 0.003000 | 1.587302 %
+
+Total ( seconds ) : 0.008
+
+Finished  --> function_three_arg.tig:1
+Testing program:string_substr.tig
+.global tigermain
+.text
+tigermain:
+pushq %rbp
+movq %rsp, %rbp
+subq $8, %rsp
+# start main
+# start 
+movq $0, %rax # integerExpression
+L415:
+movq $L413, %rax # default name
+movq %rax, -8(%rbp) # store to offset 1
+movq -8(%rbp), %rdi # mem(boe)
+movq $2, %rsi # integerExpression
+movq $5, %rdx # integerExpression
+call substring
+movq %rax, %rdi # rax to temp 
+call print
+jmp L414
+L414:
+# sink 
+# end main
+movq %rbp, %rsp
+popq %rbp
+retq
+.data
+L413:
+	.long  0x7
+	.ascii "brillig\0"
+
+Total execution times ( seconds )
+      reg-alloc | 0.001000 | 0.523560 %
+      deatomize | 0.001000 | 0.523560 %
+
+Total ( seconds ) : 0.002
+
+Finished  --> string_substr.tig:139
+[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.045 s <<< FAILURE! - in com.chaosopher.tigerlang.compiler.dataflow.DeatomizeNoEscapeComputeRegTest
+[ERROR] com.chaosopher.tigerlang.compiler.dataflow.DeatomizeNoEscapeComputeRegTest.good(String)  Time elapsed: 0.045 s  <<< FAILURE!
+org.junit.experimental.theories.internal.ParameterizedAssertionError: good("./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/string_substr.tig" <from paths[1]>)
+Caused by: org.opentest4j.AssertionFailedError: expected: <illig> but was: <>
+
+[INFO] Running com.chaosopher.tigerlang.compiler.dataflow.TreeDeatomizerTest
+Syntax error: expected RIGHT_PAREN, found SXP
+label(L417)
+move(
+  temp(t558)
+  binop(
+    PLUS
+    temp(rbp)
+    const(8)
+  )
+)
+move(
+  temp(t559)
+  mem(
+    temp(t558)
+  )
+)
+move(
+  temp(t560)
+  call(
+    name(L0)
+    temp(t559)
+    const(56)
+  )
+)
+sxp(
+  call(
+    name(printi)
+    temp(t560)
+  )
+)
+jump(
+  name(L416)
+)
+label(L416)
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s - in com.chaosopher.tigerlang.compiler.dataflow.TreeDeatomizerTest
+[INFO] Running com.chaosopher.tigerlang.compiler.dataflow.TreeAtomizerTest
+<?xml version="1.0" ?><sxp><binop op="0"><const value="1"></const><eseq><move><temp value="temp : { temp : t561 }"></temp><binop op="0"><const value="2"></const><const value="3"></const></binop></move><temp value="temp : { temp : t561 }"></temp></eseq></binop></sxp><?xml version="1.0" ?><sxp><binop op="0"><const value="1"></const><eseq><move><temp value="temp : { temp : t561 }"></temp><binop op="0"><const value="2"></const><const value="3"></const></binop></move><temp value="temp : { temp : t561 }"></temp></eseq></binop></sxp>
+>> Potential Match:binop
+>> Potential Match:const
+>> Potential Match:eseq
+>> Potential Match:move
+>> Potential Match:temp
+>> Potential Match:binop
+>> Potential Match:const
+>> Potential Match:const
+>> Potential Match:temp
+Subtree is true, finished.
+<?xml version="1.0" ?><cjump value="0"><eseq><move><temp value="temp : { temp : t562 }"></temp><mem><const value="1"></const></mem></move><temp value="temp : { temp : t562 }"></temp></eseq><const value="1"></const><label value="L418"></label><label value="L419"></label></cjump>
+>> Potential Match:cjump
+>> Potential Match:eseq
+>> Potential Match:move
+>> Potential Match:temp
+>> Potential Match:mem
+>> Potential Match:const
+>> Potential Match:temp
+>> Potential Match:const
+>> Potential Match:label
+>> Potential Match:label
+Subtree is true, finished.
+<?xml version="1.0" ?><sxp><mem><eseq><move><temp value="temp : { temp : t563 }"></temp><mem><const value="1"></const></mem></move><temp value="temp : { temp : t563 }"></temp></eseq></mem></sxp>
+>> Potential Match:mem
+>> Potential Match:eseq
+>> Potential Match:move
+>> Potential Match:temp
+>> Potential Match:mem
+>> Potential Match:const
+>> Potential Match:temp
+Subtree is true, finished.
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s - in com.chaosopher.tigerlang.compiler.dataflow.TreeAtomizerTest
+[INFO] Running com.chaosopher.tigerlang.compiler.dataflow.exp.REGenKillSetsTest
+Syntax error: expected RIGHT_PAREN, found LABEL
+## Block ##
+386201215 gen:[3, 4] kill:[3, 4]
+### Statements ###
+1:label:start gen:[] kill:[]
+2:mem[z] ← x gen:[] kill:[3, 4]
+3:y ← mem[z] gen:[3] kill:[]
+4:a ← mem[b] gen:[4] kill:[]
+--------
+## Block ##
+1846508205 gen:[] kill:[]
+### Statements ###
+5:label:end gen:[] kill:[]
+--------
+## Block ##
+706915627 gen:[3] kill:[2]
+### Statements ###
+1:label:start gen:[] kill:[]
+2:t1 ← a + b gen:[2] kill:[]
+3:a ← c + d gen:[3] kill:[2]
+--------
+## Block ##
+303846650 gen:[] kill:[]
+### Statements ###
+4:label:end gen:[] kill:[]
+--------
+## Block ##
+806738808 gen:[3] kill:[2]
+### Statements ###
+1:label:start gen:[] kill:[]
+2:t1 ← a + b gen:[2] kill:[]
+3:b ← c + d gen:[3] kill:[2]
+--------
+## Block ##
+1414924274 gen:[] kill:[]
+### Statements ###
+4:label:end gen:[] kill:[]
+--------
+## Block ##
+546886525 gen:[3, 4] kill:[3]
+### Statements ###
+1:label:start gen:[] kill:[]
+2:sxp(call(x())) gen:[] kill:[3]
+3:y ← mem[z] gen:[3] kill:[]
+4:c ← a + b gen:[4] kill:[]
+--------
+## Block ##
+1711105800 gen:[] kill:[]
+### Statements ###
+5:label:end gen:[] kill:[]
+--------
+## Block ##
+113416412 gen:[] kill:[2]
+### Statements ###
+1:label:start gen:[] kill:[]
+2:c ← a + c gen:[] kill:[2]
+--------
+## Block ##
+1916720513 gen:[] kill:[]
+### Statements ###
+3:label:end gen:[] kill:[]
+--------
+## Block ##
+227100877 gen:[3, 4] kill:[3, 4]
+### Statements ###
+1:label:start gen:[] kill:[]
+2:a ← call(x()) gen:[] kill:[3, 4]
+3:y ← mem[z] gen:[3] kill:[]
+4:c ← a + b gen:[4] kill:[]
+--------
+## Block ##
+997918120 gen:[] kill:[]
+### Statements ###
+5:label:end gen:[] kill:[]
+--------
+## Block ##
+985679444 gen:[2] kill:[]
+### Statements ###
+1:label:start gen:[] kill:[]
+2:c ← a + b gen:[2] kill:[]
+--------
+## Block ##
+1053856141 gen:[] kill:[]
+### Statements ###
+3:label:end gen:[] kill:[]
+--------
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s - in com.chaosopher.tigerlang.compiler.dataflow.exp.REGenKillSetsTest
+[INFO] Running com.chaosopher.tigerlang.compiler.dataflow.exp.AEGenKillSetsTest
+Syntax error: expected RIGHT_PAREN, found LABEL
+## Block ##
+1414934182 gen:[mem: { exp: temp : { temp : b }}, mem: { exp: temp : { temp : z }}] kill:[mem: { exp: temp : { temp : b }}, mem: { exp: temp : { temp : z }}]
+### Statements ###
+1:label:start gen:[] kill:[]
+2:mem[z] ← x gen:[] kill:[mem: { exp: temp : { temp : b }}, mem: { exp: temp : { temp : z }}]
+3:y ← mem[z] gen:[mem: { exp: temp : { temp : z }}] kill:[]
+4:a ← mem[b] gen:[mem: { exp: temp : { temp : b }}] kill:[]
+--------
+## Block ##
+1527906606 gen:[] kill:[]
+### Statements ###
+5:label:end gen:[] kill:[]
+--------
+## Block ##
+726107869 gen:[binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}, binop: { op: 2,  left: temp : { temp : a }, right temp : { temp : b }}] kill:[]
+### Statements ###
+1:label:start gen:[] kill:[]
+2:x ← a + b gen:[binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}] kill:[]
+3:y ← a * b gen:[binop: { op: 2,  left: temp : { temp : a }, right temp : { temp : b }}] kill:[]
+--------
+## Block ##
+1625428489 gen:[binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}] kill:[binop: { op: 0,  left: temp : { temp : a }, right const: { val: 1}}, binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}, binop: { op: 2,  left: temp : { temp : a }, right temp : { temp : b }}]
+### Statements ###
+4:label:l1 gen:[] kill:[]
+5:cjump:y <= a ? l3 : l2 gen:[] kill:[]
+6:a ← a + 1 gen:[] kill:[binop: { op: 0,  left: temp : { temp : a }, right const: { val: 1}}, binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}, binop: { op: 2,  left: temp : { temp : a }, right temp : { temp : b }}]
+7:x ← a + b gen:[binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}] kill:[]
+8:jump:l1 gen:[] kill:[]
+--------
+## Block ##
+1953175805 gen:[] kill:[]
+### Statements ###
+9:label:end gen:[] kill:[]
+--------
+## Block ##
+56112634 gen:[mem: { exp: temp : { temp : z }}, binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}] kill:[mem: { exp: temp : { temp : z }}]
+### Statements ###
+1:label:start gen:[] kill:[]
+2:sxp(call(x())) gen:[] kill:[mem: { exp: temp : { temp : z }}]
+3:y ← mem[z] gen:[mem: { exp: temp : { temp : z }}] kill:[]
+4:c ← a + b gen:[binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}] kill:[]
+--------
+## Block ##
+1913113425 gen:[] kill:[]
+### Statements ###
+5:label:end gen:[] kill:[]
+--------
+## Block ##
+1311315651 gen:[mem: { exp: temp : { temp : z }}, binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}] kill:[mem: { exp: temp : { temp : z }}, binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}]
+### Statements ###
+1:label:start gen:[] kill:[]
+2:a ← call(x()) gen:[] kill:[mem: { exp: temp : { temp : z }}, binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}]
+3:y ← mem[z] gen:[mem: { exp: temp : { temp : z }}] kill:[]
+4:c ← a + b gen:[binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}] kill:[]
+--------
+## Block ##
+182949133 gen:[] kill:[]
+### Statements ###
+5:label:end gen:[] kill:[]
+--------
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s - in com.chaosopher.tigerlang.compiler.dataflow.exp.AEGenKillSetsTest
+[INFO] Running com.chaosopher.tigerlang.compiler.dataflow.exp.AvailableExpressionsTest
+## Block ##
+1303362110 gen:[] kill:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}]
+### Statements ###
+1:label:start gen:[] kill:[]
+2:t1 ← 2 * a gen:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}] kill:[]
+3:a ← 1 gen:[] kill:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}]
+--------
+## Block ##
+1077316166 gen:[] kill:[]
+### Statements ###
+4:label:end gen:[] kill:[]
+--------
+# DataFlow Info#
+## Block - preds: 0 ##
+1303362110
+In:[]
+Out:[]
+### Statements ###
+1:label:start In:[] out:[]
+2:t1 ← 2 * a In:[] out:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}]
+3:a ← 1 In:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}] out:[]
+## Block - preds: 1 ##
+1077316166
+In:[]
+Out:[]
+### Statements ###
+4:label:end In:[] out:[]
+--------
+# DataFlow Info#
+## Block - preds: 0 ##
+1605834811
+In:[]
+Out:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}, binop: { op: 2,  left: const: { val: 3}, right temp : { temp : b }}]
+### Statements ###
+1:label:start In:[] out:[]
+2:t1 ← 2 * a In:[] out:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}]
+3:t2 ← 3 * b In:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}] out:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}, binop: { op: 2,  left: const: { val: 3}, right temp : { temp : b }}]
+## Block - preds: 1 ##
+1602288195
+In:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}, binop: { op: 2,  left: const: { val: 3}, right temp : { temp : b }}]
+Out:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}, binop: { op: 2,  left: const: { val: 3}, right temp : { temp : b }}]
+### Statements ###
+4:label:end In:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}, binop: { op: 2,  left: const: { val: 3}, right temp : { temp : b }}] out:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}, binop: { op: 2,  left: const: { val: 3}, right temp : { temp : b }}]
+--------
+# DataFlow Info#
+## Block - preds: 0 ##
+36883680
+In:[]
+Out:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}]
+### Statements ###
+1:label:start In:[] out:[]
+2:t1 ← 2 * a In:[] out:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}]
+## Block - preds: 2 ##
+892237946
+In:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}]
+Out:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}]
+### Statements ###
+3:label:l1 In:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}] out:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}]
+4:cjump:y <= a ? l2 : end In:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}] out:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}]
+## Block - preds: 1 ##
+22790969
+In:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}]
+Out:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}]
+### Statements ###
+5:label:end In:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}] out:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}]
+6:b ← 2 * a In:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}] out:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}]
+## Block - preds: 1 ##
+945747249
+In:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}]
+Out:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}]
+### Statements ###
+7:label:l2 In:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}] out:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}]
+8:t2 ← 2 * a In:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}] out:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}]
+9:jump:l1 In:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}] out:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}]
+--------
+# DataFlow Info#
+## Block - preds: 0 ##
+2126664214
+In:[]
+Out:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}]
+### Statements ###
+1:label:start In:[] out:[]
+2:t1 ← 2 * a In:[] out:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}]
+## Block - preds: 2 ##
+1787083839
+In:[]
+Out:[]
+### Statements ###
+3:label:l1 In:[] out:[]
+4:cjump:y <= a ? l2 : end In:[] out:[]
+## Block - preds: 1 ##
+1227903899
+In:[]
+Out:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}]
+### Statements ###
+5:label:end In:[] out:[]
+6:b ← 2 * a In:[] out:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}]
+## Block - preds: 1 ##
+582819897
+In:[]
+Out:[]
+### Statements ###
+7:label:l2 In:[] out:[]
+8:t2 ← 2 * a In:[] out:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}]
+9:a ← 2 * a In:[binop: { op: 2,  left: const: { val: 2}, right temp : { temp : a }}] out:[]
+10:jump:l1 In:[] out:[]
+--------
+# DataFlow Info#
+## Block - preds: 0 ##
+1154172430
+In:[]
+Out:[binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}, binop: { op: 2,  left: temp : { temp : a }, right temp : { temp : b }}]
+### Statements ###
+1:label:start In:[] out:[]
+2:x ← a + b In:[] out:[binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}]
+3:y ← a * b In:[binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}] out:[binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}, binop: { op: 2,  left: temp : { temp : a }, right temp : { temp : b }}]
+## Block - preds: 2 ##
+775741122
+In:[binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}]
+Out:[binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}]
+### Statements ###
+4:label:l1 In:[binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}] out:[binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}]
+5:cjump:y <= a ? l2 : end In:[binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}] out:[binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}]
+## Block - preds: 1 ##
+810672306
+In:[binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}]
+Out:[binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}]
+### Statements ###
+6:label:end In:[binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}] out:[binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}]
+## Block - preds: 1 ##
+1473313929
+In:[binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}]
+Out:[binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}]
+### Statements ###
+7:label:l2 In:[binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}] out:[binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}]
+8:a ← a + 1 In:[binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}] out:[]
+9:x ← a + b In:[] out:[binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}]
+10:jump:l1 In:[binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}] out:[binop: { op: 0,  left: temp : { temp : a }, right temp : { temp : b }}]
+--------
+# DataFlow Info#
+## Block - preds: 0 ##
+2066945445
+In:[]
+Out:[binop: { op: 2,  left: temp : { temp : x }, right temp : { temp : b }}, binop: { op: 2,  left: temp : { temp : a }, right temp : { temp : c }}, binop: { op: 2,  left: temp : { temp : a }, right temp : { temp : b }}]
+### Statements ###
+1:label:start In:[] out:[]
+2:t1 ← x * b In:[] out:[binop: { op: 2,  left: temp : { temp : x }, right temp : { temp : b }}]
+3:t2 ← a * c In:[binop: { op: 2,  left: temp : { temp : x }, right temp : { temp : b }}] out:[binop: { op: 2,  left: temp : { temp : x }, right temp : { temp : b }}, binop: { op: 2,  left: temp : { temp : a }, right temp : { temp : c }}]
+4:t3 ← a * b In:[binop: { op: 2,  left: temp : { temp : x }, right temp : { temp : b }}, binop: { op: 2,  left: temp : { temp : a }, right temp : { temp : c }}] out:[binop: { op: 2,  left: temp : { temp : x }, right temp : { temp : b }}, binop: { op: 2,  left: temp : { temp : a }, right temp : { temp : c }}, binop: { op: 2,  left: temp : { temp : a }, right temp : { temp : b }}]
+5:t4 ← a * b In:[binop: { op: 2,  left: temp : { temp : x }, right temp : { temp : b }}, binop: { op: 2,  left: temp : { temp : a }, right temp : { temp : c }}, binop: { op: 2,  left: temp : { temp : a }, right temp : { temp : b }}] out:[binop: { op: 2,  left: temp : { temp : x }, right temp : { temp : b }}, binop: { op: 2,  left: temp : { temp : a }, right temp : { temp : c }}, binop: { op: 2,  left: temp : { temp : a }, right temp : { temp : b }}]
+## Block - preds: 1 ##
+16196099
+In:[binop: { op: 2,  left: temp : { temp : x }, right temp : { temp : b }}, binop: { op: 2,  left: temp : { temp : a }, right temp : { temp : c }}, binop: { op: 2,  left: temp : { temp : a }, right temp : { temp : b }}]
+Out:[binop: { op: 2,  left: temp : { temp : x }, right temp : { temp : b }}, binop: { op: 2,  left: temp : { temp : a }, right temp : { temp : c }}, binop: { op: 2,  left: temp : { temp : a }, right temp : { temp : b }}]
+### Statements ###
+6:label:end In:[binop: { op: 2,  left: temp : { temp : x }, right temp : { temp : b }}, binop: { op: 2,  left: temp : { temp : a }, right temp : { temp : c }}, binop: { op: 2,  left: temp : { temp : a }, right temp : { temp : b }}] out:[binop: { op: 2,  left: temp : { temp : x }, right temp : { temp : b }}, binop: { op: 2,  left: temp : { temp : a }, right temp : { temp : c }}, binop: { op: 2,  left: temp : { temp : a }, right temp : { temp : b }}]
+--------
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s - in com.chaosopher.tigerlang.compiler.dataflow.exp.AvailableExpressionsTest
+[INFO] Running com.chaosopher.tigerlang.compiler.dataflow.exp.ReachingExpressionsTest
+# DataFlow Info#
+## Block - preds: 0 ##
+345986913
+In:[]
+Out:[2]
+### Statements ###
+1:label:start In:[] out:[]
+2:x ← a + b In:[] out:[2]
+## Block - preds: 1 ##
+521746054
+In:[2]
+Out:[2]
+### Statements ###
+3:label:end In:[2] out:[2]
+--------
+# DataFlow Info#
+## Block - preds: 0 ##
+1242427797
+In:[]
+Out:[2]
+### Statements ###
+1:label:start In:[] out:[]
+2:x ← a + b In:[] out:[2]
+3:cjump:y <= 10 ? l1 : l2 In:[2] out:[2]
+## Block - preds: 1 ##
+153443333
+In:[2]
+Out:[5]
+### Statements ###
+4:label:l2 In:[2] out:[2]
+5:z1 ← a + b In:[2] out:[5]
+## Block - preds: 1 ##
+2021854618
+In:[2]
+Out:[7]
+### Statements ###
+6:label:l1 In:[2] out:[2]
+7:z0 ← a + b In:[2] out:[7]
+8:jump:join In:[7] out:[7]
+## Block - preds: 2 ##
+2139266166
+In:[5, 7]
+Out:[10]
+### Statements ###
+9:label:join In:[5, 7] out:[5, 7]
+10:z2 ← a + b In:[5, 7] out:[10]
+## Block - preds: 1 ##
+2084486251
+In:[10]
+Out:[10]
+### Statements ###
+11:label:end In:[10] out:[10]
+--------
+# DataFlow Info#
+## Block - preds: 0 ##
+882962176
+In:[]
+Out:[]
+### Statements ###
+1:label:start In:[] out:[]
+2:x ← a + b In:[] out:[2]
+3:a ← a + 1 In:[2] out:[]
+## Block - preds: 1 ##
+570294012
+In:[]
+Out:[]
+### Statements ###
+4:label:end In:[] out:[]
+--------
+# DataFlow Info#
+## Block - preds: 0 ##
+232886115
+In:[]
+Out:[3]
+### Statements ###
+1:label:start In:[] out:[]
+2:x ← a + b In:[] out:[2]
+3:y ← a + b In:[2] out:[3]
+## Block - preds: 1 ##
+1665525689
+In:[3]
+Out:[3]
+### Statements ###
+4:label:end In:[3] out:[3]
+--------
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s - in com.chaosopher.tigerlang.compiler.dataflow.exp.ReachingExpressionsTest
+[INFO] Running com.chaosopher.tigerlang.compiler.dataflow.live.GenKillSetsTest
+## Block ##
+1296612741 gen:[] kill:[t1]
+### Statements ###
+1:label:start gen:[] kill:[]
+2:t1 ← 1 + t1 gen:[] kill:[t1]
+--------
+## Block ##
+1486954672 gen:[] kill:[]
+### Statements ###
+3:label:end gen:[] kill:[]
+--------
+## Block ##
+889753223 gen:[a] kill:[t1]
+### Statements ###
+1:label:start gen:[] kill:[]
+2:t1 ← 1 + a gen:[a] kill:[t1]
+--------
+## Block ##
+2036704540 gen:[] kill:[]
+### Statements ###
+3:label:end gen:[] kill:[]
+--------
+## Block ##
+246014273 gen:[t1] kill:[]
+### Statements ###
+1:label:start gen:[] kill:[]
+2:sxp(call(printi(t1))) gen:[t1] kill:[]
+--------
+## Block ##
+869005911 gen:[] kill:[]
+### Statements ###
+3:label:end gen:[] kill:[]
+--------
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s - in com.chaosopher.tigerlang.compiler.dataflow.live.GenKillSetsTest
+[INFO] Running com.chaosopher.tigerlang.compiler.dataflow.cfg.CFGTest
+0: 
+0: 0 
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s - in com.chaosopher.tigerlang.compiler.dataflow.cfg.CFGTest
+[INFO] Running com.chaosopher.tigerlang.compiler.dataflow.DeatomizeRegTest
+Testing program:function_three_arg.tig
+.global tigermain
+.text
+L422:
+pushq %rbp
+movq %rsp, %rbp
+subq $8, %rsp
+# start main
+# start 
+movq %rdi, -8(%rbp) # store to offset 1
+L424:
+add %rdx, %rsi
+movq %rsi, %rax # add lexp -> r
+add %rcx, %rax
+jmp L423
+L423:
+# sink 
+# end main
+movq %rbp, %rsp
+popq %rbp
+retq
+.text
+tigermain:
+pushq %rbp
+movq %rsp, %rbp
+subq $0, %rsp
+# start main
+# start 
+movq $0, %rax # integerExpression
+L426:
+movq $2, %rsi # integerExpression
+movq $3, %rdx # integerExpression
+movq $4, %rcx # integerExpression
+movq %rbp, %rdi # move reg arg 0 to temp
+call L422
+movq %rax, %rdi # rax to temp 
+call printi
+jmp L425
+L425:
+# sink 
+# end main
+movq %rbp, %rsp
+popq %rbp
+retq
+
+Total execution times ( seconds )
+  instr-compute | 0.001000 | 0.512821 %
+      reg-alloc | 0.002000 | 1.025641 %
+      deatomize | 0.001000 | 0.512821 %
+
+Total ( seconds ) : 0.004
+
+Finished  --> function_three_arg.tig:1
+Testing program:string_substr.tig
+.global tigermain
+.text
+tigermain:
+pushq %rbp
+movq %rsp, %rbp
+subq $0, %rsp
+# start main
+# start 
+movq $0, %rax # integerExpression
+L429:
+movq $L427, %rdi # default name
+movq $2, %rsi # integerExpression
+movq $5, %rdx # integerExpression
+call substring
+movq %rax, %rdi # rax to temp 
+call print
+jmp L428
+L428:
+# sink 
+# end main
+movq %rbp, %rsp
+popq %rbp
+retq
+.data
+L427:
+	.long  0x7
+	.ascii "brillig\0"
+
+Total execution times ( seconds )
+  instr-compute | 0.001000 | 0.507614 %
+      reg-alloc | 0.001000 | 0.507614 %
+
+Total ( seconds ) : 0.002
+
+Finished  --> string_substr.tig:5
+Testing program:array_assign.tig
+.global tigermain
+.text
+tigermain:
+pushq %rbp
+movq %rsp, %rbp
+subq $8, %rsp
+# start main
+# start 
+movq $0, %rax # integerExpression
+movq %r15, -8(%rbp) # spill store
+L431:
+movq $10, %rdi # integerExpression
+movq $0, %rsi # integerExpression
+call initArray
+movq %rax, %r15 # rax to temp 
+movq $0, %rax # integerExpression
+movq $10, %rcx # integerExpression
+movq %rcx, (%r15, %rax, 8) # store array
+movq $9, %rax # integerExpression
+movq $9, %rcx # integerExpression
+movq %rcx, (%r15, %rax, 8) # store array
+movq $5, %rax # integerExpression
+movq $5, %rcx # integerExpression
+movq %rcx, (%r15, %rax, 8) # store array
+movq $5, %rax # bin(i,i)
+movq $8, %rcx # bin(i,i)
+imul %rcx # imul rax * r 
+movq %r15, %rcx # add lexp -> r
+add %rax, %rcx
+movq (%rcx), %rdi # mem(temp)
+call printi
+movq %r15, %rcx # move(t, t)
+movq $0, %rax # bin(i,i)
+movq $8, %rdx # bin(i,i)
+imul %rdx # imul rax * r 
+add %rax, %rcx
+movq (%rcx), %rdi # mem(temp)
+call printi
+movq $9, %rax # bin(i,i)
+movq $8, %rcx # bin(i,i)
+imul %rcx # imul rax * r 
+add %rax, %r15
+movq (%r15), %rdi # mem(temp)
+call printi
+jmp L430
+L430:
+movq -8(%rbp), %r15 # spill load
+# sink 
+# end main
+movq %rbp, %rsp
+popq %rbp
+retq
+
+Total execution times ( seconds )
+  instr-compute | 0.001000 | 0.381679 %
+      reg-alloc | 0.062000 | 23.664122 %
+      deatomize | 0.002000 | 0.763359 %
+
+Total ( seconds ) : 0.065
+
+Finished  --> array_assign.tig:139
+[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.126 s <<< FAILURE! - in com.chaosopher.tigerlang.compiler.dataflow.DeatomizeRegTest
+[ERROR] com.chaosopher.tigerlang.compiler.dataflow.DeatomizeRegTest.good(String)  Time elapsed: 0.126 s  <<< FAILURE!
+org.junit.experimental.theories.internal.ParameterizedAssertionError: good("./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/array_assign.tig" <from paths[2]>)
+Caused by: org.opentest4j.AssertionFailedError: expected: <5109> but was: <>
+
+[INFO] Running com.chaosopher.tigerlang.compiler.callgraph.CallGraphCycleTest
+a calls c b 
+b calls c 
+c calls c 
+_main calls a 
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in com.chaosopher.tigerlang.compiler.callgraph.CallGraphCycleTest
+[INFO] Running com.chaosopher.tigerlang.compiler.parse.PrimitiveTest
+
+/* == Abstract Syntax Tree. == */
+primitive print(string : string)
+primitive print_err(string : string)
+primitive printi(int : int)
+primitive flush()
+primitive getchar() : string
+primitive ord(string : string) : int
+primitive chr(code : int) : string
+primitive size(string : string) : int
+primitive streq(s1 : string,s2 : string) : int
+primitive strcmp(s1 : string,s2 : string) : int
+primitive substring(string : string,start : int,length : int) : string
+primitive concat(fst : string,snd : string) : string
+primitive not(boolean : int) : int
+primitive exit(status : int)
+function tigermain() = 
+    (
+        1;
+        
+        (
+            
+        )
+    )[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in com.chaosopher.tigerlang.compiler.parse.PrimitiveTest
+[INFO] Running com.chaosopher.tigerlang.compiler.parse.DecWrapperTest
+
+/* == Abstract Syntax Tree. == */
+let
+    function a /* 1668376627 */  /* escaping static link */ () : int /* 0 */  = 1
+in
+    (
+        a() /* 0 */ 
+    )
+end
+/* == Abstract Syntax Tree. == */print("hi") /* 0 */ 
+/* == Abstract Syntax Tree. == */
+if (1 = 1) 
+then 1
+else (2 = 2)[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in com.chaosopher.tigerlang.compiler.parse.DecWrapperTest
+[INFO] Running com.chaosopher.tigerlang.compiler.parse.PrettyPrinterTests
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in com.chaosopher.tigerlang.compiler.parse.PrettyPrinterTests
+[INFO] Running com.chaosopher.tigerlang.compiler.parse.ParseTests
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s - in com.chaosopher.tigerlang.compiler.parse.ParseTests
+[INFO] Running com.chaosopher.tigerlang.compiler.cloner.AbsynClonerTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s - in com.chaosopher.tigerlang.compiler.cloner.AbsynClonerTest
+[INFO] Running com.chaosopher.tigerlang.compiler.cloner.AbsynClonerRegTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.079 s - in com.chaosopher.tigerlang.compiler.cloner.AbsynClonerRegTest
+[INFO] Running com.chaosopher.tigerlang.compiler.bind.RenamerTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s - in com.chaosopher.tigerlang.compiler.bind.RenamerTest
+[INFO] Running com.chaosopher.tigerlang.compiler.bind.RenamerRegTest
+[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.04 s <<< FAILURE! - in com.chaosopher.tigerlang.compiler.bind.RenamerRegTest
+[ERROR] com.chaosopher.tigerlang.compiler.bind.RenamerRegTest.good(String)  Time elapsed: 0.038 s  <<< FAILURE!
+org.junit.experimental.theories.internal.ParameterizedAssertionError: good("./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/string_substr.tig" <from paths[1]>)
+Caused by: org.opentest4j.AssertionFailedError: expected: <illig> but was: <>
+
+[INFO] Running com.chaosopher.tigerlang.compiler.bind.BinderTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s - in com.chaosopher.tigerlang.compiler.bind.BinderTest
+[INFO] Running com.chaosopher.tigerlang.compiler.bugs.BugTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s - in com.chaosopher.tigerlang.compiler.bugs.BugTest
+[INFO] Running com.chaosopher.tigerlang.compiler.e2e.TestDriver
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.178 s - in com.chaosopher.tigerlang.compiler.e2e.TestDriver
+[INFO] Running com.chaosopher.tigerlang.compiler.e2e.RegTest
+[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.043 s <<< FAILURE! - in com.chaosopher.tigerlang.compiler.e2e.RegTest
+[ERROR] com.chaosopher.tigerlang.compiler.e2e.RegTest.good(String)  Time elapsed: 0.043 s  <<< FAILURE!
+org.junit.experimental.theories.internal.ParameterizedAssertionError: good("./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/string_substr.tig" <from paths[1]>)
+Caused by: org.opentest4j.AssertionFailedError: expected: <illig> but was: <>
+
+[INFO] Running com.chaosopher.tigerlang.compiler.absyn.PrettyPrinterRegTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.066 s - in com.chaosopher.tigerlang.compiler.absyn.PrettyPrinterRegTest
+[INFO] Running com.chaosopher.tigerlang.compiler.absyn.PrettyPrinterTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in com.chaosopher.tigerlang.compiler.absyn.PrettyPrinterTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Failures: 
+[ERROR]   RenamerRegTest.good(String) good("./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/string_substr.tig" <from paths[1]>)
+[ERROR]   DeatomizeNoEscapeComputeRegTest.good(String) good("./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/string_substr.tig" <from paths[1]>)
+[ERROR]   DeatomizeRegTest.good(String) good("./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/array_assign.tig" <from paths[2]>)
+[ERROR]   RegTest.good(String) good("./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/string_substr.tig" <from paths[1]>)
+[ERROR]   InlinePruneRegTest.good(String) good("./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/array_assign.tig" <from paths[2]>)
+[ERROR]   StaticLinkEscapesOptimiseRegTest.good(String) good("./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/array_assign.tig" <from paths[2]>)
+[ERROR]   StaticLinkOptimiseRegTest.good(String) good("./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/string_substr.tig" <from paths[1]>)
+[ERROR]   DesugarRegTest.good(String) good("./src/test/java/com/chaosopher/tigerlang/compiler/fixtures/array_assign.tig" <from paths[2]>)
+[INFO] 
+[ERROR] Tests run: 233, Failures: 8, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  2.403 s
+[INFO] Finished at: 2024-04-24T16:49:57Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.0.0-M5:test (default-test) on project compiler: There are test failures.
+[ERROR] 
+[ERROR] Please refer to /usr/src/app/compiler/target/surefire-reports for the individual test results.
+[ERROR] Please refer to dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
