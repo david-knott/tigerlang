@@ -20,7 +20,7 @@ import com.chaosopher.tigerlang.compiler.tree.BINOP;
 import com.chaosopher.tigerlang.compiler.tree.CALL;
 import com.chaosopher.tigerlang.compiler.tree.CJUMP;
 import com.chaosopher.tigerlang.compiler.tree.CloningTreeVisitor;
-import com.chaosopher.tigerlang.compiler.tree.EXP;
+import com.chaosopher.tigerlang.compiler.tree.EXPS;
 import com.chaosopher.tigerlang.compiler.tree.Exp;
 import com.chaosopher.tigerlang.compiler.tree.ExpList;
 import com.chaosopher.tigerlang.compiler.tree.MEM;
@@ -138,7 +138,7 @@ public class TreeDeatomizer implements FragmentVisitor {
         }
 
         @Override
-        public void visit(EXP op) {
+        public void visit(EXPS op) {
             this.setCurrentStm(op);
             super.visit(op);
             this.setCurrentStm(null);

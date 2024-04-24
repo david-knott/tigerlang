@@ -56,7 +56,7 @@ class ExpCall extends com.chaosopher.tigerlang.compiler.tree.Stm {
     }
 
     public com.chaosopher.tigerlang.compiler.tree.Stm build(com.chaosopher.tigerlang.compiler.tree.ExpList kids) {
-        return new com.chaosopher.tigerlang.compiler.tree.EXP(call.build(kids));
+        return new com.chaosopher.tigerlang.compiler.tree.EXPS(call.build(kids));
     }
 
     @Override
@@ -95,7 +95,7 @@ class StmExpList {
 public class Canon {
 
     static boolean isNop(com.chaosopher.tigerlang.compiler.tree.Stm a) {
-        return a instanceof com.chaosopher.tigerlang.compiler.tree.EXP && ((com.chaosopher.tigerlang.compiler.tree.EXP) a).exp instanceof com.chaosopher.tigerlang.compiler.tree.CONST;
+        return a instanceof com.chaosopher.tigerlang.compiler.tree.EXPS && ((com.chaosopher.tigerlang.compiler.tree.EXPS) a).exp instanceof com.chaosopher.tigerlang.compiler.tree.CONST;
     }
 
     static com.chaosopher.tigerlang.compiler.tree.Stm seq(com.chaosopher.tigerlang.compiler.tree.Stm a, com.chaosopher.tigerlang.compiler.tree.Stm b) {
@@ -124,7 +124,7 @@ public class Canon {
             return reorder_stm(s);
     }
 
-    static com.chaosopher.tigerlang.compiler.tree.Stm do_stm(com.chaosopher.tigerlang.compiler.tree.EXP s) {
+    static com.chaosopher.tigerlang.compiler.tree.Stm do_stm(com.chaosopher.tigerlang.compiler.tree.EXPS s) {
         if (s.exp instanceof com.chaosopher.tigerlang.compiler.tree.CALL)
             return reorder_stm(new ExpCall((com.chaosopher.tigerlang.compiler.tree.CALL) s.exp));
         else
@@ -136,8 +136,8 @@ public class Canon {
             return do_stm((com.chaosopher.tigerlang.compiler.tree.SEQ) s);
         else if (s instanceof com.chaosopher.tigerlang.compiler.tree.MOVE)
             return do_stm((com.chaosopher.tigerlang.compiler.tree.MOVE) s);
-        else if (s instanceof com.chaosopher.tigerlang.compiler.tree.EXP)
-            return do_stm((com.chaosopher.tigerlang.compiler.tree.EXP) s);
+        else if (s instanceof com.chaosopher.tigerlang.compiler.tree.EXPS)
+            return do_stm((com.chaosopher.tigerlang.compiler.tree.EXPS) s);
         else
             return reorder_stm(s);
     }
@@ -165,7 +165,7 @@ public class Canon {
         return new com.chaosopher.tigerlang.compiler.tree.ESEQ(x.stm, e.build(x.exps));
     }
 
-    static StmExpList nopNull = new StmExpList(new com.chaosopher.tigerlang.compiler.tree.EXP(new com.chaosopher.tigerlang.compiler.tree.CONST(0)), null);
+    static StmExpList nopNull = new StmExpList(new com.chaosopher.tigerlang.compiler.tree.EXPS(new com.chaosopher.tigerlang.compiler.tree.CONST(0)), null);
 
     static StmExpList reorder(com.chaosopher.tigerlang.compiler.tree.ExpList exps) {
         if (exps == null)
@@ -219,7 +219,7 @@ public class Canon {
         // if the current item and the previous item are JUMPs, ignore the current item.
         if(previous instanceof JUMP && stmList.head instanceof JUMP) {
             if(stmList.tail == null) {
-                //Stm nop = new com.chaosopher.tigerlang.compiler.tree.EXP(new com.chaosopher.tigerlang.compiler.tree.CONST(0));
+                //Stm nop = new com.chaosopher.tigerlang.compiler.tree.EXPS(new com.chaosopher.tigerlang.compiler.tree.CONST(0));
                 //return new StmList(nop);
                 throw new Error("Jump/jump removal - inside tail = null branch.");
             }

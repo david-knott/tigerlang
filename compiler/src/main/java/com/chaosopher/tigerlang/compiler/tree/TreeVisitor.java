@@ -10,7 +10,7 @@ public interface TreeVisitor {
 
     public void visit(ESEQ op);
 
-    public void visit(EXP op);
+    public void visit(EXPS op);
 
     public void visit(JUMP op);
 

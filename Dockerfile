@@ -1,6 +1,6 @@
 FROM maven as build
 WORKDIR /usr/src/app
-COPY .. .
+COPY . .
 #RUN mvn -B -f /tmp/pom.xml -s /usr/share/maven/ref/settings-docker.xml dependency:resolve
 RUN /bin/bash -c "echo 'Hello World'"
 

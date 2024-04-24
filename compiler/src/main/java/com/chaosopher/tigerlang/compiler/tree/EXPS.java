@@ -4,10 +4,10 @@ package com.chaosopher.tigerlang.compiler.tree;
  * An expression that does not return
  * a result.
  */
-public class EXP extends Stm {
+public class EXPS extends Stm {
     public Exp exp;
 
-    public EXP(Exp e) {
+    public EXPS(Exp e) {
         exp = e;
     }
 
@@ -16,7 +16,7 @@ public class EXP extends Stm {
     }
 
     public Stm build(ExpList kids) {
-        return new EXP(kids.head);
+        return new EXPS(kids.head);
     }
 
     @Override
@@ -41,9 +41,9 @@ public class EXP extends Stm {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof EXP) {
+        if(obj instanceof EXPS) {
             return
-            ((EXP)obj).exp.equals(this.exp)
+            ((EXPS)obj).exp.equals(this.exp)
             ;
         }
         return false;

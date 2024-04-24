@@ -7,7 +7,7 @@ abstract public class Exp extends IR {
 
     @Override
     public int getOperator() {
-        return TreeKind.EXP;
+        return TreeKind.EXPS;
     }
 
 }

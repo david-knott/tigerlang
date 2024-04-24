@@ -15,7 +15,7 @@ import com.chaosopher.tigerlang.compiler.tree.CALL;
 import com.chaosopher.tigerlang.compiler.tree.CJUMP;
 import com.chaosopher.tigerlang.compiler.tree.CloningTreeVisitor;
 import com.chaosopher.tigerlang.compiler.tree.ESEQ;
-import com.chaosopher.tigerlang.compiler.tree.EXP;
+import com.chaosopher.tigerlang.compiler.tree.EXPS;
 import com.chaosopher.tigerlang.compiler.tree.Exp;
 import com.chaosopher.tigerlang.compiler.tree.ExpList;
 import com.chaosopher.tigerlang.compiler.tree.IR;
@@ -59,7 +59,7 @@ public class TreeAtomizer extends CloningTreeVisitor implements FragmentVisitor 
     }
 
     public StmList getCanonicalisedAtoms() {
-        return this.canonicalization.canon(this.getStm() != null ? this.getStm() : new EXP(this.getExp() ));
+        return this.canonicalization.canon(this.getStm() != null ? this.getStm() : new EXPS(this.getExp() ));
     }
 
     public Hashtable<Temp, Exp> getTemps() {
@@ -67,7 +67,7 @@ public class TreeAtomizer extends CloningTreeVisitor implements FragmentVisitor 
     }
 
     public Stm getAtoms() {
-        return this.getStm() != null ? this.getStm() : new EXP(this.getExp() );
+        return this.getStm() != null ? this.getStm() : new EXPS(this.getExp() );
     }
 
     private Temp createTemp(Exp exp) {

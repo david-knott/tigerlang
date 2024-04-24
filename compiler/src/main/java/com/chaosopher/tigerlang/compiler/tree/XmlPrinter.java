@@ -84,7 +84,7 @@ public class XmlPrinter implements TreeVisitor {
     }
 
     @Override
-    public void visit(EXP op) {
+    public void visit(EXPS op) {
         this.writeStartElement("sxp");
         op.exp.accept(this);
         this.writeEndElement();

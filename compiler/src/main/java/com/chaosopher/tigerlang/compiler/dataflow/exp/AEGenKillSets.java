@@ -15,7 +15,7 @@ import com.chaosopher.tigerlang.compiler.temp.Temp;
 import com.chaosopher.tigerlang.compiler.tree.BINOP;
 import com.chaosopher.tigerlang.compiler.tree.CALL;
 import com.chaosopher.tigerlang.compiler.tree.CONST;
-import com.chaosopher.tigerlang.compiler.tree.EXP;
+import com.chaosopher.tigerlang.compiler.tree.EXPS;
 import com.chaosopher.tigerlang.compiler.tree.Exp;
 import com.chaosopher.tigerlang.compiler.tree.MEM;
 import com.chaosopher.tigerlang.compiler.tree.MOVE;
@@ -86,8 +86,8 @@ public class AEGenKillSets extends GenKillSets<Exp> {
                 kill.addAll(this.getExpressionsUsingTemp(temp));
             }
         }
-        if(s instanceof EXP) {
-            EXP exp = (EXP)s;
+        if(s instanceof EXPS) {
+            EXPS exp = (EXPS)s;
             if(exp.exp instanceof CALL) {
                 kill.addAll(this.getExpressionsUsingMem());
             }

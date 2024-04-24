@@ -84,7 +84,7 @@ public class PrettyPrinter implements TreeVisitor {
     }
 
     @Override
-    public void visit(EXP op) {
+    public void visit(EXPS op) {
         this.write("sxp(");
         this.incLevel();
         op.exp.accept(this);

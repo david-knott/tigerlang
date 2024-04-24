@@ -30,7 +30,7 @@ public class DefaultTreeVisitor implements TreeVisitor {
     }
 
     @Override
-    public void visit(EXP op) {
+    public void visit(EXPS op) {
         op.exp.accept(this);
     }
 

@@ -67,10 +67,10 @@ public class CloningTreeVisitor extends DefaultTreeVisitor {
     }
 
     @Override
-    public void visit(EXP op) {
+    public void visit(EXPS op) {
         op.exp.accept(this);
         Exp eClone = this.exp;
-        this.stm = new EXP(eClone);
+        this.stm = new EXPS(eClone);
     }
 
     @Override

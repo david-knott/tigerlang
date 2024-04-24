@@ -189,7 +189,7 @@ public class Parser {
         this.match(TokenType.LEFT_PAREN);
         Exp sxpExp = this.expression();
         this.match(TokenType.RIGHT_PAREN);
-        return new EXP(sxpExp);
+        return new EXPS(sxpExp);
     }
 
     private Stm statement() throws IOException {
@@ -204,7 +204,7 @@ public class Parser {
                 return this.handleLabel();
             case SEQ: /* seq(exp, exp) */
                 return this.handleSeq();
-            case SXP: /* sxp(exp) - called Tree.EXP in model */
+            case SXP: /* sxp(exp) - called Tree.EXPS in model */
                 return this.handleSxp();
             default:
                 break;

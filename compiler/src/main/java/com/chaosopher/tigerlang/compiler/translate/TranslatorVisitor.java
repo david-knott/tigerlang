@@ -38,7 +38,7 @@ import com.chaosopher.tigerlang.compiler.tree.CALL;
 import com.chaosopher.tigerlang.compiler.tree.CJUMP;
 import com.chaosopher.tigerlang.compiler.tree.CONST;
 import com.chaosopher.tigerlang.compiler.tree.ESEQ;
-import com.chaosopher.tigerlang.compiler.tree.EXP;
+import com.chaosopher.tigerlang.compiler.tree.EXPS;
 import com.chaosopher.tigerlang.compiler.tree.ExpList;
 import com.chaosopher.tigerlang.compiler.tree.IR;
 import com.chaosopher.tigerlang.compiler.tree.JUMP;
@@ -277,7 +277,7 @@ public class TranslatorVisitor extends DefaultVisitor {
             this.setVisitedExp(
                 this.transExpressionFactory.createNx(
                     callExp,
-                    new EXP(new CALL(new NAME(functionLabel), expList))
+                    new EXPS(new CALL(new NAME(functionLabel), expList))
                 )
             );
         } else {

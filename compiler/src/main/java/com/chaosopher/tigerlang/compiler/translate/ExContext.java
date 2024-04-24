@@ -19,7 +19,7 @@ class ExContext extends TranslateContext {
 
     @Override
     Stm unNx() {
-        return new com.chaosopher.tigerlang.compiler.tree.EXP(exp);
+        return new com.chaosopher.tigerlang.compiler.tree.EXPS(exp);
     }
 
     /**

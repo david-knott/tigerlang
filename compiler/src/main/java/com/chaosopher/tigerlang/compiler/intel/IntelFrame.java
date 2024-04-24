@@ -7,7 +7,7 @@ import com.chaosopher.tigerlang.compiler.temp.TempList;
 import com.chaosopher.tigerlang.compiler.tree.BINOP;
 import com.chaosopher.tigerlang.compiler.tree.CALL;
 import com.chaosopher.tigerlang.compiler.tree.CONST;
-import com.chaosopher.tigerlang.compiler.tree.EXP;
+import com.chaosopher.tigerlang.compiler.tree.EXPS;
 import com.chaosopher.tigerlang.compiler.tree.Exp;
 import com.chaosopher.tigerlang.compiler.tree.ExpList;
 import com.chaosopher.tigerlang.compiler.tree.MEM;
@@ -416,7 +416,7 @@ public class IntelFrame extends Frame {
     private StmList moveArgs() {
         if (this.callingConventions == null) {
             // Noop
-            return new StmList(new EXP(new CONST(0)));
+            return new StmList(new EXPS(new CONST(0)));
         }
         return this.callingConventions;
     }

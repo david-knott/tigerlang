@@ -75,7 +75,7 @@ public class QuadruplePrettyPrinter implements TreeVisitor {
     }
 
     @Override
-    public void visit(EXP op) {
+    public void visit(EXPS op) {
         this.write("sxp(");
         op.exp.accept(this);
         this.write(")");
